@@ -1,0 +1,63 @@
+[
+  {"icd10":"I10","name":"Nadciśnienie tętnicze","prevalence_percent":35.2,"sex":"Both"},
+  {"icd10":"E11","name":"Cukrzyca typu 2","prevalence_percent":9.4,"sex":"Both"},
+  {"icd10":"E10","name":"Cukrzyca typu 1","prevalence_percent":0.4,"sex":"Both"},
+  {"icd10":"E66","name":"Otyłość","prevalence_percent":16.4,"sex":"Both"},
+  {"icd10":"R63.5","name":"Nadmierny przyrost masy ciała / nadwaga","prevalence_percent":42.2,"sex":"Both"},
+
+  {"icd10":"E78.0","name":"Hipercholesterolemia","prevalence_percent":61.0,"sex":"Both"},
+  {"icd10":"I25.1","name":"Przewlekła choroba niedokrwienna serca","prevalence_percent":6.5,"sex":"Both"},
+  {"icd10":"I50","name":"Niewydolność serca","prevalence_percent":2.5,"sex":"Both"},
+  {"icd10":"I48","name":"Migotanie przedsionków","prevalence_percent":2.0,"sex":"Both"},
+  {"icd10":"I63","name":"Udar niedokrwienny (przebyte)","prevalence_percent":1.8,"sex":"Both"},
+  {"icd10":"I64","name":"Udar mózgu, nieokreślony","prevalence_percent":0.6,"sex":"Both"},
+  {"icd10":"I21","name":"Zawał serca (przebyte)","prevalence_percent":3.2,"sex":"Both"},
+
+  {"icd10":"J44","name":"POChP","prevalence_percent":2.3,"sex":"Both"},
+  {"icd10":"J45","name":"Astma","prevalence_percent":6.0,"sex":"Both"},
+  {"icd10":"J18","name":"Zapalenie płuc (nawracające/wywiad)","prevalence_percent":1.2,"sex":"Both"},
+  {"icd10":"G47.3","name":"Bezdech senny","prevalence_percent":4.0,"sex":"Both"},
+
+  {"icd10":"N18","name":"Przewlekła choroba nerek","prevalence_percent":4.2,"sex":"Both"},
+  {"icd10":"N40","name":"Rozrost gruczołu krokowego","prevalence_percent":12.0,"sex":"M"},
+  {"icd10":"N39.0","name":"Zakażenie układu moczowego (nawracające)","prevalence_percent":5.0,"sex":"Both"},
+
+  {"icd10":"K21","name":"Choroba refluksowa przełyku","prevalence_percent":23.0,"sex":"Both"},
+  {"icd10":"K29","name":"Zapalenie żołądka i dwunastnicy","prevalence_percent":10.0,"sex":"Both"},
+  {"icd10":"K25","name":"Wrzód żołądka","prevalence_percent":1.1,"sex":"Both"},
+  {"icd10":"K26","name":"Wrzód dwunastnicy","prevalence_percent":1.3,"sex":"Both"},
+  {"icd10":"K76.0","name":"Stłuszczenie wątroby (NAFLD)","prevalence_percent":25.0,"sex":"Both"},
+  {"icd10":"K70","name":"Alkoholowa choroba wątroby","prevalence_percent":2.0,"sex":"Both"},
+
+  {"icd10":"E03","name":"Niedoczynność tarczycy","prevalence_percent":6.0,"sex":"Both"},
+  {"icd10":"E05","name":"Nadczynność tarczycy","prevalence_percent":1.5,"sex":"Both"},
+
+  {"icd10":"F32","name":"Epizod depresyjny","prevalence_percent":5.0,"sex":"Both"},
+  {"icd10":"F33","name":"Depresja nawracająca","prevalence_percent":3.5,"sex":"Both"},
+  {"icd10":"F41","name":"Zaburzenia lękowe","prevalence_percent":7.0,"sex":"Both"},
+  {"icd10":"F10","name":"Zaburzenia związane z alkoholem","prevalence_percent":4.0,"sex":"Both"},
+  {"icd10":"F17","name":"Uzależnienie od tytoniu","prevalence_percent":21.0,"sex":"Both"},
+
+  {"icd10":"G40","name":"Padaczka","prevalence_percent":0.8,"sex":"Both"},
+  {"icd10":"G20","name":"Choroba Parkinsona","prevalence_percent":0.3,"sex":"Both"},
+  {"icd10":"F03","name":"Otępienie","prevalence_percent":1.6,"sex":"Both"},
+
+  {"icd10":"M54","name":"Ból grzbietu","prevalence_percent":28.0,"sex":"Both"},
+  {"icd10":"M17","name":"Choroba zwyrodnieniowa kolana","prevalence_percent":8.0,"sex":"Both"},
+  {"icd10":"M16","name":"Choroba zwyrodnieniowa biodra","prevalence_percent":5.0,"sex":"Both"},
+  {"icd10":"M15","name":"Wielostawowa choroba zwyrodnieniowa","prevalence_percent":6.0,"sex":"Both"},
+  {"icd10":"M81","name":"Osteoporoza","prevalence_percent":7.5,"sex":"Both"},
+
+  {"icd10":"D50","name":"Niedokrwistość z niedoboru żelaza","prevalence_percent":7.0,"sex":"Both"},
+  {"icd10":"D64.9","name":"Niedokrwistość, nieokreślona","prevalence_percent":2.5,"sex":"Both"},
+
+  {"icd10":"C34","name":"Rak płuca","prevalence_percent":0.6,"sex":"Both"},
+  {"icd10":"C50","name":"Rak piersi","prevalence_percent":1.4,"sex":"F"},
+  {"icd10":"C61","name":"Rak prostaty","prevalence_percent":1.6,"sex":"M"},
+  {"icd10":"C18","name":"Rak jelita grubego","prevalence_percent":1.2,"sex":"Both"},
+  {"icd10":"C16","name":"Rak żołądka","prevalence_percent":0.4,"sex":"Both"},
+
+  {"icd10":"B18","name":"Przewlekłe WZW","prevalence_percent":0.7,"sex":"Both"},
+  {"icd10":"B20","name":"HIV","prevalence_percent":0.1,"sex":"Both"},
+  {"icd10":"Z94.0","name":"Stan po przeszczepieniu nerki","prevalence_percent":0.05,"sex":"Both"}
+]

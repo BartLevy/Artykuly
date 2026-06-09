@@ -1,0 +1,163 @@
+\documentclass[12pt,a4paper,oneside]{book}
+
+
+% --- Language and Fonts ---
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+
+
+% --- Layout ---
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\setlength{\marginparwidth}{3.5cm}  % wider for todonotes compatibility
+
+% --- Headers and Footers ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% --- Math and Symbols ---
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsthm}
+
+
+% --- Graphics and Tables ---
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{float}
+
+
+% --- Quotes ---
+\usepackage{csquotes}
+
+% --- Algorithms ---
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, shapes.geometric, patterns}
+\usepackage{xcolor}
+
+% --- Utilities ---
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{authblk}
+\usepackage{todonotes}
+
+% \usepackage{csvsimple-13}
+\usepackage{csvsimple}
+% Upewnij się, że separator jest zdefiniowany globalnie
+\csvset{separator=semicolon}
+% SetWatermark
+\usepackage{draftwatermark}
+\SetWatermarkText{DRAFT}        % tekst znaku wodnego
+\SetWatermarkScale{1}           % skala (1 = domyślna)
+\SetWatermarkColor[gray]{0.65}  % kolor (jasny szary)
+\SetWatermarkAngle{45}          % kąt obrotu
+
+% --- Bibliography ---
+\usepackage[
+  backend=biber,
+  style=verbose,
+  autocite=footnote,
+  sorting=none
+]{biblatex}
+\DeclareBibliographyAlias{legislation}{misc}
+\addbibresource{bib-law.bib}
+\addbibresource{bib-other.bib}
+
+
+% hyperref must be loaded last (before custom settings)
+\usepackage[hidelinks]{hyperref}
+
+% --- Theorem Environments ---
+\newtheorem{definition}{Definicja}[chapter]
+\newtheorem{algotheorem}{Algorytm}[chapter]
+
+
+% --- Chapter Title Format ---
+\titleformat{\chapter}[hang]
+  {\normalfont\huge\bfseries}
+  {\thechapter.}
+  {0.5em}
+  {}
+
+\titlespacing*{\chapter}{0pt}{0pt}{40pt}
+
+
+
+% --- Metadata ---
+\title{ORION. Ocena Ryzyka Informatycznego Organizacji Nadzorowanych\\
+Architektura, bezpieczeństwo i suwerenność danych\\
+w regulowanych ekosystemach cyfrowych}
+\title{Metodologia ORION.\\
+Formalny model oceny ryzyka informatycznego\\
+w organizacjach nadzorowanych}
+
+\author[1]{Bartosz Lewandowski \thanks{ORCID: 0009-0004-1158-0693}}
+\affil[1]{Department of Clinical Engineering, Academy of Silesia in Katowice}
+\date{} 
+
+%\includeonly{rozdzial-przeprowadzenie-audytu}
+
+\begin{document}
+
+%\frontmatter
+\maketitle
+\tableofcontents
+
+%\mainmatter
+\include{rozdzial-wstep}
+\include{rozdzial-regulacje}
+\include{rozdzial-konflikt}
+\include{rozdzial-ryzyka-w-praktyce}
+\include{rozdzial-system-oceny}
+\include{rozdzial-przeprowadzenie-audytu}
+\include{rozdzial-wyniki}
+\include{rozdzial-zakonczenie}
+\include{rozdzial-slownik}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% \chapter{Standary wytwarzania}
+% \section{Rola narzędzi wspomagających mapowanie wymagań}
+% \section{Zgodność IT jako proces ciągły (DevSecOps)}
+% \section{Praktyczne zastosowanie: Niwelowanie luki komunikacyjnej}
+
+% \chapter{Podsumowanie i przyszłość}
+
+% \section{AI Act i jego wpływ na Fintech/MedTech}
+% \section{Post-quantum cryptography (PQC) jako nadchodzące wyzwanie}
+
+% \appendix
+% \chapter{Dodatkowe rozważania techniczne}
+% \section{Formalna weryfikacja kodu i analizatory SAST/DAST}
+% \section{Governance as Code: Open Policy Agent (OPA)}
+
+\printbibliography
+\end{document}

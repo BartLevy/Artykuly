@@ -1,0 +1,148 @@
+%  LaTeX support: latex@mdpi.com 
+%  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
+
+%=================================================================
+\documentclass[foods,article,submit,pdftex,moreauthors]{Definitions/mdpi} 
+
+
+
+%=================================================================
+% MDPI internal commands - do not modify
+\firstpage{1} 
+\makeatletter 
+\setcounter{page}{\@firstpage} 
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2026}
+\copyrightyear{2026}
+%\externaleditor{Firstname Lastname} % More than 1 editor, please add `` and '' before the last editor name
+\datereceived{ } 
+
+\daterevised{ } % Comment out if no revised date
+\dateaccepted{ } 
+\datepublished{ } 
+%\usepackage[colorlinks, textwidth=30pt]{todonotes}
+%\datecorrected{} % For corrected papers: "Corrected: XXX" date in the original paper.
+%\dateretracted{} % For retracted papers: "Retracted: XXX" date in the original paper.
+%\doinum{} % Used for some special journals, like molbank
+%\pdfoutput=1 % Uncommented for upload to arXiv.org
+%\CorrStatement{yes}  % For updates
+%\longauthorlist{yes} % For many authors that exceed the left citation part
+%\IsAssociation{yes} % For association journals
+
+%=================================================================
+% Add packages and commands here. The following packages are loaded in our class file: fontenc, inputenc, calc, indentfirst, fancyhdr, graphicx, epstopdf, lastpage, ifthen, float, amsmath, amssymb, lineno, setspace, enumitem, mathpazo, booktabs, titlesec, etoolbox, tabto, xcolor, colortbl, soul, multirow, microtype, tikz, totcount, changepage, attrib, upgreek, array, tabularx, pbox, ragged2e, tocloft, marginnote, marginfix, enotez, amsthm, natbib, hyperref, cleveref, scrextend, url, geometry, newfloat, caption, draftwatermark, seqsplit
+% cleveref: load \crefname definitions after \begin{document}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+
+%=================================================================
+% Please use the following mathematics environments: Theorem, Lemma, Corollary, Proposition, Characterization, Property, Problem, Example, ExamplesandDefinitions, Hypothesis, Remark, Definition, Notation, Assumption
+%% For proofs, please use the proof environment (the amsthm package is loaded by the MDPI class).
+
+%=================================================================
+% Full title of the paper (Capitalized)
+\Title{Niedojrzały miód jako wyzwanie jakościowe w globalnej produkcji pszczelarskiej}
+
+% Author Orchid ID: enter ID or remove command
+\newcommand{\orcidauthorA}{0009-0004-1158-0693} % Add \orcidA{} behind the author's name
+\newcommand{\orcidauthorB}{0009-0003-7214-4097} % Add \orcidB{} behind the author's name
+\newcommand{\orcidauthorC}{0000-0001-9178-1540} % Add \orcidB{} behind the author's name
+\newcommand{\orcidauthorD}{0000-0003-2580-7954} % Add \orcidB{} behind the author's name
+\newcommand{\orcidauthorE}{0000-0003-3900-7368} % Add \orcidB{} behind the author's name
+\newcommand{\orcidauthorF}{0000-0002-0754-0806}
+% Authors, for the paper (add full first names)
+\Author{Anna Gajda $^{1}$\orcidE{}, 
+ Bartosz Lewandowski $^{2}$\orcidA{}, 
+ Przemysław Rujna $^{3}$\orcidB{},
+ Katarzyna Banach* $^{4}$\orcidC{},
+ Renata Pietrzak-Fiećko$^{5}$\orcidF{},
+ Ewaryst Tkacz $^{6}$\orcidD{}}
+
+%\longauthorlist{yes}
+
+% MDPI internal command: Authors, for metadata in PDF
+\AuthorNames{Bartosz Lewandowski, Przemysław Rujna, Katarzyna Banach}
+
+%\longauthorlist{yes}
+
+% Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
+\address{%
+$^{1}$ \quad Laboratory of Bee Diseases, Institute of Veterinary Medicine, Warsaw University of Life Sciences, 02-787 Warsaw, Poland anna\_gajda@sggw.edu.pl\\
+$^{2}$ \quad Department of Clinical Engineering, Academy of Silesia in Katowice, 40-555 Katowice, Poland; bartosz.lewandowski@akademiaslaska.pl\\
+$^{3}$ \quad Stowarzyszenie Polska Izba Miodu; ul. Fałata 15/1, 87-300 Toruń, Poland; przemyslaw@rujna.pl\\
+$^{4}$ \quad Institute of Management and Quality Sciences, Faculty of Economics, University of Warmia and Mazury in Olsztyn, 10-719 Olsztyn, Poland;  katarzyna.banach@uwm.edu.pl\\
+$^{5}$ \quad Institute of Management and Quality Sciences, Faculty of Economics, University of Warmia and Mazury in Olsztyn, 10-719 Olsztyn, Poland;  renap@uwm.edu.pl\\
+$^{6}$ \quad Department of Clinical Engineering, Academy of Silesia in Katowice, 40-555 Katowice, Poland; ewaryst.tkacz@akademiaslaska.pl\\
+
+}
+
+% Contact information of the corresponding author
+\corres{Correspondence: katarzyna.banach@uwm.edu.pl}
+
+\abstract{Stanowisko Apimondia z 2025 słusznie podkreśla, że proces produkcji miodu to proces całkowicie naturalny i wykonywany wyłącznie przez pszczoły. W artykule zaznaczono, że złożony proces dojrzewania miodu ściśle powiązany jest ze zmniejszającą się zawartością wody w czasie przetwarzania nektaru przez pszczoły. Procentowy udział wody w produkcie maleje w wyniku wzbogacania miodu innymi substancjami wnoszonymi przez organizm pszczoły, procesy enzymatyczne jak i przez ostatni “czynny” etap jakim jest odparowanie wody z miodu złożonego w plastrach. Tak magazynowany miód pszczoła zasklepia w plastrze czym chroni go przed niekorzystnymi zmianami wynikającymi chociażby z higroskopijności produktu.  Chociaż, co do zasady, sam proces produkcji kończy się na etapie składowania przez pszczoły przetworzonego  przez nie nektaru w plastrach to produkt nadal pozostaje “żywy” i zmienny w składzie z uwagi na nieustannie zachodzące procesy chemiczne, biochemiczne, enzymatyczne. W pewnych warunkach (pogodowych i/lub klimatycznych)  wytworzony produkt jest podatny na zepsucie i wymaga działań ze strony człowieka.  Autorzy zwracają uwagę na fakt, że w proces produkcyjny zaangażowany jest człowiek gdyż proces ten obejmuje również techniki pszczelarskie oraz dalsze etapy jak pozyskiwanie miodu, jego oczyszczanie, pakowanie i magazynowanie. Działalność człowiek a w tym zakresie winna być jedynie wspomagająca tj. możliwie nie ingerująca w naturalny skład – który winien być zależny od specyfiki pożytków i procesów przebiegających w sposób naturalny w ulu. Na styku procesów wyłącznie naturalnych (przebiegających bez ingerencji człowieka) i tych podejmowanych przez człowieka pojawiają się etap weryfikacji i oceny zasadności oraz niezbędnego zakresu ingerencji. W tym miejscu zarówno dobre praktyki pszczelarskie jak i dobre praktyki konfekcjonowania miodu, oparte na sprzęcie technicznym, niezależnie od ich złożoności,  winny zostać oparte na konkretnych, mierzalnych parametrach ,a nie na uznaniowych określeniach jak “większej ilości”, “niewielki nadmiar”, “nieznaczny nadmiar”, “dużych ilości”(…). Kryteria oceny winny być oparte na ocenie ryzyka. Z tego względu niemniejsze opracowanie szczegółowiej opisuje poruszony w  stanowisku Apiomondii związek między zawartością wody a ryzykiem wystąpienia fermentacji. Zawiera również konkretne postulaty do oceny tego zjawiska oraz metod badawczych.  Stanowisko Apimondia z 2025~roku identyfikuje produkcję niedojrzałego
+miodu jako formę fałszowania, stanowiąc istotny wkład w debatę
+o~integralności produktu. Jednak utożsamianie praktyk wczesnego
+zbioru, technologicznej regulacji wilgotności oraz systemowej produkcji
+niedojrzałego miodu nadmiernie upraszcza biologicznie i~technologicznie
+złożone continuum. Niniejszy artykuł przeglądowy poddaje krytycznej
+analizie koncepcję dojrzałości miodu z~perspektywy mikrobiologii
+żywności, metabolomiki i~międzynarodowych standardów regulacyjnych.
+Wykazujemy, że obecność drożdży osmofilnych, naturalnych
+i~powszechnych składników miodu, nie stanowi kryterium
+dyskwalifikującego przy braku aktywnej fermentacji, gdyż aktywność
+mikrobiologiczna jest determinowana przez aktywność wody ($a_w < 0{,}60$)
+i~temperaturę, a~nie samą liczbę komórek drożdży. Żaden obowiązujący
+standard (Codex Alimentarius CODEX STAN 12-1981, Dyrektywa UE
+2001/110/WE, ISO/DIS 24607:2025) nie określa limitu CFU/g dla drożdży
+w~miodzie; dyskwalifikacja produktu jest oparta na dowodzie fermentacji,
+nie na obecności drobnoustrojów. Proponujemy model \emph{dojrzałości
+funkcjonalnej} integrujący pomiar aktywności wody, profilowanie
+aktywności enzymatycznej i~biomarkery metabolomiczne, który
+uwzględnia zróżnicowanie globalnych systemów pszczelarskich, w~tym
+środowisk tropikalnych o~wysokiej wilgotności. Wnosimy, że ramy
+regulacyjne powinny rozróżniać technologiczną stabilizację miodu
+od~celowego fałszowania, a~sama obecność drożdży, przy braku aktywnej
+fermentacji, nie powinna stanowić podstawy do~stwierdzenia niezgodności
+produktu z~wymaganiami.
+}
+
+% Keywords
+\keyword{dojrzałość miodu; drożdże osmofilne;
+aktywność wody; dojrzałość funkcjonalna; fałszowanie miodu;
+metabolomika; Codex Alimentarius; globalny handel miodem.} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setcounter{section}{-1} %% Remove this when starting to work on the template.
+\include{pl/wstep}
+\include{pl/regulacje}
+\include{pl/biologia}
+\include{pl/mikrobiologia}
+\include{pl/globalne-systemy}
+\include{pl/rynek-ue}
+\include{pl/propozycja-model}
+\include{pl/wnioski}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\isPreprints{}{% This command is only used for ``preprints''.
+\begin{adjustwidth}{-\extralength}{0cm}
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+%\printendnotes[custom] % Un-comment to print a list of endnotes
+
+\reftitle{References}
+
+\bibliography{bibliografia}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\PublishersNote{}
+%\isPreprints{}{% This command is only used for ``preprints''.
+\end{adjustwidth}
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+\end{document}
+

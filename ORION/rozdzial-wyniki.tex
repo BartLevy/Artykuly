@@ -1,0 +1,542 @@
+\section{Wyniki audytu}
+
+W celu praktycznej weryfikacji metodologii ORION przeprowadzono audyt technologiczno-prawny w jednym z banków spółdzielczych działających na terenie Polski. Na wniosek instytucji dane identyfikacyjne banku zostały zanonimizowane; wyniki audytu zostały natomiast przedstawione w pełnym zakresie merytorycznym. Audyt objął kompletny cykl klasyfikacyjny przewidziany metodologią: identyfikację reżimu regulacyjnego, klasyfikację ekspozycji sieciowej, ocenę poziomu krytyczności oraz określenie modelu utrzymania infrastruktury i jurysdykcji podmiotu hostującego.
+
+Przedmiotem badania był system Cyfrowego Trwałego Nośnika (CTN), pełniący kluczową funkcję w procesie masowej komunikacji banku z klientami-konsumentami. Podstawowym zadaniem systemu jest dystrybucja dokumentów oraz oświadczeń woli w sposób zgodny z restrykcyjnymi wymogami prawnymi. Architektura systemu realizuje postanowienia Unijnej Dyrektywy o Prawach Konsumenta (Dyrektywa 2011/83/UE) oraz krajowych przepisów implementujących jej założenia, w szczególności Ustawy o prawach konsumenta. Regulacje te nakładają na przedsiębiorców, w tym instytucje sektora finansowego, obowiązek przekazywania konsumentom informacji (takich jak regulaminy, taryfy opłat i prowizji czy formularze informacyjne) na trwałym nośniku, co gwarantuje integralność treści oraz wyklucza możliwość ich jednostronnej modyfikacji przez bank.
+
+\subsection{Klasyfikacja podmiotu}
+
+W pierwszej kolejności zespół audytorski ustalił reżim regulacyjny, jakiemu podlega badana instytucja. Bank spółdzielczy, jako podmiot sektora bankowego, został jednoznacznie zaklasyfikowany jako \textbf{podmiot finansowy} w rozumieniu Rozporządzenia DORA (\textit{Digital Operational Resilience Act}). Kwalifikacja ta wynika bezpośrednio z art.~2 ust.~1 lit.~a DORA, który na pierwszym miejscu katalogu podmiotów objętych rygorem odporności cyfrowej wymienia instytucje kredytowe.
+
+Klasyfikacja ta determinuje zakres obowiązków banku w obszarze zarządzania ryzykiem ICT: obejmuje wymóg wdrożenia ram zarządzania ryzykiem (art.~5--16 DORA), prowadzenia rejestru umów z dostawcami ICT (art.~28 DORA) oraz przeprowadzania zaawansowanych testów odporności operacyjnej, w tym testów penetracyjnych opartych na analizie zagrożeń: TLPT (\textit{Threat-Led Penetration Testing}).
+
+\subsection{Klasyfikacja atrybutu ekspozycji sieciowej}
+
+Kolejnym krokiem było określenie poziomu ekspozycji sieciowej systemu CTN z zastosowaniem ankiety dostępności metodologii ORION. Analiza architektury systemu wykazała, że dokumenty bankowe oraz interfejs użytkownika są udostępniane masowemu odbiorcy bezpośrednio za pośrednictwem sieci Internet i standardowych przeglądarek internetowych, bez wymogu połączenia VPN ani dostępu do sieci wewnętrznej banku.
+
+Taka architektura wyczerpuje przesłanki \textit{Kryterium D1: Dostęp spoza sieci organizacji} (system jest osiągalny z dowolnego węzła sieci publicznej) oraz \textit{Kryterium D4: Publiczny adres lub domena}, usługa jest opublikowana pod publicznie rozwiązywalną nazwą domenową. Publiczna ekspozycja systemu rozszerza wektor ataku i implikuje konieczność wdrożenia zaawansowanych zabezpieczeń perymetrycznych, w szczególności zapory aplikacyjnej (WAF), mechanizmów mitygacji ataków DDoS oraz inspekcji ruchu TLS.
+
+W rezultacie system CTN został zaklasyfikowany jako \textbf{system publiczny}.
+
+\subsection{Klasyfikacja atrybutu poziomu krytyczności}
+
+Ocena krytyczności systemu CTN została przeprowadzona z zastosowaniem sześciokryterialnej ankiety metodologii ORION (Kryteria K1--K6). Poniższa tabela przedstawia wyniki punktacji dla każdego z kryteriów wraz z uzasadnieniem.
+
+\begin{table}[H]
+\centering
+\caption{Ocena punktowa krytyczności systemu CTN}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{2.1cm} p{5.2cm} p{1.4cm} p{5cm}}
+\toprule
+\textbf{Kryterium} & \textbf{Opis} & \textbf{Wynik} & \textbf{Uzasadnienie} \\
+\midrule
+K1 & Wpływ finansowy i operacyjny niedostępności & NIE & Awaria nie zatrzymuje transakcji; BCP przewiduje zastępczy kanał papierowy \\
+\midrule
+K2 & Przetwarzanie danych osobowych lub wrażliwych & TAK & Spersonalizowane dokumenty i dane PII klientów (imię, numer umowy, dane adresowe) \\
+\midrule
+K3 & Podleganie regulacjom zewnętrznym & TAK & Nadzór KNF (Rekomendacja~D) i wymogi Prezesa UOKiK dot.\ trwałego nośnika \\
+\midrule
+K4 & Zależności innych systemów produkcyjnych & NIE & Brak systemów operacyjnie uzależnionych od CTN \\
+\midrule
+K5 & Ryzyko wycieku lub utraty danych & TAK & Naruszenie poufności rodzi obowiązek zgłoszenia incydentu do UODO i ryzyko reputacyjne \\
+\midrule
+K6 & Obsługa procesów podstawowej działalności & NIE & Awaria CTN nie blokuje realizacji transakcji płatniczych ani procesów core-bankingowych \\
+\midrule
+\multicolumn{2}{l}{\textbf{Suma odpowiedzi twierdzących}} & \textbf{3 TAK} & \textbf{System ważny} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Wynik 3 odpowiedzi twierdzących (K2, K3, K5) plasuje system CTN w kategorii \textbf{systemu ważnego} zgodnie z matrycą klasyfikacji metodologii ORION. Kluczowe znaczenie dla ostatecznej kwalifikacji ma zasada dominacji operacyjnej: brak spełnienia kryteriów K1 i K6 (wyznaczników bezpośredniego wpływu na ciągłość podstawowej działalności) wyklucza możliwość uznania systemu za krytyczny, pomimo spełnienia trzech pozostałych kryteriów. Wdrożone plany ciągłości działania (BCP) przewidują procedurę awaryjną polegającą na tymczasowym zastąpieniu kanału cyfrowego klasyczną korespondencją papierową, co pozwala zachować pełną zgodność prawną nawet przy długotrwałej niedostępności systemu informatycznego.
+
+Status systemu ważnego nie zwalnia organizacji z obowiązków nadzorczych. Nakłada on bezwzględny wymóg: ciągłego monitorowania systemu, regularnego przeprowadzania testów penetracyjnych, audytów zgodności regulacyjnej oraz utrzymania aktualnej dokumentacji przetwarzania danych osobowych zgodnie z art.~30 RODO. Parametry RTO i RPO nie muszą być skalibrowane w reżimie minutowym, jednak powinny zostać formalnie określone i zweryfikowane w ramach ćwiczeń BCP.
+
+\subsection{Klasyfikacja atrybutu utrzymania w chmurze}
+
+Ostatnim krokiem procedury audytowej było ustalenie modelu utrzymania infrastruktury systemu CTN oraz identyfikacja jurysdykcji podmiotu hostującego, z zastosowaniem ankiety klasyfikacji atrybutu utrzymania w chmurze metodologii ORION (Kryteria C1-C6). Wyniki dla każdego kryterium przedstawia poniższa tabela.
+
+\begin{table}[H]
+\centering
+\caption{Ocena punktowa klasyfikacji modelu utrzymania systemu CTN}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{2.1cm} p{5.2cm} p{1.4cm} p{5cm}}
+\toprule
+\textbf{Kryterium} & \textbf{Opis} & \textbf{Wynik} & \textbf{Uzasadnienie} \\
+\midrule
+C1 & Model wdrożenia infrastruktury & TAK & Infrastruktura zaimplementowana u zewnętrznego polskiego dostawcy chmury \\
+\midrule
+C2 & Odpowiedzialność operacyjna & TAK & Dostępność zasobów i warstwa sprzętowa w gestii dostawcy na podstawie SLA \\
+\midrule
+C3 & Umowa outsourcingowa lub chmurowa & TAK & Umowa SaaS/PaaS i kontrakt outsourcingu IT z dostawcą \\
+\midrule
+C4 & Lokalizacja i kontrola danych & TAK & Dane produkcyjne i kopie zapasowe w centrum danych na terytorium RP \\
+\midrule
+C5 & Jurysdykcja podmiotu hostującego & TAK & Wyłącznie kapitał europejski; pełne TIA; brak ekspozycji na US CLOUD Act i FISA 702 \\
+\midrule
+C6 & Wsparcie techniczne & TAK & Helpdesk i administracja świadczone wyłącznie przez zespół z terytorium EOG; geoblocking VPN \\
+\midrule
+\multicolumn{2}{l}{\textbf{Suma odpowiedzi twierdzących}} & \textbf{6 TAK} & \textbf{Chmura EOG} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Uzyskanie kompletnego zestawu sześciu odpowiedzi twierdzących, w tym pozytywnych wyników dla kryteriów C5 i C6 dotyczących jurysdykcji i wsparcia technicznego, przesądza o klasyfikacji systemu CTN jako \textbf{systemu utrzymywanego w chmurze EOG}. Jest to klasyfikacja o najwyższym poziomie bezpieczeństwa jurydycznego: podmiot hostujący oparty wyłącznie na kapitale europejskim i niemający siedziby w państwach objętych regulacjami o ekstraterytorialnym dostępie do danych (takim jak US CLOUD Act czy FISA Section~702) eliminuje ryzyko nieautoryzowanego transferu danych do państw trzecich.
+
+Klasyfikacja ta zapewnia jednocześnie pełną zgodność z wytycznymi i komunikatami chmurowymi Urzędu Komisji Nadzoru Finansowego (UKNF) oraz z wymogami Rozporządzenia DORA w zakresie zarządzania ryzykiem ze strony zewnętrznych dostawców usług ICT (art.~28-30 DORA). Narzędzia zdalnego dostępu serwisowego skonfigurowane z restrykcyjnym geoblockingiem, uniemożliwiające zestawienie sesji administracyjnej spoza obszaru EOG, stanowią dodatkową warstwę zabezpieczenia weryfikowalną przez audytorów bezpośrednio w logach dostępowych.
+
+\subsection{Klasyfikacja atrybutu typów przetwarzanych danych}
+
+Klasyfikacja typów przetwarzanych danych została przeprowadzona zgodnie z tabelą~\ref{tab:typy-danych} metodologii ORION. System CTN przetwarza spersonalizowane dokumenty bankowe zawierające dane identyfikacyjne klientów (imię i nazwisko, numer umowy, dane adresowe) oraz informacje objęte tajemnicą bankową w rozumieniu art.~104 ustawy Prawo bankowe, a więc dane o rachunkach, historię transakcji i informacje o zobowiązaniach kredytowych. Tajemnica bankowa stanowi informację prawnie chronioną na mocy ustawy sektorowej, co w klasyfikacji ORION odpowiada najwyższej kategorii wrażliwości.
+
+System CTN został zatem sklasyfikowany jako przetwarzający dane kategorii \textbf{\texttt{TAJEMNICA}} (symbol $D_3$, mnożnik wagowy $w_{data} = 2{,}0$). Klasyfikacja ta ma bezpośrednie przełożenie na wagę artefaktu w agregacji końcowej oraz aktywuje sekcję pytań dotyczących danych poufnych. Naruszenie bezpieczeństwa systemu przetwarzającego tajemnicę bankową rodzi po stronie instytucji obowiązek zgłoszenia incydentu do organu nadzoru (KNF) oraz potencjalną odpowiedzialność odszkodowawczą wobec klientów, których dane zostały ujawnione osobom nieuprawnionym.
+
+\subsection{Klasyfikacja atrybutu kraju pochodzenia}
+
+Atrybut kraju pochodzenia dostawcy systemu CTN został wyznaczony na podstawie weryfikacji statusu prawnego i kapitałowego podmiotu świadczącego usługę utrzymania oraz przeprowadzającego wdrożenie. Dostawca jest spółką zarejestrowaną i prowadzącą działalność operacyjną wyłącznie na terytorium Rzeczypospolitej Polskiej, bez powiązań kapitałowych z podmiotami spoza Europejskiego Obszaru Gospodarczego. Zarówno wsparcie techniczne, jak i administracja systemu są świadczone przez personel zlokalizowany w Polsce.
+
+Atrybut przyjął wartość \textbf{\texttt{PL}}. Konsekwencją tej klasyfikacji jest brak obowiązku przeprowadzenia oceny skutków transferu danych (TIA), ponieważ żaden etap przetwarzania nie wiąże się z przekazaniem danych do państwa trzeciego w rozumieniu RODO. Dostawca nie podlega jurysdykcji przepisów o ekstraterytorialnym dostępie do danych (takich jak US CLOUD Act czy FISA Section~702), co eliminuje ryzyko nieautoryzowanego udostępnienia danych organom obcego państwa.
+
+\subsection{Analiza aktywowanych sekcji pytań}
+
+Zbiór atrybutów wyznaczonych w poprzednich krokach determinuje zakres sekcji pytań aktywowanych przez system ORION dla danego audytu. Poniżej przedstawiono wynik tej aktywacji wraz z uzasadnieniem dla każdej sekcji.
+
+Podmiot audytowany (bank spółdzielczy) został sklasyfikowany jako \texttt{FINANSOWY}, system CTN jako \texttt{PUBLICZNY} o poziomie krytyczności \texttt{WAŻNY}, utrzymywany w trybie \texttt{CHMURA\_EOG}, przetwarzający dane kategorii \texttt{TAJEMNICA} ($D_3$), dostarczany przez podmiot z kraju \texttt{PL}. Zidentyfikowano jednego zewnętrznego dostawcę ICT, działającego w jurysdykcji EOG.
+
+Na podstawie powyższych atrybutów aktywowano następujące sekcje pytań:
+
+\begin{itemize}
+  \item \textbf{\texttt{ORGANIZACJA}} (aktywacja stała dla obiektów typu \texttt{PODMIOT}): ocena struktury zarządzania ryzykiem ICT, polityk bezpieczeństwa i nadzoru zarządczego nad funkcjami cyfrowymi.
+
+  \item \textbf{\texttt{BEZPIECZENSTWO\_FIZYCZNE}} (aktywacja stała dla obiektów typu \texttt{PODMIOT}): weryfikacja zabezpieczeń fizycznych siedziby i pomieszczeń serwerowni podmiotu audytowanego.
+
+  \item \textbf{\texttt{BEZPIECZENSTWO\_TECHNICZNE}} (aktywacja stała dla obiektów typu \texttt{PODMIOT}): ocena technicznych środków ochrony infrastruktury, zarządzania podatnościami oraz procedur reagowania na incydenty.
+
+  \item \textbf{\texttt{APLIKACJA}} (aktywacja warunkowa dla obiektów typu \texttt{SYSTEM\_INFORMATYCZNY}): weryfikacja bezpieczeństwa warstwy aplikacyjnej systemu CTN, obejmująca m.in.\ mechanizmy uwierzytelniania, zarządzanie sesjami i ochronę przed atakami na warstwę aplikacji (OWASP Top~10).
+
+  \item \textbf{\texttt{CHMURA}} (aktywacja warunkowa: $\textit{utrzymanie\_chmura} \in \{\texttt{CHMURA\_EOG}, \texttt{CHMURA\_K3}\}$): ocena zgodności wynikającej ze specyfiki przetwarzania w środowisku zewnętrznym, w tym weryfikacja modelu zarządzania kluczami kryptograficznymi, izolacji danych między klientami dostawcy oraz prawa do audytu.
+
+  \item \textbf{\texttt{DANE\_POUFNE}} (aktywacja warunkowa: $\textit{typ\_danych}(v) \in \{D_1, D_2, D_3\}$): rozszerzona ocena środków ochrony danych objętych tajemnicą bankową, obejmująca szyfrowanie w spoczynku i podczas transmisji, kontrolę dostępu oraz procedury reagowania na naruszenia ochrony danych.
+
+  \item \textbf{\texttt{DOSTAWCY}} (aktywacja warunkowa: $\textit{utrzymanie\_chmura}(v) \in \{\texttt{CHMURA\_EOG},\\\texttt{CHMURA\_K3}\}$): ocena zarządzania ryzykiem zewnętrznego dostawcy ICT, w tym due diligence przedkontraktowe, kompletność wymogów umownych (SLA, prawo do audytu, klauzula exit) oraz monitorowanie sub-procesorów.
+
+  \item \textbf{\texttt{EXIT\_PLAN}} (aktywacja warunkowa: $\textit{typ obiektu}(v) = \texttt{DOSTAWCA}\; \land\; \textit{klasyfikacja}$ $\textit{podmiotu}(v) = \texttt{FINANSOWY}$): weryfikacja planu wyjścia z relacji z dostawcą, obejmująca zdolność do pełnego eksportu danych w formacie otwartym, zmierzony czas migracji (RTE) oraz identyfikację alternatywnego dostawcy.
+
+  \item \textbf{\texttt{PLAN\_CIAGLOSCI\_DZIALANIA}} (aktywacja warunkowa: $\textit{krytyczność}(v) \in \{\texttt{KRYTYCZNY}, \\\texttt{WAŻNY}\}$ oraz klasyfikacja podmiotu \texttt{FINANSOWY}): ocena planów BCP i DRP, wskaźników RTO i RPO, scenariuszy odtwarzania po awarii dostawcy chmury oraz kopii zapasowych izolowanych od infrastruktury produkcyjnej.
+\end{itemize}
+
+Następujące sekcje nie zostały aktywowane z uwagi na niespełnienie warunków progowych:
+
+\begin{itemize}
+  \item \textbf{\texttt{TIA}} (warunek: $\textit{utrzymanie\_chmura}(v) = \texttt{CHMURA\_K3}$): sekcja dotycząca oceny skutków transferu danych nie została aktywowana, ponieważ system jest utrzymywany w \texttt{CHMURA\_EOG}. Żaden etap przetwarzania nie obejmuje transferu danych do państwa trzeciego, wobec czego obowiązek przeprowadzenia TIA wymagany przez RODO nie powstaje.
+
+  \item \textbf{\texttt{KONCENTRACJA\_RYZYKA}} (warunek: dostawca obsługuje $\geq 3$ systemy podmiotu): zidentyfikowano jednego zewnętrznego dostawcę ICT, obsługującego wyłącznie system CTN. Próg koncentracji nie został osiągnięty, wobec czego ryzyko nadmiernego uzależnienia od jednego podmiotu nie wymaga pogłębionej oceny w ramach tego audytu.
+\end{itemize}
+
+\subsection{Wyniki sekcji ORGANIZACJA}
+
+Sekcja ORGANIZACJA obejmuje dziewięć obszarów tematycznych wymaganych przez regulacje NIS2 i DORA, dotyczących ładu zarządczego, zarządzania ryzykiem ICT oraz zdolności operacyjnej do obsługi incydentów. Ocena każdego obszaru była przeprowadzana metodą cross-validation, tzn. każde pytanie było zadawane niezależnie trzem perspektywom: prawno-compliance, technicznej (dział IT) oraz użytkownika końcowego. Zgodność odpowiedzi ze wszystkich trzech perspektyw stanowiła warunek udzielenia odpowiedzi twierdzącej bez kary za niepotwierdzenie deklaracji.
+
+Bank spółdzielczy uzyskał kompletne, pozytywne wyniki we wszystkich dziewięciu obszarach, bez żadnych niezgodności i bez rozbieżności między perspektywami. Szczegółowe ustalenia dla każdego obszaru przedstawiono poniżej.
+
+\textbf{Strategia cyberbezpieczeństwa} (NIS2 art.~20 ust.~1, DORA art.~5): zarząd banku formalnie zatwierdził strategię cyberbezpieczeństwa i ponosi za nią odpowiedzialność prawną. Dokument jest dostępny dla pracowników, a jego istnienie zostało potwierdzone niezależnie przez radcę prawnego, dział IT oraz losowo wybranych użytkowników końcowych, co świadczy o realnym wdrożeniu, a nie jedynie formalnym istnieniu dokumentu.
+
+\textbf{Szkolenia zarządu} (NIS2 art.~20 ust.~2): członkowie zarządu odbyli obowiązkowe szkolenia z cyberbezpieczeństwa. Dokumentacja szkoleń (lista uczestników, daty, zakresy tematyczne) była dostępna do wglądu audytorów, co eliminuje ryzyko zakwalifikowania szkolenia jako deklaratywnego.
+
+\textbf{Ramy zarządzania ryzykiem ICT} (NIS2 art.~21 ust.~1, DORA art.~6): organizacja wdrożyła udokumentowane ramy zarządzania ryzykiem ICT zatwierdzone przez zarząd, obejmujące rejestr ryzyk z przypisanymi właścicielami i planami mitygacji. Rejestr jest aktualizowany co najmniej raz w roku. Wszyscy respondenci (compliance, IT, użytkownicy) potrafili wskazać osobę odpowiedzialną za bezpieczeństwo systemów IT, co świadczy o wysokiej świadomości organizacyjnej.
+
+\textbf{Ocena ryzyka łańcucha dostaw} (NIS2 art.~21 ust.~2 lit.~d, DORA art.~28): organizacja przeprowadza regularną ocenę ryzyka uwzględniającą łańcuch dostaw ICT i dostawców zewnętrznych. Ocena obejmuje wszystkich dostawców z klasyfikacją krytyczności i udokumentowanymi wynikami. Użytkownicy potwierdzili wiedzę o tym, które zewnętrzne podmioty mają dostęp do systemów lub danych organizacji.
+
+\textbf{Zgłaszanie poważnych incydentów w ciągu 24 godzin} (NIS2 art.~23 ust.~4 lit.~a, DORA art.~19): bank posiada udokumentowaną procedurę umożliwiającą zgłoszenie poważnego incydentu do organu krajowego w wymaganym terminie 24 godzin od wykrycia. System ticketowy wymusza checkpointy czasowe z automatycznym przypomnieniem. Użytkownicy końcowi wykazali się znajomością kroków postępowania w sytuacji podejrzanego zdarzenia, co potwierdza skuteczność szkoleń.
+
+\textbf{Klasyfikacja incydentów} (NIS2 art.~23 ust.~3, DORA art.~18): organizacja dysponuje procedurą klasyfikacji incydentów pozwalającą ocenić, czy dane zdarzenie spełnia kryteria incydentu poważnego lub znaczącego w rozumieniu regulacji. Użytkownicy potrafili odróżnić zwykłą awarię od zdarzenia o charakterze bezpieczeństwa.
+
+\textbf{Powiadamianie klientów o incydentach} (NIS2 art.~23 ust.~4 lit.~c, DORA art.~14): bank posiada zatwierdzoną procedurę komunikacji kryzysowej z gotowymi szablonami i zdefiniowanymi kanałami komunikacji z klientami. Procedura jest możliwa do uruchomienia w krótkim czasie. Użytkownicy potwierdzili świadomość istnienia procedury powiadamiania.
+
+\textbf{Rejestr czynności przetwarzania} (RODO art.~30): organizacja prowadzi aktualny rejestr czynności przetwarzania danych osobowych (ROPA) w formie elektronicznej, obejmujący system CTN z opisem celów, kategorii danych, odbiorców i podstaw prawnych. Rejestr jest dostępny dla Inspektora Ochrony Danych i aktualizowany przy zmianach systemu lub procesu przetwarzania.
+
+\textbf{Rejestr kluczowych dostawców ICT} (DORA art.~28 ust.~2, art.~29 ust.~1): organizacja prowadzi aktualny rejestr zewnętrznych dostawców ICT z klasyfikacją ich krytyczności i przypisaniem do funkcji krytycznych lub istotnych. Rejestr obejmuje dane kontraktowe, zakres usług i daty przeglądów. Użytkownicy wykazali świadomość liczby zewnętrznych dostawców IT obsługujących organizację.
+
+Kompletna zgodność we wszystkich dziewięciu obszarach, potwierdzona niezależnie przez trzy perspektywy, wskazuje na wysoki poziom dojrzałości organizacyjnej banku w zakresie ładu zarządzania ryzykiem ICT. Brak rozbieżności między odpowiedziami działu compliance, działu IT i użytkowników końcowych świadczy o tym, że wdrożone procedury i polityki funkcjonują realnie, a nie tylko jako dokumentacja formalna. Jest to wynik szczególnie istotny w kontekście przeciwdziałania zjawisku compliance theater: potwierdzone, weryfikowalne dowody zastępują deklaratywne zapewnienia, co stanowi jeden z kluczowych postulatów metodologii ORION.
+
+\subsection{Wyniki sekcji BEZPIECZENSTWO\_TECHNICZNE}
+
+Sekcja BEZPIECZENSTWO\_TECHNICZNE jest aktywowana dla obiektów typu \texttt{PODMIOT} i w audycie CTN obejmowała ocenę banku jako organizacji. Obejmuje osiem obszarów dotyczących technicznych środków ochrony infrastruktury ICT, zarządzania dostępem, monitorowania oraz ciągłości procesów bezpieczeństwa, wymaganych przez NIS2, DORA i RODO. We wszystkich ośmiu obszarach bank uzyskał wyniki pozytywne, bez żadnych uchybień i bez rozbieżności między perspektywami. Jest to jeden z silniejszych wyników całego audytu, wskazujący na dojrzałość operacyjną działu IT oraz na skuteczność szkoleń i kultury bezpieczeństwa w organizacji.
+
+\textbf{Testy bezpieczeństwa i testy penetracyjne} (NIS2 art.~21 ust.~2 lit.~m, DORA art.~24--25): organizacja przeprowadza regularne testy bezpieczeństwa, testy podatności oraz testy penetracyjne zgodnie z rocznym planem obejmującym harmonogram i zakres. Wyniki testów są dokumentowane i powiązane z procesem naprawczym. Użytkownicy potwierdzili wiedzę o tym, że zewnętrzne podmioty cyklicznie weryfikują odporność systemów banku.
+
+\textbf{Monitoring i wykrywanie anomalii} (NIS2 art.~21 ust.~2 lit.~b, DORA art.~10): wdrożone mechanizmy ciągłego monitorowania pokrywają systemy krytyczne i generują alerty w czasie rzeczywistym. Za obsługę alertów odpowiada dedykowany zespół, co zostało potwierdzone przez użytkowników, którzy byli świadomi istnienia takiego zespołu i jego roli.
+
+\textbf{Zasada minimalnych uprawnień} (DORA art.~9, NIS2 art.~21): dostęp do systemów krytycznych jest nadawany zgodnie z zasadą least privilege i regularnie przeglądany. Stosowane jest narzędzie klasy PAM (Privileged Access Management) z automatycznym przeglądem uprawnień i alertowaniem przy próbach eskalacji. Użytkownicy potwierdzili, że nie posiadają dostępu do zasobów wykraczających poza zakres ich obowiązków.
+
+\textbf{Szkolenia i świadomość pracowników} (NIS2 art.~21 ust.~2 lit.~g): pracownicy przechodzą regularne szkolenia z cyberbezpieczeństwa dostosowane do roli (odrębne ścieżki dla personelu IT, biznesowego i zarządu). Skuteczność szkoleń jest mierzona przez symulowane kampanie phishingowe. Użytkownicy potwierdzili udział w ćwiczeniach tego rodzaju w ciągu ostatnich 12 miesięcy.
+
+\textbf{Offboarding i usuwanie dostępu} (DORA art.~9): organizacja posiada udokumentowany i zautomatyzowany proces dezaktywacji kont przy odejściu pracownika. Dezaktywacja następuje w dniu odejścia i obejmuje wszystkie systemy bez konieczności ręcznej interwencji administratora w poszczególnych aplikacjach. Użytkownicy wykazali świadomość wymogów w tym zakresie.
+
+\textbf{Bezpieczeństwo poczty elektronicznej i załączników} (RODO art.~32, NIS2 art.~21): organizacja posiada politykę regulującą wysyłanie danych wrażliwych pocztą elektroniczną, z wymogiem szyfrowania załączników zawierających dane klientów. Podczas weryfikacji z perspektywy użytkownika nie odnotowano przypadków wysyłania niezabezpieczonych plików z danymi osobowymi.
+
+\textbf{Segmentacja sieci i kontrola ruchu bocznego} (DORA art.~9, NIS2 art.~21): systemy krytyczne są logicznie odizolowane od pozostałej infrastruktury sieciowej przez segmentację VLAN uniemożliwiającą niekontrolowane przemieszczanie się potencjalnego atakującego między segmentami (lateral movement). Polityki firewalla wymuszają kontrolę ruchu wschód-zachód między segmentami. Użytkownicy rozumieją cel izolacji systemów, co świadczy o skuteczności komunikacji wewnętrznej działu IT.
+
+\textbf{Zarządzanie certyfikatami TLS} (DORA art.~9, NIS2 art.~21 lit.~h): organizacja prowadzi inwentarz certyfikatów TLS z datami wygasania i wdrożonym procesem automatycznego odnawiania. Stosowane narzędzie monitorujące generuje alerty z wyprzedzeniem co najmniej 30 dni przed wygaśnięciem certyfikatu. Użytkownicy nie odnotowali przypadków ostrzeżeń przeglądarki o wygasłym certyfikacie na systemach banku.
+
+Pełna zgodność we wszystkich ośmiu obszarach technicznych, potwierdzona spójnie przez wszystkie trzy perspektywy, świadczy o wysokiej kulturze bezpieczeństwa technicznego w organizacji. Szczególnie istotny jest wynik w obszarze szkoleń i świadomości: użytkownicy końcowi wykazali praktyczną wiedzę z zakresu cyberbezpieczeństwa, co bezpośrednio przekłada się na ograniczenie ryzyka ataków socjotechnicznych (phishing, vishing) jako najczęstszego wektora inicjalnego kompromitacji systemów finansowych.
+
+
+\subsection{Wyniki sekcji BEZPIECZENSTWO\_FIZYCZNE}
+
+Sekcja BEZPIECZENSTWO\_FIZYCZNE obejmuje osiem obszarów dotyczących ochrony fizycznej obiektów, infrastruktury serwerowej i nośników danych, wymaganych przez regulacje NIS2, DORA oraz RODO. Spośród ośmiu obszarów sześć zostało ocenionych pozytywnie przez wszystkie trzy perspektywy (compliance, IT, użytkownicy). Dwa obszary sklasyfikowane jako zalecane ujawniły nieprawidłowości o wspólnej przyczynie, omówione szczegółowo poniżej.
+
+\textbf{Bezpieczeństwo fizyczne centrów danych} (DORA art.~9, NIS2 art.~21): polityki bezpieczeństwa fizycznego centrum danych spełniają wymogi w zakresie poufności, integralności i ochrony dostępu. Stosowana jest kontrola dostępu (karty dostępu) z rejestrowaniem każdego wejścia, monitoring środowiskowy oraz CCTV. Użytkownicy potwierdzili, że wejście do serwerowni wymaga autoryzacji i jest każdorazowo rejestrowane.
+
+\textbf{Kontrola dostępu fizycznego do obiektów} (DORA art.~9, NIS2 art.~21): organizacja posiada formalną politykę kontroli dostępu fizycznego do pomieszczeń przetwarzających dane. Dostęp do serwerowni jest logowany elektronicznie, bez możliwości wejścia wyłącznie na podstawie klucza mechanicznego. Wynik potwierdzony zgodnie przez wszystkie trzy perspektywy.
+
+\textbf{Monitoring CCTV i rejestracja wideo} (RODO art.~5 ust.~1 lit.~e, NIS2 art.~21): obszary krytyczne są objęte monitoringiem kamer z retencją nagrań zgodną z polityką bezpieczeństwa i wymogami RODO. Kamery obejmują punkty wejścia do stref krytycznych, a nagrania są chronione przed modyfikacją.
+
+\textbf{Zasilanie i redundancja energetyczna} (DORA art.~11, NIS2 art.~21): obiekty krytyczne posiadają redundantne zasilanie z niezależnych źródeł oraz zasilacze UPS. Urządzenia zasilające są regularnie testowane pod obciążeniem.
+
+\textbf{Wynoszenie i transport urządzeń} (RODO art.~32, NIS2 art.~21): organizacja posiada procedurę wynoszenia urządzeń poza siedzibę z rejestrem wydanych sprzętów. Urządzenia przenośne mają aktywowane szyfrowanie całego dysku oraz możliwość zdalnego wyczyszczenia w przypadku utraty lub kradzieży.
+
+\textbf{Niszczenie i utylizacja nośników danych} (RODO art.~5, NIS2 art.~21): bank posiada procedurę bezpiecznego niszczenia nośników danych, obejmującą dyski twarde, nośniki przenośne oraz wydruki. Dyski są niszczone fizycznie lub nadpisywane skuteczną metodą przed utylizacją.
+
+\textbf{Strefy bezpieczeństwa i segmentacja fizyczna} (NIS2 art.~21, ISO 27001 A.11): w tym obszarze stwierdzono niezgodność. Obiekty nie są w wystarczającym stopniu podzielone na odrębne strefy bezpieczeństwa z różnymi poziomami kontroli dostępu. W trakcie audytu z perspektywy użytkownika ustalono, że gość lub dostawca wchodzący do biura ma możliwość swobodnego poruszania się po budynku bez dodatkowej autoryzacji na kolejnych granicach stref. Oznacza to, że osoba posiadająca dostęp do przestrzeni biurowej może potencjalnie zbliżyć się do obszarów technicznych bez skutecznej przeszkody fizycznej lub proceduralnej.
+
+\textbf{Ochrona przed kradzieżą i sabotażem fizycznym} (NIS2 art.~21, ISO 27001 A.11): stwierdzono niezgodność powiązaną przyczynowo z poprzednim obszarem. Podczas audytu zidentyfikowano niewystarczający nadzór nad osobami wizytującymi, które potencjalnie uzyskiwały nadmierny dostęp fizyczny do pomieszczeń zawierających sprzęt IT. Weryfikacja techniczna wykazała, że szafy rack z serwerami są zamknięte na klucz, a porty USB zablokowane, jednak brak segmentacji stref sprawia, że sam dostęp do szafy pozostaje fizycznie możliwy dla osoby nieupoważnionej, jeśli nie jest ona nadzorowana przez pracownika.
+
+Oba zidentyfikowane ryzyka mają charakter zaleceń (nie wymagań obowiązkowych w rozumieniu NIS2 i DORA) i wynikają z tej samej luki: braku formalnej procedury nadzoru nad gośćmi oraz braku fizycznej segmentacji stref o różnym poziomie wrażliwości. Jako działania naprawcze wskazano wdrożenie rejestru gości z obowiązkowym eskortowaniem poza strefą publiczną, wprowadzenie bramek lub drzwi z osobną autoryzacją na granicy strefy biurowej i technicznej oraz rozważenie instalacji systemu zarządzania gośćmi (visitor management system) rejestrującego każde wejście i wyjście w czasie rzeczywistym.
+
+\subsection{Wyniki sekcji APLIKACJA}
+
+Sekcja APLIKACJA obejmuje dziewięć obszarów dotyczących bezpieczeństwa warstwy aplikacyjnej systemu CTN, w tym zarządzania dostępem, szyfrowania, kopii zapasowych, logowania i zarządzania podatnościami, wymaganych przez NIS2, DORA i RODO. Spośród dziewięciu obszarów sześć zostało ocenionych pozytywnie przez wszystkie trzy perspektywy. Trzy obszary ujawniły nieprawidłowości o zróżnicowanym charakterze: jedno dotyczyło wyłącznie luki w wiedzy użytkowników (uzupełnionej na miejscu), jedno stanowiło pytanie blokujące (usunięte przed zakończeniem audytu), a jedno wskazuje na brak technicznego wymuszenia polityki haseł.
+
+\textbf{Uprawnienia i dostępy aplikacji dostawcy} (DORA art.~9, NIS2 art.~21): konta serwisowe aplikacji dostawcy posiadają ograniczony zakres uprawnień w usłudze katalogowej, bez dostępu do systemów niezwiązanych z obsługą CTN, i są regularnie przeglądane.
+
+\textbf{Dostęp zdalny dostawcy} (DORA art.~28): zdalny dostęp dostawcy do systemu jest kontrolowany, logowany i ograniczony czasowo. Sesje serwisowe wymagają jawnej akceptacji po stronie organizacji, co wyklucza możliwość nieautoryzowanego dostępu przez dostawcę bez wiedzy banku.
+
+\textbf{Rejestr zasobów ICT} (DORA art.~8): system CTN figuruje w oficjalnym rejestrze zasobów ICT z przypisaną klasyfikacją krytyczności, właścicielem biznesowym i właścicielem technicznym. Użytkownicy potwierdzili wiedzę o tym, kto odpowiada za bezpieczeństwo aplikacji.
+
+\textbf{Retencja i ochrona logów aplikacji} (DORA art.~10, NIS2 art.~21): logi aplikacji są centralnie agregowane i przechowywane przez wymagany okres, chronione przed modyfikacją w magazynie immutable. W trakcie audytu perspektywa użytkownika nie była w stanie samodzielnie potwierdzić faktu przechowywania logów, co wskazuje na lukę w komunikacji wewnętrznej na temat procedur retencji. Podczas sesji audytowej mechanizm logowania został zademonstrowany przez dział IT i zweryfikowany przez audytorów bezpośrednio w systemie. Uchybienie zostało ocenione jako formalne (brak wiedzy użytkownika, nie brak technicznej implementacji) i nie skutkuje obniżeniem oceny technicznej obszaru.
+
+\textbf{Szyfrowanie komunikacji} (DORA art.~9, NIS2 art.~21 lit.~h, RODO art.~32): cała komunikacja aplikacji jest szyfrowana przy użyciu protokołu TLS 1.2 lub nowszego. Skanowanie konfiguracji potwierdziło brak przestarzałych protokołów (TLS 1.0/1.1, SSL). Interfejs użytkownika jest dostępny wyłącznie przez HTTPS.
+
+\textbf{MFA dla wszystkich użytkowników} (DORA art.~9, NIS2 art.~21): w momencie rozpoczęcia audytu stwierdzono brak obowiązkowego uwierzytelnienia wieloskładnikowego (MFA) dla kont użytkowników systemu CTN, w tym kont uprzywilejowanych. Pytanie to zostało sklasyfikowane przez metodologię ORION jako \textbf{pytanie blokujące} (wymóg obowiązkowy), co oznacza, że jego niespełnienie automatycznie obniża wynik sekcji niezależnie od wyników pozostałych pytań. Uchybienie zostało niezwłocznie zgłoszone producentowi systemu. W trakcie trwania audytu dostawca wdrożył stosowną zmianę konfiguracyjną, a audytorzy zweryfikowali jej działanie technicznie. Wynik obszaru został skorygowany do pozytywnego po potwierdzeniu wdrożenia.
+
+\textbf{Zarządzanie hasłami i polityką haseł} (NIS2 art.~21, DORA art.~9): organizacja posiada formalną politykę haseł określającą minimalną długość, złożoność oraz zakaz ponownego użycia poprzednich haseł. Polityka jest wymuszana technicznie przez dostawcę tożsamości. Stwierdzono jednak, że system nie wymusza zmiany hasła po upływie określonego czasu (brak mechanizmu wygasania haseł). Jest to niezgodność o charakterze wymagania obowiązkowego: brak cyklicznej rotacji haseł zwiększa ryzyko długotrwałego wykorzystywania przejętych poświadczeń bez wiedzy organizacji. Jako działanie naprawcze wskazano konfigurację polityki wygasania haseł po maksymalnie 90 dniach z obowiązkową zmianą przy kolejnym logowaniu.
+
+\textbf{Backup} (DORA art.~12, NIS2 art.~21 ust.~2 lit.~c): kopie zapasowe są przechowywane w geograficznie odrębnej lokalizacji, retencja spełnia wymogi regulacyjne, a procedura odtwarzania była regularnie testowana z udokumentowanymi wynikami. Użytkownicy wykazali świadomość procedur odtwarzania systemu po awarii.
+
+\textbf{Zarządzanie podatnościami} (NIS2 art.~21 ust.~2 lit.~m, DORA art.~9): organizacja posiada formalny proces skanowania podatności CVE i zarządzania aktualizacjami z udokumentowanymi terminami naprawy przypisanymi do właścicieli. Skanowanie systemów krytycznych jest przeprowadzane co najmniej raz w miesiącu.
+
+Najistotniejszym ustaleniem sekcji jest wykrycie braku MFA jako pytania blokującego. Fakt jego usunięcia w trakcie audytu dokumentuje jedną z kluczowych właściwości metodologii ORION: identyfikacja konkretnego, weryfikowalnego uchybienia i jego naprawa w czasie rzeczywistym jest bardziej wartościowym wynikiem audytu niż brak niezgodności wynikający z powierzchownej oceny. Otwartą kwestią pozostaje brak wymuszania rotacji haseł, wymagający działania naprawczego po stronie organizacji.
+
+\subsection{Wyniki sekcji CHMURA}
+
+Sekcja CHMURA obejmuje sześć obszarów dotyczących zgodności wynikającej ze specyfiki przetwarzania danych w środowisku zewnętrznym, w tym wymagań RODO, DORA i NIS2 wobec relacji z dostawcą usługi chmurowej. Sekcja została aktywowana z uwagi na klasyfikację systemu CTN jako \texttt{CHMURA\_EOG}. Wszystkie sześć obszarów uzyskało wyniki pozytywne. Dostawca infrastruktury jest polskim centrum danych działającym wyłącznie w jurysdykcji EOG, co w istotny sposób upraszcza część wymagań w porównaniu z dostawcami podlegającymi prawu państw trzecich.
+
+Charakterystycznym ustaleniem tej sekcji był niski poziom wiedzy użytkowników o obowiązkach wynikających z modelu chmurowego, przy jednoczesnej pełnej zgodności po stronie technicznej i prawno-compliance. Perspektywa użytkownika ujawniła, że pracownicy banku nie byli świadomi, jakie obowiązki w zakresie bezpieczeństwa spoczywają na organizacji jako administratorze danych, a jakie przejmuje dostawca chmury jako podmiot przetwarzający. Luka ta nie skutkuje niezgodnością formalną, jednak wskazuje na potrzebę przeprowadzenia dedykowanego szkolenia z zakresu modelu współodpowiedzialności (shared responsibility model) obowiązującego w środowiskach chmurowych.
+
+\textbf{Dokumentacja DPIA dla przetwarzania w chmurze} (RODO art.~35): przed uruchomieniem systemu CTN przeprowadzono i udokumentowano ocenę skutków dla ochrony danych (DPIA), obejmującą opis przepływów danych osobowych, zidentyfikowane ryzyka i zastosowane środki techniczne. Dokument jest aktualny i był aktualizowany po ostatniej istotnej zmianie infrastruktury.
+
+\textbf{Szyfrowanie at-rest} (DORA art.~9, RODO art.~32): dane organizacji przechowywane w systemie są szyfrowane w spoczynku. Obszar ten, sklasyfikowany jako zalecenie (nie wymóg obowiązkowy), dotyczy modelu zarządzania kluczami szyfrującymi. Organizacja potwierdziła wdrożenie szyfrowania po stronie dostawcy, ze świadomością, że pełna kontrola nad kluczami po stronie organizacji (model HYOK) pozostaje dobrą praktyką wartą rozważenia przy kolejnym przeglądzie architektury.
+
+\textbf{Kary umowne dla dostawcy} (NIS2 art.~34, DORA art.~30): umowa z dostawcą zawiera klauzulę odpowiedzialności i regresu, umożliwiającą organizacji dochodzenie zwrotu kar administracyjnych nałożonych przez regulatora (KNF, UODO) w przypadku, gdy ich przyczyną był błąd lub zaniedbanie po stronie dostawcy. Użytkownicy nie byli świadomi tej klauzuli, co jest typowym zjawiskiem dla postanowień umownych o charakterze prawno-regulacyjnym, których znajomość nie jest wymagana operacyjnie od personelu liniowego.
+
+\textbf{Prawo do audytu dostawcy} (DORA art.~30 ust.~2 lit.~f, RODO art.~28 ust.~3 lit.~h): umowa z dostawcą gwarantuje organizacji prawo do przeprowadzenia audytu, w tym audytu na miejscu (onsite), bez możliwości zastąpienia go wyłącznie raportem własnym dostawcy. Polskie centrum danych jako podmiot działający w jurysdykcji krajowej nie zgłasza w tym zakresie ograniczeń proceduralnych ani prawnych, charakterystycznych dla dostawców z krajów trzecich, gdzie realizacja audytu onsite bywa utrudniona lub niemożliwa. Użytkownicy zostali podczas audytu poinformowani o przysługującym organizacji prawie do weryfikacji dostawcy.
+
+\textbf{Procedura reagowania na incydenty po stronie dostawcy} (DORA art.~19 ust.~3, NIS2 art.~23 ust.~4): umowa z dostawcą określa maksymalny czas powiadomienia organizacji o incydencie bezpieczeństwa, umożliwiający dotrzymanie ustawowego obowiązku zgłoszenia do CSIRT lub KNF w ciągu 24 godzin. Powiadomienie trafia do wyznaczonego punktu kontaktowego i zawiera wymagany zakres informacji o zdarzeniu. Użytkownicy nie znali szczegółów procedury, jednak znajomość ta nie leży w zakresie ich obowiązków operacyjnych.
+
+\textbf{Izolacja danych między klientami} (DORA art.~9, RODO art.~32, ISO 27017): dostawca zapewnia pełną logiczną izolację danych organizacji od danych innych klientów (tenantów). Dane systemu CTN są przechowywane w dedykowanej przestrzeni przypisanej wyłącznie do banku. Organizacja posiada dokumentację potwierdzającą mechanizmy izolacji. Użytkownicy zostali zapoznani z ryzykiem wynikającym z modelu multi-tenancy i znaczeniem technicznej izolacji danych w środowiskach współdzielonych.
+
+Wyniki sekcji CHMURA potwierdzają, że wybór krajowego dostawcy działającego w jurysdykcji EOG istotnie ogranicza ryzyko regulacyjne związane z przetwarzaniem w chmurze. Brak ekspozycji na przepisy o ekstraterytorialnym dostępie do danych (US CLOUD Act, FISA Section~702) eliminuje potrzebę przeprowadzenia TIA, a dostępność audytu onsite u dostawcy jest gwarantowana umownie i nieobarczona ograniczeniami prawnymi. Główną rekomendacją wynikającą z tej sekcji jest uzupełnienie wiedzy użytkowników na temat modelu współodpowiedzialności w środowiskach chmurowych, tak aby personel operacyjny rozumiał granicę między obowiązkami banku a obowiązkami dostawcy w przypadku incydentu lub kontroli regulatora.
+
+\subsection{Wyniki sekcji DANE\_POUFNE}
+
+Sekcja DANE\_POUFNE obejmuje cztery obszary dotyczące ochrony danych osobowych i tajemnicy bankowej, wymaganych przez RODO. Sekcja została aktywowana z uwagi na klasyfikację systemu CTN jako przetwarzającego dane kategorii \texttt{TAJEMNICA} ($D_3$). We wszystkich czterech obszarach organizacja uzyskała wyniki pozytywne, a odpowiedzi były spójne we wszystkich trzech perspektywach. Bank wykazał się pełną wiedzą proceduralną i techniczną w zakresie ochrony danych szczególnie wrażliwych, co jest wynikiem wyróżniającym się na tle typowych obserwacji audytowych w sektorze finansowym, gdzie formalne polityki są często niedostatecznie internalizowane przez personel operacyjny.
+
+\textbf{Zgłaszanie naruszeń danych osobowych do UODO} (RODO art.~33): organizacja posiada odrębną procedurę zgłaszania naruszeń ochrony danych osobowych do Prezesa UODO w ciągu 72 godzin, wyraźnie rozróżnioną od procedury zgłoszeń ICT do CSIRT i KNF. Istnieją oddzielne ścieżki eskalacji dla obu typów zdarzeń, co eliminuje ryzyko błędnego zakwalifikowania naruszenia danych osobowych wyłącznie jako incydentu technicznego i pominięcia obowiązku zgłoszenia do organu ochrony danych. Użytkownicy wykazali świadomość obowiązku powiadamiania poszkodowanych osób i znali procedurę jego realizacji.
+
+\textbf{Inspektor Ochrony Danych} (RODO art.~37--39): organizacja powołała Inspektora Ochrony Danych, zarejestrowała go w UODO i udostępniła jego dane kontaktowe klientom oraz pracownikom. IOD posiada bezpośredni dostęp do zarządu i działa niezależnie, bez podlegania instrukcjom w zakresie wykonywania swoich zadań ustawowych. Użytkownicy wiedzieli, kto pełni funkcję IOD i jak można się z nim skontaktować, co świadczy o skutecznej komunikacji wewnętrznej w tym obszarze.
+
+\textbf{Rejestr Czynności Przetwarzania} (RODO art.~30): organizacja prowadzi aktualny rejestr czynności przetwarzania (RCP) w formie elektronicznej, obejmujący cele przetwarzania, podstawy prawne, kategorie danych i odbiorców oraz okresy retencji i stosowane środki bezpieczeństwa dla każdej czynności. Rejestr jest aktualizowany w ramach procesu zarządzania zmianami, dzięki czemu odzwierciedla aktualny stan systemu. Użytkownicy potwierdzili znajomość jego istnienia i rozumieli cel jego prowadzenia.
+
+\textbf{Harmonogram retencji i usuwania danych osobowych} (RODO art.~5): organizacja posiada formalny harmonogram retencji z określonymi maksymalnymi okresami przechowywania danych osobowych i mechanizmem ich automatycznego usuwania lub anonimizacji po upływie tych okresów. Proces jest logowany, co umożliwia jego weryfikację przez audytorów. Użytkownicy rozumieli, że dane klientów nie mogą być przechowywane bezterminowo i znali ogólne zasady obowiązującej polityki retencji.
+
+Pełna zgodność we wszystkich czterech obszarach, z wysokim poziomem świadomości we wszystkich trzech perspektywach, potwierdza dojrzałość organizacji w zakresie ochrony danych osobowych. Szczególnie istotna jest spójność między procedurami zgłaszania naruszeń do UODO i do CSIRT (oddzielne ścieżki eskalacji), która eliminuje jedno z najczęstszych uchybień proceduralnych obserwowanych w audytach sektora finansowego, polegające na myleniu incydentu ICT z naruszeniem ochrony danych osobowych w rozumieniu RODO.
+
+\subsection{Wyniki sekcji DOSTAWCY}
+
+Sekcja DOSTAWCY obejmuje siedem obszarów dotyczących zarządzania ryzykiem zewnętrznych dostawców ICT, wymaganych przez DORA, NIS2 i wytyczne EBA. Sekcja została aktywowana z uwagi na klasyfikację systemu CTN jako utrzymywanego w trybie \texttt{CHMURA\_EOG}. W toku audytu zidentyfikowano jednego zewnętrznego dostawcę ICT, krajową spółkę świadczącą usługę utrzymania i wdrożenia systemu. Weryfikacja umów i dokumentacji dostawcy nie wykazała żadnych niezgodności. Wszystkie siedem obszarów uzyskało ocenę pozytywną.
+
+\textbf{Retencja i ochrona logów systemów krytycznych} (DORA art.~10, NIS2 art.~21): logi systemów krytycznych są przechowywane przez wymagany okres i chronione przed modyfikacją. Centralna agregacja logów oraz retencja w magazynie immutable zostały zweryfikowane przez audytorów bezpośrednio w środowisku dostawcy.
+
+\textbf{Due diligence i ocena ryzyka dostawcy} (DORA art.~28, EBA/GL/2019/02): przed zawarciem umowy z dostawcą systemu CTN przeprowadzono due diligence obejmujące weryfikację posiadanych certyfikatów bezpieczeństwa, lokalizacji przetwarzania danych, listy sub-procesorów oraz wyników testów penetracyjnych środowiska dostawcy. Użytkownicy rozumieli zasadność weryfikacji nowych dostawców ICT przed nawiązaniem współpracy.
+
+\textbf{Prawa audytu dostawcy} (DORA art.~30 ust.~2 lit.~f, EBA/GL/2019/02): umowa z dostawcą zawiera zapis gwarantujący organizacji prawo do przeprowadzenia audytu, w tym audytu na miejscu (onsite), bez możliwości zastąpienia go wyłącznie raportem własnym dostawcy. Organizacja posiada dostęp do logów infrastrukturalnych i konfiguracji bezpieczeństwa środowiska dostawcy, a ostatni raport z audytu był dostępny do wglądu audytorów z potwierdzeniem zaadresowania wszystkich obserwacji.
+
+\textbf{Transfer Impact Assessment} (DORA art.~28, Komunikat UKNF 2020): dostawca jest podmiotem krajowym działającym w jurysdykcji EOG, wobec czego ocena skutków transferu (TIA) w rozumieniu przepisów o transferze danych do państw trzecich nie jest wymagana. Dokumentacja dostawcy potwierdza, że żaden etap przetwarzania nie angażuje podmiotów spoza EOG, w tym na poziomie sub-procesorów.
+
+\textbf{Klauzule SLA i gwarantowana dostępność} (DORA art.~30 ust.~2): umowa z dostawcą zawiera mierzalne i egzekwowalne wskaźniki poziomu usług (SLA) z gwarantowaną dostępnością dostosowaną do krytyczności systemu CTN, wraz z sankcjami umownymi za niedotrzymanie uzgodnionych parametrów. Użytkownicy wykazali znajomość dopuszczalnych okien niedostępności systemu wynikających z umowy.
+
+\textbf{Klauzule powiadomień o zmianach u dostawcy} (DORA art.~30 ust.~2 lit.~e): umowa zobowiązuje dostawcę do uprzedniego informowania organizacji o istotnych zmianach, w tym zmianach w sub-procesorach, lokalizacji danych, architekturze bezpieczeństwa i strukturze właścicielskiej, z zachowaniem minimalnego okresu wyprzedzenia. Brak powiadomienia w wymaganym terminie uprawnia organizację do rozwiązania umowy bez kary.
+
+\textbf{Klauzule odpowiedzialności i regres od dostawcy} (DORA art.~30 ust.~2 lit.~d, NIS2 art.~34): umowa zawiera klauzulę umożliwiającą organizacji dochodzenie regresem kosztów kar regulacyjnych nałożonych na bank przez KNF lub UODO w przypadku, gdy ich przyczyną był błąd lub zaniedbanie po stronie dostawcy. Zakres klauzuli odpowiedzialności nie jest ograniczony wyłącznie do wartości ostatniej faktury.
+
+Wyniki sekcji DOSTAWCY potwierdzają, że bank prowadzi relację z dostawcą systemu CTN zgodnie z wymaganiami DORA w zakresie zarządzania ryzykiem stron trzecich. Krajowy charakter dostawcy i jego działalność wyłącznie w jurysdykcji EOG istotnie upraszcza zarządzanie ryzykiem w łańcuchu dostaw: brak sub-procesorów z krajów trzecich eliminuje konieczność prowadzenia rozbudowanego monitoringu na poziomie poddostawców, który jest typowym źródłem niezgodności w przypadku dostawców korzystających z infrastruktury globalnych hiperskalerów.
+
+\subsection{Wyniki sekcji EXIT\_PLAN}
+
+Sekcja EXIT\_PLAN obejmuje sześć obszarów dotyczących gotowości organizacji do zakończenia współpracy z dostawcą systemu CTN w sposób kontrolowany, bez utraty danych i bez zakłócenia ciągłości działania, wymaganych przez DORA art.~28. Sekcja została aktywowana z uwagi na klasyfikację audytowanego podmiotu jako \texttt{FINANSOWY} i obecność zewnętrznego dostawcy ICT. Pięć spośród sześciu obszarów uzyskało ocenę pozytywną. Zidentyfikowano jedno uchybienie w obszarze testowania planu, omówione poniżej. Bank wykazał się wysoką świadomością proceduralną i prawną, natomiast audyt ujawnił lukę w wiedzy użytkowników o tym, czym jest exit plan i jakie uprawnienia organizacji z niego wynikają, którą uzupełniono w toku sesji audytowej.
+
+\textbf{Istnienie i zatwierdzenie exit planu} (DORA art.~28 ust.~2 lit.~f): organizacja posiada formalny exit plan zatwierdzony przez zarząd, traktowany jako dokument żywy i aktualizowany przy każdej istotnej zmianie systemu lub dostawcy. Dokument zawiera konkretne kroki techniczne, narzędzia migracyjne i sekwencje wyłączeń, a nie jedynie deklaratywny opis intencji. Użytkownicy potwierdzili wiedzę o istnieniu planu i jego ogólnym zakresie.
+
+\textbf{Kompletność i możliwość eksportu danych} (DORA art.~30 ust.~2 lit.~h): dla systemu CTN zdefiniowano i przetestowano procedurę pełnego eksportu danych do formatu niezależnego od narzędzi własnościowych dostawcy. Czas i kompletność eksportu są udokumentowane w ramach testów ciągłości działania. Użytkownicy początkowo nie byli pewni, czy dane można pobrać w formacie standardowym, jednak kwestia ta została wyjaśniona i zademonstrowana podczas sesji audytowej jako element podnoszenia wiedzy o uprawnieniach przysługujących organizacji wobec dostawcy.
+
+\textbf{Czas i koszty wyjścia} (DORA art.~28): exit plan zawiera udokumentowaną analizę czasu pełnej migracji (RTE) oraz kosztów wyjścia zatwierdzoną przez zarząd, obejmującą czas migracji danych, koszt wdrożenia alternatywnego systemu, koszty równoległego utrzymania obu środowisk oraz ryzyko utraty ciągłości działania. Użytkownicy nie posiadali szczegółowej wiedzy o szacowanych czasach migracji, co jest akceptowalne, ponieważ informacje te są adresowane do zarządu i działu IT, a nie do personelu operacyjnego.
+
+\textbf{Alternatywny dostawca i przenośność usługi} (DORA art.~28): organizacja zidentyfikowała co najmniej jednego alternatywnego dostawcę zdolnego do przejęcia funkcji systemu CTN i oceniła jego zdolność do onboardingu. Architektura systemu opiera się na otwartych standardach, bez uzależnienia od własnościowych formatów danych lub interfejsów API uniemożliwiających migrację. Użytkownicy zostali poinformowani o istnieniu zidentyfikowanego dostawcy alternatywnego, co wzmacnia ich poczucie ciągłości obsługi.
+
+\textbf{Bezpieczne usunięcie danych u dostawcy po wyjściu} (RODO art.~28 ust.~3 lit.~g, DORA art.~30): umowa z dostawcą zawiera klauzulę zobowiązującą go do wydania certyfikatu zniszczenia danych po zakończeniu współpracy, obejmującego kopie zapasowe, logi i dane archiwalne. Procedura bezpiecznego usunięcia danych jest opisana w exit planie z przypisaną odpowiedzialnością i terminami. Użytkownicy zostali zapoznani z obowiązkiem uzyskania takiego certyfikatu jako elementem ochrony danych klientów po zakończeniu umowy.
+
+\textbf{Testowanie exit planu} (DORA art.~28): stwierdzono niezgodność. Exit plan nie był dotychczas testowany w żadnej formie, ani jako rzeczywiste przełączenie środowiska, ani jako ćwiczenie stołowe (tabletop exercise). DORA art.~28 wymaga regularnego testowania planów wyjścia z udokumentowanymi wynikami dostępnymi dla audytorów. Brak testów oznacza, że poprawność procedur migracyjnych, kompletność eksportu danych i realność zadeklarowanych parametrów RTE pozostają niezweryfikowane empirycznie. Jako działanie naprawcze wskazano przeprowadzenie w najbliższym cyklu rocznym testu eksportu danych do formatu niezależnego od dostawcy, z udokumentowaniem czasu i kompletności eksportu, oraz opracowanie harmonogramu regularnych ćwiczeń z exit planu.
+
+Wyniki sekcji EXIT\_PLAN wskazują na wysoką dojrzałość organizacji w zakresie dokumentacji i struktury planu wyjścia, z jednym istotnym uchybieniem: brakiem jakiegokolwiek testowania planu. Pozostałe pięć obszarów (istnienie i zatwierdzenie planu, możliwość eksportu danych, analiza czasu i kosztów wyjścia, identyfikacja alternatywnego dostawcy, procedura bezpiecznego usunięcia danych) było kompletnych i zgodnych z wymogami DORA. Priorytetowym działaniem naprawczym jest przeprowadzenie pierwszego testu exit planu we współpracy z dostawcą, obejmującego rzeczywisty eksport danych, tak aby plan przestał być wyłącznie dokumentem, a stał się zweryfikowaną procedurą operacyjną. Rekomendowanym działaniem uzupełniającym jest podniesienie świadomości personelu operacyjnego o tym, czym jest exit plan i jakie uprawnienia (prawo do eksportu danych, prawo do certyfikatu zniszczenia, prawo do audytu) przysługują organizacji wobec dostawcy.
+
+\subsection{Wyniki sekcji PLAN\_CIAGLOSCI\_DZIALANIA}
+
+Sekcja PLAN\_CIAGLOSCI\_DZIALANIA obejmuje pięć obszarów dotyczących gotowości organizacji do utrzymania ciągłości działania i odtworzenia funkcji krytycznych po poważnym incydencie ICT, wymaganych przez DORA art.~11 i NIS2 art.~21. Sekcja została aktywowana z uwagi na klasyfikację systemu CTN jako \texttt{WAŻNY} i klasyfikację podmiotu jako \texttt{FINANSOWY}. Wszystkie pięć obszarów uzyskało ocenę pozytywną. Podobnie jak w sekcjach CHMURA i EXIT\_PLAN, wyniki wymagały uzupełnienia wiedzy użytkowników, którzy nie zawsze rozumieli czym jest plan ciągłości działania i jakie uprawnienia oraz obowiązki się z nim wiążą. Dział compliance i dział IT wykazały się wysoką świadomością i znajomością dokumentacji.
+
+\textbf{Istnienie i zatwierdzenie planów BCP i DRP} (DORA art.~11, NIS2 art.~21 ust.~2 lit.~c): organizacja posiada formalne plany ciągłości działania (BCP) i odtwarzania po awarii (DRP) zatwierdzone przez zarząd, obejmujące funkcje krytyczne ICT. Dokumenty zawierają konkretne kroki techniczne, sekwencje przełączeń i drzewa decyzyjne dla poszczególnych scenariuszy, nie zaś ogólne deklaracje intencji. Użytkownicy potwierdzili ogólną wiedzę o procedurach awaryjnych, w tym o zastępczym trybie pracy w przypadku niedostępności systemu CTN.
+
+\textbf{Scenariusze zagrożeń w BCP i DRP} (DORA art.~11, NIS2 art.~21): plany obejmują konkretne scenariusze zagrożeń, w tym atak ransomware, utratę centrum danych, niedostępność dostawcy chmury i awarię kaskadową w łańcuchu dostaw. Dla każdego scenariusza zdefiniowano odrębną ścieżkę odtwarzania z konkretnymi krokami technicznymi i przypisanymi odpowiedzialnościami. Użytkownicy zostali zapoznani z podstawowymi scenariuszami w trakcie sesji audytowej, co pozwoliło uzupełnić wiedzę operacyjną personelu niezbędną do skutecznego reagowania na zdarzenia.
+
+\textbf{Testowanie BCP i DRP} (DORA art.~11 ust.~6): plany były testowane w wymaganym cyklu rocznym, z udokumentowanymi wynikami dostępnymi dla audytorów. Testy obejmowały rzeczywiste przełączenie na środowisko zapasowe z mierzonym RTO i RPO, a nie jedynie ćwiczenie stołowe (tabletop exercise). Użytkownicy w większości nie uczestniczyli bezpośrednio w ćwiczeniach awaryjnych, co wskazuje na potrzebę włączenia szerszego grona pracowników operacyjnych w kolejne testy, tak by posiadali praktyczną znajomość procedur przełączenia.
+
+\textbf{Komunikacja kryzysowa} (NIS2 art.~23, DORA art.~14): BCP zawiera plan komunikacji kryzysowej z gotowymi szablonami i upoważnieniami do komunikowania się na zewnątrz. Organizacja dysponuje alternatywnym kanałem komunikacji działającym niezależnie od głównej infrastruktury IT, umożliwiającym koordynację działań w przypadku niedostępności poczty elektronicznej i systemów komunikacji wewnętrznej. Użytkownicy nie zawsze posiadali numery kontaktowe kluczowych osób poza środowiskami cyfrowymi, co zostało wskazane jako obszar wymagający uzupełnienia w ramach szkoleń z procedur kryzysowych.
+
+\textbf{Scenariusz awarii kaskadowej w łańcuchu dostaw} (DORA art.~11, art.~29 ust.~1): organizacja opracowała scenariusz awarii kaskadowej uwzględniający drzewo zależności między dostawcami różnych poziomów i potencjalny wpływ awarii jednego węzła na dostępność funkcji krytycznych. Scenariusz był symulowany w ramach testów BCP. Użytkownicy zostali zapoznani z koncepcją ryzyka kaskadowego podczas sesji audytowej, uzyskując praktyczne zrozumienie tego, w jaki sposób awaria jednego systemu lub dostawcy może propagować się na inne elementy infrastruktury banku.
+
+Wyniki sekcji PLAN\_CIAGLOSCI\_DZIALANIA potwierdzają dojrzałość organizacyjną banku w zakresie zarządzania ciągłością działania. Szczególnie istotne jest przeprowadzenie testów z rzeczywistym przełączeniem środowiska, a nie jedynie ćwiczeń stołowych, co odpowiada wzorcowi empirycznej weryfikacji obserwowanemu w sekcji EXIT\_PLAN. Wspólnym mianownikiem rekomendacji dla obu tych sekcji jest potrzeba systematycznego włączania personelu operacyjnego w ćwiczenia i szkolenia, tak aby procedury kryzysowe były znane i zrozumiałe nie tylko na poziomie zarządu i działu IT, ale również przez pracowników bezpośrednio obsługujących audytowane systemy.
+
+\subsection{Podsumowanie wyników audytu i obliczenie $S_{total}$}
+
+\subsubsection*{Krok 1: Zestawienie wszystkich odpowiedzi}
+
+Audyt systemu CTN objął łącznie 62 pytania rozmieszczone w 9 aktywnych sekcjach. Spośród nich 58 uzyskało odpowiedź twierdzącą (TAK), a 4 odpowiedź negatywną (NIE). Jedno pytanie blokujące (brak MFA) zostało rozwiązane w trakcie audytu i ujęte jako pozytywne w wyniku końcowym.
+
+\begin{table}[H]
+\centering
+\caption{Zestawienie odpowiedzi audytowych systemu CTN według sekcji}
+\label{tab:podsumowanie-odpowiedzi}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{6.5cm}p{1.5cm}p{1.5cm}p{1.5cm}p{2cm}}
+\toprule
+\textbf{Sekcja} & \textbf{Pytań} & \textbf{TAK} & \textbf{NIE} & \textbf{Niezgodność} \\
+\midrule
+ORGANIZACJA & 9 & 9 & 0 & brak \\
+\midrule
+BEZPIECZENSTWO\_FIZYCZNE & 8 & 6 & 2 & zalecane \\
+\midrule
+BEZPIECZENSTWO\_TECHNICZNE & 8 & 8 & 0 & brak \\
+\midrule
+APLIKACJA & 9 & 8 & 1 & obowiązkowe \\
+\midrule
+CHMURA & 6 & 6 & 0 & brak \\
+\midrule
+DANE\_POUFNE & 4 & 4 & 0 & brak \\
+\midrule
+DOSTAWCY & 7 & 7 & 0 & brak \\
+\midrule
+EXIT\_PLAN & 6 & 5 & 1 & obowiązkowe \\
+\midrule
+PLAN\_CIAGLOSCI\_DZIALANIA & 5 & 5 & 0 & brak \\
+\midrule
+\textbf{Łącznie} & \textbf{62} & \textbf{58} & \textbf{4} & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Zidentyfikowane niezgodności:
+\begin{itemize}
+  \item \textbf{Strefy bezpieczeństwa i segmentacja fizyczna} (zalecane) oraz \textbf{Ochrona przed kradzieżą i sabotażem fizycznym} (zalecane): brak segmentacji stref i niewystarczający nadzór nad gośćmi.
+  \item \textbf{Zarządzanie hasłami: wymuszanie rotacji} (obowiązkowe): brak technicznego mechanizmu cyklicznej zmiany haseł.
+  \item \textbf{Testowanie exit planu} (obowiązkowe): plan wyjścia nie był dotychczas testowany.
+\end{itemize}
+
+\subsubsection*{Krok 2: Wagi pytań i wzór na wynik sekcji}
+
+Zgodnie z równaniem~\eqref{eq:omega}, każdemu pytaniu przypisywana jest waga $\omega(q_j)$ wynikająca z jego obligatoryjności:
+
+\[
+\omega(q_j) =
+\begin{cases}
+2{,}0 & \text{pytanie obowiązkowe} \\
+1{,}0 & \text{pytanie zalecane} \\
+0{,}5 & \text{pytanie informacyjne}
+\end{cases}
+\]
+
+Wynik sekcji wyznaczany jest jako ważona średnia wyników pytań (równanie~\eqref{eq:wynik-sekcji-avg}), przy założeniu pełnej jakości dowodu ($d_{ij} = 1{,}0$) dla wszystkich odpowiedzi twierdzących i zerowej ($d_{ij} = 0$) dla negatywnych:
+
+\[
+S(\mathcal{S}_k) =
+\frac{\sum_{q_j \in \mathcal{S}_k} S(q_j) \cdot \omega(q_j)}
+     {\sum_{q_j \in \mathcal{S}_k} \omega(q_j)}
+\]
+
+\subsubsection*{Krok 3: Obliczenie wyników poszczególnych sekcji}
+
+\textbf{ORGANIZACJA}: 9 pytań obowiązkowych, wszystkie TAK.
+\[
+S(\text{ORG}) = \frac{9 \times 2{,}0 \times 1{,}0}{9 \times 2{,}0} = \frac{18}{18} = 1{,}000
+\]
+
+\textbf{BEZPIECZENSTWO\_FIZYCZNE}: 5 obowiązkowych TAK, 1 zalecane TAK (CCTV), 2 zalecane NIE (strefy, ochrona).
+\[
+S(\text{BF}) = \frac{5 \times 2{,}0 \times 1{,}0 + 1 \times 1{,}0 \times 1{,}0 + 2 \times 1{,}0 \times 0{,}0}{5 \times 2{,}0 + 1 \times 1{,}0 + 2 \times 1{,}0} = \frac{10 + 1 + 0}{10 + 1 + 2} = \frac{11}{13} \approx 0{,}846
+\]
+
+\textbf{BEZPIECZENSTWO\_TECHNICZNE}: 5 obowiązkowych TAK, 3 zalecane TAK.
+\[
+S(\text{BT}) = \frac{5 \times 2{,}0 \times 1{,}0 + 3 \times 1{,}0 \times 1{,}0}{5 \times 2{,}0 + 3 \times 1{,}0} = \frac{10 + 3}{10 + 3} = \frac{13}{13} = 1{,}000
+\]
+
+\textbf{APLIKACJA}: 9 obowiązkowych, 8 TAK, 1 NIE (rotacja haseł). Pytanie MFA zostało rozwiązane w trakcie audytu i wliczone jako TAK.
+\[
+S(\text{APP}) = \frac{8 \times 2{,}0 \times 1{,}0 + 1 \times 2{,}0 \times 0{,}0}{9 \times 2{,}0} = \frac{16}{18} \approx 0{,}889
+\]
+
+\textbf{CHMURA}: 4 obowiązkowe TAK, 2 zalecane TAK.
+\[
+S(\text{CHM}) = \frac{4 \times 2{,}0 \times 1{,}0 + 2 \times 1{,}0 \times 1{,}0}{4 \times 2{,}0 + 2 \times 1{,}0} = \frac{8 + 2}{8 + 2} = \frac{10}{10} = 1{,}000
+\]
+
+\textbf{DANE\_POUFNE}: 1 obowiązkowe TAK, 3 zalecane TAK.
+\[
+S(\text{DP}) = \frac{1 \times 2{,}0 \times 1{,}0 + 3 \times 1{,}0 \times 1{,}0}{1 \times 2{,}0 + 3 \times 1{,}0} = \frac{2 + 3}{2 + 3} = \frac{5}{5} = 1{,}000
+\]
+
+\textbf{DOSTAWCY}: 6 obowiązkowych TAK, 1 zalecane TAK.
+\[
+S(\text{DOS}) = \frac{6 \times 2{,}0 \times 1{,}0 + 1 \times 1{,}0 \times 1{,}0}{6 \times 2{,}0 + 1 \times 1{,}0} = \frac{12 + 1}{12 + 1} = \frac{13}{13} = 1{,}000
+\]
+
+\textbf{EXIT\_PLAN}: 4 obowiązkowe TAK, 1 zalecane TAK, 1 informacyjne TAK, 1 obowiązkowe NIE (brak testu).
+\[
+S(\text{EP}) = \frac{4 \times 2{,}0 \times 1{,}0 + 1 \times 1{,}0 \times 1{,}0 + 1 \times 0{,}5 \times 1{,}0 + 1 \times 2{,}0 \times 0{,}0}{4 \times 2{,}0 + 1 \times 1{,}0 + 1 \times 0{,}5 + 1 \times 2{,}0} = 
+\]
+\[
+S\frac{8 + 1 + 0{,}5 + 0}{8 + 1 + 0{,}5 + 2} = \frac{9{,}5}{11{,}5} \approx 0{,}826
+\]
+\vspace{0.5em}
+
+\textbf{PLAN\_CIAGLOSCI\_DZIALANIA}: 4 obowiązkowe TAK, 1 zalecane TAK.
+\[
+S(\text{BCP}) = \frac{4 \times 2{,}0 \times 1{,}0 + 1 \times 1{,}0 \times 1{,}0}{4 \times 2{,}0 + 1 \times 1{,}0} = \frac{8 + 1}{8 + 1} = \frac{9}{9} = 1{,}000
+\]
+
+\subsubsection*{Krok 4: Obliczenie $S_{total}$ systemu CTN}
+
+Zgodnie z równaniem~\eqref{eq:wynik-obiektu}, wynik obiektu jest średnią arytmetyczną wyników wszystkich aktywnych sekcji ($|\mathcal{S}(v)| = 9$):
+
+\[
+S_{total}(\text{CTN}) = \frac{1}{9} \sum_{\mathcal{S}_k} S(\mathcal{S}_k)
+\]
+\\
+\[
+= \frac{1{,}000 + 0{,}846 + 1{,}000 + 0{,}889 + 1{,}000 + 1{,}000 + 1{,}000 + 0{,}826 + 1{,}000}{9}
+= \frac{8{,}561}{9}
+\approx \mathbf{0{,}951}
+\]
+
+\begin{table}[H]
+\centering
+\caption{Wyniki sekcji i końcowy wynik systemu CTN}
+\label{tab:wyniki-sekcji}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{6.5cm}p{2cm}p{2.5cm}p{2.5cm}}
+\toprule
+\textbf{Sekcja} & \textbf{$S(\mathcal{S}_k)$} & \textbf{Niezgodności} & \textbf{Charakter} \\
+\midrule
+ORGANIZACJA & $1{,}000$ & 0 & \\
+BEZPIECZENSTWO\_FIZYCZNE & $0{,}846$ & 2 & zalecane \\
+BEZPIECZENSTWO\_TECHNICZNE & $1{,}000$ & 0 & \\
+APLIKACJA & $0{,}889$ & 1 & obowiązkowe \\
+CHMURA & $1{,}000$ & 0 & \\
+DANE\_POUFNE & $1{,}000$ & 0 & \\
+DOSTAWCY & $1{,}000$ & 0 & \\
+EXIT\_PLAN & $0{,}826$ & 1 & obowiązkowe \\
+PLAN\_CIAGLOSCI\_DZIALANIA & $1{,}000$ & 0 & \\
+\midrule
+\textbf{$S_{total}$} & $\mathbf{0{,}951}$ & \textbf{4} & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection*{Krok 5: Klasyfikacja końcowa}
+
+Wynik $S_{total}(\text{CTN}) = 0{,}951$ mieści się w przedziale $[0{,}85;\ 1{,}0]$, co odpowiada klasyfikacji \textbf{\textsc{ZGODNY}} według skali interpretacyjnej metodologii ORION (tabela~\ref{tab:skala-wyniku}).
+
+Żadna z aktywnych sekcji nie uzyskała wyniku zerowego spowodowanego flagą blokującą (pytanie MFA zostało rozwiązane przed zamknięciem audytu). Nie aktywowano flagi \textsc{TIA}, ponieważ dostawca działa w jurysdykcji EOG. Wynik końcowy nie jest nadpisywany przez żaden mechanizm korekcyjny opisany w równaniach~\eqref{eq:wynik-sekcji-blok} i~\eqref{eq:flag-block-sekcja}.
+
+Dwie spośród czterech niezgodności dotyczą pytań zalecanych (nie obowiązkowych), wobec czego ich wpływ na wynik jest ograniczony przez niższe wagi ($\omega = 1{,}0$ wobec $\omega = 2{,}0$). Dwie niezgodności w pytaniach obowiązkowych (rotacja haseł, brak testowania exit planu) obniżają wyniki odpowiednich sekcji, lecz nie zmieniają klasyfikacji końcowej. Ich usunięcie w ramach działań naprawczych podniosłoby $S_{total}$ do wartości $1{,}000$.
+
+\subsubsection*{Graf ICT systemu CTN}
+
+Poniższy graf ICT przedstawia topologię audytowanego środowiska oraz wyniki poszczególnych sekcji w odwzorowaniu na obiekty audytowe. Każdy węzeł zawiera identyfikator obiektu, jego typ i atrybuty klasyfikacyjne oraz wyniki aktywnych sekcji. Krawędź z etykietą wagi $w$ prowadzi od systemu informatycznego do obsługującego go dostawcy; brak linii przerywanej potwierdza, że nie aktywowano triggera TIA.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[
+    podmiot/.style={rectangle, rounded corners=6pt,
+      draw=black, thick, fill=white,
+      minimum width=11cm, minimum height=0.9cm,
+      align=center, font=\small\bfseries},
+    sys/.style={rectangle, rounded corners=3pt,
+      draw=black, thick, fill=white,
+      minimum width=11cm,
+      align=center, font=\small},
+    vendor/.style={ellipse, draw=black, thick, fill=white,
+      minimum width=11cm, minimum height=1.1cm,
+      align=center, font=\small},
+    verdict/.style={rectangle, rounded corners=4pt,
+      draw=black, double, double distance=2pt, thick, fill=white,
+      minimum width=11cm, minimum height=0.9cm,
+      align=center, font=\small\bfseries},
+    dep/.style={-{Stealth}, thick},
+    lbl/.style={font=\scriptsize, inner sep=2pt}
+  ]
+  % v0: Bank (PODMIOT)
+  \node[podmiot] (v0) at (0,0)
+    {$v_0$\quad Bank (PODMIOT)\quad $[\checkmark]$ ZGODNY};
+  % v1: System CTN (SYSTEM_INFORMATYCZNY)
+  \node[sys] (v1) at (0,-4.2) {%
+    $v_1$\quad\textbf{System CTN}\quad\texttt{SYSTEM\_INFORMATYCZNY}, \texttt{CHMURA\_EOG}\\[5pt]
+    {\footnotesize
+    \begin{tabular}{@{}ccccccccc@{}}
+      ORG & BF & BT & APP & CHM & DP & DOS & EP & BCP \\[2pt]
+      $1{,}000$ & $0{,}846$ & $1{,}000$ & $0{,}889$ & $1{,}000$ &
+      $1{,}000$ & $1{,}000$ & $0{,}826$ & $1{,}000$ \\
+    \end{tabular}}\\[5pt]
+    $S_{total} = 0{,}951$\quad$[\checkmark]$\quad\textsc{ZGODNY}%
+  };
+  % d1: Dostawca krajowy (DOSTAWCA)
+  \node[vendor] (d1) at (0,-9.5) {%
+    $d_1$\quad Dostawca krajowy\quad\texttt{DOSTAWCA}, \texttt{CHMURA\_EOG}
+    \quad DOS: $1{,}000$\quad$[\checkmark]$ \textsc{ZGODNY}%
+  };
+  % krawędzie
+  \draw[dep] (v0) -- (v1);
+  \draw[dep] (v1) -- node[lbl, right] {$w\!=\!2$ (WAŻNY)} (d1);
+  % box z wynikiem końcowym
+  \node[verdict] at (0,-12.2) {%
+    $S_{total}(\text{CTN}) = 0{,}951$\quad\textsc{ZGODNY} $[\,0{,}85;\ 1{,}0\,]$
+    \quad Brak \texttt{FLAG\_TIA}\quad Brak aktywnych blokad%
+  };
+  \end{tikzpicture}
+  \caption{Graf ICT audytowanego systemu CTN. Skróty sekcji: ORG (Organizacja),
+    BF (Bezpieczeństwo fizyczne), BT (Bezpieczeństwo techniczne),
+    APP (Aplikacja), CHM (Chmura), DP (Dane poufne), DOS (Dostawcy),
+    EP (Exit Plan), BCP (Plan ciągłości działania).
+    Waga $w\!=\!2$ odpowiada klasyfikacji WAŻNY obsługiwanego systemu.}
+  \label{fig:graf-ict-ctn}
+\end{figure}
+
+

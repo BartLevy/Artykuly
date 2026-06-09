@@ -1,0 +1,360 @@
+TODO:
+- TIA - zla aktywacja
+mailem dane osobowe!
+Co knf mowi o szyfrowaniu danych na hyperscaler?
+
+
+
+Przyjęta metodologia badań ma charakter mieszany, łącząc podejście formalno-dedukcyjne z empirycznym. Część teoretyczna opiera się na krytycznej analizie literatury z zakresu zarządzania ryzykiem ICT, audytu systemów informatycznych, bezpieczeństwa łańcucha dostaw oraz regulacji cyfrowych. Formalizacja modelu ORSN wykorzystuje aparat matematyczny teorii grafów i ważonych funkcji agregujących, dostarczając precyzyjnych, replikowalnych definicji operacyjnych wszystkich kluczowych konstruktów. Parametry modelu — w szczególności współczynnik penalizacji braku dowodu oraz współczynnik tłumienia propagacji ryzyka — zostały skalibrowane z wykorzystaniem badania eksperckiego metodą Delphi, co eliminuje zarzut arbitralności doboru wartości. Część empiryczna obejmuje dwa wielowymiarowe studia przypadków: podmiot sektora finansowego, w którym analizie poddano zgodność wdrożenia systemów w środowisku chmury obliczeniowej z obowiązującymi wymogami regulacyjnymi, oraz podmiot sektora ochrony zdrowia, dla którego przeprowadzono ocenę zgodności systemów klinicznych z regulacjami dotyczącymi danych medycznych i bezpieczeństwa cyfrowego. Oba studia przypadków zostały poddane weryfikacji przez ekspertów podmiotów, których dotyczyły.
+
+
+
+
+Monografia adresowana jest do trzech grup odbiorców. Dla badaczy z obszaru informatyki, bezpieczeństwa informacji i prawa nowych technologii stanowi propozycję nowego frameworku teoretycznego z formalnym aparatem matematycznym i empiryczną walidacją, osadzoną w aktualnym stanie literatury i regulacji. Dla praktyków — audytorów, compliance officerów, architektów systemów i prawników — dostarcza operacyjnej metodyki możliwej do bezpośredniego wdrożenia w organizacjach podlegających regulacjom cyfrowym, wraz z kompletem narzędzi: ontologią pojęć, szablonami ankiet, formułami scoringu i strukturą raportu. Dla organów regulacyjnych i nadzorczych może stanowić punkt wyjścia do opracowania standaryzowanych wytycznych oceny zgodności w łańcuchu dostaw ICT, których brak jest jedną z istotnych słabości współczesnego europejskiego systemu nadzoru cyfrowego.
+
+
+
+
+
+
+
+
+Znaczenie ochrony danych w UE — RODO (2016/679), NIS2 (2022/2555), DORA (2022/2554).
+Znaczenie o bezpieczenstwo osob i organizacji.
+To ochrona przez atakami, ktore wykorzystuja wycieki.
+To przeagwa konkurencyjna.
+To tez w niestabilnych krajach, w polaczeniu z opdowiedzialnosci za dane, bezpieczenstwo narodowe.
+
+Znaczdnie to tez odpowiedzialnosc organizaji, ktore odpowiadaja za ewenrualnie nieprawidlowosci. Tu trzeba sie chronic przez sankcjami.
+Zla ochrona prowadzi od spetkalularnych atakow, jeden z najsyslniejszych to cyberatak na wirowki iranskie.
+Polska jest jednym z bardziem atakowych krajów.
+
+
+Sektory kluczowe: Fintech i MedTech — DORA + PSD2/3 dla finansów; MDR (2017/745) + IVDR dla medycyny
+
+Polska, jako państwo członkowskie Unii Europejskiej, od lat uczestniczy w budowaniu europejskiego systemu ochrony danych i cyberbezpieczeństwa. Punktem wyjścia dla krajowych regulacji w tym zakresie stało się wdrożenie unijnej dyrektywy NIS z 2016 r., która zobowiązała państwa członkowskie do ustanowienia krajowych ram cyberbezpieczeństwa. W odpowiedzi na te wymagania Polska uchwaliła ustawę o krajowym systemie cyberbezpieczeństwa, przyjętą przez Sejm RP dnia 5 lipca 2018 r. i podpisaną przez Prezydenta RP dnia 1 sierpnia 2018 r., która weszła w życie 28 sierpnia 2018 r.
+
+Analiza ryzyka związana z implementacją oraz wdrażaniem systemów informatycznych stanowi w  proces o charakterze interdyscyplinarnym, którego prawidłowe przeprowadzenie uwarunkowane jest rezygnacją z powierzania tej procedury pojedynczej jednostce organizacyjnej. Powszechnie obserwowana tendencja, w ramach której działy prawne cedują odpowiedzialność za ten obszar na zespoły IT, znajduje swoje źródło w przekonaniu, że dominujący charakter wymogów regulacyjnych sprowadza się wyłącznie do aspektów stricte technicznych. Takie podejście rodzi jednak istotne dysfunkcje, ponieważ inżynierowie, pozbawieni pełnego wglądu w szeroki kontekst odpowiedzialności prawnej organizacji za ochronę zasobów informacyjnych, często nie postrzegają rzetelnego przygotowania oceny ryzyka jako elementu krytycznego dla bezpieczeństwa operacyjnego firmy.
+
+Luka kompetencyjna, występująca na styku prawa i technologii, nie jest jedynie teoretycznym brakiem konkretnego aktu prawnego regulującego tę współpracę, lecz stanowi realny problem praktyczny, który bezpośrednio rzutuje na jakość końcowych analiz. W efekcie powstające dokumenty często stają się konstruktami całkowicie oderwanymi od rzeczywistości technologicznej, co sprawia, że ocena ryzyka przestaje pełnić funkcję realnego narzędzia zarządczego, stając się jedynie martwym zapisem nieodzwierciedlającym faktycznych zagrożeń wynikających z implementacji oraz eksploatacji systemów. Brak synergii między prawnikami, a specjalistami od ICT prowadzi do sytuacji, w której procedury są albo zbyt ogólne, by mogły być skuteczne, albo technicznie niemożliwe do wyegzekwowania w dynamicznym środowisku cyfrowym.
+
+Jednocześnie można spodziewać się, że wnioski płynące z wynik analiz IT, pozbawione są szerokiego kontekstu ryzyka prawnego. Problemy stawiane przed organizacją, są zwyczajowo interdyscyplinarne i ilustrować to mogą zagadnienia na pierwszy nawet na pierwszy rzut oka oczywiste, jak określenie czy dany system informatyczny, w myśl rozporządzenia  DORA (\textit{Digital Operational Resilience Act}) należny zakwalifikować jako system krytyczne lub istotny  (\textit{Critical or Important Function}). Bez szerokiej współpracy departamentów w organizacji i jasnej procedury, włacząjącej w ten proces działy prawne, biznes oraz IT, nie uda się dej klasyfikacji przeprowadzić.
+
+To proces interdyscyplinarny, za który ostateczną odpowiedzialność ponosi Organ Zarządzający (Zarząd), ale w praktyce wykonuje go zespół cross-funkcyjny.
+
+Ocena ryzyka implementacji i wdrożenia systemów informatcznych jest procesem interdyscyplianrnym i nie powinna być powierzona tylko i wyłacznie jednemu deparamentowi. Wydzuały prawne ogranizacji bardzo często cedują ocenę ryzyka na zespołu IT, wynika to z faktu, że przepisy i wymogi nakładają na organizacje szereg wymogów technicznych. Z drugiej storny zespoły IT, bez głębookiego zrozumeinia konteksu odpowiedzialności ogranizacje za ochrone danych nie trakują tworzenia ocena jako pracy kluczowej. 
+
+jako i Jakość oceny ryzyk wynikających 
+Luka kompetencyjna prawnik–IT — brak aktu, problem praktyczny; oceny ryzyka oderwane od rzeczywistości technicznej
+
+Potrzeba standardu oceny systemów IT — OWASP ASVS, ISO 27001 jako punkt odniesienia; brak jednolitego krajowego standardu
+
+Konflikt jurysdykcyjny: Cloud Act vs. RODO — Cloud Act (USA, 2018), FISA 702; Schrems II (wyrok TSUE C-311/18)
+
+Potrzeba interdyscyplinarnej oceny ryzyka — brak aktu; postulat metodyczny monografii
+
+MedTech: dostęp do danych anonimowych — EHDS (European Health Data Space, Rozporządzenie UE 2025/327), zgody bioetyczne
+
+Edukacja i świadomość instytucji — AI Act (2024/1689) art. o literacy; NIS2 art. 20 — obowiązek szkoleń kadry zarządzającej
+
+
+
+Ustawa ta po raz pierwszy w polskim porządku prawnym stworzyła  system z jasno określonymi strukturami odpowiedzialnymi za reagowanie na incydenty, obowiązkami operatorów usług kluczowych oraz mechanizmami współpracy na poziomie krajowym i europejskim. Powołano trzy zespoły CSIRT poziomu krajowego: CSIRT GOV, CSIRT NASK i CSIRT MON, a organy właściwe do spraw cyberbezpieczeństwa uzyskały uprawnienia nadzorcze wobec podmiotów objętych regulacją.
+
+Podstawowym aktem kształtującym europejski model ochrony danych pozostaje Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r., w Polsce znane jako w RODO. Rozporządzenie definiuje standardy przetwarzania danych osobowych obowiązujące na terenie całej Unii, przyznając osobom fizycznym szerokie uprawnienia wobec administratorów danych oraz nakładając na podmioty przetwarzające dane istotne obowiązki w zakresie przejrzystości, bezpieczeństwa i rozliczalności. Równolegle do rozporządzenia RODO, nie można pominąć regulacji  dotyczących przetwarzania danych przez organy ścigania, takie jak Dyrektywa (UE) 2016/680, a także inicjatywy legislacyjne w obszarze prywatności komunikacji elektronicznej.
+
+W odpowiedzi na wyzwania związane z rozwojem gospodarki opartej na danych Unia Europejska podjęła dalsze działania legislacyjne, przyjmując Rozporządzenie o Zarządzaniu Danymi z 2022 r. oraz Akt w sprawie Danych z 2023 r., które tworzą kompleksowe ramy dostępu do danych i ich udostępniania. Równolegle, za sprawą Dyrektywy NIS2 oraz Aktu o Cyberodporności, UE wzmacnia bezpieczeństwo systemów informacyjnych, pośrednio chroniąc dane Europejczyków przed zagrożeniami zewnętrznymi, w tym przed nieuprawnionym dostępem podmiotów spoza Unii.
+
+Wobec szybko rosnącej skali zagrożeń w cyberprzestrzeni Unia Europejska przyjęła in 2022 r. dyrektywę NIS2, znacząco rozszerzającą zakres podmiotowy regulacji oraz zaostrzającą wymagania w zakresie zarządzania ryzykiem, raportowania incydentów i bezpieczeństwa łańcucha dostaw. Polska zobowiązana była do implementacji NIS2 do dnia 17 października 2024 r., jednak prace legislacyjne nad nowelizacją ustawy o KSC przeciągnęły się, co naraziło kraj na opóźnienie wobec wyznaczonego terminu.
+
+Nowelizacja ustawy o krajowym systemie cyberbezpieczeństwa wdrażająca dyrektywę NIS2 została ostatecznie uchwalona przez Sejm RP 22 stycznia 2026 r., a Prezydent RP podpisał ją 19 lutego 2026 r., kierując jednocześnie do kontroli następczej przez Trybunał Konstytucyjny. Nowe przepisy rozszerzają system na kolejne sektory gospodarki, wzmacniają kompetencje instytucji odpowiedzialnych za reagowanie na incydenty, wprowadzają sektorowe zespoły CSIRT oraz procedurę uznania dostawcy za dostawcę wysokiego ryzyka
+
+Odrębnym, jednak uzupełniającym wobec NIS2 i KSC i unijnego systemu ochrony danych i bezpieczeństwa cyfrowego jest Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2022/2554 z dnia 14 grudnia 2022 r. w sprawie operacyjnej odporności cyfrowej sektora finansowego,  znane jako DORA (ang. \textit{Digital Operational Resilience Act}). Rozporządzenie weszło w życie 16 stycznia 2023 r., a jego pełne stosowanie stało się obowiązkowe od 17 stycznia 2025 r. DORA stanowi część szerszego unijnego Pakietu ds. Finansów Cyfrowych i jest aktem bezpośrednio stosowanym we wszystkich państwach członkowskich, bez potrzeby odrębnej implementacji do prawa krajowego.
+
+Ważnym elementem nowelizacji ustawy o krajowym systemie cyberbezpieczeństwa stała się procedura uznania dowolnego dostawcy jako przedsiębiorstwa wysokiego ryzyka, zmiana potocznie nazywana \textit{Lex Huawei}. Mechanizm ten pozwala Ministerowi Cyfryzacji wydać decyzję, natychmiast wykonalną, uznającą, wg brzmienia nowelizacji, \textit{dostawcę sprzętu lub oprogramowania dla sieci i usług łączności elektronicznej} za dostawcę wysokiego ryzyka, na podstawie stwierdzania, że przedsiębiorstwo to stanowi zagrożenie dla interesu i bezpieczeństwa krajowego. 
+
+Przepisy te są wprost wymierzone w dostawców spoza kręgu UE i NATO, a ich głównym adresatem  jest chiński koncern \textit{Huawei}. Firma ta, od wielu już lat obecna na polskim rynku telekomunikacyjnym i energetycznym, w toku prac legislacyjnych protestowała przeciwko projektowanym przepisom. W październiku 2025 r. \textit{Huawei} wystosował list do premiera Donalda Tuska, w którym ostrzegł, że nowe regulacje mogą naruszać jego prawa jako inwestora wynikające z chińsko-polskiej umowy bilateralnej oraz Traktatu Karty Energetycznej, a potencjalne straty firmy oszacował na miliardy złotych, zastrzegając możliwość skierowania sporu do arbitrażu międzynarodowego.
+
+Zmiana polityki amerykańskiej w zakresie prowadzenia relacji z partnerami zgodnie ze strategią America Firts, w sczególności prowadzona od drugiej prezydentury Donalda Trumpa była silnym triggerem, który rozbudził świadomość w Uni Europejskeej w zakresie budowy niezależności cyfrowej.
+
+Uzupelnic
+
+
+
+Niniejsza monografia stanowi kompleksowe studium projektowania, implementacji i utrzymania systemów informatycznych w sektorach o wysokim rygorze prawnym, ze szczególnym uwzględnieniem branż Fintech oraz MedTech. W obliczu ewolucji ram regulacyjnych, takich jak rozporządzenie DORA (Digital Operational Resilience Act), dyrektywa PSD2/3 oraz specyficzne wytyczne organów nadzorczych (np. KNF), autor analizuje paradygmat przejścia od pasywnej zgodności (compliance) do aktywnej odporności cyfrowej.
+
+Głównym problemem badawczym podjętym w monografii jest opracowanie kompleksowej metody oceny ryzyka wdrozenia systemów IT, zapewniajacych dla ogranizacji wdrażającej bezpieczeństwo cyfrowe, wynikające z weryfikacji jakości rozwiązań informatyczych oraz prawnych, które zapewniają zgodność wdrożonych systemów z prawej unijnym oraz krajowym.
+
+Ważnym poruszonym problelem, jest też konflikt jurysdykcyjny wynikający z amerykańskich aktów prawnych (Cloud Act, FISA 702) w relacji do europejskich standardów ochrony prywatności (RODO/GDPR). 
+
+W warstwie technicznej praca koncentruje się na pryncypiach Secure-by-Design, mapując wymagania prawne na konkretne standardy bezpieczeństwa, takie jak OWASP ASVS. Jako dr inżynier i praktyk, autor przedstawia wzorce implementacyjne w języku Java, argumentując ich efektywność w budowaniu systemów odpornych na ataki i audytowalnych. Ważnym elementem publikacji jest prezentacja autorskiego podejścia do automatyzacji zgodności na przykładzie platformy zgodnoscit.pl, która służy jako model referencyjny dla procesów DevSecOps w środowiskach regulowanych.
+
+Autor stawia tezę, że techniczna suwerenność danych oraz wykorzystanie architektur typu Sovereign Cloud i Confidential Computing są obecnie niezbędnymi elementami nowoczesnej inżynierii oprogramowania.
+
+Monografia skierowana jest do architektów systemów, inżynierów bezpieczeństwa oraz kadry zarządzającej IT, poszukujących rzetelnej wiedzy na styku technologii, cyberbezpieczeństwa i legislacji.
+
+\textbf{Słowa kluczowe:} DORA, RODO, Fintech, MedTech, Cloud Act, suwerenność danych, Java Security, OWASP, Secure-by-Design, Zgodność IT.
+
+
+
+\section{Geneza: Dlaczego „compliance as code” to konieczność, a nie wybór?}
+\section{Cel monografii: Przejście od wymagań prawnych do wzorców architektonicznych.}
+\section{Metodyka: Wykorzystanie narzędzi wspierających zgodność (platforma zgodnoscit.pl).}
+
+\mainmatter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\chapter{Architektura systemów „Secure-by-Design”}
+
+\section{Zasady projektowania: Least Privilege i Zero Trust Architecture (ZTA)}
+asady projektowania systemów informatycznych, takie jak Least Privilege i Zero Trust Architecture (ZTA), są kluczowe w architekturach Secure-by-Design, zwłaszcza w regulowanych środowiskach jak FinTech/MedTech (DORA, RODO).
+Least Privilege Principle
+\begin{itemize}
+    \item Użytkownik lub proces otrzymuje minimalne uprawnienia niezbędne do wykonywania zadań – "access only what you need, when you need it".
+    \item Korzyści: Zmniejsza powierzchnię ataku, ogranicza ruch boczny (lateral movement) malware, ułatwia containment breachy i redukuje błędy ludzkie.
+    \item Implementacja: RBAC (Role-Based Access Control), just-in-time privileges (JIT), regularne audyty i narzędzia jak PAM (Privileged Access Management).
+\end{itemize}
+
+Zero Trust Architecture (ZTA)
+\begin{itemize}
+    \item "Never trust, always verify" – brak domyślnego zaufania do insiderów/networku; ciągła weryfikacja tożsamości, urządzeń i kontekstu.
+    \item Kluczowe filary (NIST): Polityka dostępu (policy engine), mikro-segmentacja, MFA wszędzie, monitorowanie w czasie rzeczywistym i explicit verification.
+    \item Korzyści: Chroni przed insider threats, ransomware i atakami po perimeterze; skaluje na chmurę/BYOD.
+\end{itemize}
+    
+Powiązania i różnice
+\begin{itemize}
+    \item Least Privilege to podstawa ZTA – ZTA weryfikuje "kto i dlaczego", a Least Privilege ogranicza "co może zrobić". Razem minimalizują ryzyko w łańcuchu dostaw.
+    \item Przykłady: W Java – Spring Security z @PreAuthorize; izolacja kontenerów Docker w ZTA
+\end{itemize}
+
+\section{Wzorce implementacyjne: API Gateway i Sidecar Pattern}
+\section{Threat Modeling: Metodologia STRIDE w procesie projektowym}
+
+\chapter{Standardy bezpieczeństwa i implementacji}
+
+\section{Standardy: OWASP Top 10 oraz OWASP ASVS}
+OWASP Top 10: Dziesięć najgroźniejszych ryzyk dla aplikacji. 
+SANS Top 25: Lista najbardziej niebezpiecznych błędów w oprogramowaniu.
+
+\section{Implementacja kluczowych punktów bezpieczeństwa w języku Java}
+\subsection{Dlaczego Java? Silne typowanie i Bouncy Castle}
+Tu moj watek, ktory sobie wypromptowalem
+https://chatgpt.com/c/69a454cb-8ac8-838c-a803-db309c798fcc
+
+\subsection{Praktyka: mTLS, HashiCorp Vault i bezpieczna deserializacja}
+\section{Software Bill of Materials (SBOM) i Supply Chain Security}
+
+
+
+
+\subsection{Poziom 3: Wynik obiektu}
+\label{sec:wynik-obiektu}
+
+Wynik obiektu $v$ jest wyznaczany jako ważona
+średnia wyników wszystkich aktywnych sekcji,
+z uwzględnieniem wagi regulacyjnej sekcji:
+
+\begin{equation}
+S_{total}(v) =
+\frac{\displaystyle\sum_{\mathcal{S}_k \in \mathcal{S}(v)}
+      S(\mathcal{S}_k) \cdot \rho_k}
+     {\displaystyle\sum_{\mathcal{S}_k \in \mathcal{S}(v)}
+      \rho_k}
+\label{eq:wynik-obiektu}
+\end{equation}
+
+Flaga blokująca przy pytania z odpowiedzią \texttt{NIE}, ustawia wartość sekcji na \textsc{KRYTYCZNIE NIEZGODNY}, niezależnie od wartości $S_{total}(v)$:
+\begin{equation}
+\text{FLAG}_{block}(\mathcal{S}_k) = \texttt{TRUE}
+\iff
+\exists\, q_j \in \mathcal{S}_k :
+\kappa(q_j) = \texttt{BLOKUJĄCE}
+\;\wedge\;
+a_j = 0
+\label{eq:flag-block-sekcja}
+\end{equation}
+
+\noindent gdzie $\rho_k$ jest wagą regulacyjną
+sekcji $\mathcal{S}_k$, odzwierciedlającą
+dotkliwość sankcji za naruszenie wymogów
+objętych daną sekcją:
+
+
+
+
+\begin{table}[H]
+\centering
+\caption{Wagi regulacyjne sekcji pytań audytowych}
+\label{tab:wagi-sekcji}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|p{4.5cm}|p{1.5cm}|p{7cm}|}
+\hline
+\textbf{Sekcja} & \textbf{$\rho_k$}
+& \textbf{Uzasadnienie} \\
+\hline
+\texttt{PODDOSTAWCY\_TIA}    & $3{,}0$
+& Naruszenie art.~28 RODO i art.~46 RODO;
+  potencjalna sankcja do 20~mln EUR lub 4\% obrotu \\
+\hline
+\texttt{TAJEMNICA\_SEKTOROWA} & $2{,}5$
+& Odpowiedzialność karna osób fizycznych
+  niezależna od sankcji administracyjnych \\
+\hline
+\texttt{DANE\_WRAŻLIWE}      & $2{,}0$
+& Art.~9 RODO; zakaz przetwarzania bez
+  wyraźnej podstawy prawnej \\
+\hline
+\texttt{CIĄGŁOŚĆ\_DZIAŁANIA} & $2{,}0$
+& DORA Art.~11; NIS2 Art.~21 ust.~2 lit.~c \\
+\hline
+\texttt{EXIT\_PLAN}          & $1{,}8$
+& DORA Art.~28 ust.~4; KSC Art.~8 \\
+\hline
+\texttt{TRANSFER\_DANYCH}    & $1{,}8$
+& RODO Art.~46; wyrok Schrems~II \\
+\hline
+\texttt{DANE\_OSOBOWE}       & $1{,}5$
+& Art.~5 i art.~32 RODO \\
+\hline
+\texttt{CHMURA\_PUBLICZNA}   & $1{,}5$
+& EBA Guidelines on outsourcing;
+  Rekomendacja D KNF \\
+\hline
+\texttt{API\_BEZPIECZ}       & $1{,}3$
+& OWASP API Security Top~10;
+  NIS2 Art.~21 ust.~2 lit.~h \\
+\hline
+\texttt{KONCENTRACJA\_RYZYKA} & $1{,}3$
+& DORA Art.~29 --- ryzyko koncentracji
+  u dostawcy ICT \\
+\hline
+\texttt{PODSTAWY\_PRAWNE}    & $1{,}2$
+& Wymogi ogólne; RODO Art.~6 \\
+\hline
+\texttt{BEZPIECZ\_TECH}      & $1{,}0$
+& ISO/IEC~27001; dobre praktyki branżowe \\
+\hline
+\end{tabular}
+\end{table}
+
+\noindent Wynik $S_{total}(v) \in [0, 1]$ jest
+interpretowany na pięciostopniowej skali zgodności:
+
+\begin{table}[H]
+\centering
+\caption{Skala interpretacji wyniku obiektu}
+\label{tab:skala-wyniku}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|p{3cm}|p{3cm}|p{7cm}|}
+\hline
+\textbf{Wynik $S_{total}$} & \textbf{Klasyfikacja}
+& \textbf{Interpretacja} \\
+\hline
+$[0{,}85;\ 1{,}0]$   & \textsc{ZGODNY}
+& Wysoki poziom zgodności; dowody kompletne;
+  brak istotnych niezgodności \\
+\hline
+$[0{,}70;\ 0{,}85)$  & \textsc{CZĘŚCIOWO ZGODNY}
+& Większość wymogów spełniona; luki w dokumentacji
+  lub pojedyncze niezgodności drugorzędne \\
+\hline
+$[0{,}50;\ 0{,}70)$  & \textsc{WYMAGA POPRAWY}
+& Znaczące luki; wymogi obowiązkowe niespełnione
+  lub spełnione bez wystarczających dowodów \\
+\hline
+$[0{,}25;\ 0{,}50)$  & \textsc{NIEZGODNY}
+& Poważne naruszenia; wysokie ryzyko sankcji;
+  pilne działania naprawcze \\
+\hline
+$[0;\ 0{,}25)$        & \textsc{KRYTYCZNIE NIEZGODNY}
+& Brak podstawowych mechanizmów zgodności;
+  ryzyko natychmiastowych sankcji regulatora \\
+\hline
+\end{tabular}
+\end{table}
+
+\textit{Uwaga:} Aktywacja $\text{FLAG}_{block}^{obj}(v)$
+lub $\text{FLAG}_{TIA}(v)$ nadpisuje klasyfikację
+do \textsc{NIEZGODNY} niezależnie od wartości $S_{total}$.
+Aktywacja flagi \textsc{BLOKUJĄCY} z pytania obligatoryjnego
+nadpisuje klasyfikację do \textsc{KRYTYCZNIE NIEZGODNY}.
+
+\noindent Niezależnie od wartości $S_{total}(v)$,
+aktywacja flagi $\text{FLAG}_{TIA}(v) = \texttt{TRUE}$
+nadpisuje klasyfikację do \textsc{NIEZGODNY},
+a aktywacja flagi \textsc{BLOKUJĄCY} z pytania
+obligatoryjnego nadpisuje klasyfikację do
+\textsc{KRYTYCZNIE NIEZGODNY}.
+Żadna agregacja arytmetyczna nie może ukryć
+fundamentalnej niezgodności z przepisem prawa
+o charakterze bezwzględnie obowiązującym.
+
+
+\subsection{Identyfikacja dostawców kluczowych}
+\label{sec:dostawcy-kluczowi}
+
+Dostawca kluczowy (\textit{critical ICT third-party
+service provider}) to dostawca, którego niezgodność lub niedostępność stanowi zagrożenie dla stabilności podmiotu
+lub całego systemu. ORION identyfikuje dostawców kluczowych formalnie na podstawie
+dwóch kryteriów łącznych:
+
+\begin{equation}
+\textsc{KeyVendor}(v) = \texttt{TRUE}
+\iff
+\Bigl(w_{total}(v) \geq w_{KV}^{*}\Bigr)
+\;\wedge\;
+\Bigl(|\{u \in V : (v,u) \in E_{svc}\}|
+      \geq n_{KV}^{*}\Bigr)
+\label{eq:keyvendor}
+\end{equation}
+
+\noindent gdzie $w_{KV}^{*}$ jest progowym mnożnikiem
+wagi (domyślnie $w_{KV}^{*} = 2{,}6$),
+$E_{svc}$ jest zbiorem krawędzi usługowych
+w grafie ICT, a $n_{KV}^{*}$ jest minimalną
+liczbą systemów obsługiwanych przez dostawcę
+(domyślnie $n_{KV}^{*} = 3$).
+Innymi słowy: dostawca jest kluczowy, jeśli
+jego waga łączna przekracza próg
+\textit{i jednocześnie} obsługuje co najmniej trzy
+systemy podmiotu. Spełnienie tylko jednego warunku
+nie jest wystarczające.
+
+Dla dostawców kluczowych aktywowane są dodatkowe
+sekcje pytań: \texttt{EXIT\_PLAN}
+i \texttt{KONCENTRACJA\_RYZYKA},
+a wyniki tych sekcji są objęte wyższym
+współczynnikiem wagowym $\rho_k$
+zgodnie z tabelą~\ref{tab:wagi-sekcji}.

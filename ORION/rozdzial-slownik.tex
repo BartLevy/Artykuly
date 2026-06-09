@@ -1,0 +1,13 @@
+\chapter{Słownik pojęć}
+
+\csvreader[
+separator=semicolon,
+head to column names
+]{slownik.csv}{}{%
+\noindent\textbf{\skrot} (\rozwiniecie)\\
+\wyjasnienie
+
+\smallskip
+\noindent\rule{\textwidth}{0.4pt}
+\medskip
+}

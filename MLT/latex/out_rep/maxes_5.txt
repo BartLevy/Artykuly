@@ -1,0 +1,3 @@
+1. duck, elephant, frog, gorilla, monkey;
+2. duck, elephant, gorilla, owl, blackbird;
+3. dog, duck, elephant, frog, gorilla;

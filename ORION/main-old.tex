@@ -1,0 +1,221 @@
+\documentclass[12pt,a4paper,oneside]{book}
+
+% --- Language and Fonts ---
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish,english]{babel}
+
+% --- Layout ---
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+% --- Math and Symbols ---
+\usepackage{amsmath,amsfonts,amssymb}
+
+% --- Graphics and Tables ---
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{caption}
+
+% --- Utilities ---
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{authblk}
+\usepackage[hidelinks]{hyperref}
+
+% --- REMOVE "CHAPTER" BUT KEEP NUMBERING ---
+% [hang] keeps the number and title on the same line.
+% \thechapter. adds the dot after the number.
+\titleformat{\chapter}[hang]
+  {\normalfont\huge\bfseries} % Format of the whole line
+  {\thechapter.}              % The label (e.g., 1.)
+  {0.5em}                     % Space between number and title
+  {}                          % Code before title
+
+% Adjust the spacing around the chapter title:
+% {left margin}{space before}{space after (creates the line break)}
+\titlespacing*{\chapter}{0pt}{0pt}{40pt}
+
+% --- Bibliography ---
+\usepackage[numbers,sort&compress]{natbib}
+\bibliographystyle{plainnat}
+
+% --- Metadata ---
+\title{Inżynieria systemów informatycznych w ekosystemach regulowanych: Architektura, bezpieczeństwo i suwerenność danych w dobie DORA, GDPR i Cloud Act}
+
+\author[1]{Bartosz Lewandowski \thanks{ORCID: 0009-0004-1158-0693}}
+\affil[1]{Department of Clinical Engineering, Academy of Silesia in Katowice}
+\date{} 
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\chapter{Wstęp}
+\addcontentsline{toc}{chapter}{Wstęp}
+
+Ochrona danych stanowi jeden z fundamentalnych elementów współczesnego porządku prawnego Unii Europejskiej. Dynamiczny rozwój technologii, w szczególności sztucznej inteligencji oraz gromadzenia  informacji, a co za tym idzie szeroka cyfryzacja usług publicznych i prywatnych oraz rosnąca skala międzynarodowego przetwarzania danych osobowych sprawiły, że zagadnienie ochrony danych stało się przedmiotem prac legislacyjnych zarówno na poziomie unijnym, jak i krajowym. Unia Europejska oraz jej państwa członkowskie zwracają szczególną uwagę do ochrony danych, uznając ją za istotny element ochrony praw jednostki, zaufania do gospodarki oraz bezpiecznego funkcjonowania społeczeństwa informacyjnego.
+
+Polska, jako państwo członkowskie Unii Europejskiej, od lat uczestniczy w budowaniu europejskiego systemu ochrony danych i cyberbezpieczeństwa. Punktem wyjścia dla krajowych regulacji w tym zakresie stało się wdrożenie unijnej dyrektywy NIS z 2016 r., która zobowiązała państwa członkowskie do ustanowienia krajowych ram cyberbezpieczeństwa. W odpowiedzi na te wymagania Polska uchwaliła ustawę o krajowym systemie cyberbezpieczeństwa, przyjętą przez Sejm RP dnia 5 lipca 2018 r. i podpisaną przez Prezydenta RP dnia 1 sierpnia 2018 r., która weszła w życie 28 sierpnia 2018 r.
+
+Ustawa ta po raz pierwszy w polskim porządku prawnym stworzyła  system z jasno określonymi strukturami odpowiedzialnymi za reagowanie na incydenty, obowiązkami operatorów usług kluczowych oraz mechanizmami współpracy na poziomie krajowym i europejskim. Powołano trzy zespoły CSIRT poziomu krajowego: CSIRT GOV, CSIRT NASK i CSIRT MON, a organy właściwe do spraw cyberbezpieczeństwa uzyskały uprawnienia nadzorcze wobec podmiotów objętych regulacją.
+
+Podstawowym aktem kształtującym europejski model ochrony danych pozostaje Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r., w Polsce znane jako w RODO. Rozporządzenie definiuje standardy przetwarzania danych osobowych obowiązujące na terenie całej Unii, przyznając osobom fizycznym szerokie uprawnienia wobec administratorów danych oraz nakładając na podmioty przetwarzające dane istotne obowiązki w zakresie przejrzystości, bezpieczeństwa i rozliczalności. Równolegle do rozporządzenia RODO, nie można pominąć regulacji  dotyczących przetwarzania danych przez organy ścigania, takie jak Dyrektywa (UE) 2016/680, a także inicjatywy legislacyjne w obszarze prywatności komunikacji elektronicznej.
+
+W odpowiedzi na wyzwania związane z rozwojem gospodarki opartej na danych Unia Europejska podjęła dalsze działania legislacyjne, przyjmując Rozporządzenie o Zarządzaniu Danymi z 2022 r. oraz Akt w sprawie Danych z 2023 r., które tworzą kompleksowe ramy dostępu do danych i ich udostępniania. Równolegle, za sprawą Dyrektywy NIS2 oraz Aktu o Cyberodporności, UE wzmacnia bezpieczeństwo systemów informacyjnych, pośrednio chroniąc dane Europejczyków przed zagrożeniami zewnętrznymi, w tym przed nieuprawnionym dostępem podmiotów spoza Unii.
+
+Wobec szybko rosnącej skali zagrożeń w cyberprzestrzeni Unia Europejska przyjęła w 2022 r. dyrektywę NIS2, znacząco rozszerzającą zakres podmiotowy regulacji oraz zaostrzającą wymagania w zakresie zarządzania ryzykiem, raportowania incydentów i bezpieczeństwa łańcucha dostaw. Polska zobowiązana była do implementacji NIS2 do dnia 17 października 2024 r., jednak prace legislacyjne nad nowelizacją ustawy o KSC przeciągnęły się, co naraziło kraj na opóźnienie wobec wyznaczonego terminu.
+
+Nowelizacja ustawy o krajowym systemie cyberbezpieczeństwa wdrażająca dyrektywę NIS2 została ostatecznie uchwalona przez Sejm RP 22 stycznia 2026 r., a Prezydent RP podpisał ją 19 lutego 2026 r., kierując jednocześnie do kontroli następczej przez Trybunał Konstytucyjny. Nowe przepisy rozszerzają system na kolejne sektory gospodarki, wzmacniają kompetencje instytucji odpowiedzialnych za reagowanie na incydenty, wprowadzają sektorowe zespoły CSIRT oraz procedurę uznania dostawcy za dostawcę wysokiego ryzyka
+
+Odrębnym, jednak uzupełniającym wobec NIS2 i KSC i unijnego systemu ochrony danych i bezpieczeństwa cyfrowego jest Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2022/2554 z dnia 14 grudnia 2022 r. w sprawie operacyjnej odporności cyfrowej sektora finansowego,  znane jako DORA (ang. \textit{Digital Operational Resilience Act}). Rozporządzenie weszło w życie 16 stycznia 2023 r., a jego pełne stosowanie stało się obowiązkowe od 17 stycznia 2025 r. DORA stanowi część szerszego unijnego Pakietu ds. Finansów Cyfrowych i jest aktem bezpośrednio stosowanym we wszystkich państwach członkowskich, bez potrzeby odrębnej implementacji do prawa krajowego.
+
+Ważnym elementem nowelizacji ustawy o krajowym systemie cyberbezpieczeństwa stała się procedura uznania dowolnego dostawcy jako przedsiębiorstwa wysokiego ryzyka, zmiana potocznie nazywana \textit{Lex Huawei}. Mechanizm ten pozwala Ministerowi Cyfryzacji wydać decyzję, natychmiast wykonalną, uznającą, wg brzmienia nowelizacji, \textit{dostawcę sprzętu lub oprogramowania dla sieci i usług łączności elektronicznej} za dostawcę wysokiego ryzyka, na podstawie stwierdzania, że przedsiębiorstwo to stanowi zagrożenie dla interesu i bezpieczeństwa krajowego. 
+
+Przepisy te są wprost wymierzone w dostawców spoza kręgu UE i NATO, a ich głównym adresatem  jest chiński koncern \textit{Huawei}. Firma ta, od wielu już lat obecna na polskim rynku telekomunikacyjnym i energetycznym, w toku prac legislacyjnych protestowała przeciwko projektowanym przepisom. W październiku 2025 r. \textit{Huawei} wystosował list do premiera Donalda Tuska, w którym ostrzegł, że nowe regulacje mogą naruszać jego prawa jako inwestora wynikające z chińsko-polskiej umowy bilateralnej oraz Traktatu Karty Energetycznej, a potencjalne straty firmy oszacował na miliardy złotych, zastrzegając możliwość skierowania sporu do arbitrażu międzynarodowego.
+
+Zmiana polityki amerykańskiej w zakresie prowadzenia relacji z partnerami zgodnie ze strategią America Firts, w sczególności prowadzona od drugiej prezydentury Donalda Trumpa była silnym triggerem, który rozbudził świadomość w Uni Europejskeej w zakresie budowy niezależności cyfrowej.
+
+Uzupelnic
+
+Flagowym przykładem była sytuacja związana działaniami administracji amerykańskiej w stosunku do Międzynarodowego Trybunału Karnego w Hadze.
+Sankcje USA wobec MTK przełożyły się na odcięcie dostępu do niektórych usług amerykańskich, w szczególności do usług Microsoft w odniesieniu do  prokuratora Karima Khana, a także do ograniczeń finansowych i wizowych. Podstawę tych działań stanowił executive order USA z 5 lutego 2025 r., przewidujący m.in. blokowanie majątku i aktywów oraz restrykcje wizowe wobec urzędników MTK i ich rodzin. \cite{whitehouse_icc_sanctions_2025}
+
+Jednocześnie sankcje zostały rozszerzone  w czerwcu 2025 na kolejne osoby, Reine Adelaide Sophie Alapini Gansou, sędzia MTK i druga wiceprezes MTK, oraz sędziowe Solomy Balungi Bossa, Luz del Carmen Ibáñez Carranza, oraz Beti Hohler, sędzia MTK.
+
+Decyzja zaostrza napięcie między USA a państwami popierającymi porządek oparty na prawie międzynarodowym. Najważniejszy efekt polityczny to osłabienie niezależności Trybunału przez pokazanie. Ta decyzja buduje precedens, że państwo może używać sankcji nie tylko wobec przeciwników geopolitycznych, lecz także wobec międzynarodowego sądu i osób współpracujących z nim. Taki precedens może zachęcać inne rządy do podobnych działań wobec instytucji międzynarodowych, gdy ich decyzje staną się politycznie niewygodne.
+
+Incydent związany z odcięciem amerykańskich usług cyfrowych dla osób objętych sankcjami USA nie wydaje się stanowić jedynej przyczyny działań UE w obszarze suwerenności danych, lecz stał się  katalizatorem politycznym wzmacniającym unijną debatę o ryzykach wynikających z zależności od dostawców podlegających jurysdykcji Stanów Zjednoczonych.
+
+
+
+Niniejsza monografia stanowi kompleksowe studium projektowania, implementacji i utrzymania systemów informatycznych w sektorach o wysokim rygorze prawnym, ze szczególnym uwzględnieniem branż Fintech oraz MedTech. W obliczu ewolucji ram regulacyjnych, takich jak rozporządzenie DORA (Digital Operational Resilience Act), dyrektywa PSD2/3 oraz specyficzne wytyczne organów nadzorczych (np. KNF), autor analizuje paradygmat przejścia od pasywnej zgodności (compliance) do aktywnej odporności cyfrowej.
+
+Głównym problemem badawczym podjętym w monografii jest opracowanie kompleksowej metody oceny ryzyka wdrozenia systemów IT, zapewniajacych dla ogranizacji wdrażającej bezpieczeństwo cyfrowe, wynikające z weryfikacji jakości rozwiązań informatyczych oraz prawnych, które zapewniają zgodność wdrożonych systemów z prawej unijnym oraz krajowym.
+
+Ważnym poruszonym problelem, jest też konflikt jurysdykcyjny wynikający z amerykańskich aktów prawnych (Cloud Act, FISA 702) w relacji do europejskich standardów ochrony prywatności (RODO/GDPR). 
+
+W warstwie technicznej praca koncentruje się na pryncypiach Secure-by-Design, mapując wymagania prawne na konkretne standardy bezpieczeństwa, takie jak OWASP ASVS. Jako dr inżynier i praktyk, autor przedstawia wzorce implementacyjne w języku Java, argumentując ich efektywność w budowaniu systemów odpornych na ataki i audytowalnych. Ważnym elementem publikacji jest prezentacja autorskiego podejścia do automatyzacji zgodności na przykładzie platformy zgodnoscit.pl, która służy jako model referencyjny dla procesów DevSecOps w środowiskach regulowanych.
+
+
+
+
+
+
+
+Autor stawia tezę, że techniczna suwerenność danych oraz wykorzystanie architektur typu Sovereign Cloud i Confidential Computing są obecnie niezbędnymi elementami nowoczesnej inżynierii oprogramowania.
+
+
+Monografia skierowana jest do architektów systemów, inżynierów bezpieczeństwa oraz kadry zarządzającej IT, poszukujących rzetelnej wiedzy na styku technologii, cyberbezpieczeństwa i legislacji.
+
+\textbf{Słowa kluczowe:} DORA, RODO, Fintech, MedTech, Cloud Act, suwerenność danych, Java Security, OWASP, Secure-by-Design, Zgodność IT.
+
+\section{Geneza: Dlaczego „compliance as code” to konieczność, a nie wybór?}
+\section{Cel monografii: Przejście od wymagań prawnych do wzorców architektonicznych.}
+\section{Metodyka: Wykorzystanie narzędzi wspierających zgodność (platforma zgodnoscit.pl).}
+
+\chapter{Krajobraz regulacyjny: Fintech i MedTech}
+
+\section{Fintech: Analiza DORA, PSD2/3 oraz wytyczne KNF}
+\section{MedTech: RODO oraz MDR w kontekście SaMD}
+\section{Zasada TPP (Third Party Providers): Analiza łańcucha dostaw}
+\section{Suwerenność danych i strategia niezależności UE}
+\section{Wspólny mianownik: Ciągłość działania i TPRM}
+
+\chapter{Konflikt jurysdykcji i suwerenność danych}
+
+\section{Problem Cloud Act i FISA 702}
+\section{Suwerenność danych: Gaia-X, Sovereign Clouds i Confidential Computing}
+\section{Schrems II i następstwa dla transferu danych poza EOG}
+
+\chapter{Architektura systemów „Secure-by-Design”}
+
+\section{Zasady projektowania: Least Privilege i Zero Trust Architecture (ZTA)}
+asady projektowania systemów informatycznych, takie jak Least Privilege i Zero Trust Architecture (ZTA), są kluczowe w architekturach Secure-by-Design, zwłaszcza w regulowanych środowiskach jak FinTech/MedTech (DORA, RODO).
+Least Privilege Principle
+
+    Użytkownik lub proces otrzymuje minimalne uprawnienia niezbędne do wykonywania zadań – "access only what you need, when you need it".
+
+    Korzyści: Zmniejsza powierzchnię ataku, ogranicza ruch boczny (lateral movement) malware, ułatwia containment breachy i redukuje błędy ludzkie.
+
+    Implementacja: RBAC (Role-Based Access Control), just-in-time privileges (JIT), regularne audyty i narzędzia jak PAM (Privileged Access Management).​
+
+Zero Trust Architecture (ZTA)
+
+    "Never trust, always verify" – brak domyślnego zaufania do insiderów/networku; ciągła weryfikacja tożsamości, urządzeń i kontekstu.
+
+    Kluczowe filary (NIST): Polityka dostępu (policy engine), mikro-segmentacja, MFA wszędzie, monitorowanie w czasie rzeczywistym i explicit verification.
+
+    Korzyści: Chroni przed insider threats, ransomware i atakami po perimeterze; skaluje na chmurę/BYOD.​
+
+Powiązania i różnice
+
+    Least Privilege to podstawa ZTA – ZTA weryfikuje "kto i dlaczego", a Least Privilege ogranicza "co może zrobić". Razem minimalizują ryzyko w łańcuchu dostaw.
+
+    Przykłady: W Java – Spring Security z @PreAuthorize; izolacja kontenerów Docker w ZTA
+\section{Wzorce implementacyjne: API Gateway i Sidecar Pattern}
+\section{Threat Modeling: Metodologia STRIDE w procesie projektowym}
+
+\chapter{Standardy bezpieczeństwa i implementacji}
+
+\section{Standardy: OWASP Top 10 oraz OWASP ASVS}
+\section{Implementacja kluczowych punktów bezpieczeństwa w języku Java}
+\subsection{Dlaczego Java? Silne typowanie i Bouncy Castle}
+Tu moj watek, ktory sobie wypromptowalem
+https://chatgpt.com/c/69a454cb-8ac8-838c-a803-db309c798fcc
+
+\subsection{Praktyka: mTLS, HashiCorp Vault i bezpieczna deserializacja}
+\section{Software Bill of Materials (SBOM) i Supply Chain Security}
+
+\chapter{Automatyzacja zgodności – Case Study: zgodnoscit.pl}
+SonarQube nie korzysta z jednej, statycznej „bazy danych” w tradycyjnym sensie, lecz opiera się na własnym silniku reguł, który jest stale aktualizowany w oparciu o globalne standardy i bazy zagrożeń. 
+Sonar Documentation
+Sonar Documentation
+ +1
+Wykrywanie podatności odbywa się poprzez integrację z następującymi źródłami i standardami:
+1. Główne bazy danych podatności (CVE/NVD)
+W ramach modułu SCA (Software Composition Analysis), SonarQube analizuje biblioteki zewnętrzne (open-source) i porównuje je z:
+NIST National Vulnerability Database (NVD): Główna amerykańska baza zawierająca listę CVE (Common Vulnerabilities and Exposures).
+OSV (Open Source Vulnerability): Baza obejmująca m.in. złośliwe pakiety (OpenSSF Malicious Packages).
+CISA KEV (Known Exploited Vulnerabilities): Katalog luk, o których wiadomo, że są aktywnie wykorzystywane przez hakerów. 
+SonarSource
+SonarSource
+ +1
+2. Standardy klasyfikacji (CWE)
+SonarQube kategoryzuje wykryte błędy w kodzie (SAST) według:
+CWE (Common Weakness Enumeration): Słownik rodzajów słabości w oprogramowaniu (np. CWE-79 dla Cross-Site Scripting). Każda reguła Sonar jest powiązana z konkretnym identyfikatorem CWE. 
+SonarSource
+SonarSource
+ +1
+3. Rankingi bezpieczeństwa
+Narzędzie mapuje wykryte problemy na najpopularniejsze listy zagrożeń:
+OWASP Top 10: Dziesięć najgroźniejszych ryzyk dla aplikacji webowych.
+SANS Top 25: Lista najbardziej niebezpiecznych błędów w oprogramowaniu.
+PCI DSS: Standardy bezpieczeństwa dla systemów przetwarzających dane kart płatniczych. 
+SonarSource
+SonarSource
+
+\section{Rola narzędzi wspomagających mapowanie wymagań}
+\section{Zgodność IT jako proces ciągły (DevSecOps)}
+\section{Praktyczne zastosowanie: Niwelowanie luki komunikacyjnej}
+
+\chapter{Podsumowanie i przyszłość}
+
+\section{AI Act i jego wpływ na Fintech/MedTech}
+\section{Post-quantum cryptography (PQC) jako nadchodzące wyzwanie}
+
+\appendix
+\chapter{Dodatkowe rozważania techniczne}
+\section{Formalna weryfikacja kodu i analizatory SAST/DAST}
+\section{Governance as Code: Open Policy Agent (OPA)}
+
+\begin{thebibliography}{99}
+\bibitem{dora} Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2022/2554 (DORA).
+% Add more bibitems here or use a .bib file
+\end{thebibliography}
+
+\end{document}

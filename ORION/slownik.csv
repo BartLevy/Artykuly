@@ -1,0 +1,56 @@
+skrot;rozwiniecie;wyjasnienie
+AI Act;Artificial Intelligence Act;Unijne rozporządzenie dotyczące sztucznej inteligencji, wskazane jako przyszły obszar wpływu na sektory regulowane. 
+API;Application Programming Interface;Interfejs programistyczny umożliwiający komunikację między systemami i usługami. 
+ASVS;Application Security Verification Standard;Standard OWASP służący do weryfikacji wymagań bezpieczeństwa aplikacji. 
+BCP;Business Continuity Plan;Plan ciągłości działania określający sposób utrzymania kluczowych procesów po incydencie lub awarii. 
+BION;Badanie i Ocena Nadzorcza;Mechanizm oceny nadzorczej stosowany przez KNF wobec podmiotów rynku finansowego. 
+CLOUD Act;Clarifying Lawful Overseas Use of Data Act;Ustawa USA dotycząca dostępu organów amerykańskich do danych przechowywanych przez dostawców usług. 
+CSF;Cybersecurity Framework;Framework cyberbezpieczeństwa, do którego tekst odnosi się przy porównaniu z innymi standardami oceny. 
+CSIRT;Computer Security Incident Response Team;Zespół reagowania na incydenty bezpieczeństwa komputerowego właściwy do przyjmowania zgłoszeń i koordynacji reakcji. 
+CTPP;Critical ICT Third-Party Providers;Krytyczni zewnętrzni dostawcy ICT objęci nadzorem w ramach DORA. 
+DAST;Dynamic Application Security Testing;Dynamiczna analiza bezpieczeństwa aplikacji wykonywana podczas działania systemu. 
+DORA;Digital Operational Resilience Act;Rozporządzenie UE ustanawiające zasady operacyjnej odporności cyfrowej sektora finansowego. 
+DPF;Data Privacy Framework;Ramy transferu danych między UE a USA omawiane w kontekście legalności przekazywania danych. 
+DPIA;Data Protection Impact Assessment;Ocena skutków dla ochrony danych stosowana przy przetwarzaniu mogącym powodować wysokie ryzyko dla praw i wolności osób. [web:9]
+DRP;Disaster Recovery Plan;Plan odtwarzania po awarii określający sposób przywrócenia systemów i usług po zakłóceniu. 
+DUC;Dostawca Usług Cyfrowych;Kategoria podmiotów występująca w ustawie o krajowym systemie cyberbezpieczeństwa. 
+EBA;European Banking Authority;Europejski Urząd Nadzoru Bankowego, wskazany przy standardach technicznych związanych z DORA. 
+EEHRxF;European Electronic Health Record Exchange Format;Europejski format wymiany elektronicznej dokumentacji zdrowotnej. 
+EHDS;European Health Data Space;Europejska Przestrzeń Danych Zdrowotnych, istotna dla regulacji przetwarzania danych medycznych. 
+EIOPA;European Insurance and Occupational Pensions Authority;Europejski organ nadzoru dla sektora ubezpieczeń i pracowniczych programów emerytalnych. 
+EOG;Europejski Obszar Gospodarczy;Obszar istotny dla oceny transferu danych i klasyfikacji jurysdykcyjnej. 
+ESMA;European Securities and Markets Authority;Europejski organ nadzoru nad rynkami papierów wartościowych i rynkiem kapitałowym. 
+FISA 702;Foreign Intelligence Surveillance Act Section 702;Przepis prawa USA wskazywany w pracy jako źródło ryzyka dostępu do danych przez służby amerykańskie. 
+GDPR;General Data Protection Regulation;Angielska nazwa RODO, używana także w tytule dokumentu. 
+GRC;Governance Risk and Compliance;Obszar zarządzania obejmujący ład organizacyjny, ryzyko i zgodność. 
+ICT;Information and Communications Technology;Technologie informacyjno-komunikacyjne stanowiące podstawowy obszar analizy w pracy. 
+IOD;Inspektor Ochrony Danych;Osoba odpowiedzialna za nadzór nad zgodnością przetwarzania danych osobowych. 
+ITS;Implementing Technical Standards;Wykonawcze standardy techniczne towarzyszące regulacjom unijnym, w tym DORA. 
+JIT;Just-in-Time;Model przyznawania uprawnień tylko na niezbędny czas. 
+KNF;Komisja Nadzoru Finansowego;Polski organ nadzoru nad rynkiem finansowym. 
+KSC;Krajowy System Cyberbezpieczeństwa;System krajowych ram organizacyjnych i prawnych cyberbezpieczeństwa. 
+MFA;Multi-Factor Authentication;Uwierzytelnianie wieloskładnikowe wymagające użycia co najmniej dwóch różnych składników. 
+mTLS;Mutual Transport Layer Security;Mechanizm wzajemnego uwierzytelniania stron połączenia szyfrowanego TLS. 
+NIS2;Network and Information Security Directive 2;Dyrektywa UE ustanawiająca nowy model obowiązków cyberbezpieczeństwa dla podmiotów kluczowych i ważnych. 
+OChK;Operator Chmury Krajowej;Polski dostawca i integrator usług chmurowych wspomniany w kontekście suwerenności danych. 
+OPA;Open Policy Agent;Narzędzie do egzekwowania polityk w modelu governance as code. 
+ORSN;Ocena Ryzyka Systemów Nadzorowanych;Autorska metodyka oceny zgodności systemów ICT i ich łańcucha dostaw opisana w monografii. 
+OUK;Operator Usług Kluczowych;Kategoria podmiotów objętych obowiązkami ustawy o KSC w wcześniejszym modelu regulacyjnym. 
+OWASP;Open Worldwide Application Security Project;Organizacja opracowująca praktyki i standardy bezpieczeństwa aplikacji. 
+PAM;Privileged Access Management;Zarządzanie dostępem uprzywilejowanym do kont i zasobów o podwyższonych uprawnieniach. 
+PQC;Post-Quantum Cryptography;Kryptografia postkwantowa wskazana w pracy jako nadchodzące wyzwanie technologiczne. 
+PUODO;Prezes Urzędu Ochrony Danych Osobowych;Krajowy organ nadzorczy właściwy w sprawach ochrony danych osobowych. 
+RBAC;Role-Based Access Control;Model kontroli dostępu oparty na rolach przypisanych użytkownikom. 
+RODO;Rozporządzenie o Ochronie Danych Osobowych;Unijne ogólne rozporządzenie regulujące zasady przetwarzania danych osobowych. 
+RTS;Regulatory Technical Standards;Regulacyjne standardy techniczne uszczegóławiające wymagania aktów unijnych. 
+SAST;Static Application Security Testing;Statyczna analiza bezpieczeństwa aplikacji prowadzona na kodzie lub artefaktach przed uruchomieniem. 
+SBOM;Software Bill of Materials;Wykaz komponentów programistycznych tworzących dane oprogramowanie. 
+SCC;Standard Contractual Clauses;Standardowe klauzule umowne wykorzystywane przy transferze danych poza EOG. 
+STRIDE;Spoofing Tampering Repudiation Information Disclosure Denial of Service Elevation of Privilege;Metodologia modelowania zagrożeń wykorzystywana na etapie projektowania systemów. 
+TEE;Trusted Execution Environment;Zaufane środowisko wykonawcze stosowane m.in. w poufnym przetwarzaniu danych. 
+TIA;Transfer Impact Assessment;Ocena skutków transferu danych do państw trzecich pod kątem ryzyka prawnego i operacyjnego. 
+TLPT;Threat-Led Penetration Testing;Zaawansowane testy penetracyjne sterowane scenariuszami zagrożeń. 
+TPRM;Third-Party Risk Management;Zarządzanie ryzykiem związanym z dostawcami i innymi stronami trzecimi. 
+UODO;Urząd Ochrony Danych Osobowych;Urząd wspierający krajowy nadzór nad ochroną danych osobowych. 
+UKSC;Ustawa o Krajowym Systemie Cyberbezpieczeństwa;Polska ustawa określająca obowiązki podmiotów w obszarze cyberbezpieczeństwa. 
+ZTA;Zero Trust Architecture;Architektura bezpieczeństwa oparta na zasadzie ciągłej weryfikacji i braku domyślnego zaufania. 

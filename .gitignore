@@ -1,0 +1,52 @@
+*.mp3
+*.zip
+*.sty
+*.aux
+*.bst
+
+
+## Core latex/pdflatex auxiliary files
+*.aux
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.synctex(busy)
+
+## Bibliography auxiliary files (BibTeX / biber)
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+
+## Subfiles package auxiliary files
+*.pdfsync
+
+## Typecentres/Style files (if generated)
+*.lof
+*.lot
+*.maf
+*.mtc
+*.mtc0
+*.nav
+*.snm
+*.vrb
+
+## Overleaf / Texmaker / TeXstudio backup and temporary files
+*.bak
+*.sav
+*.tex.backup
+*.wbk
+
+## PDF outputs
+# Comment out the line below if you WANT to track the final PDF in Git
+*.pdf

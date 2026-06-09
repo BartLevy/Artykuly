@@ -1,0 +1,22 @@
+[
+  {"code":"89.52","name":"Elektrokardiogram (EKG)","frequency":"high"},
+  {"code":"38.99","name":"Nakłucie żyły – inne (wenopunkcja)","frequency":"high"},
+  {"code":"99.10","name":"Wstrzyknięcie/infuzja substancji leczniczej (IV)","frequency":"high"},
+  {"code":"99.29","name":"Iniekcja/infuzja – inne","frequency":"high"},
+  {"code":"87.03","name":"Tomografia komputerowa (TK) głowy (grupa badań TK)","frequency":"medium"},
+  {"code":"87.44","name":"RTG klatki piersiowej (grupa badań RTG)","frequency":"high"},
+  {"code":"87.51","name":"RTG kręgosłupa (grupa badań RTG)","frequency":"medium"},
+  {"code":"88.91","name":"USG jamy brzusznej (grupa badań USG)","frequency":"medium"},
+  {"code":"88.72","name":"USG serca / echokardiografia (grupa badań)","frequency":"low"},
+  {"code":"93.90","name":"Tlenoterapia / terapia oddechowa – inne","frequency":"medium"},
+  {"code":"96.04","name":"Założenie rurki dotchawiczej (intubacja)","frequency":"low"},
+  {"code":"96.71","name":"Mechaniczna wentylacja < 96 h","frequency":"low"},
+  {"code":"99.60","name":"Nieokreślone metody resuscytacji krążeniowo-oddechowej (RKO)","frequency":"low"},
+  {"code":"86.22","name":"Chirurgiczne oczyszczenie rany / usunięcie tkanek martwiczych","frequency":"medium"},
+  {"code":"86.59","name":"Zamknięcie rany skóry i tkanki podskórnej – inne","frequency":"high"},
+  {"code":"86.53","name":"Szycie pojedynczej rany skóry i tkanki podskórnej, do 4 cm","frequency":"high"},
+  {"code":"86.54","name":"Szycie pojedynczej rany skóry i tkanki podskórnej, > 4 cm","frequency":"medium"},
+  {"code":"93.57","name":"Unieruchomienie / założenie opatrunku unieruchamiającego (grupa)","frequency":"high"},
+  {"code":"79.02","name":"Repozycja zamknięta złamania bez zespolenia wewnętrznego (grupa)","frequency":"medium"},
+  {"code":"23.20","name":"Znieczulenie miejscowe powierzchniowe","frequency":"high"}
+]

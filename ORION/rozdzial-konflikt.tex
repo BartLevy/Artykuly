@@ -1,0 +1,335 @@
+\chapter{Konflikt jurysdykcji i suwerenność danych}
+
+Informacja jest współczesną walutą, jest to bardzo popularne, jednocześnie prawdziwe stwierdzenie. Dane, które posiadają przedsiębiorstwa, uczelnie oraz rządy stanowią o sile gospodarczej i przewadze technologicznej. Nic więc dziwnego w działaniach, które mają na celu ochronę informacji przed nieautoryzowanym dostępem.
+Do szpiegostwa gospodarczego ze strony takich państw jak Rosja czy Chiny dochodziło od wielu lat \autocite{putter2023espionage}, ale nowością jest wykorzystywanie informacji i technologii przeciwko sojusznikom, gdy decyzje podejmowane nie podobają się jednej ze stron.
+
+Flagowym przykładem była sytuacja związana z działaniami administracji amerykańskiej w stosunku do Międzynarodowego Trybunału Karnego w Hadze, a źródłem ich była decyzja sądu, której treść nie była zgodna z oczekiwaniami administracji Donalda Trumpa.
+
+Sankcje USA wobec MTK przełożyły się na odcięcie dostępu do niektórych usług amerykańskich, w szczególności do usług Microsoft w odniesieniu do prokuratora Karima Khana, a także do ograniczeń finansowych i wizowych. Podstawę tych działań stanowił nakaz (\textit{executive order}) USA z 5 lutego 2025 roku, przewidujący m.in. blokowanie majątku i aktywów oraz restrykcje wizowe wobec urzędników MTK i ich rodzin. \autocite{whitehouse_icc_sanctions_2025}
+
+Jednocześnie sankcje zostały rozszerzone w czerwcu 2025 na kolejne osoby, Reine Adelaide Sophie Alapini Gansou, sędzia MTK i druga wiceprezes MTK, oraz sędziowe Solomy Balungi Bossa, Luz del Carmen Ibáñez Carranza oraz Beti Hohler, sędzia MTK.
+
+Decyzja zaostrza napięcie między USA a państwami popierającymi porządek oparty na prawie międzynarodowym. Najważniejszy efekt polityczny to osłabienie niezależności Trybunału przez pokazanie. Ta decyzja buduje precedens, że państwo może używać sankcji nie tylko wobec przeciwników geopolitycznych, lecz także wobec międzynarodowego sądu i osób współpracujących z nim. Taki precedens może zachęcać inne rządy do podobnych działań wobec instytucji międzynarodowych, gdy ich decyzje staną się politycznie niewygodne.
+
+Incydent związany z odcięciem amerykańskich usług cyfrowych dla osób objętych sankcjami USA nie wydaje się stanowić jedynej przyczyny działań UE w obszarze suwerenności danych, lecz stał się katalizatorem politycznym wzmacniającym unijną debatę o ryzykach wynikających z zależności od dostawców podlegających jurysdykcji Stanów Zjednoczonych.
+
+\section{Problem CLOUD Act i FISA 702}
+
+Podstawą konfliktu prawnego w zakresie przetwarzania i wykorzystywania danych w chmurze oraz dostępu do nich przez władze Stanów Zjednoczonych są dwie amerykańskie ustawy: pierwsza to \textit{Clarifying Lawful Overseas Use of Data Act} (CLOUD Act, 2018)  \autocite{cloudact2018}, druga to sekcja 702 ustawy \textit{Foreign Intelligence Surveillance Act} (FISA 702) \autocite{fisa702}. Obie regulacje pozwalają władzom amerykańskim na żądanie dostępu do danych przechowywanych przez przedsiębiorstwa podlegające pod amerykańską jurysdykcję, bez względu na to, gdzie dane te się znajdują.
+
+Amerykański ustawodawca zdefiniował jurysdykcję w CLOUD Act, określając, że dotyczy ona podmiotu, a nie danych. Oznacza to, że Amazon, Microsoft i Google, które łącznie kontrolują około 70 procent europejskiego rynku usług w chmurze \autocite{synergy2025eu}, mogą zostać zobowiązane nakazem sądowym do ujawnienia danych swoich klientów, nawet jeśli serwery znajdują się na terytorium Unii Europejskiej \autocite{edpb2019cloudact}. Co istotne, ani osoba, której dane
+dotyczą, ani też żaden europejski organ nadzoru nie muszą być powiadamiani. Ustawa FISA~702 działa równolegle, upoważniając agencje wywiadowcze, bez nakazu, do gromadzenia komunikacji osób spoza Stanów Zjednoczonych.
+
+
+\section{Suwerenność danych: Gaia-X, suwerenne chmury obliczeniowe i poufne przetwarzanie danych}
+
+Europejską odpowiedzią na strukturalną zależność od dostawców spoza Unii Europejskiej jest opracowanie koncepcji \textbf{suwerenności danych cyfrowych}. Składa się ona z trzech wymiarów: rezydencja danych (\textit{data residency}), suwerenność prawna (\textit{data sovereignty}) oraz  suwerenność operacyjna (\textit{operational sovereignty}). Kluczowym problemem jest fakt, że
+fizyczna lokalizacja serwerów na terytorium Unii Europejskiej nie przesądza o jurysdykcji  prawnej. Stąd UE podjęła szereg inicjatyw: inicjatywę GAIA-X, suwerenne chmury, poufne przetwarzanie.
+
+\subsection*{Gaia-X}
+Inicjatywa Gaia-X, ogłoszona przez Niemcy i Francję w 2019~r. i formalnie zainicjowana przez Komisję Europejską w 2020 roku, ma na celu stworzenie interoperacyjnej, zdecentralizowanej infrastruktury danych zgodnej z europejskimi normami prawnymi i wartościami \autocite{braud2021gaiax}. Jego główne cele to: zapewnienie użytkownikom pełnej kontroli nad swoimi danymi i ich wykorzystaniem, standaryzacja usług chmurowych w oparciu o otwarte standardy oraz
+stworzenie alternatywy dla dominujących trzech amerykańskich hiperskalerów: Amazon, Google oraz Microsoft \autocite{braud2021gaiax}.
+
+Realizacja projektu jest kontrowersyjna. Krytycy zauważają, że do konsorcjum Gaia-X dołączyli sami hiperskalerzy, Amazon, Google i Microsoft, co rodzi pytania i wątpliwości o faktyczną suwerenność usług w ramach inicjatywy.
+
+\subsection*{Operator Chmury Krajowej (OChK)}
+Polska inicjatywa, czyli Operator Chmury Krajowej (OChK), jest poddawana podobnej krytyce jak Gaia-X. OChK jest spółką z ograniczoną odpowiedzialnością, w której po 50\% udziałów posiadają PKO Bank Polski oraz Polski Fundusz Rozwoju (PFR), oba podmioty z dominującym udziałem Skarbu Państwa. Spółka została powołana w celu utworzenia suwerennego, krajowego środowiska chmurowego
+dla polskiego sektora publicznego i finansowego.
+
+W roku 2019 OChK zawarł strategiczne partnerstwo z Google Cloud. W jego ramach OChK stał się certyfikowanym sprzedawcą usług Google w Polsce, a Google otworzył region chmurowy w Warszawie. Partnerstwo jest analogiczne do krytykowanego wejścia amerykańskich hiperskalerów do Gaia-X: OChK, który miał stanowić polską alternatywę dla dostawców spoza UE, stał się pośrednikiem sprzedaży ich usług.
+
+OChK w październiku 2025 roku ogłosiło, że platforma \blockquote{osiągnęła pełną suwerenność cyfrową zgodnie z definicją Cloud Sovereignty Framework Komisji Europejskiej} i że usługi podlegają \blockquote{całkowitej kontroli podmiotów z UE oraz unijnemu prawu, bez krytycznych zależności od dostawców spoza Europy}\autocite{ochk2025sovereignty}. Twierdzenie to wymaga jednak zastrzeżenia: dotyczy ono własnej warstwy platformowej OChK, natomiast nie eliminuje faktu, że klienci korzystający za pośrednictwem OChK z usług Google Cloud w dalszym ciągu korzystają z infrastruktury podmiotu podlegającego prawu USA, w tym CLOUD Act i FISA~702. W praktyce OChK umożliwia dwa różne modele, usługi własne (suwerenne) oraz usługi Google dystrybuowane przez OChK, które są niesuwerenne w sensie prawnym, i to od odbiorcy usługi i wybranej przez niego konfiguracji zamówienia oraz świadomości użytkownika zależy, z którego modelu faktycznie korzysta.
+
+\subsection*{Suwerenne chmury}
+
+Koncepcja suwerennej chmury odnosi się do oferty usług chmurowych, która gwarantuje, że dane pozostają pod prawną kontrolą jurysdykcji europejskiej. Jedyną drogą do prawdziwej suwerenności danych jest wybór dostawcy, który nie ma żadnych prawnych powiązań z jurysdykcją USA, czyli europejskich dostawców usług chmurowych całkowicie niezależnych od amerykańskich korporacji.
+
+\subsection*{Przetwarzanie poufne}
+
+Szyfrowanie danych w spoczynku i podczas przesyłania to wymóg stawiany przed przetwarzaniem poufnym \textit{confidential computing}. Jego bazę stanowią \textit{Zaufane Środowiska Wykonawcze} (TEE), sprzętowo izolowane środowiska, w których dane pozostają zaszyfrowane w czasie aktywnego przetwarzania, niedostępne ani dla hiperwizora, ani systemu operacyjnego, ani tym bardziej dla personelu dostawcy chmury \autocite{ijaibdcms2024tee}.
+
+TEE chronią przed nieautoryzowanym i pozajurysdykcyjnym dostępem do danych podczas ich przechowywania, transmisji oraz podczas obliczeń \autocite{ijaibdcms2024tee}.
+
+Warto podkreślić, że takie podejście wpisuje się bezpośrednio w oczekiwania polskiego i europejskiego nadzoru finansowego. Komisja Nadzoru Finansowego już w Komunikacie Chmurowym z 2020 roku wymagała od podmiotów nadzorowanych, by informacje prawnie chronione były szyfrowane zawsze \textit{at rest} oraz \textit{in transit} \autocite{knf2020chmura}, a kontrola nad kluczami
+kryptograficznymi pozostawała po stronie instytucji finansowej, nie dostawcy chmury.
+Obowiązujące od stycznia 2025~r. rozporządzenie DORA idzie o krok dalej, nakładając wymóg kompleksowej polityki szyfrowania obejmującej dane \textit{at rest}, \textit{in transit}, a także \textit{in use}, co jest bezpośrednim odniesieniem do scenariusza, w którym przetwarzanie poufne staje się nie tyle opcją, ile techniczną odpowiedzią na regulacyjne oczekiwania \autocite{dora2022}\autocite{dora_rts2024}.
+
+Z perspektywy jurysdykcyjnej, szczególnie wynikającej z ryzyk CLOUD Act, poufne obliczenia umożliwiają techniczne egzekwowanie reguł dotyczących lokalizacji przetwarzania, operacje mogą być wykonywane wyłącznie w autoryzowanych geograficznie lokalizacjach (\textit{powinowactwo lokalizacji}) i na dedykowanych hostach (\textit{powinowactwo hosta}) \autocite{ijaibdcms2024tee}. Co ważne, choć sama technologia nie uchyla prawnych obowiązków dostawcy wynikających z amerykańskiej ustawy CLOUD Act, to utrudnia realizację ewentualnych nakazów dostępu, a przede wszystkim eliminuje ryzyko cichego dostępu
+operacyjnego ze strony dostawcy.
+
+
+\section{Schrems I, II i konsekwencje dla transferu danych poza EOG}
+
+Rozwiązania prawne regulujące zakres transferu danych osobowych między Unią Europejską, a Stanami Zjednoczonymi stanowią jeden z najważniejszych punktów w historii  prawa o ochronie danych. Z perspektywy oceny ryzyka łańcuchów dostaw ICT, stanowi ona również  przykład tego, jak strukturalna luka prawna może  podważyć zgodność z przepisami tysięcy organizacji jednocześnie. Sekwencja zdarzeń zainicjowana przez jednego austriackiego studenta prawa doskonale ilustruje kategorię ryzyka, którą system ORION ma wykrywać i mierzyć.
+
+\subsection{Umowa Safe Harbour (2000–2015)}
+
+Podstawowym instrumentem regulującym transfer danych osobowych między UE a USA była decyzja Komisji 2000/520/WE, powszechnie znana jako \textit{Umowa Safe Harbour}. Przyjęta 26 lipca 2000 roku ustawa ustanowiła mechanizm autocertyfikacji, w ramach którego amerykańskie firmy mogły dobrowolnie zobowiązać się do przestrzegania siedmiu zasad ochrony danych: powiadomienia, wyboru, dalszego przekazywania, bezpieczeństwa, integralności danych, dostępu i egzekwowania. Po dokonaniu autocertyfikacji uzyskiwały prawo do otrzymywania danych osobowych z państw członkowskich UE bez dalszego uzasadnienia prawnego~\autocite{EuropeanCommission2000SafeHarbour}.
+
+Mechanizm działał na podstawie oświadczeń składanych w Departamencie Handlu USA, a ramy dostępu do danych opierały się wyłącznie na dobrej wierze organizacji uczestniczących i teoretycznej możliwości egzekwowania zasad przez Federalną Komisję Handlu USA. W szczytowym okresie ponad 4500 amerykańskich firm, w tym Facebook, Google, Microsoft i Amazon, działało na podstawie certyfikatu Safe Harbour, który stanowił podstawę prawną dla zdecydowanej większości komercyjnych przepływów danych między UE a USA.\autocite{EuropeanCommission2000SafeHarbour}.
+
+\subsection{Maximilian Schrems: Tło i strategia prawna}
+
+Maximilian Schrems, jest austiackim prawnikiem, działaczem na rzecz ochrony prywatności i założycielem organizacji pozarządowej \textit{noyb} (None of Your Business), zajmującej się egzekwowaniem europejskich przepisów o ochronie danych. W wyniku działania Schrems-a sprawę do Trybunału Sprawiedliwości Unii Europejskiej (TSUE) z wnioskiem o wydanie orzeczenia w trybie prejudycjalnym. 
+
+\subsection{Schrems I: Unieważnienie zasad Safe Harbor}
+
+6 października 2015 roku TSUE wydał wyrok w sprawie C-362/14, \textit{Maximillian Schrems przeciwko Komisarzowi Ochrony Danych}, powszechnie znanej jako \textit{Schrems~I}~\autocite{CJEU2015SchremsI}. Trybunał orzekł nieważność decyzji Komisji 2000/520/WE ze skutkiem natychmiastowym. Orzeczenie opierało się na dwóch
+zasadniczych podstawach. 
+Po pierwsze, Trybunał orzekł, że pierwszeństwo przyznane wymogom bezpieczeństwa narodowego, interesu publicznego i egzekwowania prawa USA nad zasadami Safe Harbor oznaczało, że amerykańskie firmy były systematycznie uprawnione, a w praktyce zmuszone, do odchodzenia od tych zasad, ilekroć wymagało tego prawo amerykańskie. Ramy, które mogą zostać uchylone przez suwerenne prawo państwa odbiorcy, nie mogą stanowić odpowiedniego poziomu ochrony w rozumieniu dyrektywy o ochronie danych.
+
+Po drugie, Trybunał stwierdził, że obywatele UE, których dane zostały przekazane do Stanów Zjednoczonych, nie mieli skutecznego środka odwoławczego ani administracyjnego, aby egzekwować swoje prawa wobec władz USA. Brak jakiegokolwiek mechanizmu umożliwiającego osobom z UE, których dane dotyczą,
+uzyskanie dostępu, poprawienie lub usunięcie danych przechowywanych przez amerykańskie agencje wywiadowcze, był nie do pogodzenia z podstawowym prawem do skutecznej ochrony sądowej zapisanym w artykule 47 Karty praw podstawowych UE.
+
+\subsection{Schrems II: Tarcza Prywatności}
+W odpowiedzi na wyrok w sprawie Schrems I, Komisja Europejska i Departament Handlu USA wynegocjowały nowe ramy prawne, Tarczę Prywatności UE–USA, która weszła w życie 12 lipca 2016 roku.
+
+Schrems natychmiast zakwestionował Tarczę Prywatności, argumentując, że nie rozwiązała ona fundamentalnych braków strukturalnych zidentyfikowanych w sprawie Schrems I. 16 lipca 2020 r. TSUE potwierdził tę ocenę w sprawie C-311/18, \textit{Data Protection Commissioner przeciwko Facebook Ireland Limited i Maximillian Schrems}, zwanej dalej \textit{Schrems~II}~\autocite{CJEU2020SchremsII}. Sąd unieważnił Tarczę Prywatności z zasadniczo tych samych powodów, co Safe Harbor: amerykańskie prawo dotyczące nadzoru (w szczególności art. 702 ustawy o nadzorze nad wywiadem zagranicznym (FISA)) oraz rozporządzenie wykonawcze 12333, nadal zezwalały na masowe gromadzenie danych obywateli UE bez odpowiednich ograniczeń, niezależnego nadzoru lub skutecznych mechanizmów dochodzenia roszczeń.
+
+Sprawa Schrems~II miała jednak szersze znaczenie niż samo unieważnienie Tarczy Prywatności. Trybunał wydał również niezwykle istotne wytyczne dotyczące standardowych klauzul umownych (SCC), orzekając, że eksporterzy i importerzy danych powołujący się na standardowe klauzule umowne są zobowiązani do oceny, w każdym indywidualnym przypadku, czy prawo kraju przeznaczenia zapewnia odpowiednią ochronę w praktyce, a nie tylko w teorii. Ten obowiązek, Ocena Skutków Przenoszenia (TIA), stał się nowym, obowiązkowym elementem zgodności dla każdej organizacji przekazującej dane osobowe poza EOG i jest on również istotnym aspektem w modelu ORION.
+
+\subsection{Ramy ochrony prywatności danych (2023–obecnie)}
+
+Po trzech latach intensywnych negocjacji Komisja Europejska przyjęła 10 lipca 2023 roku \textit{Ramy ochrony prywatności danych UE–USA (DPF)} w formie \textit{Decyzji wykonawczej Komisji (UE) 2023/1795}~\autocite{KomisjaEuropejska2023DPF}. DPF wprowadził nowy mechanizm odwoławczy: Sąd ds. Ochrony Danych (DPRC), mający na celu zapewnienie obywatelom UE wiążącego środka odwoławczego w przypadku bezprawnego gromadzenia informacji wywiadowczych. 
+
+DPF stanowi obecnie główną podstawę prawną przekazywania danych osobowych między UE a USA. Jednakże już Maximillian Schrems  zapowiedział dalsze postępowanie sądowe kwestionujące DPF przed sądami europejskimi, argumentując, że DPRC nie stanowi niezależnego organu sądowego w rozumieniu wymaganym przez orzecznictwo TSUE i że sekcja 702 ustawy FISA pozostaje niezmieniona w swoich najbardziej problematycznych  aspektach. 
+
+\subsection{Implikacje dla struktury ORION}
+
+Wyroki bedące skutkiem działań Schremsa niosą bezpośrednie implikacje dla metodologii ORION. Decyzje sądów wskazują, że ryzyko regulacyjne związane z geograficznym pochodzeniem dostawcy ICT jest problemem realnym, który musi być przez dostawców usług ICT brany pod uwagę.
+
+W modelu ORION ryzyko to jest wyliczane. Dostawcy geograficznie lokalizowani poaza EOG uruchamiają obowiązkowy zestaw pytań audytowych obejmujących aktualną podstawę prawną transferu danych, istnienia \textit{Oceny Skutków Transferu (\textit{TIA})} oraz weryfikacji postanowień umów regulujących wnioski rządowe o dostęp do danych. 
+Historia Safe Harbor, Privacy Shield i ciągła niepewność związana z DPF stanowią zatem empiryczne uzasadnienie dla jednej z kluczowych decyzji projektowych ORION: klasyfikacji pochodzenia geograficznego jako ryzka kluczowego.
+
+\section{Strategia legislacyjna UE: Data Act, EUCS i CADA}
+
+Europejska odpowiedź na ryzyko jurysdykcyjne ewoluuje z poziomu inicjatyw przemysłowych (Gaia-X) w~stronę wiążących instrumentów prawnych, tworzących  zalążek spójnego ekosystemu suwerenności cyfrowej. Trzy wzajemnie uzupełniające
+się inicjatywy: \textit{EU Data Act}, \textit{EUCS} oraz projektowany  \textit{Cloud and AI Development Act} adresują kolejno: prawa dostępu do danych i~ich przenoszalność, certyfikację bezpieczeństwa dostawców chmury oraz budowę europejskiej infrastruktury obliczeniowej.
+
+\subsection*{EU Data Act (Rozporządzenie 2023/2854)}
+
+\textit{Rozporządzenie Parlamentu Europejskiego i~Rady (UE) 2023/2854}, powszechnie znane jako \textit{EU Data Act}, zostało opublikowane w~Dzienniku Urzędowym UE 22~grudnia 2023~r.\ i~stało się w~pełni stosowane od 12~września 2025~r.~\autocite{dataact2023}. Regulacja wprowadza dwa mechanizmy bezpośrednio adresujące ryzyko jurysdykcyjne:
+
+\begin{enumerate}[label=(\roman*)]
+    \item Po pierwsze, art.~31 Data Act nakłada na dostawców usług przetwarzania danych obowiązek wdrożenia środków technicznych i~organizacyjnych uniemożliwiających
+    organom państw spoza Europejskiego Obszaru Gospodarczego dostęp do danych  przechowywanych w~UE bez ważnej podstawy w~prawie międzynarodowym lub
+    w~umowie między UE a~danym państwem trzecim~\autocite{dataact2023}. Przepis ten nie uchyla obowiązków dostawcy wynikających bezpośrednio z~prawa
+    państwa jego inkorporacji (takich jak CLOUD Act), lecz nakłada na dostawcę
+    obowiązek aktywnego kwestionowania wniosków uznanych za sprzeczne z~prawem
+    unijnym i~powiadamiania klienta.
+
+    \item Po drugie, Data Act zakazuje z~dniem 12~stycznia 2027~r.\ pobierania opłat za przełączenie dostawcy (\textit{switching fees}) i~ekstrakcję danych, co~bezpośrednio ogranicza ryzyko uzależnienia od jednego hiperskalera (\textit{vendor lock-in}) identyfikowane przez EBA i~Parlament Europejski \autocite{dataact2023}.
+\end{enumerate}
+
+\subsection*{Europejski Schemat Certyfikacji Bezpieczeństwa Chmury (EUCS)}
+
+Europejski Schemat Certyfikacji Bezpieczeństwa Chmury (\textit{European
+Cybersecurity Certification Scheme for Cloud Services , EUCS}), opracowywany
+przez Agencję Unii Europejskiej ds.\ Cyberbezpieczeństwa (\textit{ENISA}) na podstawie
+unijnego \textit{Aktu o~Cyberbezpieczeństwie (Rozporządzenie 2019/881)}, definiuje
+trzy poziomy zapewnienia: \textit{Basic}, \textit{Substantial} i~\textit{High}
+\autocite{enisa_eucs2022}. Projekt przewidywał również poziom
+\textit{High+}, który wprowadzałby wymogi jurysdykcyjne, rezydencję
+danych, personel operacyjny z~EOG i~brak wiążących powiązań korporacyjnych
+z~podmiotami spoza EOG, jako warunek certyfikacji dla usług krytycznych
+\autocite{enisa_eucs2022}.
+
+Brak politycznego porozumienia wśród państw członkowskich co do poziomu
+\textit{High+} jest jednym z~głównych czynników blokujących wdrożenie
+suwerennej oferty chmurowej dla sektora finansowego i~publicznego i~stanowi
+potwierdzenie tezy, że samo umieszczenie serwerów na terytorium UE nie
+przesądza o~jurysdykcji prawnej. Z~perspektywy zgodności z~DORA oznacza to,
+że instytucje finansowe nie dysponują dotychczas uzgodnionym,
+zharmonizowanym poziomem odniesienia dla oceny suwerenności dostawcy ICT
+na poziomie unijnym.
+
+\subsection*{Cloud and AI Development Act (CADA)}
+
+Najdalej idącą inicjatywą jest planowany \textit{Cloud and AI Development Act}
+(CADA), którego propozycja legislacyjna Komisji Europejskiej planowana jest na I~kwartał 2026~r.\ w~ramach
+programu prac Komisji COM(2025) 870~\autocite{ec_workprogramme2026}. Projekt
+opiera się na trzech filarach: rozbudowie europejskiej infrastruktury
+obliczeniowej (w~tym fabryk AI, \textit{AI Gigafactories}), ustanowieniu
+ram prawnych dla bezpiecznego przetwarzania danych w~chmurze oraz
+wzmocnieniu europejskiej niezależności infrastrukturalnej~\autocite{eprs_cada2025}.
+
+CADA wyrasta bezpośrednio z~rekomendacji raportu Draghiego z~2024~r.,
+który eksplicite wskazał strukturalną zależność UE od nieeuropejskich
+dostawców chmury jako ryzyko strategiczne dla konkurencyjności europejskiej
+gospodarki~\autocite{draghi2024}. Projekt zakłada możliwość nałożenia kar
+finansowych za niezgodność, a~jego podstawą prawną ma być art.~114 Traktatu
+o~Funkcjonowaniu Unii Europejskiej~\autocite{ec_workprogramme2026}.
+
+\subsection*{Implikacje dla modelu ORION}
+
+Trzy omówione inicjatywy, tj. Data Act, EUCS i~CADA, tworzą wzajemnie
+uzupełniający się system regulacyjny. Data Act reguluje prawa dostępu
+i~przenoszenia danych \textit{ex post}, EUCS certyfikuje bezpieczeństwo
+dostawców, a~CADA ma budować alternatywną, europejską infrastrukturę
+\textit{ex ante}. Z~perspektywy metodologii ORION istotne jest jednak,
+że żadna z~tych regulacji nie eliminuje jeszcze w~całości konfliktu
+jurysdykcyjnego wynikającego z~CLOUD Act: Data Act nie uchyla prawnych
+obowiązków dostawcy wynikających z~prawa USA, a~EUCS pozostaje nieukończony
+na poziomie wymaganym dla usług krytycznych.
+
+Stanowi to empiryczne uzasadnienie dla jednej z~kluczowych decyzji
+projektowych ORION: traktowania jurysdykcji geograficznej dostawcy jako
+\textbf{czynnika ryzyka, którego nie można się pozbyć} w~drodze samej konfiguracji
+usługi, wymagającego wymiany dostawcy lub zastosowania poufnego przetwarzania
+jako warstwy kompensacyjnej.
+
+
+
+% -----------------------------------------------
+\section{Przykładowe scenariusze konfliktu}
+
+Konflikt wynikający z Cloud Act pojawia się na wielu płaszczyznach. Ogólny ogląd na przechowywanie danych w chmurze należy uszczegółowić, by wskazać, jakie informacje i w jakich sytuacjach mogą opuszczać EOG. Po pierwsze należy zwrócić uwagę, w jaki sposób dane są przechowywane.
+
+Przekazywane mogą być całe kopie maszyn wirtualnych, bez względu na jakim systemie operacyjnym działają. W takiej sytuacji nie ma znaczenia czy podmiot korzysta z rozwiązań Open Source (Linux vs Windows), nie ma również znaczenia jakie oprogramowanie jest na danym systemie zainstalowane oraz kto jest jego producentem, np. komercyjny silnik bazy danych Oracle, Microsoft SQL, etc. vs PostgreSQL, MySQL. Ryzyko związane z CLOUD Act zależy nie od silnika bazy danych (MySQL, Oracle, PostgreSQL), lecz od lokalizacji infrastruktury i jej operatora. Sama zmiana silnika bazy danych nic nie zmienia, decydująca jest jurysdykcja nad infrastrukturą hostingową.
+
+W przypadku systemów operacyjnych użytkownik narażony jest na dodatkowy kanał ryzyka, równoległy do przesłania danych z maszyn wirtualnych, czyli informacji zebranych przez system, przykładowo mechanizm telemetrii dostępny nie tylko w systemie Windows\autocite{microsoft_telemetry_docs}, ale również macOS\autocite{apple_telemetry_privacy_guides} oraz zostanie dołączona do dystrybucji Linux Fedora\autocite{fedora_wiki_telemetry}, rozwijanej przez RedHat / IBM.
+
+Telemetria Windows nie przesyła wprost zawartości baz danych, jednak może przekazywać informacje takie jak nazwy procesów i ścieżki plików, zdarzenia audytu logowania (np. SQL Server Audit), czy błędy połączeń
+bazodanowych. W kontekście postępowania informacje te mogą być wystarczające do ukierunkowania żądania CLOUD Act
+wobec Google (jak i każdego innego hiperscalera podlegającego pod CLOUD Act) o wydanie pełnych danych z dysku VM.
+
+\subsection{Mechanizm telemetrii w systemie Windows}
+
+Systemy operacyjne z rodziny Windows zbierają dane diagnostyczne
+i behawioralne tzw. \textit{telemetrię},  obejmujące informacje o:
+\begin{itemize}[noitemsep]
+  \item używanych aplikacjach i ich awariach,
+  \item aktywności sieciowej i połączeniach,
+  \item konfiguracji sprzętu,
+  \item zdarzeniach systemowych rejestrowanych w Event Viewer,
+  \item lokalizacji użytkownika (przy odpowiednim poziomie uprawnień).
+\end{itemize}
+
+Kluczową usługą odpowiedzialną za transmisję telemetrii jest
+\texttt{DiagTrack} (\textit{Connected User Experiences and Telemetry}),
+która regularnie przesyła dane do serwerów Microsoft zlokalizowanych w USA.
+Dane te, trafiając do infrastruktury podmiotu objętego jurysdykcją
+amerykańską, wchodzą automatycznie w zakres CLOUD Act.
+
+
+% \subsubsection{Rekomendacje dotyczące telemetrii}
+
+% W środowiskach podlegających NIS2, DORA lub RODO zaleca się:
+% \begin{enumerate}[noitemsep]
+%   \item Wyłączenie lub ograniczenie telemetrii do poziomu
+%   \texttt{Security} lub \texttt{Basic} za pomocą GPO lub edytora rejestru.
+%   \item Zablokowanie ruchu egress do endpointów telemetrycznych
+%   Microsoft na poziomie firewalla (\texttt{vortex.data.microsoft.com},
+%   \texttt{settings-win.data.microsoft.com} i inne).
+%   \item Unikanie kont Microsoft powiązanych z systemem operacyjnym.
+%   \item Rozważenie migracji do systemów operacyjnych typu open-source
+%   (Linux) w środowiskach przetwarzających dane wrażliwe.
+% \end{enumerate}
+
+% -----------------------------------------------
+
+
+\subsection{Scenariusz kumulacji ryzyk: Windows Server na Google Cloud, Microsoft Azure, AWS}
+
+Warto przeprowadzić eksperyment myślowy ze scenariuszem, w który  uruchamiono system operacyjny na maszynie wirtualnej w centrum danych. Szczególnie wysokim profilem ryzyka charakteryzuje się konfiguracja polegająca na uruchomieniu Windows Server jako maszyny wirtualnej w Google Cloud Platform (lub innej podległej pod jurysdykcję CLOUD Act) z zainstalowanym silnikiem bazy danych.
+Wskazanie Google Cloud Platform oraz Microsoft Windows są wizualizacją przykładu i wynikają z popularności usług.
+
+\noindent Scenariusz ten łączy jednocześnie trzy warstwy ryzyka.
+
+\subsection{Trzy warstwy ryzyka}
+
+\paragraph{Warstwa 1, Chmura a CLOUD Act.}
+Hostingującą firmą jest podmiot amerykański, z tego wynika, że każda maszyna wirtualna w tym centrum danych,
+niezależnie od regionu (w tym \texttt{europe-central2} w Warszawie), 
+podlega CLOUD Act. Organy USA mogą żądać danych od dostawcy bezpośrednio,
+bez informowania właściciela.
+
+\paragraph{Warstwa 2, Windows Server a telemetria.}
+Windows Server uruchomiony jako VM na chmurze generuje telemetrię przesyłaną
+do serwerów Microsoft. Oznacza to \textbf{dwa niezależne podmioty
+objęte CLOUD Act}: Google (infrastruktura VM) oraz Microsoft (telemetria
+systemowa). Możliwe jest równoległe żądanie skierowane do obu firm.
+
+\paragraph{Warstwa 3, Dostęp Google do danych bazy danych.}
+Google jako hypervisor ma techniczną możliwość dostępu do dysków
+Persistent Disk przypisanych do maszyny wirtualnej. Przy domyślnym
+szyfrowaniu zarządzanym przez Google KMS, firma może odczytać zawartość
+dysku w tym pliki danych bazy snapshoty, logi i backupy.
+
+\subsection{Macierz wektorów dostępu}
+
+\begin{table}[h!]
+\centering
+\caption{Wektory dostępu do danych bazy przy konfiguracji Windows Server / GCP}
+\label{tab:vectors}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{>{\raggedright}p{4.5cm} >{\raggedright}p{2.5cm}
+>{\raggedright\arraybackslash}p{5.5cm}}
+\toprule
+\textbf{Wektor dostępu} & \textbf{Podmiot} & \textbf{Co może być ujawnione} \\
+\midrule
+Nakaz CLOUD Act do Google & Google LLC & Pliki danych bazy, snapshoty
+dysków, logi, backupy GCS \\
+Telemetria Windows & Microsoft Corp & Metadane systemu, Event Log,
+ścieżki plików \\
+Cloud SQL (jeśli użyte) & Google LLC & Bezpośredni dostęp do tabel
+przez DBaaS API \\
+Klucze Google KMS (domyślne) & Google LLC & Możliwość odszyfrowania
+dysków VM \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Rekomendacje dla środowisk regulowanych (NIS2 / DORA / RODO)}
+
+Na podstawie przeprowadzonej analizy formułuje się następujące rekomendacje
+dla organizacji przetwarzających dane wrażliwe lub dane operacyjne
+podlegające dyrektywie NIS2 i rozporządzeniu DORA:
+
+\begin{enumerate}
+  \item \textbf{CMEK z zewnętrznym HSM} (\textit{Customer-Managed
+  Encryption Keys}), klucze do dysków VM przechowywane poza
+  infrastrukturą dostawcy chmury eliminują techniczną możliwość
+  odszyfrowania przez Google lub AWS.
+
+  \item \textbf{BYOK dla baz danych} (\textit{Bring Your Own Key}), niezależne szyfrowanie danych
+  w bazie (np. TDE \textit{Transparent Data Encryption}) z kluczem
+  zarządzanym przez klienta, poza środowiskiem chmurowym.
+
+  \item \textbf{Wyłączenie telemetrii Windows} na poziomie GPO
+  (\texttt{Security level}) oraz zablokowanie ruchu do endpointów
+  telemetrycznych na poziomie firewalla egress.
+
+  \item \textbf{Wybór europejskiego dostawcy infrastruktury w usłudze} spoza jurysdykcji
+  USA (w pełni zlokalizowane w EOG) jako infrastruktury
+  dla systemów krytycznych.
+
+  \item \textbf{Uwzględnienie CLOUD Act w rejestrze ryzyk IT}, jako
+  ryzyko regulacyjne kategorii \textit{prawne / compliance},
+  z przypisaniem prawdopodobieństwa i wpływu zgodnie z metodologią
+  przyjętą w organizacji.
+
+  \item \textbf{Audyt umów z dostawcami chmurowymi} pod kątem klauzul
+  dotyczących żądań rządowych oraz regularny monitoring
+  \textit{Government Request Transparency Reports} publikowanych przez
+  Google, Microsoft i Amazon.
+\end{enumerate}
+
+% -----------------------------------------------
+\subsection{Wnioski}
+
+CLOUD Act stanowi realne i wielowarstwowe zagrożenie dla suwerenności
+danych europejskich organizacji. Zagrożenie to nie ogranicza się do
+danych przechowywanych bezpośrednio w usługach chmurowych (DBaaS, SaaS),
+lecz obejmuje również metadane generowane przez systemy operacyjne
+(telemetria Windows) oraz dane na dyskach wirtualnych maszyn IaaS
+zarządzanych przez podmioty podlegające prawu USA.
+
+Konfiguracja łącząca Windows Server z Google Cloud Platform jako
+infrastrukturą hostingową bazy danych tworzy najwyższy profil
+ryzyka, dwa niezależne podmioty objęte CLOUD Act uzyskują potencjalny dostęp do danych przez różne kanały techniczne.
+
+Skuteczna mitigacja tego ryzyka wymaga działań na poziomie infrastrukturalnym (wybór dostawcy spoza jurysdykcji USA), kryptograficznym
+(CMEK, BYOK) oraz operacyjnym (wyłączenie telemetrii, audyt umów).
+Środki te powinny być traktowane jako elementy systemu zarządzania ryzykiem IT, spójne z wymogami dyrektywy NIS2 i rozporządzenia DORA.
+

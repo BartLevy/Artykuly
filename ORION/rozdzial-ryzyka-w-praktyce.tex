@@ -1,0 +1,309 @@
+\chapter{Ryzyka w praktyce: zagrożenia, konsekwencje i dobre praktyki}
+
+Zrozumienie architektury środowiska organizacji oraz pełna inwentaryzacja usług jest kluczem do prawidłowego zarządzania ryzykiem ICT. Badania przeprowadzone przez firmę \textit{Swimlane} wykazały, że~71\% organizacji nie jest w~stanie całościowo dokonać audytu wszystkich systemów zgodnie z~wewnętrznymi i~zewnętrznymi standardami \autocite{swimlane2025grc}.
+Badani wskazują jako przyczyny:
+
+\begin{itemize}
+    \item \textit{Fragmentację narzędzi}: 92\% respondentów korzysta
+          z~co najmniej trzech różnych narzędzi do zbierania dowodów
+          audytowych, co powoduje powielanie pracy i~niespójność danych;
+    \item \textit{Uzależnienie od procesów manualnych}: średnio jedynie
+          39\% procesu zbierania dowodów jest zautomatyzowane; ponad
+          połowa organizacji (54\%) poświęca ponad 5~godzin tygodniowo
+          na ręczne zadania compliance;
+    \item \textit{Podatność na błędy w~danych}: 62\% organizacji
+          przyznaje, że proces zbierania dowodów audytowych jest
+          przynajmniej sporadycznie obarczony błędem;
+    \item \textit{Brak współpracy między zespołami}:
+          90\% organizacji wskazuje, że słaba koordynacja między 
+          zespołami  podważa gotowość do audytu;
+    \item \textit{Rosnącą złożoność regulacyjną}: 96\% organizacji
+          twierdzi, że dotrzymanie kroku rosnącej liczbie regulacji
+          branżowych stanowi istotne wyzwanie.
+\end{itemize}
+
+
+Jakość prowadzonych audytów bywa podważana przez samych badanych. Brak kompetencji osób wypełniających kwestionariusze audytowe nie gwarantuje poprawności udzielanych odpowiedzi.
+Badanie \textit{The Next Generation Cybersecurity Auditor}
+przeprowadzone na próbie 151~tys. audytorów IT z firm Big Four (\textit{Deloitte, Ernst \& Young, KPMG, PricewaterhouseCoopers}) wykazało, że poziom wiedzy proceduralnej (praktycznej) audytorów był o~17\% niższy niż poziom ich wiedzy teoretycznej, a poziom pewności siebie respondentów nie był skorelowany z ich rzeczywistymi
+wynikami, co wskazuje na efekt Dunninga-Krugera w~środowisku audytorskim \autocite{nextgen2022auditor}.
+
+
+Dodatkowym problemem obniżającym jakość audytów jest zjawisko nierzetelnego wypełniania kwestionariuszy przez respondentów. Badania z zakresu ekonomii behawioralnej wskazują, że nieuczciwość w~systemach samoraportowania jest powszechna, Friesen i~Gangadharan wykazali eksperymentalnie, że~respondenci częściej podają prawdziwe
+informacje w~reżimach raportowania obowiązkowego niż dobrowolnego, co sugeruje, iż~bez odpowiednio zaprojektowanych mechanizmów egzekwowania trudno osiągnąć satysfakcjonujący poziom zgodności
+odpowiedzi ze~stanem faktycznym \autocite{friesen2013designing}. Potwierdzają to badania Peer i~in., którzy wykazali, że~zobowiązanie do złożenia przysięgi uczciwości zmniejsza skłonność do nieuczciwości
+(\textit{OR} = 0{,}79 [0{,}72; 0{,}88]), jednak sama relacja interpersonalna między wypełniającym a~audytorem nie wywiera istotnego wpływu na~rzetelność odpowiedzi
+(\textit{OR} = 1{,}08 [0{,}97; 1{,}20]) \autocite{peer2023commitment}.
+Oznacza to, że~dowody pozyskane poprzez nieusystematyzowane, dobrowolne kwestionariusze audytowe mogą być obarczone istotną słabością metodologiczną, a~ich wartość jako podstawy oceny ryzyka ICT powinna być traktowana z~należytą ostrożnością.
+
+\section{Shadow IT}
+
+Trudnym do wykrycia problemów z bezpieczeństwem jest zjawisko zwane jako \textit{Shadow IT}. 
+Definiuje się je, jako wykorzystanie przez pracowników narzędzi informatycznych, 
+aplikacji, urządzeń lub usług bez wiedzy i zgody działu IT organizacji  \autocite{ibm_shadowit}. W wyniku restrykcyjnych polityk  bezpieczeństwa, użytkownicy sięgają po nieautoryzowane rozwiązania informatyczne w celu usprawnienia codziennej pracy, zjawisko to nasilił wzrost popularności  modelu pracy zdalnej \autocite{jumpcloud2024}.
+
+Raport Capterra z 2023 roku wskazuje, że 76\% małych i średnich przedsiębiorstw identyfikuje \textit{Shadow IT} jako umiarkowane lub poważne zagrożenie dla cyberbezpieczeństwa \autocite{capterra2023}. Badania JumpCloud pokazują, że 
+w 2023 roku 41\% pracowników korporacyjnych korzystało z technologii pozostających 
+poza nadzorem działu IT \autocite{jumpcloud2024}, a średnio firma dysponuje 975 
+nieznanymi usługami chmurowymi, podczas gdy jedynie 108 jest przez nią oficjalnie 
+monitorowanych \autocite{josys2024}.
+
+Niepokojący jest wpływ \textit{Shadow IT} na bezpieczeństwo organizacji. Badanie 
+Kaspersky z 2023 roku wykazało, że 85\% firm doświadczyło incydentów cyberbezpieczeństwa, 
+przy czym w co najmniej 11\% przypadków rola \textit{Shadow IT} była bezpośrednio 
+udokumentowana \autocite{kaspersky2023}. Szacuje się, że prawie połowa wszystkich 
+cyberataków ma swoje źródło właśnie \textit{w Shadow IT}.Wykrycie \textit{Shadow IT} jest szczególnie trudne, ponieważ zasoby te z definicji funkcjonują 
+poza zasięgiem standardowych narzędzi monitorowania sieci i systemów bezpieczeństwa \autocite{isaca2024}.
+
+Istnienie \textit{Shadow IT} w organizacji stanowi sygnał, że istniejące polityki i narzędzia IT nie zaspokajają w pełni potrzeb 
+pracowników. Pracownicy wykorzystujący w swojej pracy  nieautoryzowane rozwiązania pokazują, że istnieją luki w oficjalnej ofercie narzędziowej organizacji.  Sutuacja ta powinna  skłoniać  działy IT do werfyikacji swoich polityk oraz systemów szkoleń\autocite{grip2025}.
+
+
+\section{Shadow AI}
+
+Dynamiczny rozwój narzędzi generatywnej sztucznej inteligencji w~latach 2022-2025 wytworzył nową kategorię zjawiska Shadow IT, określaną jako \textit{Shadow AI}. Definiuje się je jako wykorzystanie przez pracowników systemów sztucznej inteligencji, w~szczególności narzędzi generatywnych, bez wiedzy, zgody i~oceny bezpieczeństwa ze~strony działu IT organizacji \autocite{gartner2025crossborder}.
+
+Shadow AI wyróżnia się od klasycznego Shadow IT jedną właściwością istotnie zwiększającą profil ryzyka: użycie narzędzia AI nieodłącznie wiąże się z~przesyłaniem danych wejściowych do infrastruktury zewnętrznego dostawcy. Klasyczne Shadow IT może działać lokalnie, bez transferu danych poza organizację. Shadow AI natomiast z~definicji eksportuje dane wejściowe każdorazowo, gdy pracownik sformułuje zapytanie do modelu.
+
+Skala zjawiska jest znaczna. Raport LayerX Security wykazał, że 50\% pracowników przyznało się do wklejania wrażliwych danych firmowych do narzędzi generatywnej AI, z~czego 18\% deklarowało udostępnianie danych szczególnie wrażliwych \autocite{layerx_2025}. Analiza Cyberhaven Labs, obejmująca 1,6~mln pracowników, wykazała, że 11\% danych wklejanych do ChatGPT stanowią informacje poufne, a~przeciętna firma notuje kilkaset takich zdarzeń tygodniowo \autocite{cyberhaven_chatgpt}. Raport Microsoft \textit{Work Trend Index 2024} wskazał, że 78\% pracowników korzystających z~AI w~pracy robi to za pomocą własnych, prywatnych kont w~narzędziach niezatwierdzonych przez pracodawcę \autocite{microsoft2024worktrend}.
+
+Shadow AI generuje trzy odrębne kategorie ryzyka regulacyjnego.
+
+\begin{itemize}
+      \item \textit{Ryzyko naruszenia RODO.}
+Dane przesyłane do modeli generatywnej AI trafiają na serwery dostawców zlokalizowane poza Europejskim Obszarem Gospodarczym. Stanowi to transfer danych osobowych wymagający ważnej podstawy prawnej w~rozumieniu rozdziału~V RODO, takiej jak standardowe klauzule umowne (SCC) lub przynależność dostawcy do Ram Ochrony Prywatności Danych (DPF). W~przypadku Shadow AI transfer ten odbywa się bez wiedzy administratora, co wyklucza spełnienie wymogu rozliczalności z~art.~5 ust.~2 RODO: pracownik, bez stosownego umocowania, dokonuje transferu danych, za~który organizacja ponosi pełną odpowiedzialność.
+
+\item \textit{Ryzyko na gruncie AI Act.}
+Rozporządzenie (UE) 2024/1689, zwane \textit{AI Act}, które weszło w~życie 1~sierpnia 2024~roku, nakłada na podmioty \textit{stosujące} systemy AI obowiązki uzależnione od poziomu ryzyka danego systemu \autocite{euaiact2024}.
+Korzystanie przez pracownika z~niezatwierdzonego modelu AI do wspomagania decyzji kredytowych, rekrutacyjnych lub diagnostyki medycznej może oznaczać, że organizacja faktycznie stosuje system AI wysokiego ryzyka w~rozumieniu art.~6 i~załącznika~III AI~Act bez przeprowadzenia wymaganej oceny zgodności i~bez zapewnienia nadzoru ludzkiego. Odpowiedzialność spoczywa na organizacji niezależnie od tego, że wdrożenie nastąpiło bez wiedzy zarządu.
+
+\item \textit{Ryzyko jakości i~wiarygodności.}
+Modele generatywnej AI mogą generować błędne informacje, określane jako \textit{halucynacje modelu}. Wbudowanie wyników działania niezweryfikowanego modelu w~procesy decyzyjne, na~przykład w~analizy prawne, rekomendacje medyczne lub wyceny finansowe, bez procedury weryfikacji tworzy ryzyko operacyjne, za~które odpowiada organizacja. Warunki korzystania z~większości narzędzi generatywnej AI wprost wyłączają odpowiedzialność dostawcy za~skutki biznesowe zastosowania generowanych treści.
+\end{itemize}
+
+Podobnie jak Shadow IT, Shadow AI jest diagnozą organizacyjną: pracownicy sięgają po niezatwierdzone modele AI, ponieważ zatwierdzone rozwiązania nie spełniają ich potrzeb lub procedura akceptacji jest zbyt długa. Odpowiedzią nie jest wyłącznie zakaz, lecz wdrożenie zatwierdzonego środowiska AI uzupełnionego polityką dopuszczalnego użycia, która definiuje, jakich danych nie wolno wprowadzać do żadnego zewnętrznego modelu.
+
+
+\section{Edukacja jako fundament ochrony danych osobowych}
+
+Problem \textit{shadow IT} oraz niewłaściwego posługiwania się danymi osobowymi jest w~znacznej mierze wynikiem niewystarczającego poziomu świadomości i~wiedzy pracowników.
+Badania przeprowadzone przez Stanford University i~firmę Tessian wskazują, że \textbf{88\%~naruszeń} bezpieczeństwa informacji wynika z~błędu ludzkiego, a~nie
+z~działania cyberprzestępców~\autocite{isoqar_blad_ludzki}. Raport Verizon \textit{Data Breach Investigations Report~2024} wskazuje,
+że czynnik ludzki, zdefinowany jako  nieświadome błędy lub brak kompetencji, pozostaje głównym źródłem naruszeń bezpieczeństwa danych ~\autocite{verizon_dbir_2024}.
+Raport \textit{Cyberportret polskiego biznesu} z~2024~roku przedstawił dane dla Polski: ponad połowa pracowników w~polskich firmach nie przeszła żadnego
+szkolenia z~zakresu cyberbezpieczeństwa i~ochrony danych w~ciągu ostatnich pięciu lat~\autocite{brandsit_szkolenia_2025}.
+
+Skala i~charakter najczęstszych incydentów potwierdzają diagnozę. W~2024~roku zespół CERT~Polska odnotował wzrost liczby cyberzagrożeń, liczba zgłoszeń w jednym roku przekroczyła 600~tysięcy, najczęstszym incydentem były ataki phishinggowe, czyli uzyskanie korzyści przez przestępców poprzez manipulacje zachowania ofiery, a~nie na przełamaniu
+zabezpieczeń technicznych~\autocite{cert_polska_2024}. W~badaniu przeprowadzonym przez Keepnet Labs w~2026~roku 45\%~pracowników przyznało, że ich
+organizacja nie zapewniła szkoleń z~zakresu bezpieczeństwa\autocite{keepnet_2026}.
+
+W~kontekście polskiego rynku sygnałem pozytywnym jest fakt, że cyberbezpieczeństwo stało się najszybciej rosnącym segmentem rynku IT w~Polsce, a w~latach 2024-2025 
+niemal dwie trzecie respondentów wskazało je na pierwszym miejscu wśród inwestycji IT, 43\%~badanych uznało je za najważniejszy pojedynczy obszar~\autocite{pap_cyberbezpieczenstwo_2026}. Wzrost wydatków koncentruje się na rozwiązaniach technicznych, a~nie na edukacji pracowników, co~przy dominacji błędu ludzkiego jako źródła incydentów stanowi strategiczną asymetrię w~alokacji zasobów~\autocite{brandsit_szkolenia_2025}.
+
+\subsection*{Wymiar regulacyjny obowiązku szkolenia}
+
+Edukacja pracowników nie jest jedynie kwestią dobrej praktyki lub woli pracodawcy. Aktualnie jest obowiązkiem, wynikającym aktów prawnych.
+RODO nakłada na administratora obowiązek zapewnienia, by osoby upoważnione do przetwarzania danych osobowych były odpowiednio przeszkolone (art.~32 ust.~4 RODO),
+a~brak szkoleń jako środka techniczno-organizacyjnego stanowi  podstawę do nałożenia kary przez UODO~\autocite{isoqar_blad_ludzki}. Rozporządzenie DORA
+zobowiązuje instytucje finansowe do prowadzenia programów podnoszenia świadomości w~zakresie ryzyka ICT, w~tym kadry zarządzającej~\autocite{nflo_dora}.
+Norma ISO/IEC~27001 wprost wymaga wdrożenia udokumentowanych programów szkoleń i~uświadamiania jako kontroli organizacyjnej~\autocite{isoqar_blad_ludzki}.
+Brak lub niewystarczający program szkoleniowy staje się zatem nie tylko źródłem
+ryzyka operacyjnego, lecz również jest przyczyną i źródłem niezgodność z~obowiązującym prawem.
+
+\section{Często występujące ryzyka związane z~nieprawidłowym przetwarzaniem danych}
+
+Niewłaściwe i~ryzykowne zachowania pracowników można zidentyfikować i~wskazać główne
+ich źródła. Poniżej przedstawiono najistotniejsze kategorie zachowań, udokumentowane
+przez raporty branżowe, organy nadzoru oraz literaturę naukową.
+
+\begin{itemize}
+
+\item \textit{Przekazywanie danych do narzędzi generatywnej AI.}
+Pracownicy przekazują dane wrażliwe, treści umów, numery PESEL,
+historię transakcji,  do narzędzi takich jak ChatGPT, Copilot czy Gemini,
+w~celu ich podsumowania lub analizy. Dane te trafiają bezpośrednio na serwery
+dostawców zlokalizowane w~Stanach Zjednoczonych, poza kontrolą organizacji.
+Raport LayerX Security \textit{Enterprise AI and SaaS Data Security Report~2025}
+wykazał, że \textit{50\% pracowników} przyznało się do wklejania wrażliwych
+danych firmowych do narzędzi generatywnej AI, przy czym 18\% z~nich
+deklarowało udostępnianie danych szczególnie wrażliwych, w~tym danych produkcyjnych
+i~zastrzeżonych~\autocite{layerx_2025}. Równolegle analiza Cyberhaven Labs,
+obejmująca 1,6~mln pracowników, wykazała, że 11\% danych
+wklejanych przez pracowników do ChatGPT stanowią informacje poufne, a~przeciętna
+firma notuje kilkaset takich zdarzeń tygodniowo\autocite{cyberhaven_chatgpt}.
+
+\item \textit{Używanie prywatnych kont w~usługach chmurowych do transferu dokumentów służbowych.}
+Pracownicy przesyłają dokumenty zawierające dane osobowe na prywatne konta Google Drive,
+Dropbox czy Microsoft OneDrive, omijając firmowe procedury DLP
+(\textit{Data Loss Prevention}). Według raportu WifiTalents \textit{Shadow IT Statistics~2025},
+58\% pracowników korzysta z~prywatnych rozwiązań do przechowywania plików
+bez zgody działu IT, a 47\% omija kontrole bezpieczeństwa
+przy użyciu narzędzi shadow IT~\autocite{wifitalents_shadow_2025}. Dane te,
+gdy zostaną umieszczone poza infrastrukturą organizacji, stają się niedostępne w celach nadzorczych, co uniemożliwia wykazanie zgodności
+z~zasadą rozliczalności wynikającą z~art.~5 ust.~2 RODO.
+
+\item \textit{Przesyłanie danych przez niezatwierdzone komunikatory i~dyski chmurowe.}
+Pracownicy korzystają z~komunikatorów takich jak WhatsApp lub~Messenger.
+Choć komunikacja w~aplikacjach takich jak WhatsApp jest szyfrowana \textit{end-to-end}, czyli wyłącznie między urządzeniami uczestników, nie gwarantuje to zgodności z~RODO, ponieważ metadane, kopie zapasowe i~historia czatów mogą być przechowywane przez dostawcę poza EOG~\autocite{dataprotectionpeople_human_error}. Badanie WifiTalents
+wykazało, że 37\% pracowników używa niezatwierdzonych komunikatorów
+do komunikacji służbowej~\autocite{wifitalents_shadow_2025}.
+
+\item \textit{Błędne utożsamianie pseudonimizacji z~anonimizacją.}
+W~dokumentach przekazywanych do analizy lub testów pozostają inicjały, numery PESEL
+lub numery rachunków bankowych, które pracownicy nierzadko traktują jako
+wystarczające zanonimizowanie danych. Dane pseudonimowe nadal
+identyfikują osobę fizyczną w~rozumieniu art.~4 pkt~1 RODO i~nie wyłączają
+stosowania przepisów rozporządzenia~\autocite{aepd_test_environments}.
+Preuveneers i~in.\ wykazali, że modele głębokiego uczenia
+są w~stanie z~dokładnością 73,4\% zidentyfikować gospodarstwa domowe
+na podstawie pozornie pseudonimowych danych pomiarowych w~zbiorze liczącym
+ponad 5000 podmiotów~\autocite{preuveneers2024repseudo}.
+
+\item \textit{Używanie narzędzi do transkrypcji spotkań bez oceny ryzyka.}
+Narzędzia takie jak Otter.ai, Fireflies.ai czy rozszerzenia oparte na ChatGPT
+automatycznie dołączają do posiedzeń, nagrywają rozmowy i~przesyłają transkrypty
+na serwery zewnętrznych dostawców, często zlokalizowane w~USA~\autocite{legal_io_transcription}.
+Uczestnicy spotkań mogą nie być świadomi obecności utomatu nagrywającego,
+co~stanowi naruszenie zasady przejrzystości z~art.~5 ust.~1 lit.~a RODO.
+Co istotne, warunki korzystania wielu  narzędzi transkrypcyjnych, zezwalają na
+wykorzystanie nagrań i transkrypcji do trenowania modeli AI, co oznacza, że treści posiedzeń
+z~danymi klientów mogą zasilać bazy treningowe dostawcy bez podstawy prawnej~\autocite{linkedin_transcription_risk}.
+
+\item \textit{Przesyłanie danych wrażliwych mailem}.
+Przekazywane danych wrażliwych pocztą elektroniczną do zewnętrznych adresatów
+bez uprzedniego zawarcia umowy powierzenia przetwarzania danych (DPA) oraz odpowiedniego zabezpieczenia załącznika (bezpiecznycm hasłem), wymaganej przez art.~28 RODO.
+Badanie MailIntelligence wykazało, że 65\% incydentów utraty danych
+jest powodowanych przez wiadomości e-mail skierowane do niewłaściwego adresata
+lub przesłane bez odpowiednich zabezpieczeń~\autocite{mailintelligence_2024}.
+Takie przekazanie danych  stanowi naruszenie RODO, niezależnie od tego, czy doszło do faktycznego wycieku.
+
+\item \textit{Kopiowanie danych produkcyjnych do środowisk testowych bez anonimizacji.}
+Dane wrażliwe z~systemów produkcyjnych są przenoszone do środowisk deweloperskich
+lub testowych w~niezmienionej formie, co narusza art.~25 RODO (zasada
+\textit{privacy by design and by default}) oraz zasady minimalizacji i~ograniczenia celu~\autocite{aepd_test_environments}.
+Agencja ochrony danych Hiszpanii (AEPD) wprost wskazuje, że używanie rzeczywistych
+danych osobowych w~środowiskach testowych jest dopuszczalne jedynie gdy jest bezwzględnie konieczne i~zabezpieczone zgodnie z~art.~32 RODO~\autocite{aepd_test_environments}.
+W~praktyce konieczność ta rzadko zachodzi, dostępne są narzędzia do generowania
+danych syntetycznych, a~rezygnacja z~ich stosowania wynika z~wygody, nie z~merytorycznej potrzeby.
+
+\item \textit{Przekazywanie danych pacjentów firmom IT bez podstawy prawnej.}
+Podczas zgłaszania usterek w~oprogramowaniu medycznym pracownicy przekazują
+firmom serwisowym fragmenty dokumentacji pacjentów lub całe zrzuty baz danych.
+Najwyższa Izba Kontroli w~raporcie \textit{RODO w~szpitalu} z~2019~roku wykryła
+ten proceder w~11 z~kontrolowanych szpital, gdzie udostępniono dane podmiotom zewnętrznym
+bez umowy powierzenia ani innej podstawy prawnej~\autocite{nik_rodo_szpital}.
+
+\item \textit{Przechowywanie dokumentów tożsamości klientów bez podstawy prawnej.}
+Instytucje finansowe i~inne podmioty skanują i~przechowują kopie dokumentów tożsamości w~celach, mimo że przepisy prawa nie nakładają takiego obowiązku i~wystarczająca jest jedynie weryfikacja tożsamości bez utrwalania kopii dokumentu. Prezes UODO nałożył na \textit{ING Bank Śląski} karę w~wysokości 18,4~mln~zł
+za masowe i~nieuzasadnione skanowanie oraz przechowywanie dokumentów tożsamości klientów,
+co~było najwyższą karą w~historii polskiego organu nadzorczego w~roku 2025~\autocite{gazeta_prawna_kary_2025}.
+
+\item \textit{Wysyłanie dokumentów kadrowych do niewłaściwych adresatów.}
+Świadectwa pracy, paski płac, aneksy do umów i~inne dokumenty HR zawierające dane
+osobowe kierowane są pocztą elektroniczną lub tradycyjną do błędnych odbiorców wskutek
+pomyłek przy wpisywaniu adresu lub autouzupełniania skrzynki pocztowej.
+Błędne skierowanie korespondencji jest jednym z najczęściej zgłaszanych
+naruszeń do UODO, stanowi 18\% wszystkich raportowanych incydentów
+bezpieczeństwa danych~\autocite{dataprotectionpeople_human_error, odo24_naruszenia}.
+Każde takie zdarzenie wymaga oceny ryzyka i~potencjalnego zgłoszenia do organu nadzoru
+w~ciągu 72~godzin od wykrycia.
+
+\item \textit{Ignorowanie alertów DLP i~poszukiwanie obejść.}
+Pracownicy traktują ostrzeżenia systemów DLP jako fałszywe alarmy i~aktywnie
+szukają sposobów ich ominięcia, kopiując dane na prywatne pendrive'y,
+wysyłając pliki przez prywatne konto e-mail lub korzystając z~platform
+wymiany plików (WeTransfer, Smash). Badanie WifiTalents wykazało,
+że 47\% pracowników omija kontrole bezpieczeństwa,
+a~organizacje dysponują średnio 975 nieznanych usług chmurowych,
+z~których monitorują jedynie ok.\ 108~\autocite{wifitalents_shadow_2025, fidelis_shadow_2026}.
+Gartner szacuje, że na typowego pracownika korporacyjnego przypada średnio
+13 aplikacji shadow IT używanych równolegle~\autocite{wifitalents_shadow_2025}.
+
+\end{itemize}
+
+
+
+
+
+
+
+
+% --------------
+% Slownik:
+
+% KMS/HSM + BYOK/HYOK 
+% Polska, jako państwo członkowskie Unii Europejskiej, od lat uczestniczy w budowaniu europejskiego systemu ochrony danych i cyberbezpieczeństwa. Punktem wyjścia dla krajowych regulacji w tym zakresie stało się wdrożenie unijnej dyrektywy NIS z 2016 roku, która zobowiązała państwa członkowskie do ustanowienia krajowych ram cyberbezpieczeństwa. W odpowiedzi na te wymagania, Polska uchwaliła ustawę o krajowym systemie cyberbezpieczeństwa, przyjętą przez Sejm RP dnia 5 lipca 2018 roku i podpisaną przez Prezydenta RP dnia 1 sierpnia 2018 r., która weszła w życie 28 sierpnia 2018 r.
+
+% Dokładnie co ona nakłada ta ustawa?
+
+% Isotną ustawą w krajowym prawodastwie jest Ustawa z dnia 10 maja 2018 r. o ochronie danych osobowych 
+
+% Odpowiedzialność administracyjna RODO
+% Administracyjne kary pieniężne (art. 83 RODO):
+% • Do 10 mln EUR lub 2\% całkowitego rocznego obrotu za mniejsze przewinienia (np. brak rejestru 
+% czynności przetwarzania, brak współpracy z organem).
+% • Do 20 mln EUR lub 4\% obrotu za poważne naruszenia (np. złamanie podstawowych zasad 
+% przetwarzania, naruszenie praw osób, nielegalny transfer danych do państw trzecich).
+% Środki naprawcze (art. 58 RODO):
+% • Ostrzeżenia i upomnienia.
+% • Nakazanie spełnienia żądań osoby, której dane dotyczą.
+% • Nakazanie dostosowania przetwarzania do przepisów RODO.
+% • Czasowe lub całkowite ograniczenie przetwarzania, w tym zakaz przetwarzania danych.
+% • Nakazanie usunięcia danych lub powiadomienia o naruszeniu
+
+% Ustawa z dnia 16 kwietnia 1993 r. o zwalczaniu nieuczciwej konkurencji - napsiz jak ona sie ma do mojej monografii
+
+% Skup sie też mocno nad tym:
+% Ustawa z dnia 5 lipca 2018 r. o krajowym systemie cyberbezpieczeństwa / Ustawa o zmianie ustawy o krajowym systemie cyberbezpieczeństwa oraz niektórych innych ustaw uchwalona dn. 23.01.2026 (przekazana do podpisu prezydenta RP)
+
+
+% Nie można pomijać odpowiedzialności z tytułu zapisów w Kodeksie Cywilnym, gdzie ... rozwin
+
+% Na osoby odpowiedzialne jest rowniez kodeks karny - rozwin
+
+% RODO / GDPR
+% Ai Act
+% NIS2
+
+% \section{Fintech: Analiza DORA, PSD2/3 oraz wytyczne KNF}
+% DORA
+% NIS2 ->KSC
+% RODO
+
+% Akty krajowe
+
+% Kodeks cywilny
+
+% Kodeks karny
+
+% Ustawa z dnia 5 lipca 2018 r. o krajowym systemie cyberbezpieczeństwa / Ustawa o zmianie ustawy o krajowym systemie cyberbezpieczeństwa oraz niektórych innych ustaw uchwalona dn. 23.01.2026 (przekazana do podpisu prezydenta RP)
+
+% Ustawa z dnia 25 czerwca 2025 r. o zmianie niektórych  ustaw w związku z zapewnieniem operacyjnej odporności  cyfrowej sektora finansowego oraz emitowaniem europejskich zielonych obligacji (
+
+
+% Ustawa z dnia 10 maja 2018 r. o ochronie danych osobowych 
+
+% Ustawa z dnia 16 kwietnia 1993 r. o zwalczaniu nieuczciwej konkurencji
+
+% Ustawa z dnia 6 listopada 2008 r. o prawach pacjenta i Rzeczniku Praw Pacjenta
+
+% Ustawa z dnia 28 kwietnia 2011 r. o systemie informacji w ochronie zdrowia
+
+% Aktu unijne
+
+% Rozporządzenie RODO (ochrona danych osobowych)
+% Rozporządzenie DORA (cyberodporność sektora  finansowego)
+% Dyrektywa NIS2 (krajowy system cyberbezpieczeństwa)
+% Dyrektywa CER (odporność podmiotów krytycznych)
+% Data Act (bezpieczeństwo danych z IoT
+
+
+% \section{Sektor medyczny}
+
+% \section{Sektor finansowy}
+% DORA
+
+% \section{Zasada Privacy by DEsign z RODO}
+% \section{Zasada TPP (Third Party Providers): Analiza łańcucha dostaw}
+% \section{Suwerenność danych i strategia niezależności UE}
+% \section{Wspólny mianownik: Ciągłość działania i TPRM}

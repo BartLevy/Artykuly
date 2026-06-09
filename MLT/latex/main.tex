@@ -1,0 +1,452 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{todonotes}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[utf8]{inputenc}   % jeśli plik jest w~UTF‑8
+\usepackage[T1]{fontenc}      % albo [OT4] dla „typowo polskiego” kodowania
+\usepackage[polish]{babel}
+\usepackage{caption}
+\usepackage{pgffor}
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{fancyvrb}
+
+% BIBLIOGRAFIA - POPRAWIONA:
+\usepackage[numbers,sort&compress]{natbib}
+\bibliographystyle{plainnat}
+
+\geometry{a4paper, margin=1in} %rozmiar papieru
+
+\title{Ocena podobieństwa sygnałów akustycznych z wykorzystaniem wektorowej reprezentacji cech dźwięku}
+
+% Optimization of Stimulus Sets in Auditory Perception Tests via Vector-Based Signal Similarity Analysis
+\usepackage{authblk}
+\author[1,*]{Bartosz Lewandowski, \small{(ORCID:0009-0004-1158-0693)}}
+\author[2]{Maciej J. Wróbel, \small{(ORCID:0000-0003-1865-2122)}}
+
+\affil[1]{Department of Clinical Engineering, Academy of Silesia in Katowice}
+\affil[2]{Department of Otolaryngology and Oncological Laryngology Collegium Medicum NCU}
+
+% Autor korespondencyjny - definicja przypisu
+\affil[*]{Corresponding author: Bartosz Lewandowski, Ph.D., bartosz.lewandowski@akademiaslaska.pl}
+
+\date{}  % Empty date removes it entirely
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Niniejsza praca przedstawia opracowanie i walidację obiektywnej, numerycznej miary podobieństwa bodźców akustycznych. Głównym celem badań było stworzenie metryki opartej na wektorowej reprezentacji cech dźwięku, która pozwoli na ilościową ocenę ryzyka błędnej identyfikacji próbek wynikającej z ich bliskości akustycznej, a nie z deficytów poznawczych słuchaczy.
+
+Materiał badawczy stanowiło 24 nagrań odgłosów zwierząt, które opisano za pomocą 16-wymiarowych wektorów cech, obejmujących centroid widmowy, częstotliwość podstawową (F\_0), współczynnik PAR oraz 13 współczynników cepstralnych w~skali melowej (MFCC). w~celu ujednolicenia wpływu poszczególnych parametrów zastosowano normalizację metodą Min-Max, a relacje między próbkami poddano analizie z wykorzystaniem odległości euklidesowej oraz metody głównych składowych (PCA).
+
+Zidentyfikowano kluczowe parametry różnicujące barwę dźwięku oraz wykazano brak silnej korelacji między centroidem widmowym a częstotliwością podstawową ($r = 0{,}30$), co potwierdza unikalność informacji niesionej przez poszczególne deskryptory. Walidacja krzyżowa z wynikami badania Memory Load Test~\cite{MadhavanWrobel2024MLT} wykazała zgodność opracowanej metryki z empiryczną trudnością percepcyjną: para bodźców o najniższym dystansie euklidesowym ($d = 0{,}714$, krowa-koń) była identyfikowana poprawnie jedynie w~$20{,}5\%$ przypadków, podczas gdy para o wyraźnie większym dystansie ($d = 0{,}942$, krowa-lew) osiągnęła $92{,}9\%$ poprawnych odpowiedzi. Opracowana metodologia stanowi fundament do tworzenia powtarzalnych zestawów bodźców o kontrolowanym stopniu trudności w~testach percepcji słuchowej.
+\end{abstract}
+
+
+\vspace{1em}
+
+\noindent\textbf{Keywords:}  sound perception; sound analysis, vector analysis, acoustic tests, birds sounds, animal sounds, sound properties;
+
+\section{Wstęp}
+
+Percepcja złożonych bodźców dźwiękowych to proces wymagający zaangażowania wielu poziomów postrzegania zmysłowego. Podstawowym elementem tej percepcji jest odbiór i przekazanie informacji dźwiękowej, zaczynając do obwodowego receptora jakim jest ucho, poprzez wieloodcinkową drogę nerwową przekazująca impulsy nerwowe od receptora, kończąc na  wyspecjalizowanych ośrodkach w~mózgu. w~efekcie końcowym odebrane informacje ze środowiska mogą zostać zinterpretowane, pozwalając na uruchomienie adekwatnej reakcji organizmu. Jakiekolwiek zatem zakłócenia na tej drodze (czytaj choroba, patologia, uszkodzenie) prowadzić mogą do upośledzenia prawidłowej percepcji.
+
+Subiektywne odczucie nieprawidłowej percepcji może również zaistnieć przy prawidłowo funkcjonującym postrzeganiu zmysłowym (w pełni i prawidłowo działającym odbiorze), kiedy to jakość dochodzącej informacji akustycznej jest niewystarczająca do jej zrozumienia.  Określenie „jakość” odnosić się może do wielu parametrów fizycznych dźwięku poczynając od częstotliwości, amplitudy, kształtu fali (tj. widma harmonicznego), czasu trwania bodźca, wybrzmienia (obwiedni dźwięku) oraz do warunków i właściwości ośrodka w~którym dźwięk się rozchodzi \cite{Letowski1989SoundQuality}.
+
+Jakość, może się odnosić również do „czytelności” - przejrzystości informacji dźwiękowej. Podobne w~swojej naturze bodźce dźwiękowe, niosące różne informacje, wybrzmiewające osobno pozostają „czytelne” w~odbiorze, podczas gdy oddziałujące równocześnie (wybrzmiewające jednoczasowo), mogą być niezrozumiałe, ze względu na subtelne podobieństwa lub niewielkie różnice w~fizycznej naturze tych bodźców. Z fizycznego punktu widzenia nakładanie się informacji dźwiękowych o różnej charakterystyce związane jest z interferencją, refrakcją, dyfrakcją, itp. składowych akustycznych danego bodźca. Efekty sumaryczne zmian fizycznych odbieranej informacji nie pozostają w~związku z utrwalonymi wzorcami pozostającymi w~pamięci, skutując brakiem zrozumienia odebranej informacji.
+
+Oczywiście istnieje szereg metod analizy próbek dźwiękowych, pozwalających na szczegółową charakterystykę fizyczną, opartych na komplementarnym zastosowaniu analiz w~domenie czasu, częstotliwości oraz czasowo-częstotliwościowej~\cite{Letowski1989SoundQuality,Peeters2004CUIDADO}.
+
+Analiza czasowa obejmuje ocenę przebiegu sygnału w~funkcji czasu poprzez wyznaczenie parametrów amplitudowych (wartość skuteczna RMS, dynamika), \textit{Zero-Crossing Rate} (ZCR) do wstępnej klasyfikacji okresowości/szumów~\cite{Gouyon2000}, oraz charakterystykę obwiedni (ADSR: attack, decay, sustain, release) określającą czasowe właściwości ataku i wybrzmienia~\cite{Peeters2004CUIDADO}.
+
+Analiza częstotliwościowa wykorzystuje transformatę Fouriera do określenia widma amplitudowego i fazowego, identyfikacji składowych harmonicznych, \textit{Spectral Centroid} (jasność barwy), \textit{Spectral Flatness} (tonalność) oraz \textit{Spectral Roll-off} (koncentracja energii widma)~\cite{Peeters2004CUIDADO,saitis2020brightness}.
+
+Dla sygnałów niestacjonarnych stosuje się Krótkoczasową Transformatę Fouriera (STFT) i spektrogramy do śledzenia zmian widma w~czasie, uzupełnione deskryptorami psychoakustycznymi jak MFCC i PLP, modelującymi nieliniowość ludzkiego słuchu poprzez banki filtrów melowych i krytycznych~\cite{Hermansky1990,tracey2023interpretable_mfcc}.
+
+Tak kompleksowe podejście umożliwia obiektywną ocenę fizycznych i percepcyjnych właściwości próbek dźwiękowych, stanowiąc podstawę dalszych analiz podobieństwa wektorowego~\cite{Peeters2004CUIDADO}.
+
+W przypadku konieczności porównania składowych bodźca dźwiękowego oraz próby wskazania czy określone składowe bodźca dźwiękowego w~„z góry” definiowanych konfiguracjach mogą prowadzić do trudności w~rozumieniu przekazywanej informacji, w~oparciu o opisaną złożoność procesów analitycznych, jest dużym wyzwaniem.
+
+Wyzwaniem analitycznym więc pozostaje sprawdzenie poziomu podobieństw i różnic w~naturalnych bodźcach dźwiękowych w~sposób uproszczony, parametryczny, co stanowiło przedmiot poniższej analizy.
+
+Niniejsza praca stawia następującą hipotezę badawczą: \textit{odległość euklidesowa między znormalizowanymi wektorami cech akustycznych stanowi obiektywną miarę podobieństwa bodźców dźwiękowych, która koreluje z empiryczną trudnością ich percepcyjnego rozróżnienia, pary bodźców o małym dystansie w~przestrzeni cech będą częściej błędnie identyfikowane przez słuchaczy niż pary o dużym dystansie.} Weryfikacja hipotezy opiera się na zestawieniu obliczonych odległości euklidesowych z wynikami badania percepcji słuchowej~\cite{MadhavanWrobel2024MLT}, w~którym rejestrowano odsetek poprawnych identyfikacji liczby jednoczesnych bodźców dźwiękowych.
+
+
+\section{Materiały i metodyka}
+\label{section:mat_met}
+Głównym założeniem analizy była próba uporządkowania sposobu wprowadzenia konkretnej miary, która pozwoli matematycznie ocenić, jak bardzo poszczególne sygnały, bodźce dźwiękowa są do siebie podobne. Innymi słowy, celem pracy było opracowanie tzw metryki podobieństwa akustycznego, bazującego na odległościach między znormalizowanymi wektorami cech akustycznych próbek dźwiękowych, a następnie zweryfikowanie parametrów dzwiękowych z wynikami badań opublikowanych ww "\textit{Memory Load Test - A Concept for Cognitive Reserve Evaluation with Auditory Perception}"\cite{MadhavanWrobel2024MLT}.
+
+Współczesna analiza sceny akustycznej koncentruje się na zdolności systemu słuchowego do wyodrębniania poszczególnych zdarzeń dźwiękowych z kompleksowego sygnału. Kluczowym zagadnieniem pozostaje określenie limitów ludzkiej percepcji w~zakresie jednoczesnego przetwarzania wielu bodźców, co wiąże się z koncepcją tzw. subitizingu słuchowego, zdolności do szybkiej i precyzyjnej oceny liczebności zbioru bez konieczności świadomego liczenia~\cite{Roberts2019AuditorySubitizing, Anobile2021GroupitizingAuditory}. Niniejszy artykuł stanowi rozwinięcie badań nad "Memory Load Test", sprawdzając podobieństwa wektorowe próbek dźwiękowych oraz ich wpływ na efektywność detekcji w~złożonym środowisku akustycznym.
+
+
+Materiał badawczy stanowiły próbki dźwiękowe reprezentujące odgłosy popularnych zwierząt. Nagrania przygotowane w~formie plików MP3 (\textit{Moving Picture Experts Group Layer-3}), próbkowanych z~częstotliwością 44 kHz, zostały zapisane w~trybie mono.
+
+Łącznie przygotowano dwa zestawy, 10 plików dźwiękowych opracowanych na potrzeby testu opisanego w~"Memory Load Test - A Concept for Cognitive Reserve Evaluation with Auditory Perception"\cite{MadhavanWrobel2024MLT} (\textit{chicken.mp3, cow.mp3, dog.mp3, donkey.mp3, elephant.mp3, frog.mp3, horse.mp3, lion.mp3, monkey.mp3  sheep.mp3}) oraz rozbudowano zestaw o dodatkowe pliki dźwiękowe, łącznie 24 pliki, reprezentujące różne gatunki zwierząt. Rozszerzono zestaw plików dźwiękowych, aby uzyskać zbiór, których wektory cech równomiernie pokrywają badaną przestrzeń parametrów akustycznych. 
+Rozszerzony zestaw zawiera pliki: 
+\textit{blackbird.mp3, chaffinch.mp3, cow.mp3, donkey.mp3, elephant.mp3, frog.mp3, great\_tit.mp3, horse.mp3, monkey.mp3, sheep.mp3, tundra\_swan.mp3, wolf1.mp3, cat.mp3, chicken.mp3, dog.mp3, duck.mp3, frog2.mp3, gorilla.mp3,hawk.mp3, lion.mp3, owl.mp3, tawny\_owl.mp3, wild\_boar.mp3,\\wolf2.mp3}.
+
+Metodologia zakłada weryfikację podobieństwa wykorzystanych próbek dźwiękowych oraz analizę, czy stopień tego podobieństwa wpływa na proces wyłapywania dźwięków przez słuchacza. w~przeciwieństwie do oryginalnego badania, które skupiało się na liczbie poprawnie zidentyfikowanych bodźców (wskazując na limit 3-5 dźwięków)\cite{MadhavanWrobel2024MLT}, obecna zaproponowana koncepcja tworzy deterministyczną, cyfrową metodę do analizy podobieństwo próbek, czyli sprawdzenie, czy błędy w~identyfikacji (np. nadmiarowe zliczanie lub niedocenianie liczby dźwięków) korelują z wektorowym podobieństwem widmowym poszczególnych zwierząt (np. osioł vs koń).
+
+Przeprowadzenie procesu wektoryzacji może wpłynąć na pierwotne wnioski z badania\cite{MadhavanWrobel2024MLT} wskazujące, że dokładność rozpoznawania drastycznie spada powyżej 3 bodźców.
+
+Każdy dźwięk opisano za pomocą zestawu 16 cech akustycznych obejmujących: A. centroid widmowy opisujący „jasność” dźwięku, B. częstotliwość podstawową (\textit{F0}), C. Peak to Average Ratio (\textit{PAR}); D. Mel Frequency Cepstral Coefficients (\textit{MFCC}) -13 cech opisujących dynamikę oraz barwę 
+
+\begin{enumerate}[label=\Alph*.]
+    \item \textit{Centroid widmowy} - parametr opisujący środek ciężkości widma sygnału dźwiękowego, określający częstotliwość, wokół której skupiona jest energia sygnału;  wyższe wartości centroidu wskazują na dominację wysokich częstotliwości i są percepcyjnie związane z „jasnym”, ostrym i klarownym brzmieniem, natomiast niższe wartości odpowiadają przewadze niskich częstotliwości i są odbierane jako dźwięk stłumiony \cite{saitis2020brightness}.
+    \item \textit{Częstotliwość podstawowa} (\textit{F0}; Hz) - najniższa składowa częstotliwościowa złożonej próbki dźwiękowej, potocznie utożsamiana z "wysokością" dźwięku,  tym, co odróżnia głęboki bas od przenikliwego piszczałki; im niższe F0, tym dźwięk jest niższy i bardziej basowy (np. ryk lwa), im wyższe  tym wyższy i bardziej cienki (np. świergot ptaka); F0 jest bezpośrednio powiązana z tempem drgań struny głosowej lub innego źródła dźwięku i stanowi jeden z~głównych wyznaczników tożsamości brzmienia danego gatunku.
+    \item \textit{Peak-to-Average Ratio }(\textit{PAR; dB}) - parametr określający relację pomiędzy maksymalną amplitudą sygnału a jego średnią wartością amplitudową lub energetyczną, wyrażony w~decybelach; wskazuje na obecność krótkotrwałych, intensywnych pików wyraźnie przekraczających jego średni poziom; niskie wartości PAR są charakterystyczne dla dźwięków stabilnych, takich jak mruczenie lub odgłosy kontaktowe; PAR umożliwia rozróżnianie sygnałów o tej samej częstotliwości podstawowej (F0), lecz odmiennej dynamice i charakterze akustycznym.
+    \item \textit{Mel Frequency Cepstral Coefficients} (\textit{MFCC}) - na potrzeby analizy zestaw 13 parametrów opisujących sygnał dźwiękowy w~domenie cepstralnej, stanowiących numeryczną reprezentację jego cech akustycznych; współczynniki MFCC wyznaczane są na podstawie skali melowej (nieliniowej skali częstotliwości modelującej sposób, w~jaki ludzkie ucho odbiera dźwięk: ucho jest bardziej czułe na różnice między dźwiękami niskimi niż wysokimi, dlatego skala melowa "zagęszcza" niskie częstotliwości i "rozciąga" wysokie, oddając rzeczywistą percepcję słuchową zamiast fizycznego pomiaru w~hercach) i odzwierciedlają rozkład energii sygnału w~pasmach istotnych fizjologicznie, w~przeciwieństwie do surowego zapisu fali akustycznej; proces ekstrakcji obejmuje analizę widmową sygnału, filtrację z użyciem banku filtrów melowych oraz transformację kosinusową (DCT), a jego wynikiem jest wektor kilkunastu współczynników opisujących barwę dźwięku  \cite{tracey2023interpretable_mfcc, lou2021feature}:
+    \begin{enumerate}[label=\roman*.]
+    \item MFCC 1 (Energia): To informacja o tym, jak głośny jest dźwięk. Jeśli ta liczba jest wysoka, mamy do czynienia z potężnym sygnałem; jeśli niska - z ciszą lub szeptem.
+    
+    \item MFCC 2 (Jasność/Ciemność): To najważniejszy parametr barwy. Mówi nam, czy w~dźwięku przeważają niskie tony (np. mruk basu), czy wysokie (np. pisk fletu). To fundament balansu tonalnego.
+    
+    \item MFCC 3 i 4 (Kształt widma): Odpowiadają za to, czy dźwięk jest "pusty" w~środku, czy może ma dużo "nosowości". To dzięki nim możliwe jest odróżnienie od siebie samogłosek o tej samej wysokości tonu, ponieważ wyłapują one specyficzne wzmocnienia w~środkowym paśmie częstotliwości.
+    
+    \item MFCC 5-8: Środkowa grupa współczynników, obejmująca numery od 5 do 8, zajmuje się strukturą formantową i specyficznymi rezonansami. w~tej fazie dźwięk przestaje być tylko "jasny" lub "ciemny", a zaczyna nabierać swojego charakteru. Te parametry wychwytują subtelne zmiany w~barwie, które pozwalają zidentyfikować materiał, z którego wykonany jest instrument, lub specyficzny układ krtani mówcy. Jest to etap, na którym surowe dane spektralne zamieniane są na informacje o unikalnej tożsamości brzmienia, co ma kluczowe znaczenie w~systemach rozpoznawania mowy.
+    
+    \item MFCC 9-13: Zestawienie zamykają współczynniki od 9 do 13, które w~literaturze przedmiotu często określa się mianem parametrów wysokiej częstotliwości lub mikrostruktury. Nie niosą one ze sobą informacji o głośności czy dominującym tonie, lecz skupiają się na najdrobniejszych fluktuacjach i teksturze sygnału. Opisują one to, czy dźwięk jest gładki i czysty, czy może szorstki, chropowaty i pełen nieregularności. Choć ich wpływ na ogólny obraz wydaje się mniejszy niż w~przypadku pierwszych współczynników, to właśnie ta końcowa piątka decyduje o realizmie cyfrowego odwzorowania i pozwala na odróżnienie bardzo podobnych do siebie próbek dźwiękowych.
+    
+    % \item MFCC 5–13 (detale): To coraz drobniejsze szczegóły barwy. Można je porównać do tekstury materiału,  czy dźwięk jest gładki, czy szorstki i chropowaty. Im wyższy numer parametru, tym mniejszy i bardziej subtelny detal opisuje.
+    \end{enumerate}
+\end{enumerate}
+
+Nadrzędnym celem było przekształcenie bodźca dźwiękowego w~krótki, numeryczny sumaryczny wektor cech, umożliwiający bezpośrednie porównanie. Obliczony dla każdej próbki dźwiękowej wektor cech akustycznych powstał w~wyniku połączenia składowych, uśrednionych wartości dla każdej z obliczanej cechy, w~sumie 16 cech.
+
+Ze względu na znaczące różnice w~jednostkach i skalach mierzonych parametrów (np. częstotliwość w~Hz osiągająca wartości rzędu kilku tysięcy, wobec współczynników MFCC o znacznie mniejszej amplitudzie), wszystkie wyekstrahowane cechy zostały poddane transformacji do wspólnego przedziału $[0, 1]$ przy użyciu klasy \textit{MinMaxScaler} z biblioteki \textit{scikit-learn} w~wersji 1.7.2~\cite{pedregosa2011scikit}. Zapobiegło to dominacji parametrów o wysokich wartościach bezwzględnych (jak Centroid) nad pozostałymi cechami podczas obliczeń statystycznych.
+
+Cała procedura opiera się na wyznaczeniu wartości minimalnej i maksymalnej dla każdej cechy w~obrębie całego zbioru próbek. Każdy punkt danych zostaje następnie przekształcony proporcjonalnie: najniższy odczyt przyjmuje wartość 0, a najwyższy 1. Dzięki takiemu podejściu wszystkie składowe wektora cech, od parametrów centroid, F0 i PAR, aż po 13 współczynników MFCC, zaczynają operować w~tej samej skali. Gwarantuje to, że każda z 16 zmiennych ma równy udział w~określaniu dystansu akustycznego. W~efekcie możliwe staje się obiektywne kwantyfikowanie podobieństwa i precyzyjne szacowanie ryzyka błędnej identyfikacji, całkowicie niezależnie od pierwotnych jednostek miary.
+
+% \subsection{Analiza podobieństw}
+Wektory cech plików audio porównano za pomocą miary odległości euklidesowej (odległość euklidesowa to najkrótszy, mierzony w~linii prostej dystans między dwoma punktami w~przestrzeni cech) która w~analizie dźwięku pozwala matematycznie określić stopień podobieństwa między sygnałami.
+
+W celu redukcji wymiarowości wielowymiarowego zbioru cech akustycznych oraz umożliwienia ich czytelnej wizualizacji zastosowano analizę głównych składowych (\textit{Principal Component Analysis, PCA}) ~\cite{salimi2025evaluating, liu2023voiceprint}. Punkt wyjścia stanowiła macierz danych, w~której każda próbka dźwiękowa była opisana wektorem cech obejmującym parametry widmowe i cepstralne, w~tym współczynniki MFCC oraz wybrane miary energetyczne. Przed właściwą analizą dane poddano centrowaniu oraz standaryzacji w~celu wyeliminowania wpływu różnic skali pomiędzy poszczególnymi cechami. Następnie obliczono macierz kowariancji, która posłużyła do wyznaczenia wartości i wektorów własnych definiujących nowe, ortogonalne osie zmienności danych. Wektory własne uporządkowano malejąco według odpowiadających im wartości własnych, a do dalszej analizy wybrano dwie pierwsze główne składowe (PC1 i PC2), wyjaśniające największą część całkowitej wariancji zbioru. Ostatecznie próbki dźwiękowe zostały rzutowane na płaszczyznę wyznaczoną przez PC1 i PC2, co umożliwiło ich rozmieszczenie na dwuwymiarowym wykresie oraz dalszą analizę podobieństw i dystansów pomiędzy sygnałami w~zredukowanej przestrzeni cech.
+
+Finalnie, nałożenie na siebie obu tych wymiarów pozwala sprowadzić skomplikowany, 16-wymiarowy model audio do czytelnego punktu na płaszczyźnie, dając wgląd w~obiektywne podobieństwa kliniczne badanych próbek.
+
+
+\section{Wyniki}
+
+Przeprowadzona analiza statystyczna wybranych parametrów dźwiękowych skutkowała identyfikacją istotnych różnic w~strukturze akustycznej badanych próbek dzwiękowych. Wykorzystanie  deskryptorów, takich jak współczynniki MFCC oraz miary fizyczne (Centroid, F0, PAR), umożliwiły wielowymiarowe ujęcie charakterystyki sygnałów. Kluczowym etapem przetwarzania danych była ich normalizacja metodą Min-Max, która sprowadziła surowe wartości do porównywalnego zakresu $[0, 1]$, eliminując wpływ różnic w~jednostkach miary poszczególnych cech.
+
+Na podstawie przeprowadzonej analizy uzyskano wyniki, które wskazały występowanie istotnych różnic w~analizowanych parametrach. Wyniki przed normalizacją i po normalizacji metodą Min-Max:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lrrrrrrrr}
+\toprule
+ parameter & min & max & avg & median & std dev & avg & median & std dev\\
+          & &  &   &  &  &(norm) &(norm) &(norm) \\
+\midrule
+Centroid & 1330.571 & 5692.735 & 3084.120 & 2971.778 & 1241.343 & 0.402 & 0.376 & 0.285 \\
+F0 & 437.437 & 2420.861 & 1073.498 & 973.540 & 526.305 & 0.321 & 0.270 & 0.265 \\
+PAR & 10.051 & 27.325 & 18.150 & 17.800 & 3.753 & 0.469 & 0.449 & 0.217 \\
+MFCC\_1 & -483.222 & -82.167 & -303.938 & -295.563 & 100.673 & 0.447 & 0.468 & 0.251 \\
+MFCC\_2 & 33.491 & 162.440 & 98.238 & 107.385 & 39.073 & 0.502 & 0.573 & 0.303 \\
+MFCC\_3 & -128.249 & 41.666 & -38.534 & -37.380 & 38.780 & 0.528 & 0.535 & 0.228 \\
+MFCC\_4 & -33.489 & 44.812 & 6.366 & 5.713 & 19.912 & 0.509 & 0.501 & 0.254 \\
+MFCC\_5 & -57.688 & 18.136 & -10.908 & -9.960 & 17.370 & 0.617 & 0.629 & 0.229 \\
+MFCC\_6 & -23.840 & 29.992 & 2.916 & 5.256 & 13.409 & 0.497 & 0.541 & 0.249 \\
+MFCC\_7 & -30.839 & 8.275 & -9.227 & -7.591 & 10.084 & 0.553 & 0.594 & 0.258 \\
+MFCC\_8 & -23.244 & 43.015 & 3.838 & 5.817 & 14.525 & 0.409 & 0.439 & 0.219 \\
+MFCC\_9 & -23.692 & 18.037 & -3.056 & -2.227 & 11.948 & 0.495 & 0.514 & 0.286 \\
+MFCC\_10 & -11.306 & 15.074 & 2.882 & 2.699 & 7.006 & 0.538 & 0.531 & 0.266 \\
+MFCC\_11 & -22.783 & 17.142 & -0.043 & -1.399 & 10.130 & 0.570 & 0.536 & 0.254 \\
+MFCC\_12 & -10.031 & 13.400 & 1.291 & 1.916 & 5.766 & 0.483 & 0.510 & 0.246 \\
+MFCC\_13 & -11.244 & 12.754 & 0.405 & 0.247 & 5.676 & 0.485 & 0.479 & 0.237 \\
+
+\bottomrule
+\end{tabular}
+\caption{Podsumowanie wyników analiz wraz z wartościami znormalizowanymi}
+\end{table}
+
+
+Wyniki znormalizowane metodą Min-Max. Wynik wskazuje, że średnia wartość oscyluje 
+w okolicach $0,4 - 0,55$; oznacza to, że dane są zbalansowane; nie ma sytuacji, 
+w której większość próbek ma skrajnie niskie (blisko $0$) lub skrajnie wysokie 
+(blisko $1$) wartości.
+
+
+\subsection{Centroid widmowy (Spectral Centroid)}
+
+Zakres analizy parametru \textit{Spectral Centroid} kształtował się od wartości $5692,73$~Hz (dla pliku \textit{frog.mp3}) do $1330,57$~Hz (dla pliku \textit{gorilla.mp3}). Wartości średnie i mediana dla analizowanej grupy wyniosły odpowiednio $3084,12$~Hz oraz $2971,78$~Hz, przy odchyleniu standardowym na poziomie $1241,34$~Hz. Większość próbek koncentruje się w~niższych rejestrach jasności, co potwierdza znormalizowana wartość mediany ($\text{med} = 0,376$). Próbki \textit{frog.mp3} ($c = 5692,74$~Hz) oraz \textit{tawny\_owl.mp3} ($c = 5257,00$~Hz) znacząco podnoszą średnią wartość centroidu i stanowią wartości odstające względem reszty zbioru.
+Próbki te oddalone są od kolejnego najwyższego wyniku w~zbiorze o ponad $1200$~Hz (w przypadku \textit{tawny\_owl.mp3}), podczas gdy różnica między samym liderem (\textit{frog.mp3}) a drugim w~kolejności wynikiem wynosi $435,74$~Hz. Tak gwałtowny wzrost wartości w~górnym kwartylu, w~zestawieniu z odchyleniem standardowym wynoszącym $1241,34$~Hz, jednoznacznie definiuje te dwa nagrania jako rzadkie przypadki o skrajnie wysokiej jasności spektralnej.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/chart-centroid.jpeg}
+    \caption{Centroid widomowy dla poszczególnych plików dźwiękowych, słupki zielone z deseniem oznaczają dzwięki pochodzące z oryginalnego badania.}
+    \label{fig:centroid}
+\end{figure}
+
+\subsection{Częstotliwość podstawowa (F0)}
+
+Najwyższe wartości: 2420.86 Hz  i 2240.55 Hz odnotowano w~plikach jastrząb (\textit{hawk.mp3}) oraz kos (\textit{blackbird.mp3}) , natomiast najniższe wartości 437.44 Hz, 456.73 Hz w~plikach lew (\textit{lion.mp3}) oraz puszczyk (\textit{tawny\_owl.mp3)}; średnia i mediana dla całej grupy wynosiła odpowiednio (\textit{mean=1073.498Hz}) oraz (\textit{median=973.540Hz}).\\ 
+Analizując dane znormalizowane, F0 ma średnią (\textit{mean=0.320}), co oznacza, że większość próbek oscyluje w~dolnym zakresie wysokości dźwięku w~porównaniu do najwyższej znalezionej tam wartości. Jednocześnie niskie odchylenie standardowe (\textit{std = 0.261}) wskazuje, że próbki są do siebie dość zbliżone pod względem wysokości.
+Średnia (\textit{mean=0.32}) jest wyższa od mediany (\textit{median=0.27})co oznacza, że w~zbiorze jest kilka wysokich dźwięków, które podnoszą średnią, podczas gdy dla większości próbek obliczona wartość F0 jest niska. Zakres (\textit{0.0 – 1.0}) wskazuje, że w~zbiorze jest pełna rozpiętość danych. 
+
+\vspace{1em}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/chart-f0.jpeg}
+    \caption{Częstotliwość podstawowa dla poszczególnych plików dźwiękowych, słupki zielone z deseniem oznaczają dzwięki pochodzące z oryginalnego badania.}
+    \label{fig:freq}
+\end{figure}
+
+\subsection{PAR (Peak-to-Average Ratio)}
+Zakres analizy parametru PAR kształtował się od wartości 27.325 dB (dla pliku o najwyższej dynamice, czyli \textit{duck.mp3}) do wartości 10.051 dB (\textit{dog.mp3}), wartości średnie i mediana dla analizowanej grupy wyniosły odpowiednio: (mean=18.150 dB), (\textit{median=17.800dB}) oraz odchylenie standardowe (\textit{std = 3.753}).
+Analizując dane znormalizowane, parametr PAR, którego średnia (\textit{avg = 0.469}) plasuje się niemal w~połowie skali, wykazuje największą stabilność spośród badanych cech fizycznych. Świadczy o tym stosunkowo niskie odchylenie standardowe (\textit{std = 0.21}7). Wartość mediany (mediana = 0.449) jest bardzo zbliżona do średniej, co sugeruje równomierny rozkład współczynnika szczytu w~całym zbiorze 24 próbek, bez ekstremalnych anomalii. Choć wybrane pliki dominują w~górnym rejestrze skali, to większość danych skupiona jest wokół punktu środkowego, co oznacza, że nagrania mają zbliżoną strukturę dynamiki i nasycenia sygnału.
+
+
+\vspace{1em}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/chart-par.jpeg}
+    \caption{PAR dla poszczególnych plików dźwiękowych, słupki zielone z deseniem oznaczają dzwięki pochodzące z oryginalnego badania.}
+    \label{fig:par}
+\end{figure}
+
+\subsection{Współczynniki MFCC}
+
+ Zakres analizy pierwszego współczynnika (MFCC\_1), odpowiedzialnego za ogólną energię widmową, kształtował się od $-82.167$ (\textit{gorilla.mp3}) do $-483.222$ (\textit{frog.mp3}), przy średniej wynoszącej $-303.938$. Tak duże odchylenie standardowe ($100.67$) wskazuje, że próbki różnią się między sobą głównie głośnością i całkowitą mocą sygnału.
+
+W obszarze charakterystyki spektralnej dominują współczynniki MFCC\_2 (avg = $98.238$) oraz MFCC\_3 (avg = $-38.534$), które niosą najwięcej informacji o "cieple" lub "ostrości" dźwięku. Przewaga MFCC\_2 sugeruje silnie zdefiniowane niższe pasma częstotliwości. Z kolei wartości pozostałych współczynników (MFCC\_4 - 13) oscylują bliżej zera (od avg = $-10.908$ do avg = $6.366$ ), co wskazuje na wygładzenie wyższych składowych barwy, typowe dla naturalnych odgłosów zwierząt.
+
+Normalizacja umożliwiła bezpośrednie porównanie wszystkich 13 cech, wykazując wysoki poziom zbalansowania zbioru. Większość współczynników (10 z 13) plasuje się w~przedziale średnich $0.45$-$0.55$, co oznacza, że zbiór jest statystycznie jednorodny, pozbawiony dominującego parametru, który mógłby maskować pozostałe cechy. Najsilniejszym wyróżnikiem okazał się MFCC\_5 z najwyższą średnią znormalizowaną (avg = $0.617$), to w~tym paśmie kryją się unikalne cechy barwowe definiujące badany zestaw. Największą stabilność wykazuje natomiast MFCC\_8, którego najniższe odchylenie standardowe (std = $0.219$) czyni go wspólnym mianownikiem dla wszystkich 24 nagrań. Parametr MFCC\_9 wyróżnia się wysoką wartością odchylenia standardoweg (std = $0.286$), co wskazuje, że informacja przenoszona przez te wartości ma wpływ na próbki dzwiękowe.
+
+\vspace{1em}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/mfcc_std_dev_radar.jpeg}
+    \caption{Odchylenie standardowe dla parametrów MFCC}
+    \label{fig:stddev}
+\end{figure}
+
+
+Analiza porównawcza średniej i mediany wykazała ich wysoką zbieżność we wszystkich 13 współczynnikach, różnice te są minimalne i zazwyczaj nie przekraczają wartości $0.05$ (np. dla MFCC\_10 avg = $0.537$ vs mediana = $0.531$). Świadczy to o symetrycznym rozkładzie barwy w~całym zbiorze danych. Można na tej podstawie wnioskować, że nagrania zostały wykonane w~zbliżonych warunkach akustycznych lub przy użyciu urządzeń o pokrewnej charakterystyce częstotliwościowej, co eliminuje występowanie ekstremalnych anomalii statystycznych w~obszarze psychoakustyki.
+
+Analiza korelacji została użyta jako test redundancji cech, jeśli dwie zmienne są silnie skorelowane, to w~metryce opartej o odległość euklidesową mogą w~praktyce, w~próbce dzwiękowej,  dublować informację i~wzmacniać jeden wymiar różnic, kosztem drugiego. Niska korelacja oznacza, że cechy opisują odmienne aspekty sygnału i ich łączne użycie zwiększa rozróżnialność podobieństwa akustycznego (np. niezależność centroidu od F0 oznacza, że barwa/jasność nie wynika bezpośrednio z wysokości tonu).
+
+\subsection{Analiza korelacji parametrów audio}
+
+Do analizy korelacji zostały wybrano trzy współczynniki MFCC jako reprezentantów różnych poziomów opisu sygnału: $MFCC_{1}$ (odpowiadający za energię), $MFCC_{2}$ (reprezentujący globalną składową barwy i nachylenie widma) oraz $MFCC_{9}$ jako przykład współczynnika wyższego rzędu. Ten ostatni został wybrany ze względu na relatywnie wysoką zmienność w~badanym zbiorze (odchylenie standardowe po normalizacji wyniosło (std= $0.286$). Pozostałe współczynniki w~analizie korelacji zostały pominięte w~celu zachowania czytelności, pełna macierz wymiaru $13 \times 13$ nie wnosiłaby istotnie więcej interpretowalnych wniosków, mogąc jednocześnie zaciemnić kluczowe zależności między głównymi parametrami akustycznymi. Co istotne, w~analizie PCA  składowe główne (\textit{PC1 i PC2}) wykorzystują pełny wektor cech (Centroid, F0, PAR oraz MFCC1-MFCC13), dzięki czemu metoda porównywania próbek dźwiękowych uwzględnia łączną informację niesioną przez wszystkie deskryptory, a nie jedynie wybrane współczynniki MFCC.
+
+Analiza macierzy korelacji dla wybranych parametrów wykazała zróżnicowane zależności, które pozwalają na głębsze zrozumienie struktury akustycznej badanych próbek. 
+Do analizy korelacji wybrane zostały następujące parametry: Centroid, F0, PAR oraz wybrane MFCC, tj. MFCC\_1, MFCC\_2 oraz MFCC\_9. 
+Ich wybór podyktowany był faktem, że MFCC\_1 odpowiada za energię sygnału, MFCC\_2 odpowiada za interpretację barwy i oba te parametry w~przestrzeni 
+MFCC posiadają najwyższe wartości bezwzględne (MFCC\_1 = $-303.938$, MFCC\_2 = $98.238$), natomiast MFCC\_9 wykazuje najwyższą zmienność (std = $0.286$).
+
+\vspace{1em}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/correl-matrix.jpeg}
+    \caption{Macierz korelacji}
+    \label{fig:matrix}
+\end{figure}
+
+\begin{enumerate}[label=\roman*.]
+    \item \textbf{Spectral Centroid, a parametr F0}\\
+    w~badanym zbiorze danych zależność między parametrem \textit{Spectral Centroid} a częstotliwością podstawową ($F\_0$) jest słaba (współczynnik korelacji wynosi $0{,}30$). Wynik ten wskazuje, że jasność dźwięku (percepcyjna barwa) nie jest bezpośrednio determinowana przez fizyczną wysokość tonu podstawowego. Analiza próbek wykazała obecność sygnałów o unikalnej charakterystyce, takich jak \textit{tawny\_owl.mp3} oraz \textit{duck.mp3}, które mimo niskiej wysokości dźwięku (niskie wartości $F\_0$) charakteryzują się bardzo wysokim centroidem. Potwierdza to, że w~przypadku tych dźwięków energia spektralna jest przesunięta ku wyższym częstotliwościom ze względu na ich specyficzną, bogatą w~harmoniczne lub szumy strukturę, co czyni te parametry niezależnymi i wartościowymi diagnostycznie źródłami informacji. Z punktu widzenia percepcji dzwięku,  można mieć dźwięki niskie (niskie F0), które są jednocześnie "jasne" (wysoki centroid) przez dużą ilość składowych wysokoczęstotliwościowych. Stąd, tworząc metrykę podobieństwa, oba parametry są potrzebne.
+
+    \item \textbf{Relacja Centroid, a MFCC\_1 i MFCC\_2} \\
+    Najsilniejsze zależności zaobserwowano między jasnością dźwięku (centroid) a składowymi barwy. Odnotowano istotną ujemną korelację z mfcc\_1 ($-0.63$) oraz mfcc\_2 ($-0.62$). Sugeruje to, że wraz ze wzrostem jasności widmowej (centroidu), wartości mfcc\_1 i mfcc\_2 maleją. w~praktyce oznacza to, że jaśniejsze dźwięki w~zbiorze mają specyficzny, powtarzalny profil energetyczny i barwowy.
+
+    % \item \textbf{Niezależność parametru F0} \\
+    % w~zbiorze danych zależność między centroidem a f0 ($0.30$) jest umiarkowanie słaba. Świadczy to o tym, że jasność dźwięku (barwa) nie jest bezpośrednio determinowana przez wysokość tonu podstawowego. w~zbiorze znajdują się próbki, które mimo niskiej wysokości dźwięku (niskie F0) mogą być bardzo jasne (wysoki centroid), są to \textit{tow\_owl.mp3} oraz \textit{duck.mp3}.
+    
+
+    \item \textbf{Unikalność parametru MFCC\_9} \\
+    Zaobserwowano silną ujemną korelację między MFCC\_9 a energią całkowitą sygnału (MFCC\_1), wynoszącą $-0.66$. Oznacza to, że parametr ten ściśle reaguje na zmiany głośności i natężenia dźwięku. Jednocześnie MFCC\_9 wykazuje niemal całkowitą niezależność od dynamiki wewnętrznej sygnału (parametr PAR, korelacja $0.10$). Brak związku z "uderzeniowością" dźwięku sugeruje, że współczynnik ten opisuje cechy  barwowo-teksturalne, a nie chwilowe skoki amplitudy. Występuje umiarkowana korelacja MFCC\_9 z częstotliwością podstawową (F0) na poziomie $0.33$. Wynik ten potwierdza, że informacja niesiona przez parametr MFCC\_9 jest w~dużym stopniu niezależna od tego, czy dźwięk jest wysoki, czy niski. Dzięki temu MFCC\_9 staje się narzędziem pozwalającym na obiektywną ocenę charakteru źródła dźwięku, bez wpływu jego wysokości.
+    
+    \item \textbf{Stabilność dynamiki (PAR)} \\
+    Parametr PAR wykazuje najniższe korelacje z większością pozostałych cech, szczególnie z mfcc\_9 ($0.10$) i mfcc\_2 ($-0.16$). Potwierdza to, że dynamika wewnętrzna próbek (stosunek szczytu do średniej) jest cechą niemal całkowicie niezależną od barwy dźwięku. Pozwala to na skuteczne rozróżnienie próbek pod względem ich "charakteru uderzeniowego" lub nasycenia, niezależnie od tego, czy dźwięk jest wysoki, czy niski. w~praktyce uzasadnia to wykorzystnie PAR w~wektorze cech jako osobnego wymiaru: pozwala rozróżniać próbki o podobnej wysokości i barwie, ale odmiennej "impulsowości" lub rozkładzie energii w~czasie.
+\end{enumerate}
+
+
+Wybór zestawu cech obejmującego parametry: centroid widmowy, F\_0, PAR oraz współczynniki MFCC jest uzasadniony ich wzajemną komplementarnością w~opisie fizycznej i psychoakustycznej natury sygnału. Każdy z tych parametrów niezależnie opisuje inną przestrzeń informacji: F\_0 określa wysokość tonu podstawowego, centroid widmowy opisuje rozkład energii, czyli barwę dzwięku, współczynnik PAR określa dynamikę i impulsowość dźwięku. Dzięki  połączeniu tych parametrów, model matematyczny nie ogranicza się tylko do analizy częstotliwościowej, ale uwzględnia również strukturę czasową sygnału, co pozwala na skuteczne rozróżnienie sygnałów o identycznej barwie, lecz odmiennej energii lub stabilności.
+
+Zastosowanie 13 współczynników MFCC stanowi kluczowy element opisu surowego zapisu cyfrowego, a ludzką percepcją słuchową. Dzięki wykorzystaniu skali melowej, parametry te priorytetyzują te pasma częstotliwości, na które słuchacz jest czuły, co czyni wektor cech przydatny do digitalizacji/cyfryzacji dźwięku oraz  gwarantuje wysoką czułość na subtelne różnice w~barwie i fakturze dźwięku.
+
+W celu analizy podobieństw dźwięków oraz ich wizualizacji zostały przygotowane dwie główne składowe dźwięku, ang. Principal Component, PC1 oraz PC2 opisane szczegółowo w~\ref{section:mat_met} \textit{Materiał i metody}. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/pca_normas.png}
+    \caption{Cechy PC1 oraz PC2, elementy zielone z czarną ramką oznaczają dzwięki pochodzące z oryginalnego badania.}
+    \label{fig:pc12}
+\end{figure}
+
+
+
+\subsection{Weryfikacja metryki z wynikami badania Memory Load Test}
+
+W celu empirycznej walidacji opracowanej metryki podobieństwa obliczone odległości euklidesowe zestawiono z wynikami badania percepcji słuchowej opisanego w~pracy~\cite{MadhavanWrobel2024MLT}. w~oryginalnym badaniu MLT każdy z czterech projektów (Red, Blue, Green, Yellow) zawierał dokładnie jedną próbkę złożoną z dwóch jednoczesnych bodźców dźwiękowych. Znajomość składu tych próbek oraz odnotowanego dla każdego projektu odsetka poprawnych odpowiedzi dla prób dwuelementowych umożliwiła bezpośrednie porównanie obiektywnej miary akustycznej z empiryczną miarą trudności percepcyjnej.
+
+Dla czterech par zwierząt wyznaczono odległości euklidesowe w~16-wymiarowej znormalizowanej przestrzeni cech i zestawiono je z odsetkiem poprawnych identyfikacji liczby dźwięków w~badaniu MLT (Tab.~\ref{tab:mlt_walidacja}).
+
+\begin{table}[H]
+\centering
+\begin{tabular}{llcc}
+\toprule
+Para bodźców & Projekt MLT & Odległość euklidesowa & Dokładność MLT \\
+\midrule
+Krowa - Koń  & Red    & 0{,}714 & 20{,}5\% \\
+Krowa - Lew  & Blue   & 0{,}942 & 92{,}9\% \\
+Osioł - Koń  & Green  & 1{,}093 & 55{,}6\% \\
+Owca - Żaba  & Yellow & 1{,}736 & 44{,}4\% \\
+\bottomrule
+\end{tabular}
+\caption{Zestawienie odległości euklidesowych między parami bodźców dźwiękowych z~odsetkiem poprawnych odpowiedzi w~próbach dwuelementowych badania MLT~\cite{MadhavanWrobel2024MLT}.}
+\label{tab:mlt_walidacja}
+\end{table}
+
+Dla trzech spośród czterech analizowanych par zaobserwowano zgodność z~przewidywaniami modelu: mniejszy dystans w~przestrzeni cech koreluje z niższą dokładnością identyfikacji liczby jednocześnie prezentowanych dźwięków. Para krowa-koń, charakteryzująca się najniższą odległością euklidesową ($d = 0{,}714$), okazała się najtrudniejsza do rozróżnienia dla słuchaczy ($20{,}5\%$ poprawnych odpowiedzi). Para krowa-lew, o wyraźnie większym dystansie ($d = 0{,}942$), była identyfikowana poprawnie w~niemal $93\%$ przypadków. Pośrednia para osioł-koń ($d = 1{,}093$) uzyskała pośrednią dokładność $55{,}6\%$, co w~pełni wpisuje się w~przewidziany gradient trudności.
+
+Wyjątek stanowi para owca-żaba ($d = 1{,}736$), która mimo największego dystansu akustycznego osiągnęła jedynie $44{,}4\%$ poprawnych identyfikacji. Przyczyna tej rozbieżności pozostaje niewyjaśniona w~oparciu o dostępne dane - zarówno właściwości akustyczne pary, jak i kontekst eksperymentalny nie pozwalają na jednoznaczne wskazanie czynnika odpowiedzialnego za obserwowany wynik. Obserwacja ta wskazuje, że odległość euklidesowa w~przestrzeni cech, stanowiąc obiektywną miarę podobieństwa akustycznego, nie jest jedynym czynnikiem determinującym percepcyjną trudność rozróżniania bodźców, a identyfikacja pozostałych determinant wymaga dalszych badań.
+
+Aby ocenić, czy rozszerzenie zestawu bodźców do 24 próbek wprowadza pary akustycznie bliższe niż te obecne w~oryginalnym zestawie MLT, wyznaczono minimalne odległości euklidesowe wewnątrz obu zbiorów. w~zbiorze oryginalnym ($n = 10$) minimalna odległość między parami bodźców wyniosła $d_{\min} = {0{,}714}$ (para: \textit{cow}~-~\textit{horse}). w~zbiorze rozszerzonym ($n = 24$) wartość ta wyniosła $d_{\min} = {0{,}502}$ (para: \textit{owl}~-~\textit{tawny\_owl}). Wynik potwierdza, że dodane próbki nie wprowadzają par o większym podobieństwie akustycznym niż para najtrudniejsza w~oryginalnym zestawie MLT, co wyklucza redundancję i potwierdza rozszerzenie pokrycia przestrzeni cech.
+
+% \subsection{Konstrukcja poziomów trudności rozróżniania dzwięków}
+% Stopień trudności w~separowaniu poszczególnych próbek dzwiękych  zależy bezpośrednio od tego, jak bardzo różnią się od siebie dźwięki odtwarzane w~tym samym czasie. Tę akustyczną odróżnialność oszacowano, wyliczając odległość euklidesową między wektorami cech dźwięków, które wcześniej poddano normalizacji metodą Min-Max.
+
+% Zastosowane podejście opiera się na prostym założeniu: im większy dystans dzieli poszczególne bodźce w~przestrzeni cech, tym mniejsze jest ryzyko ich wzajemnego maskowania czy zlewania się w~jeden sygnał. w~efekcie słuchacz ma ułatwione zadanie przy określaniu liczby słyszanych dźwięków. Z kolei zestawy, w~których odległości między próbkami są niewielkie, uznaje się za trudniejsze. Wynika to z faktu, że podobieństwo akustyczne częściej prowadzi do pomyłek i trudności w~rozróżnieniu źródeł dźwięku.
+
+% Zestawy dzwięków charakteryzujące się dużą odległością w~przestrzenii PC, zakwalifikowano jako zadania łatwe, natomiast te o niskich wartościach jako trudne. Dzięki takiemu rozwiązaniu możliwe stało się stworzenie płynnej skali trudności. 
+
+
+% System porównywania dźwieków na podstawie ich wektoryzacji, który jest numeryczną reprezentacją właściwości akustycznych pliku pozwala na przeprowadzenie mierzalnych, powtarzalnych porównań, a tym samym pozwala precyzyjnie oszacować ryzyko popełnienia błędu identyfikacyjnego przez system.
+
+
+% \subsection{Ryzyko błędnej klasyfikacji}
+% w~praktyce badawczej stopień prawdopodobieństwa pomyłki między dwoma zdarzeniami dźwiękowymi zależy bezpośrednio od dystansu dzielącego ich wektory cech w~wielowymiarowej przestrzeni akustycznej. Problem ten nasila się w~przypadku kategorii o wysokiej zbieżności parametrów fizycznych.
+
+% Szczególnym wyzwaniem są sygnały operujące na niemal identycznej częstotliwości podstawowej ($F\_0$) oraz wykazujące zbliżoną charakterystykę dynamiki ($PAR$). w~sytuacjach, gdy podstawowe deskryptory oraz barwa ulegają zatarciu, kluczowym narzędziem różnicującym staje się wektor współczynników mel-cepstralnych ($MFCC$). O ile początkowe komponenty (np. $MFCC_1$, $MFCC_2$) mogą przyjmować wartości niemal tożsame dla różnych klas, o tyle istotne różnice diagnostyczne są kodowane w~współczynnikach wyższego rzędu. Opisują one unikalne rezonanse toru akustycznego źródła; choć są one mniej intuicyjne w~percepcji słuchowej, stanowią fundament precyzyjnej identyfikacji w~systemach cyfrowych.
+
+
+% \subsection{Pewność identyfikacji}
+% Wysoka pewność klasyfikacji występuje w~sytuacjach, gdy wartości wektorów cech są od siebie znacznie odległe w~przestrzeni decyzyjnej. Stan ten jest pożądany, gdyż minimalizuje ryzyko interferencji między poszczególnymi próbkami. O wysokiej separowalności decydują skrajne różnice w~profilach fizycznych porównywanych sygnałów, przejawiające się w~następujących obszarach:
+
+% \begin{itemize}
+%     \item \textbf{Częstotliwość podstawowa ($F\_0$):} Wyraźna polaryzacja między sygnałami o niskim a wysokim rejestrze tonu podstawowego stanowi fundamentalną i łatwą do parametryzacji różnicę.
+%     \item \textbf{Centroid widmowy:} Parametr ten pozwala na skuteczną separację sygnałów o charakterystyce ciemnej (niskoczęstotliwościowej) od sygnałów jasnych i przenikliwych.
+%     \item \textbf{Dynamika ($PAR$):} Nawet przy zbliżonych poziomach głośności, sygnały mogą różnić się strukturalnie pod względem morfologii impulsu oraz rozkładu energii w~czasie.
+% \end{itemize}
+
+
+\subsection{Propozycja klasyfikacji trudności percepcyjnej}
+
+Na podstawie zestawienia odległości euklidesowych z wynikami badania MLT zaproponowano wstępną, empiryczną klasyfikację trudności percepcyjnej par bodźców akustycznych (Tab.~\ref{tab:trudnosc}). Progi wyznaczono na podstawie trzech spójnych punktów walidacyjnych; para owca-żaba, stanowiąca wyjątek od ogólnej tendencji, nie została uwzględniona przy ich wyznaczaniu.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{clcc}
+\toprule
+Poziom trudności & Przykładowa para & Dystans euklidesowy & Dokładność MLT \\
+\midrule
+Wysoki   & krowa~-~koń  & $d < 0{,}80$               & $\sim$20\% \\
+Średni   & osioł~-~koń  & $0{,}80 \leq d < 1{,}20$   & $\sim$55\% \\
+Niski    & krowa~-~lew  & $d \geq 1{,}20$             & $\sim$90\% \\
+\bottomrule
+\end{tabular}
+\caption{Wstępna klasyfikacja trudności percepcyjnej par bodźców na podstawie odległości euklidesowej w~przestrzeni 16 cech akustycznych. Progi wyznaczono empirycznie na podstawie walidacji z danymi MLT~\cite{MadhavanWrobel2024MLT} i wymagają potwierdzenia na większej liczbie par bodźców.}
+\label{tab:trudnosc}
+\end{table}
+
+Opracowana klasyfikacja umożliwia projektowanie zestawów bodźców o z góry zdefiniowanym stopniu trudności percepcyjnej. Spośród 24 analizowanych próbek dźwiękowych możliwe jest wyznaczenie siedmiu par o dystansie kwalifikującym je do poziomu trudnego ($d < 0{,}80$), pięćdziesięciu trzech par o trudności średniej ($0{,}80 \leq d < 1{,}20$) oraz dwieście szesnaście par o niskiej trudności ($d \geq 1{,}20$), co dostarcza projektantom testów audiologicznych gotowego katalogu bodźców o kontrolowanej właściwości percepcyjnej.
+
+Przedstawiona w~niniejszym opracowaniu metodyka badawcza stanowi potwierdzenie tezy, że wielowymiarowa reprezentacja wektorowa cech akustycznych umożliwia stworzenie obiektywnej, numerycznej metody obliczania podobieństwa plików dźwiękowych na podstawie parametrów, pozwalając jednocześnie na estymację ryzyka ich błędnej identyfikacji, którego źródło leży w~fizycznej bliskości sygnałów w~przestrzeni cech PCA.
+
+Zastosowanie deskryptora złożonego z 16 parametrów, obejmującego \textit{Spectral Centroid}, częstotliwość podstawową ($F0$), współczynnik $PAR$ oraz trzynaście składowych $MFCC_{1}$-$MFCC_{13}$, w~połączeniu z procedurą normalizacji typu Min-Max, gwarantuje zrównoważony udział poszczególnych parametrów w~metryce dystansu, co determinuje wysoką powtarzalność uzyskanych wyników oraz pełną transparentność procesów interpretacyjnych. Implementacja odległości euklidesowej jako miary podobieństwa, poddana weryfikacji poprzez algorytmy redukcji wymiarowości PCA (\textit{Principal Component Analysis}), stanowi narzędzie służące do numerycznej oceny plików dźwiękowych.
+
+Przeprowadzona analiza korelacji wykazała komplementarność wybranych parametrów. Brak zależności między jasnością widmową a wysokością tonu podstawowego (niska korelacja \textit{Spectral Centroid} względem $F_0$) potwierdza zasadność wykorzystania deskryptorów fizycznych i cepstralnych w~ramach jednego wektora cech. Opracowana procedura umożliwia projektowanie zestawów bodźców o kontrolowanym stopniu trudności w~zależności od odległości euklidesowej, co znajduje bezpośrednie zastosowanie w~standaryzacji materiału dźwiękowego wykorzystywanego w~testach percepcji słuchowej.
+
+Reasumując, sformułowana metryka podobieństwa akustycznego, bazująca na dystansie między znormalizowanymi wektorami cech plików dźwiękowych, dostarcza praktycznego narzędzia do estymacji prawdopodobieństwa błędnej kategoryzacji dźwięków w~warunkach jednoczesnej ekspozycji wielu źródeł sygnału. Rozwiązanie tworzy fundament pod przyszłe badania nad automatyzacją doboru bodźców oraz implementacją ważonych parametrów, zachowując przy tym niezbędną rygorystyczność i interpretowalność wypracowanego modelu.
+
+\section{Dyskusja} 
+
+Konieczność prowadzenia analiz porównawczych sygnałów akustycznych, w~tym próbek dźwiękowych, wynika z różnorodnych potrzeb natury poznawczej, diagnostycznej i aplikacyjnej. Jednym z istotnych obszarów zastosowań są badania audiologiczne, w~których porównywanie bodźców dźwiękowych o kontrolowanych parametrach fizycznych umożliwia obiektywną ocenę funkcjonowania narządu słuchu oraz kondycji zdrowotnej pacjenta. Analizy takie znajdują zastosowanie zarówno w~klasycznych testach audiometrycznych, jak i w~nowoczesnych procedurach opartych na bodźcach złożonych, lepiej odzwierciedlających naturalne warunki percepcji dźwięku. Porównawcza analiza sygnałów akustycznych pozwala również na pogłębianie wiedzy dotyczącej mechanizmów percepcji słuchowej, w~tym relacji pomiędzy fizycznymi właściwościami bodźca a jego subiektywnym odbiorem. w~tym kontekście szczególnego znaczenia nabierają metody umożliwiające ilościowy opis podobieństwa dźwięków, które stanowią podstawę do badań nad rozróżnialnością bodźców, adaptacją sensoryczną oraz przetwarzaniem informacji akustycznej w~ośrodkowym układzie nerwowym. Rozwój narzędzi analitycznych pozwalających na obiektywną i powtarzalną ocenę podobieństwa sygnałów akustycznych stanowi zatem istotny element interdyscyplinarnych badań łączących akustykę, audiologię, neurofizjologię oraz nauki kognitywne
+Jednym z kluczowych wyzwań w~badaniach opartych na analizie bodźców akustycznych jest duża liczba zmiennych wpływających na uzyskiwane wyniki, obejmujących zarówno parametry fizyczne sygnału, jak i czynniki związane z warunkami jego rejestracji oraz indywidualnymi cechami percepcyjnymi odbiorcy. Zmienność tych parametrów może stanowić istotne ograniczenie metodologiczne, prowadząc do trudności w~jednoznacznej interpretacji wyników oraz obniżenia ich powtarzalności i wiarygodności. w~kontekście testów audiologicznych oraz badań nad percepcją słuchową szczególnie problematyczne jest rozdzielenie wpływu właściwości samego bodźca od efektów wynikających z jego prezentacji lub subiektywnej interpretacji. 
+Zastosowanie ustrukturyzowanych metod analizy porównawczej, opartych na mierzalnych i jednoznacznie definiowalnych parametrach akustycznych, umożliwia systematyczne uwzględnienie tej zmienności i ograniczenie jej wpływu na końcowe wnioski badawcze. Reprezentacja próbek dźwiękowych w~postaci wielowymiarowych wektorów cech pozwala na równoczesną analizę wielu aspektów sygnału, takich jak struktura widmowa, dynamika amplitudowa czy cechy cepstralne, bez konieczności każdorazowego odwoływania się do złożonej i czasochłonnej oceny fizycznej poszczególnych parametrów. Takie podejście sprzyja standaryzacji procedur analitycznych, zwiększa obiektywność porównań oraz umożliwia szybką i powtarzalną ocenę podobieństwa sygnałów akustycznych. w~rezultacie analiza wektorowa stanowi efektywne narzędzie wspomagające interpretację wyników badań, pozwalając na bardziej przejrzyste odniesienie obserwowanych różnic i podobieństw do mierzalnych właściwości bodźców dźwiękowych.
+
+Uzyskane w~niniejszym badaniu wyniki potwierdzają zasadność stosowania ustrukturyzowanych metod porównawczych opartych na wektorowej reprezentacji cech akustycznych w~analizie próbek dźwiękowych. 
+
+W warunkach dużej zmienności parametrów sygnału, obejmujących zarówno jego właściwości fizyczne, jak i czynniki związane z rejestracją oraz percepcją, tradycyjna, szczegółowa ocena poszczególnych cech akustycznych może być czasochłonna i obarczona ograniczoną powtarzalnością. Zastosowanie analizy wektorowej umożliwiło jednoczesne uwzględnienie wielu parametrów opisujących strukturę czasową, widmową i cepstralną sygnału, co przełożyło się na bardziej spójną i porównywalną ocenę podobieństwa pomiędzy badanymi próbkami. 
+
+Wykazane zależności pomiędzy miarami podobieństwa opartymi na odległościach wektorowych a obserwowanymi różnicami akustycznymi wskazują, że zaproponowane podejście może stanowić użyteczne narzędzie upraszczające analizę złożonych bodźców dźwiękowych. 
+
+Jednocześnie metoda ta pozwala na ograniczenie wpływu pojedynczych, silnie zmiennych parametrów na końcową ocenę, sprzyjając bardziej obiektywnej interpretacji wyników. w~tym kontekście analiza wektorowa jawi się jako efektywna alternatywa dla klasycznej, wieloetapowej oceny fizycznej próbek dźwiękowych, szczególnie w~badaniach wymagających przetwarzania dużych zbiorów danych lub szybkiej analizy porównawczej.
+
+Podstawowym ograniczeniem niniejszego badania jest mała liczba par bodźców dostępnych do walidacji: cztery pary z~badania MLT, z~których tylko trzy wykazały zgodność z~hipotezą. Progi klasyfikacji trudności ($d < 0{,}80$; $0{,}80 \leq d < 1{,}20$; $d \geq 1{,}20$) zostały wyznaczone empirycznie na podstawie zaledwie trzech spójnych punktów danych, co ogranicza ich uogólnialność na inne zestawy bodźców lub populacje słuchaczy. Ponadto zastosowany wektor cech opiera się na uśrednionych wartościach parametrów dla całego nagrania, przez co nie uwzględnia dynamiki czasowej sygnału, właściwości ataku, wybrzmienia ani modulacji barwy w~czasie. Czynniki te mogą samodzielnie wpływać na trudność percepcyjną niezależnie od dystansu w~przestrzeni cech. Walidacja ograniczona była również do prób dwuelementowych, podczas gdy oryginalny test MLT obejmował bodźce wieloelementowe; ekstrapolacja metryki na zestawy $n > 2$ jednoczesnych dźwięków wymaga odrębnego potwierdzenia eksperymentalnego.
+
+Zasadność opracowanej metryki jako predyktora trudności percepcyjnej znajduje fizjologiczne uzasadnienie w~mechanizmie maskowania energetycznego. Zjawisko to, opisane w~kontekście analizy sceny akustycznej przez Bregmana~\cite{Bregman1990}, zachodzi wówczas, gdy dwa dźwięki o zbliżonych widmach częstotliwościowych nakładają się na siebie na poziomie ślimaka: jeden z sygnałów zostaje stłumiony i nie dociera do wyższych ośrodków słuchowych~\cite{MadhavanWrobel2024MLT}. Opracowana metryka, opierając się na centroidzie widmowym i współczynnikach MFCC opisujących rozkład energii widmowej, pośrednio mierzy właśnie to ryzyko: mały dystans euklidesowy w~przestrzeni cech oznacza podobne profile widmowe, a tym samym zwiększone prawdopodobieństwo wzajemnego maskowania bodźców. Wykazana zgodność między niskim dystansem akustycznym a niską dokładnością percepcyjną w~badaniu MLT~\cite{MadhavanWrobel2024MLT} jest zatem spójna z tym mechanizmem peryferyjnym, co potwierdza, że opracowana metryka nie jest jedynie miarą formalną, lecz odzwierciedla rzeczywiste ograniczenia ludzkiej percepcji słuchowej.
+
+\section{Wnioski}
+
+Na podstawie przeprowadzonych analiz sformułowano następujące wnioski:
+
+\begin{enumerate}[label=\roman*.]
+    \item Opracowano 16-wymiarową metrykę podobieństwa akustycznego opartą na znormalizowanych wektorach cech (centroid widmowy, $F_0$, PAR oraz $\text{MFCC}_{1}$-$\text{MFCC}_{13}$), umożliwiającą obiektywne, powtarzalne porównywanie próbek dźwiękowych niezależnie od pierwotnych jednostek miary poszczególnych parametrów.
+
+    \item Analiza korelacji wykazała niską zależność między centroidem widmowym a częstotliwością podstawową ($r = 0{,}30$), co potwierdza komplementarność wybranych deskryptorów: jasność barwy i wysokość tonu niosą niezależną informację i łącznie zwiększają zdolność różnicowania podobieństwa akustycznego.
+
+    \item Spośród wszystkich współczynników MFCC największą zdolność różnicującą wykazał $\text{MFCC}_5$ (najwyższa średnia znormalizowana, $\overline{x} = 0{,}617$), natomiast parametr PAR okazał się niemal całkowicie niezależny od cech barwowych ($r \leq 0{,}16$ względem wszystkich współczynników MFCC), co uzasadnia jego włączenie do wektora jako osobnego wymiaru opisu dynamiki sygnału.
+
+    \item Walidacja krzyżowa z danymi empirycznymi badania Memory Load Test~\cite{MadhavanWrobel2024MLT} potwierdziła zgodność metryki z ludzką percepcją słuchową: w~trzech spośród czterech analizowanych par bodźców mniejszy dystans euklidesowy odpowiadał niższej dokładności liczenia dźwięków przez słuchaczy (para krowa-koń: $d = 0{,}714$, dokładność $20{,}5\%$; para krowa-lew: $d = 0{,}942$, dokładność $92{,}9\%$; para osioł-koń: $d = 1{,}093$, dokładność $55{,}6\%$).
+
+    \item Opracowana procedura dostarcza praktycznego narzędzia do projektowania zestawów bodźców akustycznych o z góry zdefiniowanym i kontrolowanym stopniu trudności percepcyjnej, co stanowi bezpośrednie zastosowanie w~standaryzacji materiału dźwiękowego wykorzystywanego w~testach audiologicznych i kognitywnych.
+\end{enumerate}
+
+\clearpage
+\bibliography{bibliography}
+
+
+\clearpage
+\appendix
+\section{Wektory cech akustycznych}
+
+
+Wektor cech akustycznych przed normalizacją min-max, wykorzystanych w~artykule.
+
+\begin{tabular}{|c|c|c|c|}\hline
+Name & F0 & PAR & Centroid \\\multicolumn{4}{|c|}{MFCC } \\ \hline
+chaffinch & 1397.990 & 21.744 & 4473.348 \\\multicolumn{4}{|c|}{-379.172 84.621 -16.691 34.242 -16.974 -18.007 -17.783 18.617 -12.605 -0.168 -3.704 -1.220 -2.195 } \\ \hline
+chicken & 930.343 & 17.700 & 2926.691 \\\multicolumn{4}{|c|}{-327.237 82.999 -38.592 -33.489 -32.739 -16.701 -22.290 -11.800 4.410 12.632 5.750 2.132 0.797 } \\ \hline
+cow & 875.505 & 18.591 & 1654.120 \\\multicolumn{4}{|c|}{-394.512 137.184 -21.177 -26.304 -1.867 9.404 0.484 -2.328 2.940 1.853 -4.083 -4.867 0.937 } \\ \hline
+dog & 501.156 & 10.051 & 2209.468 \\\multicolumn{4}{|c|}{-210.405 140.009 -0.183 11.668 -14.332 0.444 -15.602 -17.633 -22.330 -8.135 -1.243 -5.612 1.156 } \\ \hline
+donkey & 1254.720 & 16.949 & 3438.254 \\\multicolumn{4}{|c|}{-210.732 119.803 -76.757 1.164 -57.688 24.694 -14.443 14.486 -12.009 0.844 12.634 -10.031 1.196 } \\ \hline
+duck & 809.362 & 27.325 & 4146.062 \\\multicolumn{4}{|c|}{-214.189 113.623 -54.584 34.472 -32.769 29.992 -17.735 16.085 -13.393 13.294 -6.171 8.963 -3.980 } \\ \hline
+elephant & 922.155 & 13.935 & 1530.462 \\\multicolumn{4}{|c|}{-260.300 162.440 -58.624 -32.465 16.992 -23.840 -13.287 14.540 -10.512 -11.306 6.717 -6.099 -4.969 } \\ \hline
+frog & 1580.831 & 18.955 & 5692.735 \\\multicolumn{4}{|c|}{-483.222 33.491 -25.037 -1.014 1.969 0.867 0.394 1.640 6.719 6.226 -1.556 -4.698 -0.447 } \\ \hline
+frog2 & 1016.737 & 23.145 & 3016.866 \\\multicolumn{4}{|c|}{-392.174 131.438 -36.168 2.720 9.223 13.644 0.556 7.303 7.392 10.260 17.142 1.723 1.871 } \\ \hline
+gorilla & 786.202 & 17.734 & 1330.571 \\\multicolumn{4}{|c|}{-82.167 96.097 -65.205 12.497 -24.149 6.374 -19.602 -0.698 -23.692 -3.660 -22.783 13.400 -6.624 } \\ \hline
+great\_tit & 1421.528 & 18.490 & 3894.647 \\\multicolumn{4}{|c|}{-401.115 71.831 -31.917 44.812 5.723 -18.835 8.275 9.700 -3.537 -6.278 5.170 4.607 -4.099 } \\ \hline
+hawk & 2420.861 & 15.379 & 2490.972 \\\multicolumn{4}{|c|}{-251.887 103.621 -128.249 12.337 -16.913 0.574 -9.382 -23.244 18.037 1.230 13.741 -0.940 8.283 } \\ \hline
+horse & 1067.942 & 17.368 & 2011.143 \\\multicolumn{4}{|c|}{-297.051 119.692 -53.103 -3.729 -8.849 7.642 -5.801 -3.085 -13.738 -5.808 -6.445 -3.819 -1.159 } \\ \hline
+lion & 437.437 & 12.647 & 1858.199 \\\multicolumn{4}{|c|}{-294.076 104.998 -4.434 26.838 -4.114 10.453 -3.604 8.942 -4.704 4.246 0.125 -1.112 -0.304 } \\ \hline
+monkey & 1710.385 & 22.929 & 3530.151 \\\multicolumn{4}{|c|}{-394.827 53.336 -97.621 -15.711 -11.431 7.840 -5.534 18.661 11.501 3.127 -7.646 -2.045 -11.244 } \\ \hline
+owl & 622.496 & 13.560 & 4539.256 \\\multicolumn{4}{|c|}{-429.998 47.405 10.065 -2.331 -8.078 -7.900 -2.792 10.686 15.895 15.074 8.192 2.367 -1.195 } \\ \hline
+sheep & 1279.340 & 19.892 & 3325.403 \\\multicolumn{4}{|c|}{-189.880 109.772 -88.828 6.104 -25.419 15.384 -30.839 -3.600 -21.130 9.763 -1.861 0.301 12.754 } \\ \hline
+tawny\_owl & 456.731 & 17.654 & 5257.504 \\\multicolumn{4}{|c|}{-447.315 38.390 15.328 5.323 1.278 -0.280 0.894 6.429 9.165 9.383 6.560 4.190 1.832 } \\ \hline
+tundra\_swan & 784.416 & 18.319 & 2701.883 \\\multicolumn{4}{|c|}{-230.075 125.439 -51.170 5.210 -21.519 -6.252 -26.662 -14.046 -10.482 5.757 13.905 9.226 7.296 } \\ \hline
+wild\_boar & 1085.865 & 22.563 & 3304.438 \\\multicolumn{4}{|c|}{-268.061 126.635 -52.249 20.793 3.746 11.124 -4.933 -14.149 7.141 -1.544 -3.149 2.109 -6.019 } \\ \hline
+wolf1 & 510.134 & 15.807 & 2421.858 \\\multicolumn{4}{|c|}{-231.524 144.509 -9.122 21.388 -25.433 -2.456 -14.032 -4.206 -9.847 -1.886 -8.958 2.777 -3.800 } \\ \hline
+wolf2 & 551.040 & 16.948 & 2131.952 \\\multicolumn{4}{|c|}{-334.230 131.805 41.666 -0.186 -5.520 5.895 1.657 5.204 -0.917 2.270 -2.057 7.741 11.357 } \\ \hline
+blackbird & 2240.552 & 20.041 & 4619.491 \\\multicolumn{4}{|c|}{-381.544 39.774 -62.417 10.515 18.136 4.618 -10.540 11.598 1.926 7.897 1.459 2.245 4.149 } \\ \hline
+cat & 1100.218 & 17.867 & 1513.415 \\\multicolumn{4}{|c|}{-188.818 38.797 -19.753 17.932 -11.072 15.299 1.157 43.015 0.418 4.087 -22.761 9.654 4.120 } \\ \hline
+\end{tabular}
+
+
+
+
+
+\end{document}

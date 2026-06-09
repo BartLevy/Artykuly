@@ -1,0 +1,2461 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{uksc2018}{misc}{}{}
+      \list{institution}{1}{%
+        {Sejm Rzeczypospolitej Polskiej}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Dz.U.}
+      \field{note}{Weszła w życie 28 sierpnia 2018 r.}
+      \field{number}{poz. 1560}
+      \field{shorthand}{UKSC}
+      \field{title}{Ustawa z dnia 5 lipca 2018 r. o krajowym systemie cyberbezpieczeństwa}
+      \field{volume}{2018}
+      \field{year}{2018}
+    \endentry
+    \entry{dora2022}{misc}{}{}
+      \name{author}{2}{}{%
+        {{hash=2e0f8b5b83eadbb795164b0f1848df34}{%
+           family={{Parlament Europejski}},
+           familyi={P\bibinitperiod}}}%
+        {{hash=eec833edee271fa109afdaeff20839d5}{%
+           family={{Rada Unii Europejskiej}},
+           familyi={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{323f98fcf562b2ac280b24d521674201}
+      \strng{fullhash}{323f98fcf562b2ac280b24d521674201}
+      \strng{fullhashraw}{323f98fcf562b2ac280b24d521674201}
+      \strng{bibnamehash}{323f98fcf562b2ac280b24d521674201}
+      \strng{authorbibnamehash}{323f98fcf562b2ac280b24d521674201}
+      \strng{authornamehash}{323f98fcf562b2ac280b24d521674201}
+      \strng{authorfullhash}{323f98fcf562b2ac280b24d521674201}
+      \strng{authorfullhashraw}{323f98fcf562b2ac280b24d521674201}
+      \field{extraname}{1}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Dz.Urz.\ UE L 333/1}
+      \field{month}{12}
+      \field{title}{Rozporządzenie {(UE)} 2022/2554 w sprawie operacyjnej odporności cyfrowej sektora finansowego ({DORA})}
+      \field{year}{2022}
+      \verb{urlraw}
+      \verb https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX%3A32022R2554
+      \endverb
+      \verb{url}
+      \verb https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX%3A32022R2554
+      \endverb
+    \endentry
+    \entry{dyrektywa_nis}{misc}{}{}
+      \list{institution}{1}{%
+        {Parlament Europejski i Rada UE}%
+      }
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{title}
+      \field{day}{19}
+      \field{journaltitle}{Dz.Urz. UE L 194}
+      \field{month}{7}
+      \field{number}{2016/1148}
+      \field{shorthand}{Dyrektywa NIS}
+      \field{title}{Dyrektywa Parlamentu Europejskiego i Rady (UE) 2016/1148 z dnia 6 lipca 2016 r. w sprawie środków na rzecz wysokiego wspólnego poziomu bezpieczeństwa sieci i systemów informatycznych na terytorium Unii}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \field{pages}{1\bibrangedash 30}
+      \range{pages}{30}
+    \endentry
+    \entry{uksc2026}{legislation}{}{}
+      \list{institution}{1}{%
+        {Sejm Rzeczypospolitej Polskiej}%
+      }
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labeltitlesource}{title}
+      \field{title}{Ustawa z dnia 23 stycznia 2026 r. o zmianie ustawy o krajowym systemie cyberbezpieczeństwa oraz niektórych innych ustaw}
+      \field{year}{2026}
+    \endentry
+    \entry{dyrektywa_nis2}{misc}{}{}
+      \list{institution}{1}{%
+        {Parlament Europejski i Rada UE}%
+      }
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labeltitlesource}{title}
+      \field{day}{27}
+      \field{journaltitle}{Dz.Urz. UE L 333}
+      \field{month}{12}
+      \field{number}{2022/2555}
+      \field{shorthand}{Dyrektywa NIS2}
+      \field{title}{Dyrektywa Parlamentu Europejskiego i Rady (UE) 2022/2555 z dnia 14 grudnia 2022 r. w sprawie środków na rzecz wysokiego wspólnego poziomu cyberbezpieczeństwa na terytorium Unii (NIS2)}
+      \field{year}{2022}
+      \field{dateera}{ce}
+      \field{pages}{80\bibrangedash 152}
+      \range{pages}{73}
+    \endentry
+    \entry{uodo2018}{legislation}{}{}
+      \list{institution}{1}{%
+        {Sejm Rzeczypospolitej Polskiej}%
+      }
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Dz.U.}
+      \field{note}{Weszła w życie 25 maja 2018 r.}
+      \field{number}{poz. 1000}
+      \field{title}{Ustawa z dnia 10 maja 2018 r. o ochronie danych osobowych}
+      \field{volume}{2018}
+      \field{year}{2018}
+    \endentry
+    \entry{rodo}{misc}{}{}
+      \list{institution}{1}{%
+        {Parlament Europejski i Rada UE}%
+      }
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labeltitlesource}{title}
+      \field{day}{4}
+      \field{journaltitle}{Dz.Urz. UE L 119}
+      \field{month}{5}
+      \field{note}{Stosowane od 25 maja 2018 r.}
+      \field{number}{2016/679}
+      \field{shorthand}{RODO}
+      \field{title}{Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE (ogólne rozporządzenie o ochronie danych)}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \field{pages}{1\bibrangedash 88}
+      \range{pages}{88}
+    \endentry
+    \entry{uznk1993}{legislation}{}{}
+      \list{institution}{1}{%
+        {Sejm Rzeczypospolitej Polskiej}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Dz.U.}
+      \field{note}{Tekst jednolity: Dz.U. z 2003 r. Nr 153, poz. 1503 z późn. zm.}
+      \field{number}{Nr 47, poz. 211}
+      \field{shorthand}{u.z.n.k.}
+      \field{title}{Ustawa z dnia 16 kwietnia 1993 r. o zwalczaniu nieuczciwej konkurencji}
+      \field{volume}{1993}
+      \field{year}{1993}
+    \endentry
+    \entry{kc1964}{legislation}{}{}
+      \list{institution}{1}{%
+        {Sejm Rzeczypospolitej Polskiej}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Dz.U.}
+      \field{note}{Tekst jednolity: Dz.U. z 2023 r. poz. 1610 z późn. zm.}
+      \field{number}{Nr 16, poz. 93}
+      \field{shorthand}{k.c.}
+      \field{title}{Ustawa z dnia 23 kwietnia 1964 r. -- Kodeks cywilny}
+      \field{volume}{1964}
+      \field{year}{1964}
+    \endentry
+    \entry{kk1997}{legislation}{}{}
+      \list{institution}{1}{%
+        {Sejm Rzeczypospolitej Polskiej}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Dz.U.}
+      \field{note}{Tekst jednolity: Dz.U. z 2024 r. poz. 17 z późn. zm.}
+      \field{number}{Nr 88, poz. 553}
+      \field{shorthand}{k.k.}
+      \field{title}{Ustawa z dnia 6 czerwca 1997 r. -- Kodeks karny}
+      \field{volume}{1997}
+      \field{year}{1997}
+    \endentry
+    \entry{deficja_msp_2018}{misc}{}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Dz.U. 2018 poz. 646}
+      \field{note}{art. 7; ELI: https://eli.gov.pl/eli/DU/2018/646/ogl}
+      \field{title}{Ustawa z dnia 6 marca 2018 r. -- Prawo przedsiębiorców}
+      \field{year}{2018}
+      \verb{urlraw}
+      \verb https://eli.gov.pl/eli/DU/2018/646/ogl
+      \endverb
+      \verb{url}
+      \verb https://eli.gov.pl/eli/DU/2018/646/ogl
+      \endverb
+    \endentry
+    \entry{knf_rekomendacja_d_2013}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=476bd0b47dadc589b925dbe3b3976dc8}{%
+           family={{Komisja Nadzoru Finansowego}},
+           familyi={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{476bd0b47dadc589b925dbe3b3976dc8}
+      \strng{fullhash}{476bd0b47dadc589b925dbe3b3976dc8}
+      \strng{fullhashraw}{476bd0b47dadc589b925dbe3b3976dc8}
+      \strng{bibnamehash}{476bd0b47dadc589b925dbe3b3976dc8}
+      \strng{authorbibnamehash}{476bd0b47dadc589b925dbe3b3976dc8}
+      \strng{authornamehash}{476bd0b47dadc589b925dbe3b3976dc8}
+      \strng{authorfullhash}{476bd0b47dadc589b925dbe3b3976dc8}
+      \strng{authorfullhashraw}{476bd0b47dadc589b925dbe3b3976dc8}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Załącznik do uchwały nr 7/2013 Komisji Nadzoru Finansowego z dnia 8 stycznia 2013 r., Dz. Urz. KNF z 2013 r. poz. 5}
+      \field{note}{Ogłoszona 27 lutego 2013 r.}
+      \field{title}{Rekomendacja D dotycząca zarządzania obszarami technologii informacyjnej i bezpieczeństwa środowiska teleinformatycznego w bankach}
+      \field{year}{2013}
+      \verb{urlraw}
+      \verb https://www.knf.gov.pl/knf/pl/komponenty/img/rekomendacja_d_8_01_13_uchwala_7_33016.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.knf.gov.pl/knf/pl/komponenty/img/rekomendacja_d_8_01_13_uchwala_7_33016.pdf
+      \endverb
+    \endentry
+    \entry{knf_bion_2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=991f511866f32dee9aaf9d3b317bf956}{%
+           family={{Urząd Komisji Nadzoru Finansowego}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{991f511866f32dee9aaf9d3b317bf956}
+      \strng{fullhash}{991f511866f32dee9aaf9d3b317bf956}
+      \strng{fullhashraw}{991f511866f32dee9aaf9d3b317bf956}
+      \strng{bibnamehash}{991f511866f32dee9aaf9d3b317bf956}
+      \strng{authorbibnamehash}{991f511866f32dee9aaf9d3b317bf956}
+      \strng{authornamehash}{991f511866f32dee9aaf9d3b317bf956}
+      \strng{authorfullhash}{991f511866f32dee9aaf9d3b317bf956}
+      \strng{authorfullhashraw}{991f511866f32dee9aaf9d3b317bf956}
+      \field{extraname}{1}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Urząd Komisji Nadzoru Finansowego, Warszawa, 12 lutego 2024 r.}
+      \field{note}{Dokument opisujący proces BION stosowany przez KNF}
+      \field{title}{Metodyka badania i oceny nadzorczej banków komercyjnych, zrzeszających oraz spółdzielczych (Metodyka BION)}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.knf.gov.pl/knf/pl/komponenty/img/Metodyka_BION_2024.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.knf.gov.pl/knf/pl/komponenty/img/Metodyka_BION_2024.pdf
+      \endverb
+    \endentry
+    \entry{resilia_dora}{legislation}{}{}
+      \list{institution}{1}{%
+        {Parlament Europejski i Rada Unii Europejskiej}%
+      }
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{27}
+      \field{journaltitle}{Dziennik Urzędowy Unii Europejskiej}
+      \field{langid}{polish}
+      \field{month}{12}
+      \field{number}{(UE) 2022/2554}
+      \field{shorttitle}{Rozporządzenie DORA}
+      \field{title}{Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2022/2554 z dnia 14 grudnia 2022~r. w sprawie operacyjnej odporności cyfrowej sektora finansowego i zmieniające rozporządzenia (WE) nr~1060/2009, (UE) nr~648/2012, (UE) nr~600/2014, (UE) nr~909/2014 oraz (UE) 2016/1011 (DORA)}
+      \field{volume}{L 333}
+      \field{year}{2022}
+      \field{dateera}{ce}
+      \field{pages}{1\bibrangedash 79}
+      \range{pages}{79}
+      \verb{urlraw}
+      \verb https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32022R2554
+      \endverb
+      \verb{url}
+      \verb https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32022R2554
+      \endverb
+    \endentry
+    \entry{eiopa_dora}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=9c00c43cc9b91bdcbcb829d645bf0981}{%
+           family={{European Insurance and Occupational Pensions Authority (EIOPA)}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{9c00c43cc9b91bdcbcb829d645bf0981}
+      \strng{fullhash}{9c00c43cc9b91bdcbcb829d645bf0981}
+      \strng{fullhashraw}{9c00c43cc9b91bdcbcb829d645bf0981}
+      \strng{bibnamehash}{9c00c43cc9b91bdcbcb829d645bf0981}
+      \strng{authorbibnamehash}{9c00c43cc9b91bdcbcb829d645bf0981}
+      \strng{authornamehash}{9c00c43cc9b91bdcbcb829d645bf0981}
+      \strng{authorfullhash}{9c00c43cc9b91bdcbcb829d645bf0981}
+      \strng{authorfullhashraw}{9c00c43cc9b91bdcbcb829d645bf0981}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Strona instytucjonalna EIOPA}
+      \field{langid}{english}
+      \field{note}{Informacje dotyczące wymogów DORA w zakresie zarządzania ryzykiem ICT, raportowania incydentów oraz wymiany informacji o zagrożeniach cybernetycznych}
+      \field{title}{Digital Operational Resilience Act ({DORA})}
+      \field{urlday}{10}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.eiopa.europa.eu/digital-operational-resilience-act-dora_en
+      \endverb
+      \verb{url}
+      \verb https://www.eiopa.europa.eu/digital-operational-resilience-act-dora_en
+      \endverb
+    \endentry
+    \entry{knf_dora}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=65df1df01130f44f750c61134a9c372c}{%
+           family={{Komisja Nadzoru Finansowego (KNF)}},
+           familyi={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{65df1df01130f44f750c61134a9c372c}
+      \strng{fullhash}{65df1df01130f44f750c61134a9c372c}
+      \strng{fullhashraw}{65df1df01130f44f750c61134a9c372c}
+      \strng{bibnamehash}{65df1df01130f44f750c61134a9c372c}
+      \strng{authorbibnamehash}{65df1df01130f44f750c61134a9c372c}
+      \strng{authornamehash}{65df1df01130f44f750c61134a9c372c}
+      \strng{authorfullhash}{65df1df01130f44f750c61134a9c372c}
+      \strng{authorfullhashraw}{65df1df01130f44f750c61134a9c372c}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Serwis instytucjonalny KNF}
+      \field{langid}{polish}
+      \field{note}{Zbiór materiałów nadzorczych KNF dotyczących wdrożenia rozporządzenia (UE) 2022/2554 (DORA)}
+      \field{title}{Rozporządzenie {DORA} -- strona tematyczna}
+      \field{urlday}{10}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.knf.gov.pl/dla_rynku/dora
+      \endverb
+      \verb{url}
+      \verb https://www.knf.gov.pl/dla_rynku/dora
+      \endverb
+    \endentry
+    \entry{przewodnik_rodo_zdrowie}{legislation}{}{}
+      \list{institution}{1}{%
+        {Parlament Europejski i Rada Unii Europejskiej}%
+      }
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{27}
+      \field{journaltitle}{Dziennik Urzędowy Unii Europejskiej}
+      \field{langid}{polish}
+      \field{month}{4}
+      \field{note}{W szczególności art.~9 dotyczący szczególnych kategorii danych osobowych (w tym danych zdrowotnych)}
+      \field{number}{(UE) 2016/679}
+      \field{shorttitle}{Rozporządzenie RODO}
+      \field{title}{Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016~r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE (Ogólne rozporządzenie o ochronie danych, RODO)}
+      \field{volume}{L 119}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \field{pages}{1\bibrangedash 88}
+      \range{pages}{88}
+      \verb{urlraw}
+      \verb https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32016R0679
+      \endverb
+      \verb{url}
+      \verb https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32016R0679
+      \endverb
+    \endentry
+    \entry{przewodnik_rodo_dane_zdrowotne}{legislation}{}{}
+      \list{institution}{1}{%
+        {Parlament Europejski i Rada Unii Europejskiej}%
+      }
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{27}
+      \field{journaltitle}{Dziennik Urzędowy Unii Europejskiej}
+      \field{langid}{polish}
+      \field{month}{4}
+      \field{note}{W szczególności art.~37--39 RODO regulujące obowiązek wyznaczenia, zadania i pozycję Inspektora Ochrony Danych (IOD)}
+      \field{number}{(UE) 2016/679}
+      \field{shorttitle}{Rozporządzenie RODO -- inspektor ochrony danych}
+      \field{title}{Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016~r. \textnormal{(RODO)}}
+      \field{volume}{L 119}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \field{pages}{1\bibrangedash 88}
+      \range{pages}{88}
+      \verb{urlraw}
+      \verb https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32016R0679
+      \endverb
+      \verb{url}
+      \verb https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32016R0679
+      \endverb
+    \endentry
+    \entry{rpp_dokumentacja}{legislation}{}{}
+      \list{institution}{1}{%
+        {Sejm Rzeczypospolitej Polskiej}%
+      }
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{6}
+      \field{langid}{polish}
+      \field{month}{11}
+      \field{note}{W szczególności art.~23--29 regulujące prawo pacjenta do dokumentacji medycznej oraz obowiązki podmiotów leczniczych w zakresie jej prowadzenia, przechowywania i udostępniania}
+      \field{number}{Dz.U.~2024 poz.~581}
+      \field{shorttitle}{Ustawa o prawach pacjenta}
+      \field{title}{Ustawa z dnia 6 listopada 2008~r. o prawach pacjenta i Rzeczniku Praw Pacjenta}
+      \field{year}{2008}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20240000581/O/D20240581.pdf
+      \endverb
+      \verb{url}
+      \verb https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20240000581/O/D20240581.pdf
+      \endverb
+    \endentry
+    \entry{sc_prawa_pacjenta}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=791bcc20522080e8cbb90d00a4a7d0fd}{%
+           family={{Centrum e-Zdrowia}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{791bcc20522080e8cbb90d00a4a7d0fd}
+      \strng{fullhash}{791bcc20522080e8cbb90d00a4a7d0fd}
+      \strng{fullhashraw}{791bcc20522080e8cbb90d00a4a7d0fd}
+      \strng{bibnamehash}{791bcc20522080e8cbb90d00a4a7d0fd}
+      \strng{authorbibnamehash}{791bcc20522080e8cbb90d00a4a7d0fd}
+      \strng{authornamehash}{791bcc20522080e8cbb90d00a4a7d0fd}
+      \strng{authorfullhash}{791bcc20522080e8cbb90d00a4a7d0fd}
+      \strng{authorfullhashraw}{791bcc20522080e8cbb90d00a4a7d0fd}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Serwis instytucjonalny Centrum e-Zdrowia}
+      \field{langid}{polish}
+      \field{note}{Informacje o systemach P1, P2 oraz standardach informatycznych elektronicznej dokumentacji medycznej zarządzanych przez Centrum e-Zdrowia}
+      \field{title}{Systemy informacyjne w ochronie zdrowia -- {P1} (e-recepta, e-skierowanie) i krajowa infrastruktura elektronicznej dokumentacji medycznej}
+      \field{urlday}{10}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.cez.gov.pl
+      \endverb
+      \verb{url}
+      \verb https://www.cez.gov.pl
+      \endverb
+    \endentry
+    \entry{ehds_gov_zdrowie}{misc}{}{}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Parlament Europejski}
+      \field{langid}{polish}
+      \field{title}{Rozporządzenia EHDS (UE) 2025/327, daty wejścia w życie (26.03.2025 r.) oraz harmonogramu wdrożenia do 26.03.2027 r.}
+      \field{urlday}{10}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://eur-lex.europa.eu/legal-content/PL/TXT/PDF/?uri=OJ:L_202500327
+      \endverb
+      \verb{url}
+      \verb https://eur-lex.europa.eu/legal-content/PL/TXT/PDF/?uri=OJ:L_202500327
+      \endverb
+    \endentry
+    \entry{ehds_komisja}{legislation}{}{}
+      \list{institution}{1}{%
+        {Parlament Europejski i Rada Unii Europejskiej}%
+      }
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{5}
+      \field{journaltitle}{Dziennik Urzędowy Unii Europejskiej}
+      \field{langid}{polish}
+      \field{month}{3}
+      \field{note}{Weszło w życie 26 marca 2025~r.; ustanawia EHDS jako ogólnounijne ramy pierwotnego i wtórnego wykorzystania elektronicznych danych zdrowotnych}
+      \field{number}{(UE) 2025/327}
+      \field{shorttitle}{Rozporządzenie EHDS}
+      \field{title}{Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2025/327 z dnia 11 lutego 2025~r. w sprawie Europejskiej Przestrzeni Danych Dotyczących Zdrowia i zmieniające rozporządzenie (UE) 2018/1724 i dyrektywę 2011/24/UE}
+      \field{volume}{L 2025/327}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32025R0327
+      \endverb
+      \verb{url}
+      \verb https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32025R0327
+      \endverb
+    \endentry
+    \entry{putter2023espionage}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=a988413860d16fb61bcdd2de8033efb6}{%
+           family={Putter},
+           familyi={P\bibinitperiod},
+           given={Johan},
+           giveni={J\bibinitperiod}}}%
+        {{hash=abc2631dfbf4a8c5b7cd037a3d8814f0}{%
+           family={Bachmann},
+           familyi={B\bibinitperiod},
+           given={Sascha-Dominik},
+           giveni={S\bibinithyphendelim D\bibinitperiod}}}%
+      }
+      \strng{namehash}{87377d64fc34a6a6f3a100fa42d403cf}
+      \strng{fullhash}{87377d64fc34a6a6f3a100fa42d403cf}
+      \strng{fullhashraw}{87377d64fc34a6a6f3a100fa42d403cf}
+      \strng{bibnamehash}{87377d64fc34a6a6f3a100fa42d403cf}
+      \strng{authorbibnamehash}{87377d64fc34a6a6f3a100fa42d403cf}
+      \strng{authornamehash}{87377d64fc34a6a6f3a100fa42d403cf}
+      \strng{authorfullhash}{87377d64fc34a6a6f3a100fa42d403cf}
+      \strng{authorfullhashraw}{87377d64fc34a6a6f3a100fa42d403cf}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal on Baltic Security}
+      \field{number}{1}
+      \field{title}{Russia and China Expected to Renew Their Espionage Vigour}
+      \field{volume}{9}
+      \field{year}{2023}
+      \field{pages}{1\bibrangedash 31}
+      \range{pages}{31}
+      \verb{doi}
+      \verb 10.2478/jobs-2023-0001
+      \endverb
+      \verb{urlraw}
+      \verb https://journalonbalticsecurity.com/journal/JOBS/article/113/text
+      \endverb
+      \verb{url}
+      \verb https://journalonbalticsecurity.com/journal/JOBS/article/113/text
+      \endverb
+    \endentry
+    \entry{whitehouse_icc_sanctions_2025}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=0cee9b756070a2e3863e7466712c9eb8}{%
+           family={{The White House}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {The White House}%
+      }
+      \strng{namehash}{0cee9b756070a2e3863e7466712c9eb8}
+      \strng{fullhash}{0cee9b756070a2e3863e7466712c9eb8}
+      \strng{fullhashraw}{0cee9b756070a2e3863e7466712c9eb8}
+      \strng{bibnamehash}{0cee9b756070a2e3863e7466712c9eb8}
+      \strng{authorbibnamehash}{0cee9b756070a2e3863e7466712c9eb8}
+      \strng{authornamehash}{0cee9b756070a2e3863e7466712c9eb8}
+      \strng{authorfullhash}{0cee9b756070a2e3863e7466712c9eb8}
+      \strng{authorfullhashraw}{0cee9b756070a2e3863e7466712c9eb8}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{2}
+      \field{title}{Imposing Sanctions on the International Criminal Court}
+      \field{urlday}{7}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.whitehouse.gov/presidential-actions/2025/02/imposing-sanctions-on-the-international-criminal-court/
+      \endverb
+      \verb{url}
+      \verb https://www.whitehouse.gov/presidential-actions/2025/02/imposing-sanctions-on-the-international-criminal-court/
+      \endverb
+    \endentry
+    \entry{cloudact2018}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=af3bc5ad214279131de50325fb61b15c}{%
+           family={{United States Congress}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{af3bc5ad214279131de50325fb61b15c}
+      \strng{fullhash}{af3bc5ad214279131de50325fb61b15c}
+      \strng{fullhashraw}{af3bc5ad214279131de50325fb61b15c}
+      \strng{bibnamehash}{af3bc5ad214279131de50325fb61b15c}
+      \strng{authorbibnamehash}{af3bc5ad214279131de50325fb61b15c}
+      \strng{authornamehash}{af3bc5ad214279131de50325fb61b15c}
+      \strng{authorfullhash}{af3bc5ad214279131de50325fb61b15c}
+      \strng{authorfullhashraw}{af3bc5ad214279131de50325fb61b15c}
+      \field{extraname}{1}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Pub.\ L.\ No.\ 115-141, div.\ V, 132 Stat.\ 348}
+      \field{title}{Clarifying Lawful Overseas Use of Data Act (CLOUD Act)}
+      \field{year}{2018}
+      \verb{urlraw}
+      \verb https://www.congress.gov/115/plaws/publ141/PLAW-115publ141.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.congress.gov/115/plaws/publ141/PLAW-115publ141.pdf
+      \endverb
+    \endentry
+    \entry{fisa702}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=af3bc5ad214279131de50325fb61b15c}{%
+           family={{United States Congress}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{af3bc5ad214279131de50325fb61b15c}
+      \strng{fullhash}{af3bc5ad214279131de50325fb61b15c}
+      \strng{fullhashraw}{af3bc5ad214279131de50325fb61b15c}
+      \strng{bibnamehash}{af3bc5ad214279131de50325fb61b15c}
+      \strng{authorbibnamehash}{af3bc5ad214279131de50325fb61b15c}
+      \strng{authornamehash}{af3bc5ad214279131de50325fb61b15c}
+      \strng{authorfullhash}{af3bc5ad214279131de50325fb61b15c}
+      \strng{authorfullhashraw}{af3bc5ad214279131de50325fb61b15c}
+      \field{extraname}{2}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{50 U.S.C. §1881a; reauthorized most recently by the FISA Reform and Reauthorization Act of 2024}
+      \field{title}{Foreign Intelligence Surveillance Act, Section 702}
+      \field{year}{1978}
+      \verb{urlraw}
+      \verb https://www.govinfo.gov/content/pkg/STATUTE-92/pdf/STATUTE-92-Pg1783.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.govinfo.gov/content/pkg/STATUTE-92/pdf/STATUTE-92-Pg1783.pdf
+      \endverb
+    \endentry
+    \entry{synergy2025eu}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=193fe4b0a964d5ee5f39be4f71280fe1}{%
+           family={{Synergy Research Group}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{193fe4b0a964d5ee5f39be4f71280fe1}
+      \strng{fullhash}{193fe4b0a964d5ee5f39be4f71280fe1}
+      \strng{fullhashraw}{193fe4b0a964d5ee5f39be4f71280fe1}
+      \strng{bibnamehash}{193fe4b0a964d5ee5f39be4f71280fe1}
+      \strng{authorbibnamehash}{193fe4b0a964d5ee5f39be4f71280fe1}
+      \strng{authornamehash}{193fe4b0a964d5ee5f39be4f71280fe1}
+      \strng{authorfullhash}{193fe4b0a964d5ee5f39be4f71280fe1}
+      \strng{authorfullhashraw}{193fe4b0a964d5ee5f39be4f71280fe1}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Market Report}
+      \field{title}{European Cloud Providers' Local Market Share Holds Steady at 15\%}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://www.srgresearch.com/articles/european-cloud-providers-local-market-share-now-holds-steady-at-15
+      \endverb
+      \verb{url}
+      \verb https://www.srgresearch.com/articles/european-cloud-providers-local-market-share-now-holds-steady-at-15
+      \endverb
+    \endentry
+    \entry{edpb2019cloudact}{misc}{}{}
+      \name{author}{2}{}{%
+        {{hash=74d1e10fcee75ce98ed9bd00812ec2fb}{%
+           family={{European Data Protection Board}},
+           familyi={E\bibinitperiod}}}%
+        {{hash=b92ff15057fb0eaa3233c2c5ad151e13}{%
+           family={{European Data Protection Supervisor}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{4a36562df026505743f215115e1ec621}
+      \strng{fullhash}{4a36562df026505743f215115e1ec621}
+      \strng{fullhashraw}{4a36562df026505743f215115e1ec621}
+      \strng{bibnamehash}{4a36562df026505743f215115e1ec621}
+      \strng{authorbibnamehash}{4a36562df026505743f215115e1ec621}
+      \strng{authornamehash}{4a36562df026505743f215115e1ec621}
+      \strng{authorfullhash}{4a36562df026505743f215115e1ec621}
+      \strng{authorfullhashraw}{4a36562df026505743f215115e1ec621}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Joint Response Annex}
+      \field{title}{Initial Legal Assessment of the Impact of the {US} {CLOUD} Act on the {European Union} Legal Framework for Personal Data Protection}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://www.edpb.europa.eu/sites/default/files/files/file2/edpb_edps_joint_response_us_cloudact_annex.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.edpb.europa.eu/sites/default/files/files/file2/edpb_edps_joint_response_us_cloudact_annex.pdf
+      \endverb
+    \endentry
+    \entry{braud2021gaiax}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=4f75d176391646314e577626967d243b}{%
+           family={Braud},
+           familyi={B\bibinitperiod},
+           given={Tristan},
+           giveni={T\bibinitperiod}}}%
+        {{hash=411115bfa77232393227ebf6a9fc030b}{%
+           family={Lacombe},
+           familyi={L\bibinitperiod},
+           given={Elsa},
+           giveni={E\bibinitperiod}}}%
+        {{hash=a4d9f4063512827890a28608c609b9ab}{%
+           family={Bharti},
+           familyi={B\bibinitperiod},
+           given={Vikram},
+           giveni={V\bibinitperiod}}}%
+        {{hash=28777383a6d1b2b7a5a8741ac2ce2e03}{%
+           family={Hui},
+           familyi={H\bibinitperiod},
+           given={Pan},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{68b42b01cf86cce99bfe62b4addda6e0}
+      \strng{fullhash}{7b3224aba8d704534575c0146921bb6d}
+      \strng{fullhashraw}{7b3224aba8d704534575c0146921bb6d}
+      \strng{bibnamehash}{68b42b01cf86cce99bfe62b4addda6e0}
+      \strng{authorbibnamehash}{68b42b01cf86cce99bfe62b4addda6e0}
+      \strng{authornamehash}{68b42b01cf86cce99bfe62b4addda6e0}
+      \strng{authorfullhash}{7b3224aba8d704534575c0146921bb6d}
+      \strng{authorfullhashraw}{7b3224aba8d704534575c0146921bb6d}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 2021 IEEE International Conference on Cloud Engineering (IC2E)}
+      \field{title}{Scaling the Gaia-{X} Lighthouse: An Analysis of European Data Infrastructure}
+      \field{year}{2021}
+      \verb{urlraw}
+      \verb https://publikationen.bibliothek.kit.edu/1000139020
+      \endverb
+      \verb{url}
+      \verb https://publikationen.bibliothek.kit.edu/1000139020
+      \endverb
+    \endentry
+    \entry{ochk2025sovereignty}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=a39d3be6e66b2ef2f65675d79a8b0b09}{%
+           family={{Operator Chmury Krajowej}},
+           familyi={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{a39d3be6e66b2ef2f65675d79a8b0b09}
+      \strng{fullhash}{a39d3be6e66b2ef2f65675d79a8b0b09}
+      \strng{fullhashraw}{a39d3be6e66b2ef2f65675d79a8b0b09}
+      \strng{bibnamehash}{a39d3be6e66b2ef2f65675d79a8b0b09}
+      \strng{authorbibnamehash}{a39d3be6e66b2ef2f65675d79a8b0b09}
+      \strng{authornamehash}{a39d3be6e66b2ef2f65675d79a8b0b09}
+      \strng{authorfullhash}{a39d3be6e66b2ef2f65675d79a8b0b09}
+      \strng{authorfullhashraw}{a39d3be6e66b2ef2f65675d79a8b0b09}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Komunikat prasowy}
+      \field{month}{10}
+      \field{title}{OChK osiągnął pełną suwerenność cyfrową zgodnie z Cloud Sovereignty Framework Komisji Europejskiej}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://chmura.gov.pl
+      \endverb
+      \verb{url}
+      \verb https://chmura.gov.pl
+      \endverb
+    \endentry
+    \entry{ijaibdcms2024tee}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=b35248a628642e41802bf7fd35440bc8}{%
+           family={Almutairi},
+           familyi={A\bibinitperiod},
+           given={Sulaiman},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{e5532eb16e59c88a7880cfd2cca9af6f}
+      \strng{fullhash}{e5532eb16e59c88a7880cfd2cca9af6f}
+      \strng{fullhashraw}{e5532eb16e59c88a7880cfd2cca9af6f}
+      \strng{bibnamehash}{e5532eb16e59c88a7880cfd2cca9af6f}
+      \strng{authorbibnamehash}{e5532eb16e59c88a7880cfd2cca9af6f}
+      \strng{authornamehash}{e5532eb16e59c88a7880cfd2cca9af6f}
+      \strng{authorfullhash}{e5532eb16e59c88a7880cfd2cca9af6f}
+      \strng{authorfullhashraw}{e5532eb16e59c88a7880cfd2cca9af6f}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Advances in Internet of Big Data and Cloud Management System}
+      \field{number}{1}
+      \field{title}{Confidential Computing Using Trusted Execution Environments}
+      \field{volume}{3}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://ijaibdcms.org/index.php/ijaibdcms/article/view/240
+      \endverb
+      \verb{url}
+      \verb https://ijaibdcms.org/index.php/ijaibdcms/article/view/240
+      \endverb
+    \endentry
+    \entry{knf2020chmura}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=991f511866f32dee9aaf9d3b317bf956}{%
+           family={{Urząd Komisji Nadzoru Finansowego}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{991f511866f32dee9aaf9d3b317bf956}
+      \strng{fullhash}{991f511866f32dee9aaf9d3b317bf956}
+      \strng{fullhashraw}{991f511866f32dee9aaf9d3b317bf956}
+      \strng{bibnamehash}{991f511866f32dee9aaf9d3b317bf956}
+      \strng{authorbibnamehash}{991f511866f32dee9aaf9d3b317bf956}
+      \strng{authornamehash}{991f511866f32dee9aaf9d3b317bf956}
+      \strng{authorfullhash}{991f511866f32dee9aaf9d3b317bf956}
+      \strng{authorfullhashraw}{991f511866f32dee9aaf9d3b317bf956}
+      \field{extraname}{2}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Komunikat UKNF}
+      \field{month}{1}
+      \field{title}{Komunikat {UKNF} w sprawie przetwarzania przez podmioty nadzorowane informacji w chmurze obliczeniowej publicznej i hybrydowej}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://www.knf.gov.pl/knf/pl/komponenty/img/Komunikat_UKNF_Chmura_Obliczeniowa_68669.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.knf.gov.pl/knf/pl/komponenty/img/Komunikat_UKNF_Chmura_Obliczeniowa_68669.pdf
+      \endverb
+    \endentry
+    \entry{dora_rts2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=b283c636af01e679dd89b225b86542e3}{%
+           family={{Komisja Europejska}},
+           familyi={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{fullhash}{b283c636af01e679dd89b225b86542e3}
+      \strng{fullhashraw}{b283c636af01e679dd89b225b86542e3}
+      \strng{bibnamehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authorbibnamehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authornamehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authorfullhash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authorfullhashraw}{b283c636af01e679dd89b225b86542e3}
+      \field{extraname}{1}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Dz.Urz.\ UE}
+      \field{title}{Commission Delegated Regulation ({EU}) 2024/1532 --- {RTS} on {ICT} Risk Management Tools, Methods, Processes and Policies ({DORA} Article 15)}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://ec.europa.eu/finance/docs/level-2-measures/dora-regulation-rts--2024-1532_en.pdf
+      \endverb
+      \verb{url}
+      \verb https://ec.europa.eu/finance/docs/level-2-measures/dora-regulation-rts--2024-1532_en.pdf
+      \endverb
+    \endentry
+    \entry{EuropeanCommission2000SafeHarbour}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=b283c636af01e679dd89b225b86542e3}{%
+           family={{Komisja Europejska}},
+           familyi={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{fullhash}{b283c636af01e679dd89b225b86542e3}
+      \strng{fullhashraw}{b283c636af01e679dd89b225b86542e3}
+      \strng{bibnamehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authorbibnamehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authornamehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authorfullhash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authorfullhashraw}{b283c636af01e679dd89b225b86542e3}
+      \field{extraname}{2}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Dz.U. L 215 z 25.08.2000, s. 7--47}
+      \field{title}{Decyzja Komisji 2000/520/WE z dnia 26 lipca 2000 r. wydana na podstawie dyrektywy 95/46/WE Parlamentu Europejskiego i Rady w sprawie adekwatności ochrony przewidzianej przez zasady „bezpiecznej przystani” oraz związane z nimi najczęściej zadawane pytania, wydane przez Departament Handlu Stanów Zjednoczonych}
+      \field{year}{2000}
+    \endentry
+    \entry{CJEU2015SchremsI}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=0e0597227c5a2700567ae277dd3a0b59}{%
+           family={{Trybunał Sprawiedliwości Unii Europejskiej}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{0e0597227c5a2700567ae277dd3a0b59}
+      \strng{fullhash}{0e0597227c5a2700567ae277dd3a0b59}
+      \strng{fullhashraw}{0e0597227c5a2700567ae277dd3a0b59}
+      \strng{bibnamehash}{0e0597227c5a2700567ae277dd3a0b59}
+      \strng{authorbibnamehash}{0e0597227c5a2700567ae277dd3a0b59}
+      \strng{authornamehash}{0e0597227c5a2700567ae277dd3a0b59}
+      \strng{authorfullhash}{0e0597227c5a2700567ae277dd3a0b59}
+      \strng{authorfullhashraw}{0e0597227c5a2700567ae277dd3a0b59}
+      \field{extraname}{1}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{ECLI: EU:C:2015:650}
+      \field{note}{Schrems I}
+      \field{title}{Wyrok z dnia 6 października 2015 r., Maximillian Schrems przeciwko Data Protection Commissioner, C-362/14}
+      \field{year}{2015}
+    \endentry
+    \entry{CJEU2020SchremsII}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=0e0597227c5a2700567ae277dd3a0b59}{%
+           family={{Trybunał Sprawiedliwości Unii Europejskiej}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{0e0597227c5a2700567ae277dd3a0b59}
+      \strng{fullhash}{0e0597227c5a2700567ae277dd3a0b59}
+      \strng{fullhashraw}{0e0597227c5a2700567ae277dd3a0b59}
+      \strng{bibnamehash}{0e0597227c5a2700567ae277dd3a0b59}
+      \strng{authorbibnamehash}{0e0597227c5a2700567ae277dd3a0b59}
+      \strng{authornamehash}{0e0597227c5a2700567ae277dd3a0b59}
+      \strng{authorfullhash}{0e0597227c5a2700567ae277dd3a0b59}
+      \strng{authorfullhashraw}{0e0597227c5a2700567ae277dd3a0b59}
+      \field{extraname}{2}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{ECLI: EU:C:2020:559}
+      \field{note}{Schrems II}
+      \field{title}{Wyrok z dnia 16 lipca 2020 r., Data Protection Commissioner przeciwko Facebook Ireland Ltd i Maximillian Schrems, C-311/18}
+      \field{year}{2020}
+    \endentry
+    \entry{KomisjaEuropejska2023DPF}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=b283c636af01e679dd89b225b86542e3}{%
+           family={{Komisja Europejska}},
+           familyi={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{fullhash}{b283c636af01e679dd89b225b86542e3}
+      \strng{fullhashraw}{b283c636af01e679dd89b225b86542e3}
+      \strng{bibnamehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authorbibnamehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authornamehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authorfullhash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authorfullhashraw}{b283c636af01e679dd89b225b86542e3}
+      \field{extraname}{3}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Dz.U. UE L 231 z 20.09.2023}
+      \field{note}{dokument C(2023) 4745}
+      \field{title}{Decyzja wykonawcza Komisji (UE) 2023/1795 z dnia 10 lipca 2023 r. wydana na podstawie rozporządzenia (UE) 2016/679 Parlamentu Europejskiego i Rady w sprawie odpowiedniego poziomu ochrony danych osobowych na podstawie ram ochrony danych UE--USA}
+      \field{year}{2023}
+    \endentry
+    \entry{dataact2023}{misc}{}{}
+      \name{author}{2}{}{%
+        {{hash=2e0f8b5b83eadbb795164b0f1848df34}{%
+           family={{Parlament Europejski}},
+           familyi={P\bibinitperiod}}}%
+        {{hash=eec833edee271fa109afdaeff20839d5}{%
+           family={{Rada Unii Europejskiej}},
+           familyi={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{323f98fcf562b2ac280b24d521674201}
+      \strng{fullhash}{323f98fcf562b2ac280b24d521674201}
+      \strng{fullhashraw}{323f98fcf562b2ac280b24d521674201}
+      \strng{bibnamehash}{323f98fcf562b2ac280b24d521674201}
+      \strng{authorbibnamehash}{323f98fcf562b2ac280b24d521674201}
+      \strng{authornamehash}{323f98fcf562b2ac280b24d521674201}
+      \strng{authorfullhash}{323f98fcf562b2ac280b24d521674201}
+      \strng{authorfullhashraw}{323f98fcf562b2ac280b24d521674201}
+      \field{extraname}{2}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{22}
+      \field{journaltitle}{Dziennik Urzędowy Unii Europejskiej}
+      \field{month}{12}
+      \field{note}{Stosowane od 12 września 2025 r.}
+      \field{number}{2023/2854}
+      \field{shorthand}{Data Act}
+      \field{title}{Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2023/2854 z dnia 13 grudnia 2023 r. w sprawie zharmonizowanych przepisów dotyczących sprawiedliwego dostępu do danych i ich wykorzystywania oraz w sprawie ich zmiany}
+      \field{urlday}{21}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{volume}{L}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{1\bibrangedash 97}
+      \range{pages}{97}
+      \verb{urlraw}
+      \verb https://data.europa.eu/eli/reg/2023/2854/oj
+      \endverb
+      \verb{url}
+      \verb https://data.europa.eu/eli/reg/2023/2854/oj
+      \endverb
+    \endentry
+    \entry{enisa_eucs2022}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=405fea721c62c3980e94f3a73bf2df7e}{%
+           family={{European Union Agency for Cybersecurity (ENISA)}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {ENISA}%
+      }
+      \strng{namehash}{405fea721c62c3980e94f3a73bf2df7e}
+      \strng{fullhash}{405fea721c62c3980e94f3a73bf2df7e}
+      \strng{fullhashraw}{405fea721c62c3980e94f3a73bf2df7e}
+      \strng{bibnamehash}{405fea721c62c3980e94f3a73bf2df7e}
+      \strng{authorbibnamehash}{405fea721c62c3980e94f3a73bf2df7e}
+      \strng{authornamehash}{405fea721c62c3980e94f3a73bf2df7e}
+      \strng{authorfullhash}{405fea721c62c3980e94f3a73bf2df7e}
+      \strng{authorfullhashraw}{405fea721c62c3980e94f3a73bf2df7e}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{EUCS -- Cloud Services Scheme}: Draft Candidate Scheme for the European Cybersecurity Certification of Cloud Services}
+      \field{type}{Draft Candidate Scheme}
+      \field{urlday}{21}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2022}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.enisa.europa.eu/publications/eucs-cloud-service-scheme
+      \endverb
+      \verb{url}
+      \verb https://www.enisa.europa.eu/publications/eucs-cloud-service-scheme
+      \endverb
+    \endentry
+    \entry{ec_workprogramme2026}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=b283c636af01e679dd89b225b86542e3}{%
+           family={{Komisja Europejska}},
+           familyi={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{fullhash}{b283c636af01e679dd89b225b86542e3}
+      \strng{fullhashraw}{b283c636af01e679dd89b225b86542e3}
+      \strng{bibnamehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authorbibnamehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authornamehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authorfullhash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authorfullhashraw}{b283c636af01e679dd89b225b86542e3}
+      \field{extraname}{4}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Inicjatywa Cloud and AI Development Act (CADA) planowana na I kwartał 2026 r., podstawa prawna: art. 114 TFUE}
+      \field{number}{COM(2025) 870}
+      \field{title}{Commission Work Programme 2026}
+      \field{urlday}{21}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://commission.europa.eu/document/09579818-64a6-4dd5-9577-446ab6219113_en
+      \endverb
+      \verb{url}
+      \verb https://commission.europa.eu/document/09579818-64a6-4dd5-9577-446ab6219113_en
+      \endverb
+    \endentry
+    \entry{eprs_cada2025}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=922502ef0ff21c1a81954e6cf702a59e}{%
+           family={{European Parliamentary Research Service (EPRS)}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Europejski Parlament -- EPRS}%
+      }
+      \strng{namehash}{922502ef0ff21c1a81954e6cf702a59e}
+      \strng{fullhash}{922502ef0ff21c1a81954e6cf702a59e}
+      \strng{fullhashraw}{922502ef0ff21c1a81954e6cf702a59e}
+      \strng{bibnamehash}{922502ef0ff21c1a81954e6cf702a59e}
+      \strng{authorbibnamehash}{922502ef0ff21c1a81954e6cf702a59e}
+      \strng{authornamehash}{922502ef0ff21c1a81954e6cf702a59e}
+      \strng{authorfullhash}{922502ef0ff21c1a81954e6cf702a59e}
+      \strng{authorfullhashraw}{922502ef0ff21c1a81954e6cf702a59e}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{12}
+      \field{number}{EPRS\_BRI(2025)779251}
+      \field{title}{Cloud and AI Development Act}
+      \field{type}{techreport}
+      \field{urlday}{21}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.europarl.europa.eu/thinktank/en/document/EPRS_BRI(2025)779251
+      \endverb
+      \verb{url}
+      \verb https://www.europarl.europa.eu/thinktank/en/document/EPRS_BRI(2025)779251
+      \endverb
+    \endentry
+    \entry{draghi2024}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=4384fac6a801f3b01d36e9813c64d6e4}{%
+           family={Draghi},
+           familyi={D\bibinitperiod},
+           given={Mario},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Bruksela}%
+      }
+      \list{publisher}{1}{%
+        {Komisja Europejska}%
+      }
+      \strng{namehash}{4384fac6a801f3b01d36e9813c64d6e4}
+      \strng{fullhash}{4384fac6a801f3b01d36e9813c64d6e4}
+      \strng{fullhashraw}{4384fac6a801f3b01d36e9813c64d6e4}
+      \strng{bibnamehash}{4384fac6a801f3b01d36e9813c64d6e4}
+      \strng{authorbibnamehash}{4384fac6a801f3b01d36e9813c64d6e4}
+      \strng{authornamehash}{4384fac6a801f3b01d36e9813c64d6e4}
+      \strng{authorfullhash}{4384fac6a801f3b01d36e9813c64d6e4}
+      \strng{authorfullhashraw}{4384fac6a801f3b01d36e9813c64d6e4}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{9}
+      \field{subtitle}{A Competitiveness Strategy for Europe}
+      \field{title}{The Future of European Competitiveness}
+      \field{urlday}{21}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://commission.europa.eu/topics/strengthening-european-competitiveness/eu-competitiveness-looking-ahead_en
+      \endverb
+      \verb{url}
+      \verb https://commission.europa.eu/topics/strengthening-european-competitiveness/eu-competitiveness-looking-ahead_en
+      \endverb
+    \endentry
+    \entry{microsoft_telemetry_docs}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=b9a8b868588ad4bc6b36c29936e26423}{%
+           family={{Microsoft Corporation}},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{b9a8b868588ad4bc6b36c29936e26423}
+      \strng{fullhash}{b9a8b868588ad4bc6b36c29936e26423}
+      \strng{fullhashraw}{b9a8b868588ad4bc6b36c29936e26423}
+      \strng{bibnamehash}{b9a8b868588ad4bc6b36c29936e26423}
+      \strng{authorbibnamehash}{b9a8b868588ad4bc6b36c29936e26423}
+      \strng{authornamehash}{b9a8b868588ad4bc6b36c29936e26423}
+      \strng{authorfullhash}{b9a8b868588ad4bc6b36c29936e26423}
+      \strng{authorfullhashraw}{b9a8b868588ad4bc6b36c29936e26423}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Microsoft Learn}
+      \field{note}{Dostęp: 2026-04-07}
+      \field{title}{Configure {Windows} diagnostic data in your organization}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://learn.microsoft.com/en-us/windows/privacy/configure-windows-diagnostic-data-in-your-organization
+      \endverb
+      \verb{url}
+      \verb https://learn.microsoft.com/en-us/windows/privacy/configure-windows-diagnostic-data-in-your-organization
+      \endverb
+    \endentry
+    \entry{apple_telemetry_privacy_guides}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=aaf2e5c39bc9e73fe493bc0b00ae6171}{%
+           family={{Privacy Guides}},
+           familyi={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{aaf2e5c39bc9e73fe493bc0b00ae6171}
+      \strng{fullhash}{aaf2e5c39bc9e73fe493bc0b00ae6171}
+      \strng{fullhashraw}{aaf2e5c39bc9e73fe493bc0b00ae6171}
+      \strng{bibnamehash}{aaf2e5c39bc9e73fe493bc0b00ae6171}
+      \strng{authorbibnamehash}{aaf2e5c39bc9e73fe493bc0b00ae6171}
+      \strng{authornamehash}{aaf2e5c39bc9e73fe493bc0b00ae6171}
+      \strng{authorfullhash}{aaf2e5c39bc9e73fe493bc0b00ae6171}
+      \strng{authorfullhashraw}{aaf2e5c39bc9e73fe493bc0b00ae6171}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Privacy Guides}
+      \field{note}{Dostęp: 2026-04-07}
+      \field{title}{macOS Overview --- Privacy and Telemetry}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://www.privacyguides.org/en/os/macos-overview/
+      \endverb
+      \verb{url}
+      \verb https://www.privacyguides.org/en/os/macos-overview/
+      \endverb
+    \endentry
+    \entry{fedora_wiki_telemetry}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=bbaf662539b1bdaf9bd38bb1386834a2}{%
+           family={{Fedora Project}},
+           familyi={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{bbaf662539b1bdaf9bd38bb1386834a2}
+      \strng{fullhash}{bbaf662539b1bdaf9bd38bb1386834a2}
+      \strng{fullhashraw}{bbaf662539b1bdaf9bd38bb1386834a2}
+      \strng{bibnamehash}{bbaf662539b1bdaf9bd38bb1386834a2}
+      \strng{authorbibnamehash}{bbaf662539b1bdaf9bd38bb1386834a2}
+      \strng{authornamehash}{bbaf662539b1bdaf9bd38bb1386834a2}
+      \strng{authorfullhash}{bbaf662539b1bdaf9bd38bb1386834a2}
+      \strng{authorfullhashraw}{bbaf662539b1bdaf9bd38bb1386834a2}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Fedora Project Wiki}
+      \field{note}{Dostęp: 2026-04-07}
+      \field{title}{Changes/Telemetry --- {Fedora Project Wiki}}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://fedoraproject.org/wiki/Changes/Telemetry
+      \endverb
+      \verb{url}
+      \verb https://fedoraproject.org/wiki/Changes/Telemetry
+      \endverb
+    \endentry
+    \entry{swimlane2025grc}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=f544e69f1ea8f2e590fb23e985d9b6ca}{%
+           family={Swimlane},
+           familyi={S\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Swimlane, Inc.}%
+      }
+      \strng{namehash}{f544e69f1ea8f2e590fb23e985d9b6ca}
+      \strng{fullhash}{f544e69f1ea8f2e590fb23e985d9b6ca}
+      \strng{fullhashraw}{f544e69f1ea8f2e590fb23e985d9b6ca}
+      \strng{bibnamehash}{f544e69f1ea8f2e590fb23e985d9b6ca}
+      \strng{authorbibnamehash}{f544e69f1ea8f2e590fb23e985d9b6ca}
+      \strng{authornamehash}{f544e69f1ea8f2e590fb23e985d9b6ca}
+      \strng{authorfullhash}{f544e69f1ea8f2e590fb23e985d9b6ca}
+      \strng{authorfullhashraw}{f544e69f1ea8f2e590fb23e985d9b6ca}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{4}
+      \field{note}{Survey conducted by Sapio Research among 500 IT and cybersecurity decision-makers in the US and UK, March 2025}
+      \field{title}{{GRC Chaos: The High Price of Audits and Non-Compliance}}
+      \field{type}{techreport}
+      \field{urlday}{10}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://swimlane.com/news/grc-audit-research/
+      \endverb
+      \verb{url}
+      \verb https://swimlane.com/news/grc-audit-research/
+      \endverb
+    \endentry
+    \entry{nextgen2022auditor}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=5543394b4909b2a0300e7b71f0d31e5d}{%
+           family={Henry},
+           familyi={H\bibinitperiod},
+           given={Brandon},
+           giveni={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{5543394b4909b2a0300e7b71f0d31e5d}
+      \strng{fullhash}{5543394b4909b2a0300e7b71f0d31e5d}
+      \strng{fullhashraw}{5543394b4909b2a0300e7b71f0d31e5d}
+      \strng{bibnamehash}{5543394b4909b2a0300e7b71f0d31e5d}
+      \strng{authorbibnamehash}{5543394b4909b2a0300e7b71f0d31e5d}
+      \strng{authornamehash}{5543394b4909b2a0300e7b71f0d31e5d}
+      \strng{authorfullhash}{5543394b4909b2a0300e7b71f0d31e5d}
+      \strng{authorfullhashraw}{5543394b4909b2a0300e7b71f0d31e5d}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Security Magazine}
+      \field{month}{10}
+      \field{note}{Dotyczy luki kompetencyjnej między wiedzą deklaratywną a proceduralną u audytorów IT w firmach Big Four; wykazano 17\% spadek poziomu wiedzy praktycznej względem teoretycznej}
+      \field{title}{{The Next Generation Cybersecurity Auditor: Technical Competency Gaps in 151,000 IT Auditors in the Audit Industry}}
+      \field{urlday}{10}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2022}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.securitymagazine.com/articles/98555-technical-competency-gaps-in-151-000-it-auditors-in-the-audit-industry
+      \endverb
+      \verb{url}
+      \verb https://www.securitymagazine.com/articles/98555-technical-competency-gaps-in-151-000-it-auditors-in-the-audit-industry
+      \endverb
+    \endentry
+    \entry{friesen2013designing}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=f92b27afe932eac70460a89ab0191684}{%
+           family={Friesen},
+           familyi={F\bibinitperiod},
+           given={Lana},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{f92b27afe932eac70460a89ab0191684}
+      \strng{fullhash}{f92b27afe932eac70460a89ab0191684}
+      \strng{fullhashraw}{f92b27afe932eac70460a89ab0191684}
+      \strng{bibnamehash}{f92b27afe932eac70460a89ab0191684}
+      \strng{authorbibnamehash}{f92b27afe932eac70460a89ab0191684}
+      \strng{authornamehash}{f92b27afe932eac70460a89ab0191684}
+      \strng{authorfullhash}{f92b27afe932eac70460a89ab0191684}
+      \strng{authorfullhashraw}{f92b27afe932eac70460a89ab0191684}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Economic Behavior \& Organization}
+      \field{title}{Designing Self-Reporting Regimes to Encourage Truth Telling}
+      \field{volume}{95}
+      \field{year}{2013}
+      \verb{doi}
+      \verb 10.1016/j.jebo.2013.08.007
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/abs/pii/S0167268113002072
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/abs/pii/S0167268113002072
+      \endverb
+    \endentry
+    \entry{peer2023commitment}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{2}{}{%
+        {{hash=9754fb6fc31636641e40b5130b30bf97}{%
+           family={Peer},
+           familyi={P\bibinitperiod},
+           given={Eyal},
+           giveni={E\bibinitperiod}}}%
+        {{hash=809c87fe235bd30ea45aafe4631e03e0}{%
+           family={Vanhoof},
+           familyi={V\bibinitperiod},
+           given={Thomas},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{309dbdbf7be3e9929fef439e354b701e}
+      \strng{fullhash}{309dbdbf7be3e9929fef439e354b701e}
+      \strng{fullhashraw}{309dbdbf7be3e9929fef439e354b701e}
+      \strng{bibnamehash}{309dbdbf7be3e9929fef439e354b701e}
+      \strng{authorbibnamehash}{309dbdbf7be3e9929fef439e354b701e}
+      \strng{authornamehash}{309dbdbf7be3e9929fef439e354b701e}
+      \strng{authorfullhash}{309dbdbf7be3e9929fef439e354b701e}
+      \strng{authorfullhashraw}{309dbdbf7be3e9929fef439e354b701e}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Communications Psychology}
+      \field{number}{1}
+      \field{title}{Commitment to honesty oaths decreases dishonesty, but commitment to another individual does not}
+      \field{volume}{1}
+      \field{year}{2023}
+      \verb{doi}
+      \verb 10.1038/s44271-023-00028-7
+      \endverb
+      \verb{urlraw}
+      \verb https://www.nature.com/articles/s44271-023-00028-7
+      \endverb
+      \verb{url}
+      \verb https://www.nature.com/articles/s44271-023-00028-7
+      \endverb
+    \endentry
+    \entry{ibm_shadowit}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=cbf44511d041dc6d1dd73cc0c033122c}{%
+           family={{IBM}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{cbf44511d041dc6d1dd73cc0c033122c}
+      \strng{fullhash}{cbf44511d041dc6d1dd73cc0c033122c}
+      \strng{fullhashraw}{cbf44511d041dc6d1dd73cc0c033122c}
+      \strng{bibnamehash}{cbf44511d041dc6d1dd73cc0c033122c}
+      \strng{authorbibnamehash}{cbf44511d041dc6d1dd73cc0c033122c}
+      \strng{authornamehash}{cbf44511d041dc6d1dd73cc0c033122c}
+      \strng{authorfullhash}{cbf44511d041dc6d1dd73cc0c033122c}
+      \strng{authorfullhashraw}{cbf44511d041dc6d1dd73cc0c033122c}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 2026}
+      \field{title}{What Is Shadow IT?}
+      \field{year}{2022}
+      \verb{urlraw}
+      \verb https://www.ibm.com/think/topics/shadow-it
+      \endverb
+      \verb{url}
+      \verb https://www.ibm.com/think/topics/shadow-it
+      \endverb
+    \endentry
+    \entry{jumpcloud2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=44a1c4b7ba9d5f437a861be9db542c0d}{%
+           family={{JumpCloud}},
+           familyi={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{44a1c4b7ba9d5f437a861be9db542c0d}
+      \strng{fullhash}{44a1c4b7ba9d5f437a861be9db542c0d}
+      \strng{fullhashraw}{44a1c4b7ba9d5f437a861be9db542c0d}
+      \strng{bibnamehash}{44a1c4b7ba9d5f437a861be9db542c0d}
+      \strng{authorbibnamehash}{44a1c4b7ba9d5f437a861be9db542c0d}
+      \strng{authornamehash}{44a1c4b7ba9d5f437a861be9db542c0d}
+      \strng{authorfullhash}{44a1c4b7ba9d5f437a861be9db542c0d}
+      \strng{authorfullhashraw}{44a1c4b7ba9d5f437a861be9db542c0d}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 2026}
+      \field{title}{What Is Shadow IT? 2024 Statistics \& Solutions}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://jumpcloud.com/blog/shadow-it
+      \endverb
+      \verb{url}
+      \verb https://jumpcloud.com/blog/shadow-it
+      \endverb
+    \endentry
+    \entry{capterra2023}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=052210b7c0d3a3d74d4afec950dbfc53}{%
+           family={{Capterra}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{052210b7c0d3a3d74d4afec950dbfc53}
+      \strng{fullhash}{052210b7c0d3a3d74d4afec950dbfc53}
+      \strng{fullhashraw}{052210b7c0d3a3d74d4afec950dbfc53}
+      \strng{bibnamehash}{052210b7c0d3a3d74d4afec950dbfc53}
+      \strng{authorbibnamehash}{052210b7c0d3a3d74d4afec950dbfc53}
+      \strng{authornamehash}{052210b7c0d3a3d74d4afec950dbfc53}
+      \strng{authorfullhash}{052210b7c0d3a3d74d4afec950dbfc53}
+      \strng{authorfullhashraw}{052210b7c0d3a3d74d4afec950dbfc53}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Cytowane w: Auvik (2024), dostęp: 2026}
+      \field{title}{Shadow IT Report 2023}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://www.capterra.com
+      \endverb
+      \verb{url}
+      \verb https://www.capterra.com
+      \endverb
+    \endentry
+    \entry{josys2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=83a561e2827f6b9a200e42df5d85e7d9}{%
+           family={{Josys}},
+           familyi={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{83a561e2827f6b9a200e42df5d85e7d9}
+      \strng{fullhash}{83a561e2827f6b9a200e42df5d85e7d9}
+      \strng{fullhashraw}{83a561e2827f6b9a200e42df5d85e7d9}
+      \strng{bibnamehash}{83a561e2827f6b9a200e42df5d85e7d9}
+      \strng{authorbibnamehash}{83a561e2827f6b9a200e42df5d85e7d9}
+      \strng{authornamehash}{83a561e2827f6b9a200e42df5d85e7d9}
+      \strng{authorfullhash}{83a561e2827f6b9a200e42df5d85e7d9}
+      \strng{authorfullhashraw}{83a561e2827f6b9a200e42df5d85e7d9}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 2026}
+      \field{title}{Shadow IT Definition: 2024 Statistics and Solutions}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://josys.com/article/article-shadow-it-shadow-it-definition-2024-statistics-and-solutions
+      \endverb
+      \verb{url}
+      \verb https://josys.com/article/article-shadow-it-shadow-it-definition-2024-statistics-and-solutions
+      \endverb
+    \endentry
+    \entry{kaspersky2023}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=071bf7e58e3c1226b3bf96f5abb2dbf5}{%
+           family={{Kaspersky}},
+           familyi={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{071bf7e58e3c1226b3bf96f5abb2dbf5}
+      \strng{fullhash}{071bf7e58e3c1226b3bf96f5abb2dbf5}
+      \strng{fullhashraw}{071bf7e58e3c1226b3bf96f5abb2dbf5}
+      \strng{bibnamehash}{071bf7e58e3c1226b3bf96f5abb2dbf5}
+      \strng{authorbibnamehash}{071bf7e58e3c1226b3bf96f5abb2dbf5}
+      \strng{authornamehash}{071bf7e58e3c1226b3bf96f5abb2dbf5}
+      \strng{authorfullhash}{071bf7e58e3c1226b3bf96f5abb2dbf5}
+      \strng{authorfullhashraw}{071bf7e58e3c1226b3bf96f5abb2dbf5}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Cytowane w: ISACA Journal (2024), dostęp: 2026}
+      \field{title}{IT Security Economics Report 2023}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://www.kaspersky.com
+      \endverb
+      \verb{url}
+      \verb https://www.kaspersky.com
+      \endverb
+    \endentry
+    \entry{isaca2024}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=cc2032cdfad6e690ac5a9b0982ef0dae}{%
+           family={{ISACA}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{cc2032cdfad6e690ac5a9b0982ef0dae}
+      \strng{fullhash}{cc2032cdfad6e690ac5a9b0982ef0dae}
+      \strng{fullhashraw}{cc2032cdfad6e690ac5a9b0982ef0dae}
+      \strng{bibnamehash}{cc2032cdfad6e690ac5a9b0982ef0dae}
+      \strng{authorbibnamehash}{cc2032cdfad6e690ac5a9b0982ef0dae}
+      \strng{authornamehash}{cc2032cdfad6e690ac5a9b0982ef0dae}
+      \strng{authorfullhash}{cc2032cdfad6e690ac5a9b0982ef0dae}
+      \strng{authorfullhashraw}{cc2032cdfad6e690ac5a9b0982ef0dae}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ISACA Journal}
+      \field{note}{Dostęp: 2026}
+      \field{title}{Risk in the Shadows}
+      \field{volume}{6}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.isaca.org/resources/isaca-journal/issues/2024/volume-6/risk-in-the-shadows
+      \endverb
+      \verb{url}
+      \verb https://www.isaca.org/resources/isaca-journal/issues/2024/volume-6/risk-in-the-shadows
+      \endverb
+    \endentry
+    \entry{grip2025}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=290ae516283d45bbf47196c514936d84}{%
+           family={{Grip Security}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{290ae516283d45bbf47196c514936d84}
+      \strng{fullhash}{290ae516283d45bbf47196c514936d84}
+      \strng{fullhashraw}{290ae516283d45bbf47196c514936d84}
+      \strng{bibnamehash}{290ae516283d45bbf47196c514936d84}
+      \strng{authorbibnamehash}{290ae516283d45bbf47196c514936d84}
+      \strng{authornamehash}{290ae516283d45bbf47196c514936d84}
+      \strng{authorfullhash}{290ae516283d45bbf47196c514936d84}
+      \strng{authorfullhashraw}{290ae516283d45bbf47196c514936d84}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 2026}
+      \field{title}{How to Detect and Manage Shadow IT in 5 Steps}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://www.grip.security/blog/5-steps-to-detect-and-control-shadow-it
+      \endverb
+      \verb{url}
+      \verb https://www.grip.security/blog/5-steps-to-detect-and-control-shadow-it
+      \endverb
+    \endentry
+    \entry{gartner2025crossborder}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=a41804af92a2aa0180154f489f3d308b}{%
+           family={{Gartner, Inc.}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{a41804af92a2aa0180154f489f3d308b}
+      \strng{fullhash}{a41804af92a2aa0180154f489f3d308b}
+      \strng{fullhashraw}{a41804af92a2aa0180154f489f3d308b}
+      \strng{bibnamehash}{a41804af92a2aa0180154f489f3d308b}
+      \strng{authorbibnamehash}{a41804af92a2aa0180154f489f3d308b}
+      \strng{authornamehash}{a41804af92a2aa0180154f489f3d308b}
+      \strng{authorfullhash}{a41804af92a2aa0180154f489f3d308b}
+      \strng{authorfullhashraw}{a41804af92a2aa0180154f489f3d308b}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Gartner Newsroom Press Release}
+      \field{month}{2}
+      \field{note}{Accessed: June 2026}
+      \field{title}{Gartner Predicts Forty Percent of {AI} Data Breaches Will Arise from Cross-Border {GenAI} Misuse by 2027}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://www.gartner.com/en/newsroom/press-releases/2025-02-17-gartner-predicts-forty-percent-of-ai-data-breaches-will-arise-from-cross-border-genai-misuse-by-2027
+      \endverb
+      \verb{url}
+      \verb https://www.gartner.com/en/newsroom/press-releases/2025-02-17-gartner-predicts-forty-percent-of-ai-data-breaches-will-arise-from-cross-border-genai-misuse-by-2027
+      \endverb
+    \endentry
+    \entry{layerx_2025}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=b3c3db2dac7bdc62927aa09e5347cdd6}{%
+           family={{LayerX Security}},
+           familyi={L\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {LayerX Security Ltd.}%
+      }
+      \strng{namehash}{b3c3db2dac7bdc62927aa09e5347cdd6}
+      \strng{fullhash}{b3c3db2dac7bdc62927aa09e5347cdd6}
+      \strng{fullhashraw}{b3c3db2dac7bdc62927aa09e5347cdd6}
+      \strng{bibnamehash}{b3c3db2dac7bdc62927aa09e5347cdd6}
+      \strng{authorbibnamehash}{b3c3db2dac7bdc62927aa09e5347cdd6}
+      \strng{authornamehash}{b3c3db2dac7bdc62927aa09e5347cdd6}
+      \strng{authorfullhash}{b3c3db2dac7bdc62927aa09e5347cdd6}
+      \strng{authorfullhashraw}{b3c3db2dac7bdc62927aa09e5347cdd6}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{Enterprise AI and SaaS Data Security Report 2025}
+      \field{type}{techreport}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://www.cybersecurity-insiders.com/research-says-over-77-percent-of-data-is-shared-to-chatgpt-by-employees/
+      \endverb
+      \verb{url}
+      \verb https://www.cybersecurity-insiders.com/research-says-over-77-percent-of-data-is-shared-to-chatgpt-by-employees/
+      \endverb
+    \endentry
+    \entry{cyberhaven_chatgpt}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=0805c245df0be5dd599819093684f86f}{%
+           family={{Cyberhaven Labs}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{0805c245df0be5dd599819093684f86f}
+      \strng{fullhash}{0805c245df0be5dd599819093684f86f}
+      \strng{fullhashraw}{0805c245df0be5dd599819093684f86f}
+      \strng{bibnamehash}{0805c245df0be5dd599819093684f86f}
+      \strng{authorbibnamehash}{0805c245df0be5dd599819093684f86f}
+      \strng{authornamehash}{0805c245df0be5dd599819093684f86f}
+      \strng{authorfullhash}{0805c245df0be5dd599819093684f86f}
+      \strng{authorfullhashraw}{0805c245df0be5dd599819093684f86f}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{11\% of data employees paste into ChatGPT is confidential}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://www.cyberhaven.com/blog/4-2-of-workers-have-pasted-company-data-into-chatgpt
+      \endverb
+      \verb{url}
+      \verb https://www.cyberhaven.com/blog/4-2-of-workers-have-pasted-company-data-into-chatgpt
+      \endverb
+    \endentry
+    \entry{microsoft2024worktrend}{report}{}{}
+      \name{author}{2}{}{%
+        {{hash=140864078aeca1c7c35b4beb33c53c34}{%
+           family={{Microsoft}},
+           familyi={M\bibinitperiod}}}%
+        {{hash=e884c507c5198a4578a84498f7a323e2}{%
+           family={{LinkedIn}},
+           familyi={L\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Microsoft Corporation}%
+      }
+      \strng{namehash}{64f6752446501f4e654f51a93be683dc}
+      \strng{fullhash}{64f6752446501f4e654f51a93be683dc}
+      \strng{fullhashraw}{64f6752446501f4e654f51a93be683dc}
+      \strng{bibnamehash}{64f6752446501f4e654f51a93be683dc}
+      \strng{authorbibnamehash}{64f6752446501f4e654f51a93be683dc}
+      \strng{authornamehash}{64f6752446501f4e654f51a93be683dc}
+      \strng{authorfullhash}{64f6752446501f4e654f51a93be683dc}
+      \strng{authorfullhashraw}{64f6752446501f4e654f51a93be683dc}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{5}
+      \field{note}{Based on a survey of 31,000 professionals across 31 countries. Accessed: June 2026}
+      \field{title}{2024 Work Trend Index Annual Report: {AI} at Work Is Here. Now Comes the Hard Part}
+      \field{type}{techreport}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part
+      \endverb
+      \verb{url}
+      \verb https://www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part
+      \endverb
+    \endentry
+    \entry{euaiact2024}{misc}{}{}
+      \name{author}{2}{}{%
+        {{hash=04477f088e2d7fa909d6f010ddf08b41}{%
+           family={{European Parliament}},
+           familyi={E\bibinitperiod}}}%
+        {{hash=2be4a816598128ae272abd2cb54c8a67}{%
+           family={{Council of the European Union}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{000a9a0d5f0f06101811874d891db3a2}
+      \strng{fullhash}{000a9a0d5f0f06101811874d891db3a2}
+      \strng{fullhashraw}{000a9a0d5f0f06101811874d891db3a2}
+      \strng{bibnamehash}{000a9a0d5f0f06101811874d891db3a2}
+      \strng{authorbibnamehash}{000a9a0d5f0f06101811874d891db3a2}
+      \strng{authornamehash}{000a9a0d5f0f06101811874d891db3a2}
+      \strng{authorfullhash}{000a9a0d5f0f06101811874d891db3a2}
+      \strng{authorfullhashraw}{000a9a0d5f0f06101811874d891db3a2}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Official Journal of the European Union}
+      \field{month}{7}
+      \field{note}{Entered into force: 1 August 2024. Accessed: June 2026}
+      \field{title}{Regulation ({EU}) 2024/1689 of the European Parliament and of the Council of 13 June 2024 Laying Down Harmonised Rules on Artificial Intelligence (Artificial Intelligence Act)}
+      \field{volume}{L}
+      \field{year}{2024}
+      \field{pages}{1\bibrangedash 136}
+      \range{pages}{136}
+      \verb{urlraw}
+      \verb https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689
+      \endverb
+      \verb{url}
+      \verb https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689
+      \endverb
+    \endentry
+    \entry{isoqar_blad_ludzki}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=d8279eb968594d6ae91eb8b304866e9a}{%
+           family={{ISOQAR CEE}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {ISOQAR CEE Sp. z o.o.}%
+      }
+      \strng{namehash}{d8279eb968594d6ae91eb8b304866e9a}
+      \strng{fullhash}{d8279eb968594d6ae91eb8b304866e9a}
+      \strng{fullhashraw}{d8279eb968594d6ae91eb8b304866e9a}
+      \strng{bibnamehash}{d8279eb968594d6ae91eb8b304866e9a}
+      \strng{authorbibnamehash}{d8279eb968594d6ae91eb8b304866e9a}
+      \strng{authornamehash}{d8279eb968594d6ae91eb8b304866e9a}
+      \strng{authorfullhash}{d8279eb968594d6ae91eb8b304866e9a}
+      \strng{authorfullhashraw}{d8279eb968594d6ae91eb8b304866e9a}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{Błąd ludzki -- cichy sprawca naruszeń bezpieczeństwa informacji}
+      \field{type}{techreport}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.isoqar.pl/pl/aktualnosci/bezpieczenstwo-informacji/blad-ludzki-cichy-sprawca-naruszen-bezpieczenstwa-informacji
+      \endverb
+      \verb{url}
+      \verb https://www.isoqar.pl/pl/aktualnosci/bezpieczenstwo-informacji/blad-ludzki-cichy-sprawca-naruszen-bezpieczenstwa-informacji
+      \endverb
+    \endentry
+    \entry{verizon_dbir_2024}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=fc971930f16af614663abf7a225f5946}{%
+           family={{Verizon Business}},
+           familyi={V\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Verizon Communications Inc.}%
+      }
+      \strng{namehash}{fc971930f16af614663abf7a225f5946}
+      \strng{fullhash}{fc971930f16af614663abf7a225f5946}
+      \strng{fullhashraw}{fc971930f16af614663abf7a225f5946}
+      \strng{bibnamehash}{fc971930f16af614663abf7a225f5946}
+      \strng{authorbibnamehash}{fc971930f16af614663abf7a225f5946}
+      \strng{authornamehash}{fc971930f16af614663abf7a225f5946}
+      \strng{authorfullhash}{fc971930f16af614663abf7a225f5946}
+      \strng{authorfullhashraw}{fc971930f16af614663abf7a225f5946}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{2024 Data Breach Investigations Report}
+      \field{type}{techreport}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.verizon.com/business/resources/reports/dbir/
+      \endverb
+      \verb{url}
+      \verb https://www.verizon.com/business/resources/reports/dbir/
+      \endverb
+    \endentry
+    \entry{brandsit_szkolenia_2025}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=708951bc946779dcaa2e550c2504afb9}{%
+           family={{BrandsIT}},
+           familyi={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{708951bc946779dcaa2e550c2504afb9}
+      \strng{fullhash}{708951bc946779dcaa2e550c2504afb9}
+      \strng{fullhashraw}{708951bc946779dcaa2e550c2504afb9}
+      \strng{bibnamehash}{708951bc946779dcaa2e550c2504afb9}
+      \strng{authorbibnamehash}{708951bc946779dcaa2e550c2504afb9}
+      \strng{authornamehash}{708951bc946779dcaa2e550c2504afb9}
+      \strng{authorfullhash}{708951bc946779dcaa2e550c2504afb9}
+      \strng{authorfullhashraw}{708951bc946779dcaa2e550c2504afb9}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{Im mniej szkoleń, tym więcej ataków. Jak brak edukacji wpływa na cyberbezpieczeństwo firm}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://brandsit.pl/im-mniej-szkolen-tym-wiecej-atakow-jak-brak-edukacji-wplywa-na-cyberbezpieczenstwo-firm/
+      \endverb
+      \verb{url}
+      \verb https://brandsit.pl/im-mniej-szkolen-tym-wiecej-atakow-jak-brak-edukacji-wplywa-na-cyberbezpieczenstwo-firm/
+      \endverb
+    \endentry
+    \entry{cert_polska_2024}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=a93443d83146fdfab947340192b05648}{%
+           family={{CERT Polska / NASK}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Ministerstwo Cyfryzacji / NASK PIB}%
+      }
+      \strng{namehash}{a93443d83146fdfab947340192b05648}
+      \strng{fullhash}{a93443d83146fdfab947340192b05648}
+      \strng{fullhashraw}{a93443d83146fdfab947340192b05648}
+      \strng{bibnamehash}{a93443d83146fdfab947340192b05648}
+      \strng{authorbibnamehash}{a93443d83146fdfab947340192b05648}
+      \strng{authornamehash}{a93443d83146fdfab947340192b05648}
+      \strng{authorfullhash}{a93443d83146fdfab947340192b05648}
+      \strng{authorfullhashraw}{a93443d83146fdfab947340192b05648}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{Analiza bezpieczeństwa polskiego internetu w 2024 roku}
+      \field{type}{techreport}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://www.gov.pl/web/baza-wiedzy/analiza-bezpieczenstwa-polskiego-internetu-w-2024-roku
+      \endverb
+      \verb{url}
+      \verb https://www.gov.pl/web/baza-wiedzy/analiza-bezpieczenstwa-polskiego-internetu-w-2024-roku
+      \endverb
+    \endentry
+    \entry{keepnet_2026}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=ce0317c2d0827ef45243ba34e80470bb}{%
+           family={{Keepnet Labs}},
+           familyi={K\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Keepnet Labs Ltd.}%
+      }
+      \strng{namehash}{ce0317c2d0827ef45243ba34e80470bb}
+      \strng{fullhash}{ce0317c2d0827ef45243ba34e80470bb}
+      \strng{fullhashraw}{ce0317c2d0827ef45243ba34e80470bb}
+      \strng{bibnamehash}{ce0317c2d0827ef45243ba34e80470bb}
+      \strng{authorbibnamehash}{ce0317c2d0827ef45243ba34e80470bb}
+      \strng{authornamehash}{ce0317c2d0827ef45243ba34e80470bb}
+      \strng{authorfullhash}{ce0317c2d0827ef45243ba34e80470bb}
+      \strng{authorfullhashraw}{ce0317c2d0827ef45243ba34e80470bb}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{Security Awareness Training Statistics [Updated 2026]}
+      \field{type}{techreport}
+      \field{year}{2026}
+      \verb{urlraw}
+      \verb https://keepnetlabs.com/blog/security-awareness-training-statistics
+      \endverb
+      \verb{url}
+      \verb https://keepnetlabs.com/blog/security-awareness-training-statistics
+      \endverb
+    \endentry
+    \entry{pap_cyberbezpieczenstwo_2026}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=5d09bdf27b78b4ff4602460041ef1882}{%
+           family={{PAP Biznes}},
+           familyi={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{5d09bdf27b78b4ff4602460041ef1882}
+      \strng{fullhash}{5d09bdf27b78b4ff4602460041ef1882}
+      \strng{fullhashraw}{5d09bdf27b78b4ff4602460041ef1882}
+      \strng{bibnamehash}{5d09bdf27b78b4ff4602460041ef1882}
+      \strng{authorbibnamehash}{5d09bdf27b78b4ff4602460041ef1882}
+      \strng{authornamehash}{5d09bdf27b78b4ff4602460041ef1882}
+      \strng{authorfullhash}{5d09bdf27b78b4ff4602460041ef1882}
+      \strng{authorfullhashraw}{5d09bdf27b78b4ff4602460041ef1882}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{Cyberbezpieczeństwo najszybciej rosnącym segmentem rynku IT w Polsce}
+      \field{year}{2026}
+      \verb{urlraw}
+      \verb https://biznes.pap.pl/wiadomosci/gry-i-technologie/cyberbezpieczenstwo-najszybciej-rosnacym-segmentem-rynku-it-w-polsce-w
+      \endverb
+      \verb{url}
+      \verb https://biznes.pap.pl/wiadomosci/gry-i-technologie/cyberbezpieczenstwo-najszybciej-rosnacym-segmentem-rynku-it-w-polsce-w
+      \endverb
+    \endentry
+    \entry{nflo_dora}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=80aa98237e6944f6fad8eaf2054f7a2f}{%
+           family={{Autoriteit Financiële Markten (AFM)}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{80aa98237e6944f6fad8eaf2054f7a2f}
+      \strng{fullhash}{80aa98237e6944f6fad8eaf2054f7a2f}
+      \strng{fullhashraw}{80aa98237e6944f6fad8eaf2054f7a2f}
+      \strng{bibnamehash}{80aa98237e6944f6fad8eaf2054f7a2f}
+      \strng{authorbibnamehash}{80aa98237e6944f6fad8eaf2054f7a2f}
+      \strng{authornamehash}{80aa98237e6944f6fad8eaf2054f7a2f}
+      \strng{authorfullhash}{80aa98237e6944f6fad8eaf2054f7a2f}
+      \strng{authorfullhashraw}{80aa98237e6944f6fad8eaf2054f7a2f}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Strona instytucjonalna AFM}
+      \field{langid}{english}
+      \field{note}{Informacje nt. wymogów DORA, w tym zarządzania ryzykiem ICT i obowiązków raportowania incydentów dla podmiotów finansowych}
+      \field{title}{Digital Operational Resilience Act ({DORA})}
+      \field{urlday}{10}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.afm.nl/en/sector/themas/digitalisering/dora
+      \endverb
+      \verb{url}
+      \verb https://www.afm.nl/en/sector/themas/digitalisering/dora
+      \endverb
+    \endentry
+    \entry{wifitalents_shadow_2025}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=d3f6cf252db9f7e258fdd81bad0b2715}{%
+           family={{WifiTalents}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {WifiTalents}%
+      }
+      \strng{namehash}{d3f6cf252db9f7e258fdd81bad0b2715}
+      \strng{fullhash}{d3f6cf252db9f7e258fdd81bad0b2715}
+      \strng{fullhashraw}{d3f6cf252db9f7e258fdd81bad0b2715}
+      \strng{bibnamehash}{d3f6cf252db9f7e258fdd81bad0b2715}
+      \strng{authorbibnamehash}{d3f6cf252db9f7e258fdd81bad0b2715}
+      \strng{authornamehash}{d3f6cf252db9f7e258fdd81bad0b2715}
+      \strng{authorfullhash}{d3f6cf252db9f7e258fdd81bad0b2715}
+      \strng{authorfullhashraw}{d3f6cf252db9f7e258fdd81bad0b2715}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{Shadow IT Statistics: Reports 2025}
+      \field{type}{techreport}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://wifitalents.com/shadow-it-statistics/
+      \endverb
+      \verb{url}
+      \verb https://wifitalents.com/shadow-it-statistics/
+      \endverb
+    \endentry
+    \entry{dataprotectionpeople_human_error}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=cd7f1862f597a70d23a1c23bc8785b06}{%
+           family={{Data Protection People}},
+           familyi={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{cd7f1862f597a70d23a1c23bc8785b06}
+      \strng{fullhash}{cd7f1862f597a70d23a1c23bc8785b06}
+      \strng{fullhashraw}{cd7f1862f597a70d23a1c23bc8785b06}
+      \strng{bibnamehash}{cd7f1862f597a70d23a1c23bc8785b06}
+      \strng{authorbibnamehash}{cd7f1862f597a70d23a1c23bc8785b06}
+      \strng{authornamehash}{cd7f1862f597a70d23a1c23bc8785b06}
+      \strng{authorfullhash}{cd7f1862f597a70d23a1c23bc8785b06}
+      \strng{authorfullhashraw}{cd7f1862f597a70d23a1c23bc8785b06}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{GDPR Data Breaches \& Human Error: How Bad Is It?}
+      \field{year}{2026}
+      \verb{urlraw}
+      \verb https://dataprotectionpeople.com/resource-centre/gdpr-data-breaches-human-error-how-bad-is-it/
+      \endverb
+      \verb{url}
+      \verb https://dataprotectionpeople.com/resource-centre/gdpr-data-breaches-human-error-how-bad-is-it/
+      \endverb
+    \endentry
+    \entry{aepd_test_environments}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=f4918c6f733cf63b6648a1166e3392e4}{%
+           family={{Agencia Española de Protección de Datos (AEPD)}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{f4918c6f733cf63b6648a1166e3392e4}
+      \strng{fullhash}{f4918c6f733cf63b6648a1166e3392e4}
+      \strng{fullhashraw}{f4918c6f733cf63b6648a1166e3392e4}
+      \strng{bibnamehash}{f4918c6f733cf63b6648a1166e3392e4}
+      \strng{authorbibnamehash}{f4918c6f733cf63b6648a1166e3392e4}
+      \strng{authornamehash}{f4918c6f733cf63b6648a1166e3392e4}
+      \strng{authorfullhash}{f4918c6f733cf63b6648a1166e3392e4}
+      \strng{authorfullhashraw}{f4918c6f733cf63b6648a1166e3392e4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{Personal Data Breaches: Development and Pre-Production Environments}
+      \field{year}{2022}
+      \verb{urlraw}
+      \verb https://www.aepd.es/en/prensa-y-comunicacion/blog/data-breaches-development-and-pre-production-enviroments
+      \endverb
+      \verb{url}
+      \verb https://www.aepd.es/en/prensa-y-comunicacion/blog/data-breaches-development-and-pre-production-enviroments
+      \endverb
+    \endentry
+    \entry{preuveneers2024repseudo}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=3714463eb7c496eed75d3e4dc5c17ac0}{%
+           family={Preuveneers},
+           familyi={P\bibinitperiod},
+           given={Davy},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{a77cf88e511979f565775406de61d1dd}
+      \strng{fullhash}{a77cf88e511979f565775406de61d1dd}
+      \strng{fullhashraw}{a77cf88e511979f565775406de61d1dd}
+      \strng{bibnamehash}{a77cf88e511979f565775406de61d1dd}
+      \strng{authorbibnamehash}{a77cf88e511979f565775406de61d1dd}
+      \strng{authornamehash}{a77cf88e511979f565775406de61d1dd}
+      \strng{authorfullhash}{a77cf88e511979f565775406de61d1dd}
+      \strng{authorfullhashraw}{a77cf88e511979f565775406de61d1dd}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint}
+      \field{title}{Re-pseudonymization Strategies for Smart Meter Data Are Not Robust to Deep Learning Profiling Attacks}
+      \field{year}{2024}
+      \verb{doi}
+      \verb 10.48550/arXiv.2404.03948
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2404.03948
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2404.03948
+      \endverb
+    \endentry
+    \entry{legal_io_transcription}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=cb104f0df73e879b402045f09e2c0a08}{%
+           family={{Legal.io / Bloomberg Law}},
+           familyi={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{cb104f0df73e879b402045f09e2c0a08}
+      \strng{fullhash}{cb104f0df73e879b402045f09e2c0a08}
+      \strng{fullhashraw}{cb104f0df73e879b402045f09e2c0a08}
+      \strng{bibnamehash}{cb104f0df73e879b402045f09e2c0a08}
+      \strng{authorbibnamehash}{cb104f0df73e879b402045f09e2c0a08}
+      \strng{authornamehash}{cb104f0df73e879b402045f09e2c0a08}
+      \strng{authorfullhash}{cb104f0df73e879b402045f09e2c0a08}
+      \strng{authorfullhashraw}{cb104f0df73e879b402045f09e2c0a08}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{AI Meeting Tools Raise Privacy, Privilege, and Discovery Risks for Employers}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://www.legal.io/articles/5767845/AI-Meeting-Tools-Raise-Privacy-Privilege-And-Discovery-Risks-For-Employers
+      \endverb
+      \verb{url}
+      \verb https://www.legal.io/articles/5767845/AI-Meeting-Tools-Raise-Privacy-Privilege-And-Discovery-Risks-For-Employers
+      \endverb
+    \endentry
+    \entry{linkedin_transcription_risk}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=61df128906fc3673621d42ddce0797b4}{%
+           family={{Privacy Partnership}},
+           familyi={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{61df128906fc3673621d42ddce0797b4}
+      \strng{fullhash}{61df128906fc3673621d42ddce0797b4}
+      \strng{fullhashraw}{61df128906fc3673621d42ddce0797b4}
+      \strng{bibnamehash}{61df128906fc3673621d42ddce0797b4}
+      \strng{authorbibnamehash}{61df128906fc3673621d42ddce0797b4}
+      \strng{authornamehash}{61df128906fc3673621d42ddce0797b4}
+      \strng{authorfullhash}{61df128906fc3673621d42ddce0797b4}
+      \strng{authorfullhashraw}{61df128906fc3673621d42ddce0797b4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{Why AI Transcription Bots Pose a Data Privacy Risk}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://www.linkedin.com/posts/privacy-partnership_ai-bots-gdpr-activity-7387443108201787396-3dRL
+      \endverb
+      \verb{url}
+      \verb https://www.linkedin.com/posts/privacy-partnership_ai-bots-gdpr-activity-7387443108201787396-3dRL
+      \endverb
+    \endentry
+    \entry{mailintelligence_2024}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=3f3e694965cd79f2c47f1b016511957d}{%
+           family={{MailIntelligence}},
+           familyi={M\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {MailIntelligence AI}%
+      }
+      \strng{namehash}{3f3e694965cd79f2c47f1b016511957d}
+      \strng{fullhash}{3f3e694965cd79f2c47f1b016511957d}
+      \strng{fullhashraw}{3f3e694965cd79f2c47f1b016511957d}
+      \strng{bibnamehash}{3f3e694965cd79f2c47f1b016511957d}
+      \strng{authorbibnamehash}{3f3e694965cd79f2c47f1b016511957d}
+      \strng{authornamehash}{3f3e694965cd79f2c47f1b016511957d}
+      \strng{authorfullhash}{3f3e694965cd79f2c47f1b016511957d}
+      \strng{authorfullhashraw}{3f3e694965cd79f2c47f1b016511957d}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{Human Error Cases in Enterprise Email Security 2024}
+      \field{type}{techreport}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://mailintelligence.ai/reports/human-error-cases-2024
+      \endverb
+      \verb{url}
+      \verb https://mailintelligence.ai/reports/human-error-cases-2024
+      \endverb
+    \endentry
+    \entry{nik_rodo_szpital}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=12f48389b5fc17f225f972fa7782b2b3}{%
+           family={{Najwyższa Izba Kontroli}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Najwyższa Izba Kontroli}%
+      }
+      \strng{namehash}{12f48389b5fc17f225f972fa7782b2b3}
+      \strng{fullhash}{12f48389b5fc17f225f972fa7782b2b3}
+      \strng{fullhashraw}{12f48389b5fc17f225f972fa7782b2b3}
+      \strng{bibnamehash}{12f48389b5fc17f225f972fa7782b2b3}
+      \strng{authorbibnamehash}{12f48389b5fc17f225f972fa7782b2b3}
+      \strng{authornamehash}{12f48389b5fc17f225f972fa7782b2b3}
+      \strng{authorfullhash}{12f48389b5fc17f225f972fa7782b2b3}
+      \strng{authorfullhashraw}{12f48389b5fc17f225f972fa7782b2b3}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{RODO w szpitalu -- wyniki kontroli}
+      \field{type}{techreport}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://www.nik.gov.pl/najnowsze-informacje-o-wynikach-kontroli/rodo-w-szpitalu.html
+      \endverb
+      \verb{url}
+      \verb https://www.nik.gov.pl/najnowsze-informacje-o-wynikach-kontroli/rodo-w-szpitalu.html
+      \endverb
+    \endentry
+    \entry{gazeta_prawna_kary_2025}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=4bae72bd0b55984c786fc8970e7196ba}{%
+           family={{Gazeta Prawna}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{4bae72bd0b55984c786fc8970e7196ba}
+      \strng{fullhash}{4bae72bd0b55984c786fc8970e7196ba}
+      \strng{fullhashraw}{4bae72bd0b55984c786fc8970e7196ba}
+      \strng{bibnamehash}{4bae72bd0b55984c786fc8970e7196ba}
+      \strng{authorbibnamehash}{4bae72bd0b55984c786fc8970e7196ba}
+      \strng{authornamehash}{4bae72bd0b55984c786fc8970e7196ba}
+      \strng{authorfullhash}{4bae72bd0b55984c786fc8970e7196ba}
+      \strng{authorfullhashraw}{4bae72bd0b55984c786fc8970e7196ba}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Gazeta Prawna}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{Raport: w 2025 r. padły rekordowe kary za naruszenia RODO -- najwyższa dla Poczty Polskiej}
+      \field{year}{2026}
+      \verb{urlraw}
+      \verb https://www.gazetaprawna.pl/firma-i-prawo/artykuly/10648769,raport-w-2025-r-padly-rekordowe-kary-za-naruszenia-rodo-najwyzsza-.html
+      \endverb
+      \verb{url}
+      \verb https://www.gazetaprawna.pl/firma-i-prawo/artykuly/10648769,raport-w-2025-r-padly-rekordowe-kary-za-naruszenia-rodo-najwyzsza-.html
+      \endverb
+    \endentry
+    \entry{odo24_naruszenia}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=9a5ab913968ac788a1eb1ad002b0ef2b}{%
+           family={{ODO 24}},
+           familyi={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{9a5ab913968ac788a1eb1ad002b0ef2b}
+      \strng{fullhash}{9a5ab913968ac788a1eb1ad002b0ef2b}
+      \strng{fullhashraw}{9a5ab913968ac788a1eb1ad002b0ef2b}
+      \strng{bibnamehash}{9a5ab913968ac788a1eb1ad002b0ef2b}
+      \strng{authorbibnamehash}{9a5ab913968ac788a1eb1ad002b0ef2b}
+      \strng{authornamehash}{9a5ab913968ac788a1eb1ad002b0ef2b}
+      \strng{authorfullhash}{9a5ab913968ac788a1eb1ad002b0ef2b}
+      \strng{authorfullhashraw}{9a5ab913968ac788a1eb1ad002b0ef2b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{Naruszenia ochrony danych -- jakie są zgłaszane najczęściej i jak można im zapobiegać}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://odo24.pl/blog-post.naruszenia-ochrony-danych-jakie-sa-zglaszane-najczesciej-i-w-jaki-sposob-mozna-im-zapobiegac
+      \endverb
+      \verb{url}
+      \verb https://odo24.pl/blog-post.naruszenia-ochrony-danych-jakie-sa-zglaszane-najczesciej-i-w-jaki-sposob-mozna-im-zapobiegac
+      \endverb
+    \endentry
+    \entry{fidelis_shadow_2026}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=03d4e5adc9284181734d7ca03c5f8227}{%
+           family={{Fidelis Security}},
+           familyi={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{03d4e5adc9284181734d7ca03c5f8227}
+      \strng{fullhash}{03d4e5adc9284181734d7ca03c5f8227}
+      \strng{fullhashraw}{03d4e5adc9284181734d7ca03c5f8227}
+      \strng{bibnamehash}{03d4e5adc9284181734d7ca03c5f8227}
+      \strng{authorbibnamehash}{03d4e5adc9284181734d7ca03c5f8227}
+      \strng{authornamehash}{03d4e5adc9284181734d7ca03c5f8227}
+      \strng{authorfullhash}{03d4e5adc9284181734d7ca03c5f8227}
+      \strng{authorfullhashraw}{03d4e5adc9284181734d7ca03c5f8227}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Dostęp: 10 marca 2026}
+      \field{title}{Shadow IT Risks, Examples, and Detection}
+      \field{year}{2026}
+      \verb{urlraw}
+      \verb https://fidelissecurity.com/cybersecurity-101/cloud-security/shadow-it-risks-examples-and-detection/
+      \endverb
+      \verb{url}
+      \verb https://fidelissecurity.com/cybersecurity-101/cloud-security/shadow-it-risks-examples-and-detection/
+      \endverb
+    \endentry
+    \entry{Krosnick2002DontKnow}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{10}{}{%
+        {{hash=a5089c9f0c9a15ef61c2cb7f543c5a2e}{%
+           family={Krosnick},
+           familyi={K\bibinitperiod},
+           given={Jon\bibnamedelima A.},
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=4ae92d7aab230a8c1566ce1d9bd92867}{%
+           family={Holbrook},
+           familyi={H\bibinitperiod},
+           given={Allyson\bibnamedelima L.},
+           giveni={A\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=ab68fd4e36b77cb3b99515051351eeab}{%
+           family={Berent},
+           familyi={B\bibinitperiod},
+           given={Matthew\bibnamedelima K.},
+           giveni={M\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=396eef5cfdd2bf498884922cb848f9c6}{%
+           family={Carson},
+           familyi={C\bibinitperiod},
+           given={Richard\bibnamedelima T.},
+           giveni={R\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+        {{hash=b415f8386a934298ad54120a70a592da}{%
+           family={Hanemann},
+           familyi={H\bibinitperiod},
+           given={W.\bibnamedelimi Michael},
+           giveni={W\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=82290a7b3905fbbacefe60f64fe931c7}{%
+           family={Kopp},
+           familyi={K\bibinitperiod},
+           given={Raymond\bibnamedelima J.},
+           giveni={R\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=742d58c59fa02076f92928e6c642cc14}{%
+           family={Cameron\bibnamedelima Mitchell},
+           familyi={C\bibinitperiod\bibinitdelim M\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
+        {{hash=e6b96536618bbf1649dbf41b0df777e2}{%
+           family={Presser},
+           familyi={P\bibinitperiod},
+           given={Stanley},
+           giveni={S\bibinitperiod}}}%
+        {{hash=3a213c8399f0aac84a02ba6905ae0b27}{%
+           family={Ruud},
+           familyi={R\bibinitperiod},
+           given={Paul\bibnamedelima A.},
+           giveni={P\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=d958c21c7aae8ce0af83bd181a896bb7}{%
+           family={Kerry\bibnamedelima Smith},
+           familyi={K\bibinitperiod\bibinitdelim S\bibinitperiod},
+           given={V.},
+           giveni={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{c439933c6e5b7caee50d15419d44570c}
+      \strng{fullhash}{273fcb6810c6810c373a6b1f12385158}
+      \strng{fullhashraw}{273fcb6810c6810c373a6b1f12385158}
+      \strng{bibnamehash}{c439933c6e5b7caee50d15419d44570c}
+      \strng{authorbibnamehash}{c439933c6e5b7caee50d15419d44570c}
+      \strng{authornamehash}{c439933c6e5b7caee50d15419d44570c}
+      \strng{authorfullhash}{273fcb6810c6810c373a6b1f12385158}
+      \strng{authorfullhashraw}{273fcb6810c6810c373a6b1f12385158}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Public Opinion Quarterly}
+      \field{number}{3}
+      \field{title}{The Impact of ``No Opinion'' Response Options on Data Quality: Non-Attitude Reduction or an Invitation to Satisfice?}
+      \field{volume}{66}
+      \field{year}{2002}
+      \field{pages}{371\bibrangedash 403}
+      \range{pages}{33}
+      \verb{doi}
+      \verb 10.1086/341394
+      \endverb
+    \endentry
+    \entry{Dolnicar2011ForcedBinary}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=3097e101bdf6b151d7bcb0b9cab32e3c}{%
+           family={Dolnicar},
+           familyi={D\bibinitperiod},
+           given={Sara},
+           giveni={S\bibinitperiod}}}%
+        {{hash=be8e8db7aefb5e406129f69278dc01c8}{%
+           family={Grün},
+           familyi={G\bibinitperiod},
+           given={Bettina},
+           giveni={B\bibinitperiod}}}%
+        {{hash=206bc8e5c879d4926dffd8eed005bcc7}{%
+           family={Leisch},
+           familyi={L\bibinitperiod},
+           given={Friedrich},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{7cb939233d6dc38e261b07932a53d725}
+      \strng{fullhash}{7cb939233d6dc38e261b07932a53d725}
+      \strng{fullhashraw}{7cb939233d6dc38e261b07932a53d725}
+      \strng{bibnamehash}{7cb939233d6dc38e261b07932a53d725}
+      \strng{authorbibnamehash}{7cb939233d6dc38e261b07932a53d725}
+      \strng{authornamehash}{7cb939233d6dc38e261b07932a53d725}
+      \strng{authorfullhash}{7cb939233d6dc38e261b07932a53d725}
+      \strng{authorfullhashraw}{7cb939233d6dc38e261b07932a53d725}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Market Research}
+      \field{number}{2}
+      \field{title}{Quick, simple and reliable: forced binary survey questions}
+      \field{volume}{53}
+      \field{year}{2011}
+      \field{pages}{231\bibrangedash 252}
+      \range{pages}{22}
+      \verb{doi}
+      \verb 10.2501/IJMR-53-2-231-252
+      \endverb
+    \endentry
+    \entry{Waters2021DontKnow}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=66f93dcebe5d21860e281c2dea2f7a87}{%
+           family={Waters},
+           familyi={W\bibinitperiod},
+           given={Erika\bibnamedelima A.},
+           giveni={E\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{1e05710ba41019484aa5654e0e6150bd}
+      \strng{fullhash}{1e05710ba41019484aa5654e0e6150bd}
+      \strng{fullhashraw}{1e05710ba41019484aa5654e0e6150bd}
+      \strng{bibnamehash}{1e05710ba41019484aa5654e0e6150bd}
+      \strng{authorbibnamehash}{1e05710ba41019484aa5654e0e6150bd}
+      \strng{authornamehash}{1e05710ba41019484aa5654e0e6150bd}
+      \strng{authorfullhash}{1e05710ba41019484aa5654e0e6150bd}
+      \strng{authorfullhashraw}{1e05710ba41019484aa5654e0e6150bd}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Sage Journals}
+      \field{title}{Dismissing ``don't know'' responses to perceived risk survey questions}
+      \field{year}{2021}
+      \verb{doi}
+      \verb 10.1177/17456916211017860
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

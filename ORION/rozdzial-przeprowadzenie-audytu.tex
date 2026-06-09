@@ -1,0 +1,1659 @@
+\newcommand{\generujKryteria}[2]{%
+\vspace{0.5cm}\\
+Pytania w sekcji:\\\\
+  \csvreader[
+    separator=semicolon,
+    no head
+  ]{#1}{}{%%
+    \ifcsvstrcmp{\csvcoli}{#2}{%
+      \noindent
+      Obszar: \textbf{\csvcolii} \\
+      Podstawa prawna: \textbf{\csvcoliii} \\
+      Typ pytania: \textbf{\csvcolviii}, blokujące: \textbf{\csvcolix}
+
+      \begin{itemize}
+        \item \textbf{Perspektywa zgodności:} \csvcoliv
+        \item \textbf{Perspektywa użytkownika:} \csvcolvi
+        \item \textbf{Perspektywa techniczna:} \csvcolv
+      \end{itemize}
+    }{}%
+  }
+}
+
+% ============================================================
+\chapter{Przeprowadzenie audytu ORION}
+\label{chap:audyt}
+% ============================================================
+
+Niniejszy rozdział opisuje pełny algorytm przeprowadzenia audytu zgodności systemów informatycznych w metodologii ORION.
+Audyt jest procesem iteracyjnym, co oznacza, że po zakończeniu jednego etapu audytor przechodzi do kolejnego, składającym się z pięciu faz następujących po sobie w ściśle określonej kolejności. 
+Każda faza produkuje dane wejściowe dla fazy następnej, a wynik całości, czyli ocena zgodności podmiotu z aktualnym stanem regulacyjnym z punktu widzenia ITC,  jest wynikiem wszystkich odpowiedzi na każdym etapie.
+Schemat ogólny procesu przedstawia rysunek~\ref{fig:fazy-audytu}.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.6cm,
+  box/.style={rectangle, rounded corners=4pt,
+              draw=black, fill=gray!10,
+              minimum width=10cm, minimum height=1cm,
+              text centered, font=\small},
+  arrow/.style={-Stealth, thick}
+]
+\node[box] (f1) {\textbf{Faza 1} \quad Klasyfikacja podmiotu};
+\node[box, below of=f1] (f2)
+  {\textbf{Faza 2} \quad Inwentaryzacja i klasyfikacja obiektów};
+\node[box, below of=f2] (f3)
+  {\textbf{Faza 3} \quad Kwestionariusz szczegółowy i zbieranie dowodów};
+\node[box, below of=f3] (f4)
+  {\textbf{Faza 4} \quad Obliczenie scoringu i propagacja ryzyka};
+\node[box, below of=f4] (f5)
+  {\textbf{Faza 5} \quad Raport końcowy i rekomendacje};
+\draw[arrow] (f1) -- (f2);
+\draw[arrow] (f2) -- (f3);
+\draw[arrow] (f3) -- (f4);
+\draw[arrow] (f4) -- (f5);
+\end{tikzpicture}
+\caption{Pięć faz audytu ORION}
+\label{fig:fazy-audytu}
+\end{figure}
+
+% ============================================================
+\section{Faza 1: Klasyfikacja podmiotu}
+\label{sec:faza1}
+% ============================================================
+
+Audyt rozpoczyna się od ustalenia tożsamości regulacyjnej audytowanego podmiotu. Wynik tej fazy determinuje, które zestawy pytań zostaną zaprezentowane w dalszych etapach, jakie wymogi mają charakter obligatoryjny, a jakie fakultatywne oraz jakie progi klasyfikacji dostawców kluczowych będą stosowane. 
+Faza pierwsza składa się z dwóch kroków wykonywanych wyłącznie raz, przed przystąpieniem do analizy jakiegokolwiek obiektu i dotyczy globalnie całe orgnanizacji.
+
+\subsection{Krok 1.1: Ustalenie reżimu regulacyjnego}
+\label{sec:krok11}
+
+Dla każdego kryterium poniżej odpowiedz \texttt{TAK} lub \texttt{NIE}. Klasyfikacja wyznaczana jest na podstawie konsensusu odpowiedzi z~co najmniej dwóch perspektyw.
+
+\bigskip
+
+\noindent\textbf{Kryterium R1: Podleganie reżimowi regulacyjnemu}
+
+\begin{itemize}
+  \item \textbf{Perspektywa zgodności} (DPO / Radca prawny): Czy podmiot prowadzi działalność wymienioną w~załączniku~I lub~II dyrektywy NIS2 albo w~art.~2 rozporządzenia DORA i~przekracza progi wielkości określone przez te akty?
+  \item \textbf{Perspektywa użytkownika} (Zarząd / Właściciel): Czy organizacja świadczy usługi finansowe, prowadzi infrastrukturę krytyczną lub przetwarza dane na zlecenie podmiotów regulowanych?
+  \item \textbf{Perspektywa techniczna} (CTO / Architekt): Czy systemy IT organizacji były kiedykolwiek objęte obowiązkowym audytem regulacyjnym lub wymogiem zgłaszania incydentów do organu nadzorczego?
+\end{itemize}
+
+Na podstawie konsensusu odpowiedzi podmiot otrzymuje
+jedną z następujących klasyfikacji regulacyjnych,
+które określają obowiązkowość kluczowych elementów audytu:
+
+\begin{table}[ht] % Zmieniono z [H] na [ht] dla lepszej kompatybilności
+\centering
+\caption{Klasyfikacja regulacyjna podmiotu i jej wpływ na zakres audytu}
+\label{tab:klasyfikacja-regulacyjna}
+\renewcommand{\arraystretch}{1.5}
+% Usunięto resizebox na rzecz precyzyjnych szerokości p{}
+\begin{tabular}{p{2.5cm}p{3cm}cccc}
+\toprule
+\textbf{Klasyfikacja} & \textbf{Podstawa} & \textbf{BCP} & \textbf{Exit plan} & \textbf{TIA} & $w_{reg}$ \\ \midrule
+\texttt{FINANSOWY} & DORA Art.~2 & Tak & Tak & Tak & $1{,}5$ \\ \midrule
+\texttt{KLUCZOWY} & NIS2 / KSC Art.~5 & Tak & Tak & Tak & $1{,}3$ \\ \midrule
+\texttt{WAŻNY} & NIS2 / KSC Art.~6 & Tak & Nie & Tak & $1{,}1$ \\ \midrule
+\texttt{POZOSTAŁE} & RODO / ogólne & Nie & Nie & Warunkowy & $1{,}0$ \\ \bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================
+\section{Faza 2: Inwentaryzacja i klasyfikacja obiektów}
+\label{sec:faza2}
+% ============================================================
+
+Celem fazy drugiej jest zbudowanie grafu ICT podmiotu,  pełnego rejestru wszystkich obiektów podlegających audytowi
+wraz z ich atrybutami klasyfikacyjnymi. Graf ICT jest strukturą dynamiczną: jego wierzchołki są odkrywane
+iteracyjnie, a mechanizm triggera TIA opisany w sekcji~\ref{sec:trigger-tia} może rozszerzać graf o nowe obiekty w trakcie fazy trzeciej. Faza druga stanowi zatem pierwszą, wstępną wersję grafu, która ulega uzupełnieniu w toku audytu szczegółowego.
+
+\subsection{Krok 2.1: Inwentaryzacja systemów}
+\label{sec:krok21}
+
+Audytor przeprowadza inwentaryzację wszystkich systemów informatycznych eksploatowanych przez podmiot. Jako punkt wyjścia służą: rejestr systemów prowadzony przez dział IT, wykaz aplikacji z licencji oprogramowania (pobranych z systemów księgowych oraz archiwów licencji), rejestr umów z dostawcami ICT, wyniki poprzednich audytów lub testów penetracyjnych. Każdy zidentyfikowany system jest rejestrowany jako obiekt w grafie ICT i przypisany do właściciela biznesowego.
+Należy również przeskanować systemy informatyczne w celu zaintwentaryzowania zainstalowanego oprogramowania, na rynku dostępne są do tego narzędzia typu \textit{open source}.
+
+Kluczowe w inwentaryzacji jest podejście wieloperspektywiczne: inwentaryzacja przeprowadzana wyłącznie przez dział IT często pomija systemy zakupione i utrzymywane bezpośrednio przez jednostki biznesowe (\textit{shadow IT}), podczas gdy wywiad z właścicielami biznesowymi i prawnikami ujawnia dodatkowe systemy i usługi SaaS nieprzechodzące przez standardowy proces zakupów IT.
+Wynikiem operacji indetyfikacji będzie lista obiektów typu \texttt{SYSTEM\_INFORMATYCZNY}, która będzie dołączona do grafu ITC.
+
+\subsection{Krok 2.2: Identyfikacja bezpośrednich dostawców}
+\label{sec:krok22}
+
+Dla każdego zidentyfikowanego systemu audytor identyfikuje bezpośrednich dostawców ICT: podmioty zewnętrzne świadczące
+usługi hostingu, utrzymania, wsparcia lub integracji.
+Każdy dostawca jest rejestrowany jako odrębny obiekt typu \texttt{DOSTAWCA} w grafie ICT i połączony krawędzią skierowaną z systemem, który obsługuje. Na tym etapie nie są jeszcze identyfikowani poddostawcy, ich identyfikacja następuje w fazie trzeciej przez mechanizm triggera TIA.
+
+\subsection{Krok 2.3: Przypisanie atrybutów klasyfikacyjnych}
+\label{sec:krok23}
+
+Dla każdego obiektu zidentyfikowanego w kroku \ref{sec:krok21} audytor przeprowadza klasyfikację wstępną, ustalając wartości atrybutów:
+\textit{dostępność}(v),
+\textit{krytyczność}(v),
+\textit{utrzymanie\_chmura}(v),
+\textit{typ\_danych\_wrażliwych}(v), 
+
+
+Każdy atrybut jest wyznaczany metodą cross-validation opisaną w sekcji~\ref{sec:crossvalidation}. 
+
+
+\subsection{Ankieta klasyfikacji atrybuty dostępności }
+
+Poniższe kryteria służą do określenia, z jaka jest dostępność systemu z punktu widzenia prywatności rozwiązania.  Dla każdego kryterium odpowiedz \texttt{TAK} lub \texttt{NIE}. Klasyfikacja jest wyznaczana na ilości odpowiedzi zgodnych z odpowiedzią \textbf{oczekiwaną} jako poprawna.
+
+\bigskip
+
+\textbf{Kryterium D1: Dostęp spoza sieci organizacji}
+
+\begin{itemize}
+\item \textbf{Perspektywa zgodności:} Czy umowa lub regulamin systemu przewiduje dostęp dla podmiotów spoza struktury prawnej organizacji?
+\item \textbf{Perspektywa użytkownika:} Czy z systemu korzystają osoby lub firmy spoza naszej organizacji (klienci, partnerzy, dostawcy)?
+\item \textbf{Perspektywa techniczna:} Czy system jest dostępny spoza sieci LAN/VPN organizacji (publiczny IP, internet)?
+\end{itemize}
+
+% ============================================================
+
+\textbf{Kryterium D2: Użytkownicy zewnętrzni}
+
+\begin{itemize}
+\item \textbf{Perspektywa zgodności:} Czy system wymaga odrębnych umów powierzenia danych lub regulaminów dla jego użytkowników?
+\item \textbf{Perspektywa użytkownika:} Czy system służy do komunikacji lub wymiany informacji z klientami bądź kontrahentami?
+\item \textbf{Perspektywa techniczna:} Czy system posiada konta lub sesje dla użytkowników spoza domeny organizacji?
+\end{itemize}
+
+% ============================================================
+
+\textbf{Kryterium D3: Integracje zewnętrzne}
+
+\begin{itemize}
+\item \textbf{Perspektywa zgodności:} Czy system przesyła dane do podmiotów trzecich na podstawie umów lub przepisów prawa?
+\item \textbf{Perspektywa użytkownika:} Czy system automatycznie wymienia dane z zewnętrznymi dostawcami, bankami lub platformami?
+\item \textbf{Perspektywa techniczna:} Czy system wywołuje zewnętrzne API lub odbiera dane z systemów spoza infrastruktury organizacji?
+\end{itemize}
+
+% ============================================================
+
+\textbf{Kryterium D4: Publiczny adres lub domena}
+
+\begin{itemize}
+\item \textbf{Perspektywa zgodności:} Czy system jest zarejestrowany lub dostępny pod adresem publicznie widocznym w internecie?
+\item \textbf{Perspektywa użytkownika:} Czy system ma adres www lub można do niego dotrzeć bez łączenia się z siecią wewnętrzną firmy?
+\item \textbf{Perspektywa techniczna:} Czy system posiada publiczny rekord DNS lub publiczny adres IP?
+\end{itemize}
+
+
+\bigskip
+\textbf{Wynik końcowy:}
+
+\begin{table}[ht]
+\begin{tabular}{p{10cm} p{4cm}}
+\toprule
+Suma TAK & Klasyfikacja \\
+\midrule
+Zero odpowiedzi twierdzących     & System \textbf{prywatny}    \\
+\midrule
+Minimum jedna twierdząca     & System \textbf{publiczny}     \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+% ============================================================
+%  Ankieta system krytyczny, ważny czy zwykły?
+% ============================================================
+
+\subsection{Ankieta klasyfikacja atrybutu poziomu krytyczności}
+Poniższe kryteria służą do określenia, z jakim poziomem krytyczności operuje system. Dla każdego kryterium odpowiedz \texttt{TAK} lub \texttt{NIE}. Klasyfikacja jest wyznaczana na ilości odpowiedzi twierdzących.
+
+\bigskip
+\noindent\textbf{Kryterium K1: Wpływ finansowy i operacyjny
+niedostępności systemu}
+\begin{itemize}
+\item \textbf{Perspektywa zgodności:} Czy niedostępność
+systemu może powodować roszczenia kontraktowe lub
+kary umowne?
+\item \textbf{Perspektywa użytkownika:} Czy kilkugodzinny
+przestój zatrzymuje sprzedaż, obsługę klienta lub
+kluczowy proces biznesowy?
+\item \textbf{Perspektywa techniczna:} Czy system ma
+zdefiniowane RTO poniżej 4~godzin lub SLA z karami
+za niedostępność?
+\end{itemize}
+
+\noindent\textbf{Kryterium K2: Przetwarzanie danych osobowych
+lub wrażliwych}
+\begin{itemize}
+\item \textbf{Perspektywa zgodności:} Czy system przetwarza
+dane osobowe lub szczególne kategorie danych
+w rozumieniu art.~9 RODO?
+\item \textbf{Perspektywa użytkownika:} Czy w systemie
+przechowywane są dane klientów, pracowników lub inne
+informacje poufne?
+\item \textbf{Perspektywa techniczna:} Czy baza danych
+zawiera pola z danymi PII
+(np.\ imię, PESEL, adres, numer konta)?
+\end{itemize}
+
+\noindent\textbf{Kryterium K3: Podleganie regulacjom zewnętrznym}
+\begin{itemize}
+\item \textbf{Perspektywa zgodności:} Czy system podlega
+regulacjom sektorowym
+(np.\ DORA, NIS2, Rekomendacja D KNF)?
+\item \textbf{Perspektywa użytkownika:} Czy system był
+przedmiotem pytań audytorów lub regulatorów
+podczas kontroli?
+\item \textbf{Perspektywa techniczna:} Czy system znajduje
+się w wykazie systemów objętych audytem zgodności
+lub testami penetracyjnymi?
+\end{itemize}
+
+\noindent\textbf{Kryterium K4: Zależności innych systemów
+produkcyjnych}
+\begin{itemize}
+\item \textbf{Perspektywa zgodności:} Czy awaria systemu
+może uniemożliwić realizację zobowiązań wobec klientów
+lub partnerów?
+\item \textbf{Perspektywa użytkownika:} Czy inne działy
+lub systemy firmy nie mogą działać, gdy system jest
+niedostępny?
+\item \textbf{Perspektywa techniczna:} Czy inne systemy
+produkcyjne mają bezpośrednie zależności od tego systemu?
+\end{itemize}
+
+\noindent\textbf{Kryterium K5: Ryzyko wycieku lub utraty danych}
+\begin{itemize}
+\item \textbf{Perspektywa zgodności:} Czy wyciek danych
+z systemu wymagałby zgłoszenia incydentu do UODO
+lub regulatora?
+\item \textbf{Perspektywa użytkownika:} Czy ujawnienie
+danych mogłoby zaszkodzić reputacji firmy lub spowodować
+utratę klientów?
+\item \textbf{Perspektywa techniczna:} Czy system przechowuje
+dane bez szyfrowania lub bez możliwości pseudonimizacji?
+\end{itemize}
+
+\noindent\textbf{Kryterium K6: Obsługa procesów podstawowej
+działalności (core business)}
+\begin{itemize}
+\item \textbf{Perspektywa zgodności:} Czy system jest
+wskazany w dokumentacji BCM/BCP jako niezbędny
+do kontynuacji działalności?
+\item \textbf{Perspektywa użytkownika:} Czy system obsługuje
+główny produkt lub usługę firmy?
+\item \textbf{Perspektywa techniczna:} Czy system jest
+sklasyfikowany jako produkcyjny tier-1
+w architekturze IT?
+\end{itemize}
+
+W celu uniknięcia zjawiska sztucznego zawyżania krytyczności (gdzie niemal każdy system przetwarzający dane osobowe stawał się krytyczny), w metodologii ORION zastosowano zasadę dominacji operacyjnej. System nie może zostać uznany za krytyczny tylko na podstawie faktu, że podlega regulacjom (K3) lub przetwarza dane (K2), o ile jego niedostępność nie paraliżuje podstawowej działalności organizacji (K1, K6).
+
+\begin{table}[H]
+\centering
+\caption{Wynik klasyfikacji krytyczności na podstawie
+         sumy odpowiedzi twierdzących}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{3cm} p{4cm} p{5cm}}
+\toprule
+\textbf{Suma TAK} & \textbf{Klasyfikacja} & \textbf{Warunek dodatkowy} \\
+\midrule
+0--2  & System \textbf{standardowy} & --- \\
+\midrule
+3--4  & System \textbf{ważny}       & --- \\
+\midrule
+5--6  & System \textbf{krytyczny}   & Wymagane K1\,=\,TAK lub K6\,=\,TAK
+                                      (zasada dominacji operacyjnej) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+% ============================================================
+% ANKIETA 2: System w chmurze
+\subsection{Ankieta klasyfikacji atrybutu utrzymania w chmurze}
+\label{sec:ankieta-chmura}
+Poniższe kryteria służą do określenia, czy system jest rozwiązaniem on-premise czy chmurowym . Dla każdego kryterium odpowiedz \texttt{TAK} lub \texttt{NIE}. Klasyfikacja jest wyznaczana na ilości odpowiedzi twierdzących.
+
+
+\bigskip
+
+\textbf{Kryterium L1: Model wdrożenia infrastruktury}
+
+\begin{itemize}
+\item \textbf{Perspektywa zgodności:} Czy umowa lub dokumentacja systemu wskazuje na dostawcę chmury publicznej, prywatnej lub hybrydowej (np. AWS, Azure, GCP, OVH)?
+\item \textbf{Perspektywa użytkownika:} Czy system działa w internecie lub w środowisku zarządzanym przez zewnętrznego dostawcę, a nie na serwerach w siedzibie firmy?
+\item \textbf{Perspektywa techniczna:} Czy serwery lub maszyny wirtualne systemu są uruchomione poza fizycznym data center organizacji?
+\end{itemize}
+
+% ============================================================
+
+\textbf{Kryterium L2: Odpowiedzialność operacyjna}
+
+\begin{itemize}
+\item \textbf{Perspektywa zgodności:} Czy odpowiedzialność za dostępność i utrzymanie infrastruktury systemu spoczywa na zewnętrznym dostawcy zgodnie z umową SLA?
+\item \textbf{Perspektywa użytkownika:} Czy w przypadku awarii serwera zgłaszamy problem do zewnętrznej firmy, a nie do naszego działu IT?
+\item \textbf{Perspektywa techniczna:} Czy organizacja nie ma bezpośredniego dostępu administracyjnego do warstwy sprzętowej lub hiperwizora systemu?
+\end{itemize}
+
+% ============================================================
+
+\textbf{Kryterium L3: Umowa outsourcingowa lub chmurowa}
+
+\begin{itemize}
+\item \textbf{Perspektywa zgodności:} Czy z dostawcą systemu lub infrastruktury podpisano umowę outsourcingu IT, umowę SaaS/PaaS/IaaS lub umowę powierzenia przetwarzania danych?
+\item \textbf{Perspektywa użytkownika:} Czy dostęp do systemu lub jego funkcji jest uzależniony od aktywnej subskrypcji lub kontraktu z zewnętrznym dostawcą?
+\item \textbf{Perspektywa techniczna:} Czy system jest wdrożony w modelu usługowym (SaaS, PaaS lub IaaS), w którym zasoby obliczeniowe są rozliczane na podstawie zużycia lub abonamentu?
+\end{itemize}
+
+% ============================================================
+
+\textbf{Kryterium L4: Lokalizacja i kontrola danych}
+
+\begin{itemize}
+\item \textbf{Perspektywa zgodności:} Czy dane przetwarzane przez system są przechowywane w lokalizacji określonej przez dostawcę zewnętrznego oraz czy przeprowadzono pełne TIA?
+\item \textbf{Perspektywa użytkownika:} Czy jako użytkownik systemu masz pewności, czy fizycznie dane przechowywane są na serwerach kraju EOG?
+\item \textbf{Perspektywa techniczna:} Czy kopie zapasowe lub dane produkcyjne systemu są składowane na zasobach poza kontrolą  dministracyjną organizacji?
+\end{itemize}
+
+% ============================================================
+
+\textbf{Kryterium L5: Jurysdykcja podmiotu hostującego}
+
+\begin{itemize}
+  \item \textbf{Perspektywa zgodności:} Czy dostawca przeprowadził pełne TIA
+        wraz z poddostawcami, z którego wynika, że wszystkie podmioty
+        zaangażowane w przetwarzanie danych są własnością kapitałową
+        przedsiębiorstw z EOG lub nie podlegają jurysdykcji państw trzecich
+        (np.\ US CLOUD Act, FISA Section 702)?
+
+  \item \textbf{Perspektywa użytkownika:} Czy użytkownik może potwierdzić,
+        że wszystkie usługi i okna logowania systemu należą do podmiotów
+        zarejestrowanych i działających wyłącznie na podstawie prawa
+        europejskiego?
+
+  \item \textbf{Perspektywa techniczna:} Czy certyfikaty SSL/TLS, adresy IP,
+        rekordy DNS oraz dane WHOIS infrastruktury systemu wskazują wyłącznie
+        na podmioty zarejestrowane w EOG, a żaden z komponentów technicznych
+        (CDN, load balancer, usługa uwierzytelniania) nie pochodzi od dostawcy
+        spoza EOG lub podlegającego obcemu prawu dostępu do danych?
+\end{itemize}
+
+\textbf{Kryterium L6: Wsparcie techniczne}
+
+\begin{itemize}
+  \item \textbf{Perspektywa zgodności:} Czy umowa z dostawcą systemu
+        jednoznacznie określa, że wsparcie techniczne (helpdesk, administracja,
+        dostęp serwisowy) jest świadczone wyłącznie przez osoby lub podmioty
+        mające siedzibę w EOG?
+
+\item \textbf{Perspektywa użytkownika:} Czy użytkownik może potwierdzić,
+      że wszystkie punkty kontaktowe wsparcia technicznego (w tym adresy
+      e-mail, domeny helpdesk, numery telefonów oraz profile agentów
+      w systemie zgłoszeń) wskazują na podmioty zarejestrowane
+      w EOG (europejskie domeny, kierunkowe numery telefonów,
+      europejskie dane rejestrowe dostawcy)?
+
+  \item \textbf{Perspektywa techniczna:} Czy narzędzia zdalnego dostępu
+        serwisowego (np.\ VPN, RDP, sesje administracyjne) są skonfigurowane
+        w sposób uniemożliwiający połączenie spoza EOG, a logi dostępu
+        potwierdzają, że żadna sesja wsparcia technicznego nie była
+        inicjowana z adresów IP spoza Europejskiego Obszaru Gospodarczego?
+\end{itemize}
+\bigskip
+\textbf{Wynik końcowy:}
+
+\begin{table}[ht]
+\begin{tabular}{p{10cm} p{4cm}}
+\toprule
+Suma TAK & Klasyfikacja \\
+\midrule
+Zero odpowiedzi twierdzących  & System \textbf{on-premise}   \\
+\midrule
+Minimum jedna odpowiedź twierdząca oraz minimum jedna odpowiedź negatywna na pytania L5, L6      & System \textbf{w chmurze krajów trzecich}    \\
+\midrule
+Minimum trzy odpowiedi twierdząca w tym na pytania L5, L6     & System \textbf{w chmurze EOG}    \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ====================================
+\subsection{Ankieta klasyfikacji typu danych}
+
+Poniższe kryteria służą do określenia, z jakim typem danych operuje system. Dla każdego kryterium odpowiedz \texttt{TAK} lub \texttt{NIE}. Klasyfikacja jest wyznaczana na podstawie najwyższej kategorii, dla której udzielono co najmniej jednej odpowiedzi twierdzącej.
+
+\bigskip
+\noindent\textbf{Kryterium W: Dane szczególnych kategorii (wrażliwe)}
+\begin{itemize}
+    \item \textbf{Perspektywa zgodności:} Czy system przetwarza dane
+    szczególnych kategorii w rozumieniu art.~9 RODO
+    (np.\ dane dotyczące zdrowia, wyroków skazujących, przekonań
+    religijnych, orientacji seksualnej, przynależności związkowej)?
+    \item \textbf{Perspektywa użytkownika:} Czy system zawiera
+    dokumentację medyczną, orzeczenia, dane HR
+    o niepełnosprawności lub inne informacje uznawane
+    za szczególnie chronione?
+    \item \textbf{Perspektywa techniczna:} Czy baza danych zawiera
+    pola klasyfikowane jako dane wrażliwe (np.\ diagnoza,
+    orzeczenie, wyznanie, dane biometryczne)?
+\end{itemize}
+
+\bigskip
+\noindent\textbf{Kryterium O: Dane osobowe (zwykłe)}
+\begin{itemize}
+    \item \textbf{Perspektywa zgodności:} Czy system przetwarza
+    dane osobowe w rozumieniu art.~4 pkt~1 RODO,
+    pozwalające na identyfikację osoby fizycznej
+    (np.\ imię i nazwisko, PESEL, adres e-mail, numer konta)?
+    \item \textbf{Perspektywa użytkownika:} Czy w systemie
+    przechowywane są dane klientów, pracowników
+    lub kontrahentów w jakiejkolwiek formie?
+    \item \textbf{Perspektywa techniczna:} Czy baza danych zawiera
+    pola, takie jak imię, adres, identyfikator użytkownika, adres IP lub dane logowania?
+\end{itemize}
+
+\bigskip
+\noindent\textbf{Kryterium T: Tajemnice prawnie chronione}
+\begin{itemize}
+    \item \textbf{Perspektywa zgodności:} Czy system przetwarza
+    informacje objęte tajemnicą zawodową, handlową,
+    bankową, skarbową, adwokacką lub inną tajemnicą
+    chronioną przepisami prawa?
+    \item \textbf{Perspektywa użytkownika:} Czy ujawnienie danych
+    z systemu mogłoby naruszyć obowiązki zachowania
+    poufności wynikające z umów lub przepisów prawa
+    (np.\ NDA, tajemnica przedsiębiorstwa)?
+    \item \textbf{Perspektywa techniczna:} Czy system posiada
+    oznaczenie klauzulą poufności lub jest objęty
+    restrykcjami dostępu wynikającymi z wymogów
+    regulacyjnych lub umownych?
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\caption{Wynik klasyfikacji typu danych na podstawie
+         udzielonych odpowiedzi twierdzących}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{5cm} p{4cm} p{4cm}}
+\toprule
+\textbf{Warunek} & \textbf{Typ danych} & \textbf{Reżim ochrony} \\
+\midrule
+Co najmniej jedno TAK w~kryterium W
+    & \textbf{Wrażliwe}
+    & art.~9 RODO, DPIA wymagane \\
+\midrule    
+Co najmniej jedno TAK w~kryterium O
+(brak TAK w~W)
+    & \textbf{Osobowe}
+    & RODO, zgłoszenie do UODO \\
+\midrule    
+Co najmniej jedno TAK w~kryterium T
+(brak TAK w~W i~O)
+    & \textbf{Tajemnica}
+    & przepisy sektorowe, NDA \\
+\midrule    
+Wyłącznie NIE we wszystkich kryteriach
+    & \textbf{Brak}
+    & brak szczególnych wymogów \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Uwaga:} Klasyfikacja ma charakter kaskadowy ---
+wystarczy jedno TAK w~kryterium wyższej kategorii, aby
+przypisać wyższy typ danych. Jeśli system spełnia warunki
+kilku kryteriów jednocześnie, stosuje się typ danych
+o~najwyższym ryzyku.
+
+% ============================================================
+\section{Faza 3: Kwestionariusz szczegółowy i zbieranie dowodów}
+\label{sec:faza3}
+% ============================================================
+
+Na podstawie atrybutów obiektów i wartości im przypisanych w fazie drugiej system ORION generuje dla każdego
+obiektu indywidualny kwestionariusz szczegółowy, zestaw pytań audytowych pogrupowanych w sekcje tematyczne,
+aktywowane warunkowo w zależności od wartości atrybutów. 
+Żaden obiekt nie jest pytany o aspekty, które są dla niego nieistotne z powodów technicznych lub regulacyjnych.
+
+
+
+\subsection{Warunkowe aktywowanie sekcji pytań}
+\label{sec:aktywowanie-sekcji}
+
+Zestaw aktywnych sekcji pytań dla obiektu $v$ jest wyznaczany przez funkcję:
+
+\begin{equation}
+\mathcal{S}(v) =
+\bigcup_{\tau \in \mathcal{T}}
+  \mathcal{S}_{\tau} \cdot \mathbb{1}\bigl[\mathrm{type}(v) = \tau\bigr]
+\;\cup\;
+\bigcup_{k}
+  \mathcal{S}_k \cdot \mathbb{1}\bigl[\Phi_k\bigl(\mathcal{A}(v)\bigr)\bigr]
+\label{eq:sekcje}
+\end{equation}
+
+\noindent gdzie:
+\begin{itemize}
+  \item $\mathcal{T} = \{\texttt{PODMIOT},\, \texttt{SYSTEM\_INFORMATYCZNY},\, \texttt{DOSTAWCA}\}$
+        jest zbiorem typów obiektów w grafie ICT,
+  \item $\mathcal{S}_{\tau}$ jest zbiorem sekcji aktywowanych wyłącznie
+        dla obiektów danego typu $\tau$ (np.\ sekcje
+        \texttt{ORGANIZACJA}, \texttt{BEZPIECZENSTWO\_TECHNICZNE}
+        i \texttt{BEZPIECZENSTWO\_FIZYCZNE} są aktywowane
+        gdy $\mathrm{type}(v) = \texttt{PODMIOT}$,
+        a \texttt{APLIKACJA} gdy $\mathrm{type}(v) = \texttt{SYSTEM\_INFORMATYCZNY}$),
+  \item $\mathcal{S}_k$ jest $k$-tą sekcją aktywowaną warunkowo
+        na podstawie atrybutów obiektu,
+  \item $\Phi_k\bigl(\mathcal{A}(v)\bigr)$ jest warunkiem logicznym
+        aktywacji sekcji $\mathcal{S}_k$ wyznaczanym na podstawie
+        wektora atrybutów $\mathcal{A}(v)$ obiektu $v$
+        (np.\ klasyfikacji utrzymania w chmurze, typu danych, krytyczności).
+\end{itemize}
+
+Pierwszy składnik sumy pokrywa sekcje aktywowane przez \emph{typ} obiektu i jest niezależny od jego atrybutów. Drugi składnik pokrywa sekcje aktywowane przez \emph{atrybuty} obiektu i jest niezależny od jego typu. Oba zbiory mogą być rozłączne lub przecinać się, przy czym wynikowy zbiór aktywnych sekcji $\mathcal{S}(v)$ jest ich sumą teoriomnogościową.
+
+Pytania zostały podzielone na sekcje zgodnie z klasyfikacją przyjętą w rodziale \ref{perspektywa-pytań} \textit{Perspektywa}. Każda pozycja odnosi się do konkretnego obszaru zagadnień, zawiera podstawę prawną, definicję istotności oraz oznaczenie (flagę binarną) pytania blokującego.
+
+
+\subsection{Sekcja organizacja}
+\noindent Aktywacja: \textit{sekcja aktywna jednorazowo dla całego audytowanego podmiotu.}\\
+Pytania w tej sekcji służą do oceny dojrzałości zarządczej organizacji w zakresie cyberbezpieczeństwa i odporności cyfrowej. Sprawdzają, czy na poziomie strategicznym podmiot jest świadomy ryzyk ICT, czyli czy zarząd formalnie zatwierdził strategię cyberbezpieczeństwa i ponosi za nią odpowiedzialność prawną, czy przeszedł wymagane szkolenia oraz czy wdrożono ramy zarządzania ryzykiem ICT z rejestrem ryzyk, właścicielami i planami. Ocenie podlega również gotowość operacyjna: czy organizacja potrafi klasyfikować incydenty, zgłaszać poważne zdarzenia do organów krajowych w ustawowych terminach oraz informować klientów o incydentach według gotowych procedur.
+\generujKryteria{pytania.csv}{ORGANIZACJA}
+
+
+\subsection{Sekcja dane poufne: osobowe, wrażliwe oraz tajemnice przedsiębiorstwa}
+\noindent Aktywacja: \textit{sekcja aktywna jednorazowo dla całego audytowanego podmiotu.}\\
+Pytania w tej sekcji służą do oceny, czy organizacja prawidłowo zarządza procesem gromadzenia oraz przetwarzania danych poufnych. Weryfikowana jest również gotowość do zgłoszenia naruszenia ochrony danych osobowych, które chroni prawa osób fizycznych i wymaga odrębnej procedury, odrębnej ścieżki eskalacji i odrębnych formularzy. Organizacja nieposiadająca oddzielnej procedury zgłoszeń do UODO nie wykazuje gotowości do wywiązania się z fundamentalnego obowiązku w zakresie ochrony danych osobowych.
+\generujKryteria{pytania.csv}{DANE_WRAZLIWE}
+
+\subsection{Sekcja bezpieczeństwo techniczne}
+\noindent Aktywacja: \textit{sekcja aktywna jednorazowo dla całego audytowanego podmiotu.}\\
+Pytania w tej sekcji służą do oceny skuteczności technicznych środków ochrony systemów i infrastruktury ICT organizacji przed zagrożeniami cybernetycznymi. Sprawdzane jest, czy organizacja wdrożyła mechanizmy ciągłego monitorowania i wykrywania anomalii oraz czy przeprowadza regularne testy bezpieczeństwa i testy penetracyjne z udokumentowanymi wynikami i planem naprawy zidentyfikowanych podatności. Ocenie podlega stosowanie zasady minimalnych uprawnień (least privilege) w odniesieniu zarówno do kont użytkowników, jak i kont serwisowych aplikacji dostawców, z kwartalnym przeglądem uprawnień i automatycznym alertowaniem przy próbach eskalacji.
+\generujKryteria{pytania.csv}{BEZPIECZENSTWO_TECH}
+
+\subsection{Sekcja bezpieczeństwo fizyczne}
+\noindent Aktywacja: \textit{sekcja aktywna jednorazowo dla całego audytowanego podmiotu.}\\
+Pytania w tej sekcji służą do oceny środków ochrony fizycznej stosowanych w obiektach, w których zlokalizowana jest infrastruktura ICT organizacji lub jej kluczowych dostawców. Sprawdzane jest, czy dostęp do stref krytycznych (serwerowni i pomieszczeń technicznych) jest kontrolowany przez elektroniczne systemy uwierzytelnienia (karty dostępu, biometria) z automatycznym logowaniem każdego wejścia, eliminującym możliwość nieautoryzowanego wejścia bez śladu w rejestrze. Ocenie podlega podział obiektu na strefy bezpieczeństwa o różnych poziomach dostępu, monitoring wizyjny CCTV z retencją nagrań zgodną z RODO, redundancja zasilania testowana pod rzeczywistym obciążeniem (UPS i agregat prądotwórczy) oraz procedury dotyczące urządzeń przenośnych: szyfrowanie całego dysku, rejestr wynoszenia i zdalna możliwość wyczyszczenia. Weryfikowane jest ponadto, czy nośniki danych przy utylizacji są niszczone fizycznie lub nadpisywane certyfikowaną metodą, a serwisanci zewnętrzni w strefach krytycznych są przez cały czas eskortowani i ich działania są logowane. Pytania blokujące obejmują brak formalnej polityki bezpieczeństwa fizycznego oraz brak elektronicznej kontroli dostępu do serwerowni.
+\generujKryteria{pytania.csv}{BEZPIECZENSTWO_FIZYCZNE}
+
+\subsection{Sekcja system informatyczny}
+\noindent Aktywacja: \textit{aktywacja warunkowa, gdy typ obiektu} = \texttt{SYSTEM\_INFORMATYCZNY}\\
+Pytania w tej sekcji służą do oceny bezpieczeństwa i zgodności konkretnego systemu informatycznego rozpatrywanego jako samodzielna jednostka. Zakres oceny jest stosowany odrębnie dla każdego audytowanego systemu, co pozwala zidentyfikować różnice w poziomach zabezpieczeń między poszczególnymi aplikacjami w portfelu ICT organizacji. Sprawdzane jest, czy system figuruje w oficjalnym rejestrze zasobów ICT z przypisaną klasyfikacją krytyczności i właścicielem, czy wymusza uwierzytelnianie wieloskładnikowe (MFA) dla wszystkich kont, czy stosuje aktualny protokół szyfrowania komunikacji TLS 1.2 lub nowszy, a logi są centralnie agregowane i przechowywane w niezmienialnym storage przez co najmniej 12 miesięcy. Ocenie podlegają również polityka haseł wymuszana technicznie przez system, zarządzanie podatnościami z udokumentowanymi terminami naprawy oraz, jako kryterium o szczególnym znaczeniu dla ciągłości działania, kopie zapasowe przechowywane w izolowanej, geograficznie odrębnej lokalizacji, z empirycznie weryfikowanymi wskaźnikami RTO i RPO. Pytania blokujące obejmują brak wpisu w rejestrze CMDB, brak MFA oraz brak backupu.
+\generujKryteria{pytania.csv}{APLIKACJA}
+
+\subsection{Sekcja usługi w chmurze}
+\noindent Aktywacja: \textit{aktywacja warunkowa, gdy} $\textit{utrzymanie\_chmura}(v) \in \{\texttt{CHMURA\_K3}, \texttt{CHMURA\_EOG}\}$\\
+Pytania w tej sekcji służą do oceny zgodności wynikającej ze specyfiki przetwarzania danych w środowisku chmurowym, gdzie organizacja powierza przetwarzanie zewnętrznemu dostawcy usług (CSP). Sprawdzane jest, czy przed uruchomieniem systemu przeprowadzono i udokumentowano Ocenę Skutków dla Ochrony Danych (DPIA) oraz czy jest ona aktualizowana przy każdej istotnej zmianie systemu lub dostawcy. Ocenie podlega model zarządzania kluczami kryptograficznymi, uniemożliwiając dostawcy samodzielny dostęp do przechowywanych danych. Weryfikowane jest również, czy umowa z dostawcą chmury zapewnia prawo do audytu, bezpieczną i pełną izolację danych między klientami (multi-tenancy).
+\generujKryteria{pytania.csv}{CHMURA}
+
+\subsection{Sekcja Transfer Impact Assessment (TIA)}
+\noindent Aktywacja: \textit{aktywacja warunkowa, gdy} $\textit{utrzymanie\_chmura}(v) = \texttt{CHMURA\_K3}$\\
+Pytania w tej sekcji służą do oceny zgodności transferów danych osobowych realizowanych poza Europejski Obszar Gospodarczy (EOG). Obowiązek przeprowadzenia TIA wynika z wyroku Trybunału Sprawiedliwości UE w sprawie Schrems II z 2020 r., który uchylił mechanizm Privacy Shield i nałożył na administratorów obowiązek indywidualnej weryfikacji, czy prawo i praktyka państwa docelowego nie podważają skuteczności ochrony gwarantowanej przez Standardowe Klauzule Umowne (SCC). Sprawdzane jest, czy dla każdego transferu przeprowadzono TIA uwzględniające ustawodawstwo krajowe państwa odbiorcy (w tym ryzyko eksterytorialnego dostępu wynikające z amerykańskiego CLOUD Act i FISA 702) a także czy transfer jest obsługiwany jako komplet trzech dokumentów: aktualnej umowy DPA zgodnej z art. 28 RODO, klauzul SCC z 2021 r. oraz dokumentacji TIA. Weryfikowane jest ponadto, czy organizacja posiada pisemne oświadczenie dostawcy o nieprzekazywaniu danych poza EOG, obejmujące backupy, logi i metadane, oraz czy oświadczenie to jest technicznie weryfikowalne. Kryterium blokującym jest brak ważnej umowy DPA, bez niej jakikolwiek transfer danych osobowych jest z mocy prawa niedopuszczalny.
+
+\paragraph{Trigger identyfikacji poddostawców i TIA}\mbox{}\\
+\label{sec:trigger-tia}
+
+Jednym z najpoważniejszych i najczęściej pomijanych problemów współczesnej praktyki compliance jest zjawisko \textit{deklaratywnego zatrzymania łańcucha} analizy poddostawcóœ: 
+organizacja lub jej dostawca deklaruje zgodność z wymogami regulacyjnymi dotyczącymi miejsca przetwarzania danych, nie weryfikując jednak,
+czy deklaracja ta jest prawdziwa w odniesieniu do wszystkich ogniw łańcucha dostaw ICT leżących poniżej.
+
+Klasycznym przykładem jest firma zewnętrzna,
+która informuje audytowaną organizację:
+\textit{,,Hostujemy Państwa dane wyłącznie
+na serwerach zlokalizowanych w Unii Europejskiej''}
+i jako potwierdzenie wskazuje na regulamin usługi amerykańskiego dostawcy chmury, wskazujący region lokalizacji danych w europejskim obszarze gospodarczym. Jeśli serwer w EOG obsługiwany jest przez podmiot podlegający CLOUD Act oznacza to, że władze federalne USA mogą żądać dostępu
+do przechowywanych na nim danych bez wiedzy i zgody europejskiego podmiotu danych, a okoliczność ta powinna być objęta procedurą Transfer
+Impact Assessment (TIA), jednak w praktyce audytowej jest nagminnie pomijana.
+
+ORION rozwiązuje ten problem przez formalny mechanizm triggera identyfikacji poddostawców, który jest zaimplementowany w ankiecie w rozdziale \ref{sec:ankieta-chmura} poprzez pytania dotyczące kraju pochodzenia podmiotu hostującego oraz lokalizacji przechowywania danych.
+
+\begin{definition}[Trigger identyfikacji poddostawcy]
+Trigger identyfikacji poddostawcy jest automatycznym
+mechanizmem rozszerzania grafu ICT, aktywowanym gdy
+obiekt $v$ spełnia co najmniej jeden warunek
+ze zbioru $\mathcal{C}_{TIA}$. Po aktywacji trigger
+generuje obowiązek audytowy rozszerzenia grafu $G$
+o wierzchołki reprezentujące poddostawców obiektu $v$
+oraz przeprowadzenia pełnego audytu ORION
+dla każdego nowo odkrytego wierzchołka.
+\end{definition}
+
+Zbiór warunków aktywujących trigger:
+
+\begin{multline}
+\mathcal{C}_{TIA}(v) =
+\bigl(\textit{pochodzenie podmiotu}(v) \neq \texttt{EOG}\bigr)
+\;\vee\;
+\bigl(\textit{lokalizacja danych}(v) \neq \texttt{EOG}\bigr) \\
+\;\vee\;
+\bigl(\textit{wsparcie systemu}(v) \neq \texttt{EOG}\bigr) \\
+\label{eq:ctia}
+\end{multline}
+
+
+Gdy $\mathcal{C}_{TIA}(v) = \texttt{TRUE}$,
+do kwestionariusza obiektu $v$ dodawana jest sekcja \texttt{TIA}, zawierająca pytania dotyczące ryzyk przekazanie danych poza EOG.
+\\
+\generujKryteria{pytania.csv}{TIA}
+
+% Brak pozytywnej odpowiedzi na pytania TIA z dowodem jakości co najmniej $d = 0{,}8$ aktywuje flagę blokującą:
+
+% \begin{equation}
+% \text{FLAG}_{TIA}(v) =
+% \mathcal{C}_{TIA}(v)
+% \;\wedge\;
+% \Bigl(a_{TIA\text{-}01} = 0
+% \;\vee\; d_{TIA\text{-}01} < 0{,}8
+% \;\vee\; a_{TIA\text{-}02} = 0\Bigr)
+% \label{eq:flag-tia}
+% \end{equation}
+
+% Gdy $\text{FLAG}_{TIA}(v) = \texttt{TRUE}$,
+% obiekt jest klasyfikowany jako \texttt{NIEZGODNY}
+% niezależnie od wyników pozostałych pytań,
+% a graf ICT jest obowiązkowo rozszerzany
+% o poddostawców obiektu $v$.
+
+\subsection{Sekcja dostawcy ICT}
+\noindent Aktywacja: \textit{aktywacja warunkowa, gdy typ obiektu} = \texttt{SYSTEM\_INFORMATYCZNY}\\
+Pytania w tej sekcji służą do oceny zarządzania ryzykiem stron trzecich w odniesieniu do zewnętrznych dostawców ICT wspierających oceniany system lub funkcje krytyczne organizacji. Sprawdzane jest, czy przed zawarciem umowy przeprowadzono due diligence obejmujące weryfikację certyfikatów bezpieczeństwa, lokalizacji przetwarzania danych, listy sub-procesorów oraz wyników testów penetracyjnych środowiska dostawcy. Ocenie podlega kompletność wymogów umownych: czy kontrakt zawiera mierzalne wskaźniki SLA z sankcjami za ich niedotrzymanie, prawo do audytu onsite, obowiązek powiadomienia o istotnych zmianach (np. zmianie sub-procesora) z wyprzedzeniem co najmniej 30 dni, klauzulę exit umożliwiającą pełny eksport danych w otwartym formacie bez dodatkowych opłat oraz klauzulę regresu umożliwiającą dochodzenie zwrotu kar regulacyjnych nałożonych z winy dostawcy.
+\generujKryteria{pytania.csv}{DOSTAWCY}
+
+\subsection{Sekcja exit plan}
+\noindent Aktywacja: \textit{aktywacja warunkowa, gdy typ obiektu} = \texttt{SYSTEM\_INFORMATYCZNY} \textbf{ORAZ} \textit{klasyfikacja podmiotu} $\in \{\texttt{FINANSOWY}, \texttt{KLUCZOWY}\}$\\
+Pytania w tej sekcji służą do oceny gotowości organizacji do zakończenia współpracy z dostawcą ICT w sposób kontrolowany, bez utraty danych i bez zakłócenia ciągłości działania obsługiwanych funkcji krytycznych. Exit plan jest traktowany jako dokument żywy, zatwierdzony przez zarząd i aktualizowany przy każdej istotnej zmianie systemu lub dostawcy, zawierający konkretne kroki techniczne migracji, a nie jedynie deklaratywny opis intencji. Sprawdzane jest, czy możliwy jest pełny eksport danych w otwartym formacie niezależnym od narzędzi własnościowych dostawcy oraz czy eksport był faktycznie przetestowany poza środowiskiem dostawcy. Ocenie podlega empirycznie zmierzony czas pełnej migracji (RTE), zidentyfikowanie alternatywnego dostawcy zdolnego do przejęcia funkcji oraz posiadanie procedury weryfikacji bezpiecznego i certyfikowanego usunięcia wszystkich danych z infrastruktury dostawcy po zakończeniu współpracy.
+\generujKryteria{pytania.csv}{EXIT_PLAN}
+
+\subsection{Sekcja plan ciągłości działania (BCP)}
+\noindent Aktywacja: \textit{aktywacja warunkowa, gdy} $\textit{krytyczność}(v) \in \{\texttt{KRYTYCZNY}, \texttt{WAŻNY}\}$ \textbf{ORAZ} \textit{klasyfikacja podmiotu} $\in \{\texttt{FINANSOWY}, \texttt{KLUCZOWY}\}$\\
+Pytania w tej sekcji służą do oceny zdolności organizacji do utrzymania lub sprawnego odtworzenia funkcji krytycznych w przypadku poważnego incydentu ICT, awarii dostawcy lub katastrofy. Sprawdzane jest, czy organizacja posiada formalne, zatwierdzone przez zarząd plany BCP i DRP zawierające konkretne kroki techniczne i sekwencje przełączeń oraz czy każdy system krytyczny ma zdefiniowane i technicznie weryfikowalne wskaźniki RTO i RPO. Ocenie podlega zakres scenariuszy ujętych w planach: czy obejmują ransomware, utratę centrum danych, niedostępność dostawcy chmury i awarię kaskadową w łańcuchu dostaw, a dla każdego scenariusza zdefiniowano odrębną ścieżkę odtwarzania.
+\generujKryteria{pytania.csv}{PLAN_CIAGLOSCI_DZIALANIA}
+
+\subsection{Sekcja koncentracja ryzyka}
+\noindent Aktywacja: \textit{aktywacja warunkowa, gdy obiekt obsługuje} $\geq 3$ \textit{systemy podmiotu}\\
+Pytania w tej sekcji służą do oceny narażenia organizacji na ryzyko nadmiernego uzależnienia od ograniczonej liczby zewnętrznych dostawców ICT, grup powiązanych dostawców lub lokalizacji geograficznych, co może skutkować systemowym zakłóceniem funkcji krytycznych w przypadku pojedynczej awarii lub incydentu. Ryzyko koncentracji jest oceniane w czterech wymiarach: podmiotowym: uzależnienie od jednego dostawcy lub grupy kapitałowej; geograficznym: koncentracja przetwarzania w jednej lokalizacji lub jurysdykcji prawnej; technologicznym:  vendor lock-in wynikający z zastrzeżonych formatów danych lub interfejsów API uniemożliwiających migrację; oraz systemowym:  wspólna infrastruktura bazowa leżąca u podstaw pozornie niezależnych dostawców warstwy aplikacyjnej.
+\generujKryteria{pytania.csv}{KONCENTRACJA_RYZYKA}
+
+\begin{table}[H]
+\centering
+\caption{Podsumowanie pytań audytowych ORION i
+         warunki aktywacji}
+\label{tab:sekcje-aktywacja}
+\renewcommand{\arraystretch}{1.5}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{p{5cm}p{3cm}p{8cm}}
+\toprule
+\textbf{Sekcja} & \textbf{Typ} & \textbf{Warunek aktywacji $\Phi_k$} \\
+\midrule
+Organizacja & Warunkowa & \textit{typ obiektu} = \texttt{PODMIOT} \\
+\midrule
+Bezpieczeństwo techniczne & Warunkowa & \textit{typ obiektu} = \texttt{PODMIOT} \\
+\midrule
+Bezpieczeństwo fizyczne & Warunkowa & \textit{typ obiektu} = \texttt{PODMIOT} \\
+\midrule
+System informatyczny & Warunkowa & \textit{typ obiektu} = \texttt{SYSTEM\_INFORMATYCZNY} \\
+\midrule
+Usługi w chmurze & Warunkowa & $\textit{utrzymanie\_chmura}(v) \in \{\texttt{CHMURA\_K3}, \texttt{CHMURA\_EOG}\}$ \\
+\midrule
+Transfer Impact Assessment (TIA) & Warunkowa & $\textit{utrzymanie\_chmura}(v) = \texttt{CHMURA\_K3}$ \\
+\midrule
+Dane poufne: osobowe, wrażliwe oraz tajemnice przedsiębiorstwa & Warunkowa & $\textit{typ\_danych}(v) \in \{D_1, D_2, D_3\}$ \\
+\midrule
+Dostawcy ICT & Warunkowa & \textit{typ obiektu} = \texttt{SYSTEM\_INFORMATYCZNY} \\
+\midrule
+Plan ciągłości działania (BCP) & Warunkowa &
+  $\textit{krytyczność}(v) \in \{\texttt{KRYTYCZNY}, \texttt{WAŻNY}\}$
+  \textbf{ORAZ} klasyfikacja podmiotu
+  $\in \{\texttt{FINANSOWY}, \texttt{KLUCZOWY}\}$ \\
+\midrule
+Exit plan & Warunkowa &
+  \textit{typ obiektu} $= \texttt{SYSTEM\_INFORMATYCZNY}$
+  \textbf{ORAZ} klasyfikacja podmiotu
+  $\in \{\texttt{FINANSOWY}, \texttt{KLUCZOWY}\}$ \\
+\midrule
+Koncentracja ryzyka & Warunkowa &
+  Obiekt obsługuje $\geq 3$ systemy podmiotu \\
+\bottomrule
+\end{tabular}}
+
+\end{table}
+
+
+
+% ============================================================
+\section{Faza 4: Obliczenie scoringu
+          i propagacja ryzyka}
+\label{sec:faza4}
+% ============================================================
+
+Po zebraniu wszystkich odpowiedzi i dowodów
+dla wszystkich obiektów w grafie ICT system ORION
+oblicza wyniki scoringowe na trzech poziomach
+agregacji: pytania, obiektu i podmiotu.
+
+\subsection{Poziom 1: Wynik pytania}
+\label{sec:wynik-pytania}
+
+Wynik pojedynczego pytania $q_j$ jest wyznaczany
+jako ważona średnia efektywnych wartości odpowiedzi
+ze wszystkich perspektyw, które pytanie to otrzymały:
+
+\begin{equation}
+S(q_j) =
+\frac{\displaystyle\sum_{\pi_i \in \Pi_{q_j}}
+      V_{eff}(q_j, \pi_i) \cdot w_{\pi_i}}
+     {\displaystyle\sum_{\pi_i \in \Pi_{q_j}} w_{\pi_i}}
+\label{eq:wynik-pytania}
+\end{equation}
+
+\noindent gdzie $\Pi_{q_j}$ jest zbiorem perspektyw,
+którym zadano pytanie $q_j$, a $w_{\pi_i}$
+jest wagą perspektywy. W rdzeniu metodycznym
+wszystkie perspektywy mają równą wagę
+$w_{\pi_i} = 1$, co upraszcza wzór do
+ średniej arytmetycznej efektywnych
+wartości odpowiedzi. Wagi perspektyw mogą być
+różnicowane w rozszerzeniach domenowych,
+na przykład w module finansowym DORA perspektywa
+zgodności może otrzymać wyższą wagę w pytaniach
+dotyczących obowiązków sprawozdawczych.
+
+\subsection{Poziom 2: Wynik sekcji}
+\label{sec:wynik-sekcji}
+
+Wynik sekcji tematycznej $\mathcal{S}_k$ jest
+wyznaczany jako ważona średnia wyników wszystkich
+pytań należących do tej sekcji, z uwzględnieniem
+obligatoryjności pytania.
+
+Wynik sekcji $\mathcal{S}_k$ jest wyznaczany dwuetapowo.
+Najpierw sprawdzany jest warunek blokujący:
+jeśli $\text{FLAG}_{block}(\mathcal{S}_k) = \texttt{TRUE}$,
+wynik sekcji wynosi zero niezależnie od pozostałych odpowiedzi:
+
+\begin{equation}
+S(\mathcal{S}_k) = 0
+\qquad
+\text{jeśli } \text{FLAG}_{block}(\mathcal{S}_k) = \texttt{TRUE}
+\label{eq:wynik-sekcji-blok}
+\end{equation}
+
+\noindent W przeciwnym razie wynik sekcji jest wyznaczany
+jako ważona średnia wyników pytań:
+
+\begin{equation}
+S(\mathcal{S}_k) =
+\frac{%
+  \sum\limits_{q_j \in \mathcal{S}_k} S(q_j) \cdot \omega(q_j)%
+}{%
+  \sum\limits_{q_j \in \mathcal{S}_k} \omega(q_j)%
+}
+\label{eq:wynik-sekcji-avg}
+\end{equation}
+
+
+\noindent gdzie $\omega(q_j)$ jest wagą pytania
+wynikającą z jego obligatoryjności: 
+
+\begin{equation}
+\omega(q_j) =
+\begin{cases}
+2{,}0 & \text{jeśli pytanie jest obligatoryjne
+               (\textsc{OBOWIĄZKOWE})} \\
+1{,}0 & \text{jeśli pytanie jest zalecane
+               (\textsc{ZALECANE})} \\
+0{,}5 & \text{jeśli pytanie jest informacyjne
+               (\textsc{INFORMACYJNE})}
+\end{cases}
+\label{eq:omega}
+\end{equation}
+
+Pytania oznaczone jako \textsc{OBOWIĄZKOWE} wynikają
+bezpośrednio z przepisów prawa i mają podwojoną wagę
+względem pytań zalecanych. Ich wynik $S(q_j) = 0$, to znaczy brak zgodności bez żadnego dowodu,
+jest dodatkowo oznaczany flagą audytową niezależnie
+od agregacji sekcji.
+
+
+\subsection{Poziom 3: Wynik obiektu}
+\label{sec:wynik-obiektu}
+
+
+Wynik obiektu $v$ jest wyznaczany jako
+\textit{średnia arytmetyczna} wyników wszystkich
+aktywnych sekcji. Wszystkie sekcje pytań audytowych
+są traktowane jako równoważne pod względem znaczenia
+regulacyjnego ($\rho_k = 1{,}0$ dla każdej sekcji
+$\mathcal{S}_k$):
+
+\begin{equation}
+S_{total}(v) =
+\frac{1}{|\mathcal{S}(v)|}
+\sum_{\mathcal{S}_k \in \mathcal{S}(v)}
+S(\mathcal{S}_k)
+\label{eq:wynik-obiektu}
+\end{equation}
+
+Flaga blokująca przy pytaniu z odpowiedzią
+\texttt{NIE} ustawia wartość sekcji na zero,
+co bezpośrednio obniża $S_{total}(v)$
+niezależnie od wyników pozostałych sekcji:
+
+\begin{equation}
+\text{FLAG}_{block}(\mathcal{S}_k) = \texttt{TRUE}
+\iff
+\exists\, q_j \in \mathcal{S}_k :
+\kappa(q_j) = \texttt{BLOKUJĄCE}
+\;\wedge\;
+a_j = 0
+\label{eq:flag-block-sekcja}
+\end{equation}
+
+\noindent Wynik $S_{total}(v) \in [0, 1]$ jest
+interpretowany na pięciostopniowej skali zgodności:
+
+\begin{table}[H]
+\centering
+\caption{Skala interpretacji wyniku obiektu}
+\label{tab:skala-wyniku}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{3cm}p{3cm}p{7cm}}
+\toprule
+\textbf{Wynik $S_{total}$} & \textbf{Klasyfikacja}
+& \textbf{Interpretacja} \\
+\midrule
+$[0{,}85;\ 1{,}0]$   & \textsc{ZGODNY}
+& Wysoki poziom zgodności; dowody kompletne;
+  brak istotnych niezgodności \\
+\midrule
+$[0{,}70;\ 0{,}85)$  & \textsc{CZĘŚCIOWO ZGODNY}
+& Większość wymogów spełniona; luki w dokumentacji
+  lub pojedyncze niezgodności drugorzędne \\
+\midrule
+$[0{,}50;\ 0{,}70)$  & \textsc{WYMAGA POPRAWY}
+& Znaczące luki; wymogi obowiązkowe niespełnione
+  lub spełnione bez wystarczających dowodów \\
+\midrule
+$[0{,}25;\ 0{,}50)$  & \textsc{NIEZGODNY}
+& Poważne naruszenia; wysokie ryzyko sankcji;
+  pilne działania naprawcze \\
+\midrule
+$[0;\ 0{,}25)$        & \textsc{KRYTYCZNIE NIEZGODNY}
+& Brak podstawowych mechanizmów zgodności;
+  ryzyko natychmiastowych sankcji regulatora \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textit{Uwaga:} Aktywacja $\text{FLAG}_{block}^{obj}(v)$
+lub $\text{FLAG}_{TIA}(v)$ nadpisuje klasyfikację
+do \textsc{NIEZGODNY} niezależnie od wartości $S_{total}$.
+Aktywacja flagi \textsc{BLOKUJĄCY} z pytania obligatoryjnego
+nadpisuje klasyfikację do \textsc{KRYTYCZNIE NIEZGODNY}.
+
+\noindent Niezależnie od wartości $S_{total}(v)$,
+aktywacja flagi $\text{FLAG}_{TIA}(v) = \texttt{TRUE}$
+nadpisuje klasyfikację do \textsc{NIEZGODNY},
+a aktywacja flagi \textsc{BLOKUJĄCY} z pytania
+obligatoryjnego nadpisuje klasyfikację do
+\textsc{KRYTYCZNIE NIEZGODNY}.
+Żadna agregacja arytmetyczna nie może ukryć
+fundamentalnej niezgodności z przepisem prawa
+o charakterze bezwzględnie obowiązującym.
+
+
+
+\subsection{Poziom 4: Wynik podmiotu
+            z propagacją ryzyka}
+\label{sec:wynik-podmiotu}
+
+Wynik podmiotu-korzenia $v_0$ jest wyznaczany
+jako ważona średnia wyników wszystkich obiektów
+w grafie ICT, z uwzględnieniem łącznej wagi obiektu
+$w_{total}(v)$ oraz współczynnika deprecjacji
+głębokości $\lambda$:
+
+\begin{equation}
+S_{podmiot} =
+\frac{\displaystyle\sum_{v \in V \setminus \{v_0\}}
+      S_{total}(v)
+      \cdot w_{total}(v)
+      \cdot \lambda^{\,depth(v)}}
+     {\displaystyle\sum_{v \in V \setminus \{v_0\}}
+      w_{total}(v)
+      \cdot \lambda^{\,depth(v)}}
+\label{eq:Spodmiot_rozszerzone}
+\end{equation}
+
+\noindent gdzie:
+\begin{itemize}
+  \item $w_{total}(v) = w_{krit}(v) \cdot w_{data}(v)$
+  jest łączną wagą obiektu wynikającą z jego
+  krytyczności i klasyfikacji przetwarzanych danych
+  zgodnie z tabelą~\ref{tab:krytycznosc},
+  \item $depth(v)$ jest głębokością wierzchołka $v$
+  w grafie ICT, czyli odległością od korzenia $v_0$
+  mierzoną liczbą krawędzi,
+  \item $\lambda \in (0, 1]$ jest konfigurowalnym
+  współczynnikiem deprecjacji głębokości
+  (wartość domyślna: $\lambda = 0{,}8$),
+  określającym, jak mocno niezgodności głębszych
+  warstw łańcucha dostaw wpływają na wynik podmiotu.
+\end{itemize}
+
+Interpretacja współczynnika $\lambda$ jest następująca:
+przy $\lambda = 1{,}0$ niezgodności poddostawcy
+trzeciego poziomu wpływają na wynik podmiotu
+z taką samą siłą jak niezgodności systemu własnego;
+przy $\lambda = 0{,}8$ każdy kolejny poziom głębokości
+zmniejsza wpływ o 20\%. Wartość $\lambda$ może być
+konfigurowana przez audytora w zależności od
+oceny faktycznej ekspozycji podmiotu na ryzyko
+łańcucha dostaw.
+
+\subsection{Identyfikacja dostawców kluczowych}
+\label{sec:dostawcy-kluczowi}
+
+Dostawca kluczowy (\textit{critical ICT third-party service provider}) to dostawca, którego niezgodność lub niedostępność stanowi zagrożenie dla stabilności podmiotu lub całego systemu. ORION identyfikuje dostawców kluczowych formalnie na podstawie warunku alternatywnego wystarczy spełnienie \textbf{co najmniej jednego} z poniższych kryteriów:
+
+\begin{definition}[Dostawca kluczowy]
+Dostawca $v$ jest uznawany za \textbf{kluczowego}
+(\textsc{KeyVendor}), jeżeli spełnia co najmniej
+jeden z następujących warunków:
+\begin{enumerate}
+  \item obsługuje co najmniej jeden system
+        o klasyfikacji \textbf{KRYTYCZNY}:
+        \[
+          \exists\, u \in V :
+          (v, u) \in E_{svc}
+          \;\wedge\;
+          \textit{krytyczność}(u) = \texttt{KRYTYCZNY}
+        \]
+  \item obsługuje co najmniej $n_{KV}^{*} = 3$
+        systemy podmiotu (niezależnie od ich
+        klasyfikacji krytyczności):
+        \[
+          \bigl|\{u \in V : (v,u) \in E_{svc}\}\bigr|
+          \geq n_{KV}^{*}
+        \]
+\end{enumerate}
+Formalnie:
+
+\begin{multline}
+\textsc{KeyVendor}(v) = \texttt{TRUE}
+\iff
+\Bigl(
+  \exists\, u \in V :
+  (v,u) \in E_{svc}
+  \wedge
+  \textit{krytyczność}(u) = \texttt{KRYTYCZNY}
+\Bigr)
+\\
+\;\vee\;
+\Bigl(
+  |\{u \in V : (v,u) \in E_{svc}\}|
+  \geq n_{KV}^{*}
+\Bigr)
+\label{eq:keyvendor}
+\end{multline}
+
+\noindent gdzie $E_{svc}$ jest zbiorem krawędzi
+usługowych w grafie ICT, a $n_{KV}^{*} = 3$
+jest minimalną liczbą systemów obsługiwanych
+przez dostawcę (wartość domyślna, konfigurowalna
+przez audytora).
+\end{definition}
+
+Innymi słowy: dostawca jest kluczowy, jeśli
+obsługuje choćby jeden system krytyczny 
+\textbf{niezależnie od liczby obsługiwanych systemów} lub jeśli obsługuje co najmniej trzy systemy podmiotu, niezależnie od ich poziomu krytyczności.
+Spełnienie wyłącznie jednego warunku \textbf{jest wystarczające}.
+
+Sekcja \texttt{KONCENTRACJA\_RYZYKA} jest aktywowana
+\textbf{wyłącznie} wtedy, gdy dostawca obsługuje
+co najmniej $n_{KV}^{*} = 3$ systemy podmiotu
+(warunek~2 z definicji powyżej), niezależnie
+od tego, czy stał się dostawcą kluczowym
+na podstawie warunku~1 czy~2:
+
+\begin{equation}
+\Phi_{\texttt{KONCENTRACJA\_RYZYKA}}(v) = \texttt{TRUE}
+\iff
+\bigl|\{u \in V : (v,u) \in E_{svc}\}\bigr|
+\geq n_{KV}^{*}
+\label{eq:koncentracja-aktywacja}
+\end{equation}
+
+\noindent Uzasadnienie tego rozróżnienia jest
+następujące: ryzyko koncentracji w rozumieniu
+DORA Art.~29 materializuje się przez uzależnienie
+od jednego dostawcy obsługującego wiele systemów
+jednocześnie. Dostawca obsługujący jeden system
+krytyczny jest kluczowy z uwagi na wagę tego systemu,
+lecz nie generuje ryzyka koncentracji w sensie
+regulacyjnym,  stąd sekcja \texttt{KONCENTRACJA\_RYZYKA} nie jest dla niego aktywowana.
+
+Wynik sekcji \texttt{KONCENTRACJA\_RYZYKA} wchodzi do agregacji wyniku obiektu zgodnie
+z równaniem~\eqref{eq:wynik-obiektu}.
+Karty dostawców kluczowych są bezpośrednio adresowane do zarządu i rady nadzorczej,
+gdyż to na tych organach spoczywa odpowiedzialność za nadzór nad kluczowymi zależnościami ICT
+w rozumieniu DORA Art.~5 i KSC Art.~8.
+% ============================================================
+\section{Faza 5: Raport końcowy i rekomendacje}
+\label{sec:faza5}
+% ============================================================
+
+Wynikiem audytu ORION jest ustrukturyzowany raport
+zawierający cztery elementy: macierz zgodności,
+graf ICT z oznaczeniami, listę priorytetyzowanych
+rekomendacji oraz kartę dostawców kluczowych.
+
+\subsection{Macierz zgodności}
+\label{sec:macierz-zgodnosci}
+
+Macierz zgodności przedstawia wyniki $S_{total}(v)$
+dla wszystkich obiektów w grafie ICT, pogrupowane
+według sekcji tematycznych. Umożliwia to audytorowi
+i zarządowi szybką identyfikację obszarów,
+w których poziom zgodności jest najniższy, niezależnie od tego, których konkretnych
+systemów lub dostawców te obszary dotyczą.
+
+\begin{table}[H]
+\centering
+\caption{Przykładowy fragment macierzy zgodności
+         (ilustracja struktury)}
+\label{tab:macierz-zgodnosci}
+\renewcommand{\arraystretch}{1.4}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{p{4cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}}
+\toprule
+\textbf{Sekcja / Obiekt}
+& \textbf{System ERP} & \textbf{CRM SaaS}
+& \textbf{Dostawca cloud} & \textbf{Poddos-tawca CDN}
+& \textbf{Średnia} \\
+\midrule
+\texttt{ORGANIZACJA}
+& $0{,}91$ & $0{,}85$ & $0{,}78$ & $0{,}62$ & $0{,}79$ \\
+\midrule
+\texttt{BEZPIECZENSTWO\_TECHNICZNE}
+& $0{,}88$ & $0{,}72$ & $0{,}65$ & $0{,}41$ & $0{,}67$ \\
+\midrule
+\texttt{TIA}
+& --- & $0{,}40$ & $0{,}38$ & $0{,}20$ & $0{,}33$ \\
+\midrule
+\texttt{PODDOSTAWCY\_TIA}
+& --- & $0{,}10$ & $0{,}15$ & $0{,}10$ & $0{,}12$ \\
+\midrule
+\texttt{CIĄGŁOŚĆ\_DZIAŁANIA}
+& $0{,}80$ & $0{,}75$ & $0{,}50$ & --- & $0{,}68$ \\
+\midrule
+\texttt{EXIT\_PLAN}
+& --- & $0{,}30$ & $0{,}25$ & --- & $0{,}28$ \\
+\hline
+\midrule
+\textbf{Wynik obiektu $S_{total}$}
+& $0{,}86$ & $0{,}55$ & $0{,}48$ & $0{,}31$ & \\
+\midrule
+\textbf{Klasyfikacja}
+& \textsc{zgodny}
+& \textsc{wymaga poprawy}
+& \textsc{niezgodny}
+& \textsc{niezgodny} & \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\noindent Wiersze sekcji \texttt{TIA}
+i \texttt{EXIT\_PLAN} w powyższej tabeli ilustrują
+kluczową obserwację metodyczną: najniższe wyniki
+skupiają się konsekwentnie w sekcjach dotyczących
+łańcucha dostaw i transferu danych, a nie
+w obszarach bezpieczeństwa technicznego, które
+są tradycyjnie najlepiej monitorowane.
+Jest to bezpośrednie potwierdzenie luki badawczej
+zidentyfikowanej w sekcji~\ref{sec:luka}.
+
+\subsection{Graf ICT z oznaczeniami}
+\label{sec:graf-ict}
+
+
+Graf ICT generowany jako element raportu końcowego jest wizualną reprezentacją skierowanego grafu ważonego $G = (V, E, W)$ zbudowanego w toku przeprowadzenia audytu. Wierzchołki $V$ reprezentują obiekty audytowe, tj.: systemy informatyczne typu \texttt{SYSTEM\_INFORMATYCZNY} oraz dostawców ICT,  a krawędzie skierowane $E \subseteq V \times V$ wskazują kierunek zależności usługowej: od systemu do podmiotu zewnętrznego, który go obsługuje. Wagi $W$ krawędzi odzwierciedlają poziom krytyczności obsługiwanego systemu zgodnie z klasyfikacją przyjętą w Sekcji~\ref{sec:krok23}.
+
+Graf spełnia podwójną funkcję audytową. Po pierwsze, jest \emph{narzędziem komunikacji wyników do zarządu}, pozwala w kilka sekund zidentyfikować, na którym poziomie łańcucha dostaw ICT koncentruje się ryzyko regulacyjne. Po drugie, jest \emph{dowodem audytowym} dokumentującym kompletność przeprowadzonej analizy i wszystkie odkryte ogniwa łańcucha, włącznie z poddostawcami ujawnionymi przez mechanizm triggera TIA opisany w Sekcji~\ref{sec:trigger-tia}.
+
+\subsubsection{Notacja wierzchołków}
+\label{sec:notacja-wierzcholkow}
+
+Każdy wierzchołek grafu jest identyfikowany przez \emph{kod literowy z indeksem głębokości} $\mathrm{depth}(v)$, rozumianej jako odległość od korzenia $v_0$ mierzona liczbą krawędzi. Przyjęta konwencja nazewnicza jest następująca:
+
+\begin{itemize}
+    \item $v_0$: podmiot-korzeń, czyli audytowana organizacja (głębokość~0);
+    \item $v_1, v_2, \ldots, v_n$: systemy informatyczne własne podmiotu, zidentyfikowane w Kroku~2.1 (głębokość~1);
+    \item $d_1, d_2, \ldots, d_m$: bezpośredni dostawcy ICT, zidentyfikowani w Kroku~2.2 (głębokość~2);
+    \item $p_1, p_2, \ldots, p_k$: poddostawcy odkryci przez trigger TIA w toku Fazy~3 (głębokość~3 i wyżej).
+\end{itemize}
+
+W przypadku rozległych grafów dopuszcza się stosowanie notacji złożonej, np.\ $d_{1.1}, d_{1.2}$ dla kolejnych dostawców powiązanych z systemem $v_1$, co ułatwia czytelność przy dużej liczbie obiektów.
+
+\subsubsection{Oznaczenia klasyfikacji zgodności}
+\label{sec:oznaczenia-zgodnosci}
+
+Biorąc pod uwagę ograniczenia techniczne związane z technologią druku i ograniczonej dostępności druku kolorowego,  raport audytowy może być drukowany w wersji czarno-białej, klasyfikacja zgodności obiektu jest kodowana \emph{symbolem wewnątrz wierzchołka}, a nie wyłącznie kolorem. Tabela~\ref{tab:oznaczenia-grafu} przedstawia kompletny słownik oznaczeń.
+
+\begin{table}[ht]
+\renewcommand{\arraystretch}{1.4}
+\caption{Słownik oznaczeń wierzchołków w grafie ICT}
+\label{tab:oznaczenia-grafu}
+\begin{tabular}{p{2cm} p{4cm} p{4.5cm} p{3cm}}
+\hline
+\textbf{Symbol} & \textbf{Klasyfikacja} & \textbf{Warunek} & \textbf{Priorytet naprawczy} \\
+\hline
+$[\checkmark]$ & ZGODNY & $S_{total} \geq 0{,}85$ & brak \\
+$[\sim]$ & CZĘŚCIOWO ZGODNY & $0{,}70 \leq S_{total} < 0{,}85$ & P3 \\
+$[!]$   & WYMAGA POPRAWY   & $0{,}50 \leq S_{total} < 0{,}70$ & P2 \\
+$[\times]$ & NIEZGODNY & $0{,}25 \leq S_{total} < 0{,}50$ & P1--P2 \\
+$[\times\!]$ & KRYTYCZNIE NIEZGODNY & $S_{total} < 0{,}25$ & P0 \\
+$[\times!!]$ & Aktywna flaga \texttt{FLAG\_TIA} \newline lub \texttt{BLOKUJĄCY} & niezależnie od $S_{total}$ -- nadpisuje klasyfikację & P0--P1 \\
+\hline
+\end{tabular}
+\end{table}
+
+Aktywacja flagi \texttt{FLAG\_TIA} lub flagi \texttt{BLOKUJĄCY} z pytania obligatoryjnego nadpisuje klasyfikację obiektu niezależnie od wartości $S_{total}$, co jest sygnalizowane przez dodanie symbolu~\texttt{!!} do oznaczenia wierzchołka. Żadna agregacja arytmetyczna nie może ukryć fundamentalnej niezgodności z przepisem prawa o charakterze bezwzględnie obowiązującym.
+
+\subsubsection{Oznaczenia krawędzi}
+\label{sec:oznaczenia-krawedzi}
+
+Krawędzie grafu ICT różnicowane są typem linii oraz opcjonalną etykietą:
+
+\begin{itemize}
+    \item \textbf{Linia ciągła} ($\rightarrow$) -- standardowa zależność usługowa; system korzysta z usług dostawcy na podstawie umowy;
+    \item \textbf{Linia przerywana} ($\dashrightarrow$) -- krawędź odkryta przez trigger TIA; oznacza poddostawcę niewidocznego na etapie Fazy~2, ujawnionego dopiero w toku analizy kwestionariusza szczegółowego;
+    \item \textbf{Etykieta \texttt{[KV]}} na krawędzi, dostawca kluczowy (\textit{KeyVendor}), spełniający co najmniej jeden warunek z definicji~\ref{def:dostawca-kluczowy}: obsługuje co najmniej jeden system KRYTYCZNY lub obsługuje co najmniej $n_{KV} = 3$ systemy podmiotu.
+\end{itemize}
+
+\subsubsection{Przykładowy graf ICT}
+\label{sec:przykladowy-graf}
+
+Poniższy przykład ilustruje strukturę grafu ICT dla przykładowego podmiotu. Podmiot $v_0$ eksploatuje trzy systemy informatyczne:
+
+\begin{itemize}
+    \item $v_1$ - system ERP, klasyfikacja KRYTYCZNY, wdrożony on-premise, wynik $S_{total} = 0{,}91$ ($[\checkmark]$~ZGODNY);
+    \item $v_2$ - system CRM, klasyfikacja WAŻNY, chmura EOG, wynik $S_{total} = 0{,}78$ ($[\sim]$~CZĘŚCIOWO ZGODNY);
+    \item $v_3$ - portal kliencki SaaS, klasyfikacja STANDARDOWY, chmura kraju trzeciego (USA), wynik $S_{total} = 0{,}48$ ($[\times]$~NIEZGODNY).
+\end{itemize}
+
+Systemy $v_1$ i $v_2$ obsługiwane są przez dostawcę $d_1$ (firma cloudowa z EOG, $S_{total} = 0{,}72$, $[\sim]$~CZĘŚCIOWO ZGODNY). System $v_3$ obsługiwany jest przez dostawcę $d_2$ (firma z USA, $S_{total} = 0{,}31$, $[\times!!]$~- \texttt{FLAG\_TIA} aktywna). Dostawca $d_1$ obsługuje dwa systemy podmiotu ($n < n_{KV}$), zatem nie spełnia progu dostawcy kluczowego. Trigger TIA aktywowany dla $d_2$ rozszerza graf o poddostawcę $p_1$ -- sieć CDN zlokalizowaną w USA ($S_{total} = 0{,}20$, $[\times!]$~KRYTYCZNIE NIEZGODNY), obsługiwaną przez dostawcę $p_2$ (podmiot zarejestrowany poza EOG, $S_{total}$ nieustalony na etapie Fazy~2).
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[
+    podmiot/.style={rectangle, rounded corners=6pt,
+      draw=black, thick, fill=gray!25,
+      minimum width=3.2cm, minimum height=0.9cm,
+      align=center, font=\small\bfseries},
+    sys/.style={rectangle, rounded corners=3pt,
+      draw=black, thick,
+      minimum width=3.6cm, minimum height=1.2cm,
+      align=center, font=\scriptsize},
+    vendor/.style={ellipse, draw=black, thick,
+      minimum width=3.6cm, minimum height=1.2cm,
+      align=center, font=\scriptsize},
+    cfok/.style={fill=white},
+    cfwarn/.style={fill=white, pattern=north east lines, pattern color=gray!50},
+    cfwarn2/.style={fill=white, pattern=north west lines, pattern color=gray!50},
+    cfniezg/.style={fill=white, pattern=crosshatch, pattern color=gray!60},
+    cfcrit/.style={fill=white, pattern=crosshatch dots, pattern color=gray},
+    cfunk/.style={fill=white, pattern=vertical lines, pattern color=gray!40},
+    flagtia/.style={double, double distance=2pt, ultra thick},
+    dep/.style={-{Stealth}, thick},
+    tiadep/.style={-{Stealth}, thick, dashed},
+    lbl/.style={font=\tiny, inner sep=1pt}
+  ]
+  % depth 0: PODMIOT
+  \node[podmiot] (v0) at (0,0)
+    {$v_0$\\[2pt]Podmiot audytowany};
+  % depth 1: SYSTEM\_INFORMATYCZNY
+  \node[sys, cfok] (v1) at (-4.5,-3)
+    {$v_1$ \textbf{ERP}\\KRYTYCZNY, on-premise\\$S\!=\!0{,}91$~$[\checkmark]$};
+  \node[sys, cfwarn] (v2) at (0,-3)
+    {$v_2$ \textbf{CRM}\\WAŻNY, \texttt{CHMURA\_EOG}\\$S\!=\!0{,}78$~$[\sim]$};
+  \node[sys, cfniezg] (v3) at (4.5,-3)
+    {$v_3$ \textbf{Portal SaaS}\\STD., \texttt{CHMURA\_K3}\\$S\!=\!0{,}48$~$[\times]$};
+  % depth 2: DOSTAWCY
+  \node[vendor, cfwarn] (d1) at (-2.2,-6.5)
+    {$d_1$ Dostawca EOG\\$S\!=\!0{,}72$~$[\sim]$};
+  \node[vendor, cfniezg, flagtia] (d2) at (4.5,-6.5)
+    {$d_2$ Firma z USA\\\texttt{FLAG\_TIA}\\$S\!=\!0{,}31$~$[\times!!]$};
+  % depth 3: poddostawca TIA
+  \node[vendor, cfcrit] (p1) at (4.5,-10)
+    {$p_1$ Sieć CDN (USA)\\KR.~NIEZGODNY\\$S\!=\!0{,}20$~$[\times!]$};
+  % depth 4: poddostawca TIA
+  \node[vendor, cfunk] (p2) at (4.5,-13)
+    {$p_2$ Podmiot poza EOG\\$S$ nieustalony};
+  % krawędzie: v0 -> systemy
+  \draw[dep] (v0) -- (v1);
+  \draw[dep] (v0) -- (v2);
+  \draw[dep] (v0) -- (v3);
+  % krawędzie: systemy -> dostawcy (waga = krytyczność systemu)
+  \draw[dep] (v1) -- node[lbl, left] {$w\!=\!3$} (d1);
+  \draw[dep] (v2) -- node[lbl, right] {$w\!=\!2$} (d1);
+  \draw[dep] (v3) -- node[lbl, right] {$w\!=\!1$} (d2);
+  % krawędzie TIA (odkryte przez trigger)
+  \draw[tiadep] (d2) -- node[lbl, right, text=red!70!black] {\textsc{tia}} (p1);
+  \draw[tiadep] (p1) -- node[lbl, right, text=red!70!black] {\textsc{tia}} (p2);
+  % etykiety głębokości
+  \foreach \y/\d in {0/0, -3/1, -6.5/2, -10/3, -13/4}
+    \node[font=\tiny, text=gray!80, anchor=west] at (7.5,\y) {głęb.~\d};
+  \end{tikzpicture}
+
+  \medskip\noindent
+  \begin{scriptsize}
+  \begin{tabular}{@{}cl@{\hspace{14pt}}cl@{}}
+    \tikz[baseline=-0.5ex]\draw[fill=white, draw=black, thick]
+      (0,0) rectangle (0.4,0.25); &
+    ZGODNY ($S\!\geq\!0{,}85$) &
+    \tikz[baseline=-0.5ex]\draw[fill=white, pattern=crosshatch,
+      pattern color=black!60, draw=black, thick]
+      (0,0) rectangle (0.4,0.25); &
+    NIEZGODNY ($0{,}25\!\leq\!S\!<\!0{,}50$) \\[2pt]
+    \tikz[baseline=-0.5ex]\draw[fill=white, pattern=north east lines,
+      pattern color=black!50, draw=black, thick]
+      (0,0) rectangle (0.4,0.25); &
+    CZĘŚCIOWO ZGODNY ($0{,}70\!\leq\!S\!<\!0{,}85$) &
+    \tikz[baseline=-0.5ex]\draw[fill=white, pattern=crosshatch dots,
+      pattern color=black, draw=black, thick]
+      (0,0) rectangle (0.4,0.25); &
+    KRYTYCZNIE NIEZGODNY ($S\!<\!0{,}25$) \\[2pt]
+    \tikz[baseline=-0.5ex]\draw[fill=white, pattern=north west lines,
+      pattern color=black!50, draw=black, thick]
+      (0,0) rectangle (0.4,0.25); &
+    WYMAGA POPRAWY ($0{,}50\!\leq\!S\!<\!0{,}70$) &
+    \tikz[baseline=-0.5ex]\draw[double, double distance=2pt, ultra thick]
+      (0,0.12) ellipse (0.35 and 0.18); &
+    \texttt{FLAG\_TIA} aktywna (podwójna obwódka) \\[2pt]
+    \tikz[baseline=-0.5ex]\draw[-{Stealth}, dashed, thick]
+      (0,0) -- (0.7,0); &
+    krawędź odkryta przez TIA &
+    \multicolumn{2}{l}{} \\
+  \end{tabular}
+  \end{scriptsize}
+
+  \caption{Przykładowy graf ICT podmiotu z oznaczeniami klasyfikacji zgodności.
+    Prostokąty oznaczają systemy informatyczne (\texttt{SYSTEM\_INFORMATYCZNY}), elipsy oznaczają dostawców ICT.
+    Podwójna obwódka sygnalizuje aktywną flagę \texttt{FLAG\_TIA} lub kryterium blokujące.
+    Linia przerywana oznacza krawędź odkrytą przez trigger TIA. Wagi krawędzi odzwierciedlają
+    poziom krytyczności obsługiwanego systemu ($w\!=\!3$: KRYTYCZNY, $w\!=\!2$: WAŻNY,
+    $w\!=\!1$: STANDARDOWY).}
+  \label{fig:przykladowy-graf-ict}
+\end{figure}
+
+
+
+
+Wynik podmiotu $S_{podmiot}$ obliczany jest zgodnie z równaniem~\eqref{eq:Spodmiot_rozszerzone}, przy czym wierzchołki odkryte przez trigger TIA (głębokość~3) są objęte współczynnikiem deprecjacji głębokości $\lambda^{\mathrm{depth}(v)} = 0{,}8^3 = 0{,}512$, co oznacza, że niezgodność poddostawcy CDN~($p_1$) wpływa na wynik podmiotu z siłą ok.~51\% siły niezgodności systemu własnego.
+
+\subsubsection{Interpretacja grafu przez zarząd}
+\label{sec:interpretacja-grafu}
+
+Graf ICT jest jedynym elementem raportu przeznaczonym do odczytania bez uprzedniego zapoznania się z treścią kwestionariuszy. Zarząd i rada nadzorcza powinni być w stanie, wyłącznie na podstawie grafu, odpowiedzieć na trzy pytania operacyjne:
+
+\begin{enumerate}
+    \item \textbf{Gdzie skupia się ryzyko?} Wierzchołki oznaczone $[\times]$, $[\times!]$ lub $[\times!!]$ wymagają natychmiastowej uwagi, niezależnie od ich głębokości w grafie.
+    \item \textbf{Który dostawca jest kluczowy?} Krawędzie z etykietą \texttt{[KV]} wskazują podmioty, których awaria lub niezgodność zagraża stabilności całej organizacji.
+    \item \textbf{Jak głęboko sięga łańcuch?} Liczba poziomów grafu ujawnia, czy organizacja jest świadoma pełnej ekspozycji na ryzyko poddostawców, co jest wymogiem art.~28 DORA i art.~6 ust.~2 dyrektywy NIS2.
+\end{enumerate}
+
+Brak wierzchołków na poziomie głębokości~3 i wyżej \emph{nie} oznacza braku poddostawców, oznacza brak przeprowadzenia analizy TIA. Audytor jest zobowiązany do odnotowania w raporcie, czy głębokość grafu wynika z faktycznego braku poddostawców podlegających triggerowi, czy też z niewykonania należytej staranności przez audytowany podmiot lub jego dostawców.
+
+\subsection{Lista rekomendacji z priorytetami}
+\label{sec:rekomendacje}
+
+Każda niezgodność zidentyfikowana w toku audytu
+generuje rekomendację przypisaną do jednego
+z czterech poziomów priorytetu:
+
+\begin{table}[H]
+\centering
+\caption{Priorytety rekomendacji naprawczych w ORION}
+\label{tab:priorytety}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{p{2.5cm}p{3cm}p{3.5cm}p{4cm}}
+\toprule
+\textbf{Priorytet} & \textbf{Definicja}
+& \textbf{Termin działania}
+& \textbf{Warunek nadania} \\
+\midrule
+\textbf{P0} \newline \textsc{Krytyczny}
+& Naruszenie przepisu bezwzględnie obowiązującego
+  grożące natychmiastową sankcją regulatora
+& Natychmiast\newline(max.\ 72~h)
+& Flaga \textsc{BLOKUJĄCY}
+  lub $S_{total}(v) < 0{,}25$ \\
+\midrule
+\textbf{P1} \newline \textsc{Wysoki}
+& Istotna niezgodność z przepisami prawa
+  lub brak TIA przy przetwarzaniu danych osobowych
+& 30~dni
+& $\text{FLAG}_{TIA} = \texttt{TRUE}$
+  lub pytanie obligatoryjne
+  z $S(q_j) < 0{,}3$ \\
+\midrule
+\textbf{P2} \newline \textsc{Średni}
+& Niezgodność z zaleceniami regulacyjnymi
+  lub luki w dokumentacji
+& 90~dni
+& $S_{total}(v) \in [0{,}25;\ 0{,}50)$
+  lub pytanie zalecane z $d < 0{,}5$ \\
+\midrule
+\textbf{P3} \newline \textsc{Niski}
+& Obszar do usprawnienia;
+  brak aktualnej dokumentacji lub dowodów słabych
+& 180~dni
+& $S_{total}(v) \in [0{,}50;\ 0{,}70)$
+  lub odpowiedź z $d = 0{,}5$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent Każda rekomendacja zawiera: identyfikator
+niezgodności, numer pytania audytowego i sekcji,
+obiekt którego dotyczy, perspektywę która ujawniła
+niezgodność, treść niezgodności sformułowaną
+w języku zrozumiałym dla zarządu,
+podstawę regulacyjną z numerem artykułu,
+sugerowane działanie naprawcze oraz termin
+wynikający z priorytetu.
+
+\subsection{Karta dostawców kluczowych}
+\label{sec:karta-dostawcow}
+
+Raport końcowy zawiera oddzielną kartę dla każdego
+dostawcy spełniającego warunek~\eqref{eq:keyvendor}.
+Karta zawiera: wynik $S_{total}$ dostawcy,
+listę systemów podmiotu przez niego obsługiwanych,
+status TIA i exit planu, klasyfikację zgodności
+ze wskazaniem priorytetów naprawczych oraz
+rekomendację dotyczącą zarządzania ryzykiem
+koncentracji. Karty dostawców kluczowych
+są bezpośrednio adresowane do zarządu i rady
+nadzorczej, gdyż to na tych organach spoczywa
+odpowiedzialność za nadzór nad kluczowymi
+zależnościami ICT w rozumieniu DORA Art.~5
+i KSC Art.~8.
+
+
+% \section{Pytania audytowe}
+
+
+% Wywołanie
+
+% Pytania zostały podzielone na sekcje zgodnie z klasyfikacją przyjętą w rodziale \ref{perspektywa-pytań} \textit{Perspektywa}. Każda pozycja odnosi się do konkretnego obszaru zagadnień, zawiera podstawę prawną, definicję istotności oraz oznaczenie (flagę binarną) pytania blokującego.
+
+
+% \subsection{Sekcja organizacja}
+% \generujKryteria{pytania.csv}{ORGANIZACJA}
+
+% \subsection{Sekcja dane poufne: wrażliwe oraz osobowe}
+% \generujKryteria{pytania.csv}{DANE_WRAZLIWE}
+
+% \subsection{Sekcja utrzymanie w chmurze}
+% \generujKryteria{pytania.csv}{CHMURA}
+
+% \subsection{Sekcja bezpieczeństwo techniczne}
+% \generujKryteria{pytania.csv}{BEZPIECZENSTWO_TECH}
+
+% \subsection{Sekcja bezpieczeństwo fizyczne}
+% \generujKryteria{pytania.csv}{BEZPIECZENSTWO_FIZYCZNE}
+
+% \subsection{Sekcja system informatyczny}
+% \generujKryteria{pytania.csv}{APLIKACJA}
+
+% \subsection{Sekcja Transfer Impact Assessment (TIA)}
+% \generujKryteria{pytania.csv}{TIA}
+
+% \subsection{Sekcja dostawcy ICT}
+% \generujKryteria{pytania.csv}{DOSTAWCY}
+
+% \subsection{Sekcja exit plan}
+% \generujKryteria{pytania.csv}{EXIT_PLAN}
+
+% \subsection{Sekcja plan ciągłości działania (BCP)}
+% \generujKryteria{pytania.csv}{PLAN_CIAGLOSCI_DZIALANIA}
+
+% \subsection{Sekcja koncentracja ryzyka}
+% \generujKryteria{pytania.csv}{KONCENTRACJA_RYZYKA}
+
+
+
+
+% % ============================================================
+% \section{Pełny algorytm audytu ORION}
+% \label{sec:algorytm-pelny}
+% % ============================================================
+% \todo{poprawic, są braki}
+% Poniższy algorytm formalnie opisuje kompletny
+% przebieg audytu ORION, integrując wszystkie
+% elementy opisane w poprzednich sekcjach.
+
+% \begin{algorithm}[H]
+% \caption{Pełny algorytm audytu ORION -- część 1/2:
+%          Inicjalizacja i przejście BFS}
+% \label{alg:orion-czesc1}
+% \begin{algorithmic}[1]
+
+% \Require Podmiot $v_0$,
+%          próg dostawcy kluczowego $w_{KV}^{*}$, $n_{KV}^{*}$,
+%          współczynnik deprecjacji $\lambda$
+% \Ensure  Wyniki $\mathcal{R}$,
+%          klasyfikacja podmiotu $S_{podmiot}$,
+%          lista dostawców kluczowych $\mathcal{K}$,
+%          lista flag $\mathcal{F}$,
+%          lista rekomendacji $\mathcal{REC}$
+
+% \medskip
+% \Statex \Comment{\textbf{Faza 1: Klasyfikacja podmiotu}}
+% \State $\textit{reżim}(v_0) \leftarrow
+%        \textsc{KlasyfikacjaRegulatoryjna}(v_0)$
+% \State $\textit{zasięg\_geo}(v_0) \leftarrow
+%        \textsc{ZakresGeograficzny}(v_0)$
+
+% \medskip
+% \Statex \Comment{\textbf{Faza 2: Inicjalizacja grafu ICT}}
+% \State $V \leftarrow \{v_0\}$,\quad
+%        $E \leftarrow \emptyset$,\quad
+%        $Q_{BFS} \leftarrow [v_0]$
+% \State $\textit{Visited} \leftarrow \emptyset$,\quad
+%        $\mathcal{R} \leftarrow \emptyset$,\quad
+%        $\mathcal{K} \leftarrow \emptyset$,\quad
+%        $\mathcal{F} \leftarrow \emptyset$,\quad
+%        $\mathcal{REC} \leftarrow \emptyset$
+
+% \medskip
+% \Statex \Comment{Inwentaryzacja systemów i dostawców pierwszego poziomu}
+% \ForAll{$v \in \textsc{InwentaryzacjaSystemów}(v_0)$}
+%     \State $V \leftarrow V \cup \{v\}$
+%     \State $E \leftarrow E \cup \{(v_0, v)\}$
+%     \State $\textsc{Enqueue}(Q_{BFS}, v)$
+% \EndFor
+
+% \medskip
+% \Statex \Comment{\textbf{Fazy 3--4: Przejście BFS po grafie ICT}}
+% \While{$Q_{BFS} \neq \emptyset$}
+%     \State $v \leftarrow \textsc{Dequeue}(Q_{BFS})$
+%     \If{$v \in \textit{Visited}$}
+%         \textbf{continue}
+%     \EndIf
+%     \State $\textit{Visited} \leftarrow \textit{Visited} \cup \{v\}$
+
+%     \medskip
+%     \Statex \Comment{Klasyfikacja atrybutów obiektu (cross-validation)}
+%     \State $\mathcal{A}(v) \leftarrow
+%            \textsc{KlasyfikujAtrybuty}(v)$
+%     \State $w_{total}(v) \leftarrow
+%            w_{krit}(v) \cdot w_{data}(v)$
+
+%     \medskip
+%     \Statex \Comment{Generowanie kwestionariusza szczegółowego}
+%     \State $\mathcal{S}(v) \leftarrow
+%            \textsc{AktywujSekcje}\bigl(v,\,
+%            \mathcal{A}(v),\,
+%            \textit{reżim}(v_0)\bigr)$
+
+%     \medskip
+%     \Statex \Comment{Sprawdzenie triggera TIA}
+%     \If{$\mathcal{C}_{TIA}(v)$}
+%         \State $\mathcal{S}(v) \leftarrow
+%                \mathcal{S}(v) \cup
+%                \{\texttt{PODDOSTAWCY\_TIA}\}$
+%     \EndIf
+
+%     \medskip
+%     \Statex \Comment{Zbieranie odpowiedzi i dowodów}
+%     \State $\mathcal{R}[v] \leftarrow
+%            \textsc{ZbierzOdpowiedzi}\bigl(v,\,
+%            \mathcal{S}(v)\bigr)$
+
+%     \medskip
+%     \Statex \Comment{Obliczenie wyników sekcji z obsługą flag blokujących}
+%     \ForAll{$\mathcal{S}_k \in \mathcal{S}(v)$}
+%         \If{$\exists\, q_j \in \mathcal{S}_k :
+%              \kappa(q_j) = \texttt{BLOKUJĄCE}
+%              \;\wedge\; a_j = 0$}
+%             \State $S(\mathcal{S}_k) \leftarrow 0$
+%             \State $\mathcal{F} \leftarrow \mathcal{F} \cup
+%                    \{(v,\, \mathcal{S}_k,\,
+%                    \textsc{BLOKUJĄCY\_SEKCJA})\}$
+%         \Else
+%             \State $S(\mathcal{S}_k) \leftarrow
+%                    \dfrac{%
+%                      \displaystyle\sum_{q_j \in \mathcal{S}_k}
+%                      S(q_j) \cdot \omega(q_j)%
+%                    }{%
+%                      \displaystyle\sum_{q_j \in \mathcal{S}_k}
+%                      \omega(q_j)%
+%                    }$
+%         \EndIf
+%     \EndFor
+
+%     \medskip
+%     \Statex \Comment{Obliczenie scoringu obiektu}
+%     \State $S_{total}(v) \leftarrow
+%            \dfrac{%
+%              \displaystyle\sum_{\mathcal{S}_k \in \mathcal{S}(v)}
+%              S(\mathcal{S}_k) \cdot \rho_k%
+%            }{%
+%              \displaystyle\sum_{\mathcal{S}_k \in \mathcal{S}(v)}
+%              \rho_k%
+%            }$
+
+% \EndWhile
+
+% \end{algorithmic}
+% \end{algorithm}
+
+% \begin{algorithm}[H]
+% \caption{Pełny algorytm audytu ORION -- część 2/2:
+%          Flagi, rekomendacje i agregacja}
+% \label{alg:orion-czesc2}
+% \begin{algorithmic}[1]
+% \setcounter{ALG@line}{42}
+
+%     \medskip
+%     \Statex \Comment{Sprawdzenie flagi blokującej na poziomie obiektu}
+%     \If{$\exists\, (v,\, \mathcal{S}_k,\,
+%          \textsc{BLOKUJĄCY\_SEKCJA}) \in \mathcal{F}$}
+%         \State $\mathcal{F} \leftarrow \mathcal{F} \cup
+%                \{(v,\, \textsc{BLOKUJĄCY\_OBJ})\}$
+%         \State $S_{total}(v) \leftarrow
+%                \min\bigl(S_{total}(v),\; 0{,}49\bigr)$
+%                \Statex \Comment{Wymuszenie klasy \textsc{NIEZGODNY}}
+%     \EndIf
+
+%     \medskip
+%     \Statex \Comment{Sprawdzenie flagi TIA}
+%     \If{$\text{FLAG}_{TIA}(v)$}
+%         \State $\mathcal{F} \leftarrow \mathcal{F} \cup
+%                \{(v,\, \textsc{BLOKUJĄCY\_TIA})\}$
+%         \State $S_{total}(v) \leftarrow
+%                \min\bigl(S_{total}(v),\; 0{,}49\bigr)$
+%                \Statex \Comment{Wymuszenie klasy \textsc{NIEZGODNY}}
+
+%         \medskip
+%         \Statex \Comment{Dynamiczne rozszerzanie grafu ICT}
+%         \ForAll{$u \in \textsc{IdentyfikujPoddostawców}(v)$}
+%             \If{$u \notin V$}
+%                 \State $V \leftarrow V \cup \{u\}$
+%                 \State $E \leftarrow E \cup \{(v,\, u)\}$
+%                 \State $\textsc{Enqueue}(Q_{BFS},\, u)$
+%             \EndIf
+%         \EndFor
+%     \EndIf
+
+%     \medskip
+%     \Statex \Comment{Generowanie rekomendacji z priorytetami}
+%     \If{$(v,\, \textsc{BLOKUJĄCY\_OBJ}) \in \mathcal{F}$
+%         \textbf{ or }
+%         $(v,\, \textsc{BLOKUJĄCY\_TIA}) \in \mathcal{F}$}
+%         \State $\textit{priorytet} \leftarrow \textbf{P0}$
+%     \ElsIf{$\exists\, q_j :
+%             \omega(q_j) = \textsc{OBOWIĄZKOWE}
+%             \;\wedge\; S(q_j) < 0{,}3$}
+%         \State $\textit{priorytet} \leftarrow \textbf{P1}$
+%     \ElsIf{$S_{total}(v) \in [0{,}25;\; 0{,}50)$}
+%         \State $\textit{priorytet} \leftarrow \textbf{P2}$
+%     \Else
+%         \State $\textit{priorytet} \leftarrow \textbf{P3}$
+%     \EndIf
+%     \State $\mathcal{REC} \leftarrow \mathcal{REC} \cup
+%            \textsc{GenerujRekomendacje}\bigl(v,\,
+%            \mathcal{R}[v],\,
+%            S_{total}(v),\,
+%            \mathcal{F},\,
+%            \textit{priorytet}\bigr)$
+
+%     \medskip
+%     \Statex \Comment{Sprawdzenie warunku dostawcy kluczowego}
+%     \If{$\textsc{IsKeyVendor}\bigl(v,\,
+%         w_{total}(v),\, n_{KV}^{*}\bigr)$}
+%         \State $\mathcal{K} \leftarrow \mathcal{K} \cup \{v\}$
+%     \EndIf
+
+%     \medskip
+%     \Statex \Comment{Standardowe przejście BFS -- dodanie sąsiadów}
+%     \ForAll{$(v,\, u) \in E$}
+%         \If{$u \notin \textit{Visited}$}
+%             \State $\textsc{Enqueue}(Q_{BFS},\, u)$
+%         \EndIf
+%     \EndFor
+
+% \medskip
+% \Statex \Comment{\textbf{Faza 4 końcowa: Agregacja wyniku podmiotu}}
+% \State $S_{podmiot} \leftarrow
+%        \dfrac{%
+%          \displaystyle\sum_{v \in V \setminus \{v_0\}}
+%          S_{total}(v) \cdot w_{total}(v)
+%          \cdot \lambda^{\,depth(v)}%
+%        }{%
+%          \displaystyle\sum_{v \in V \setminus \{v_0\}}
+%          w_{total}(v) \cdot \lambda^{\,depth(v)}%
+%        }$
+
+% \medskip
+% \Statex \Comment{Nadpisanie wyniku gdy aktywna flaga krytyczna obiektu}
+% \If{$\exists\, v \in V :
+%      (v,\, \textsc{BLOKUJĄCY\_OBJ}) \in \mathcal{F}$}
+%     \State $S_{podmiot} \leftarrow
+%            \min\bigl(S_{podmiot},\; 0{,}24\bigr)$
+%            \Statex \Comment{Wymuszenie klasy \textsc{KRYTYCZNIE NIEZGODNY}}
+% \EndIf
+
+% \medskip
+% \Statex \Comment{\textbf{Faza 5: Raport końcowy}}
+% \State \Return $S_{podmiot}$,\ $\mathcal{R}$,\
+%        $\mathcal{K}$,\ $\mathcal{F}$,\ $\mathcal{REC}$
+
+% \end{algorithmic}
+% \end{algorithm}

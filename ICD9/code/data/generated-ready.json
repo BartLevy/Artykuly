@@ -1,0 +1,251 @@
+[
+    {
+        "desc": "16-12-2021  Zdj. rtg palca III ręki lewej a-p i boczne:   Uwidocznione struktury kostne bez wyraźnych zmian urazowych. Oszczędzanie i wyższe ułożenie chorej kończyny do czasu ustąpienia dolegliwości. Schładzanie bolesnej okolicy - okłady z lodu (nie należy kłaść lodu bezpośrednio na skórę!) 3x dziennie po 20 min. Kontrola w Poradni Lekarza Rodzinnego jutro - w razie utrzymywania się dolegliwości przez okres dłuższy niż 7 dni proszę rozważyć kontrolę w Poradni Urazowo-Ortopedycznej.",
+        "gender": "mężczyzna",
+        "age": 49,
+        "icd9": [
+            {
+                "code": "86.54",
+                "name": "Szycie pojedynczej rany skóry i tkanki podskórnej, > 4 cm",
+                "frequency": "medium"
+            }
+        ],
+        "icd10": [
+            {
+                "icd10": "E05",
+                "name": "Nadczynność tarczycy",
+                "prevalence_percent": 1.5,
+                "sex": "Both"
+            },
+            {
+                "icd10": "G20",
+                "name": "Choroba Parkinsona",
+                "prevalence_percent": 0.3,
+                "sex": "Both"
+            },
+            {
+                "icd10": "J44",
+                "name": "POChP",
+                "prevalence_percent": 2.3,
+                "sex": "Both"
+            }
+        ],
+        "matcher_cosine_cross": {
+            "matches": [
+                {
+                    "icd9": "88.299",
+                    "description": "RTG kości kończyny dolnej - nieokreślone inaczej",
+                    "cross_score": 0.19611118733882904,
+                    "score": 0.9574211835861206
+                },
+                {
+                    "icd9": "88.241",
+                    "description": "RTG kości kończyny górnej celowane lub czynnościowe",
+                    "cross_score": 0.19391746819019318,
+                    "score": 0.9554157257080078
+                },
+                {
+                    "icd9": "78.614",
+                    "description": "Usunięcie zewnętrznego – inwazyjnego stabilizatora kości – kości nadgarstka/śródręcza/paliczki (ręki)",
+                    "cross_score": 0.18780672550201416,
+                    "score": 0.9574985504150391
+                },
+                {
+                    "icd9": "88.291",
+                    "description": "RTG kości kończyny dolnej celowane lub czynnościowe",
+                    "cross_score": 0.1742500215768814,
+                    "score": 0.9579321146011353
+                },
+                {
+                    "icd9": "79.94",
+                    "description": "Inne operacje urazu kości - paliczki ręki",
+                    "cross_score": 0.17094452679157257,
+                    "score": 0.9564348459243774
+                },
+                {
+                    "icd9": "78.514",
+                    "description": "Profilaktyczna stabilizacja wewnętrzna kości - kości nadgarstka/ śródręcza/ paliczki (ręki)",
+                    "cross_score": 0.1508575677871704,
+                    "score": 0.9584499001502991
+                },
+                {
+                    "icd9": "78.618",
+                    "description": "Usunięcie zewnętrznego – inwazyjnego stabilizatora kości – kości stępu/kości śródstopia/paliczki (stopy)",
+                    "cross_score": 0.14413203299045563,
+                    "score": 0.9553319215774536
+                },
+                {
+                    "icd9": "78.414",
+                    "description": "Inne zabiegi naprawcze kości - kości nadgarstka/ śródręcza/ paliczki (ręki)",
+                    "cross_score": 0.12141363322734833,
+                    "score": 0.9573094844818115
+                }
+            ],
+            "time_ms": 659
+        }
+    },
+    {
+        "desc": "Drogi Pacjencie,\r\n\r\nW dniu [data] przeprowadzono badanie przedmiotowe oraz procedurę zgodnie z podanymi kodami ICD-9 i opcjonalnymi ICD-10. Oto szczegółowy opis:\r\n\r\n**Wywiad i badanie przedmiotowe:**\nPacjentka, lat 59, płci żeńskiej, zgłosiła się do gabinetu lekarskiego z powodu [opcjonalnie: diagnoza ICD-10, np. \"bólu w nadbrzuszu\"]. W wywiadzie podała brak istotnych chorób przewlekłych oraz nie przyjmuje leków na stałe. W badaniu fizykalnym stwierdzono:\n- Tętno: [wartość] uderzeń/min, regularne\n- Ciśnienie tętnicze: [wartości] mmHg\n- RR: [wartość]\n- Akcja serca miarowa\n- Brzuch miękki, bez objawów otrzewnowych\n- Wątroba i śledziona niepowiększone\n- Objawy patologiczne: brak\n\n**Opis procedury/badania:**\nW związku z podejrzeniem [opcjonalnie: diagnoza ICD-10, np. \"problemu ginekologicznego\"], wykonano badanie USG jamy brzusznej (ICD-9: 88.76). Wynik badania był następujący:\n- Pęcherzyk żółciowy bez złogów, drogi żółciowe nieposzerzone\n- Trzustka i śledziona o prawidłowej echogeniczności\n- Nerki o prawidłowym kształcie i wielkości, bez cech kamicy\n- Pęcherz moczowy o gładkich zarysach, bez widocznych zmian patologicznych\n\n**Wynik badania:**\nBadanie USG jamy brzusznej nie wykazało odchyleń od normy. Pacjentka została poinformowana o prawidłowym stanie narządów wewnętrznych i zalecono dalsze monitorowanie w przypadku wystąpienia nowych objawów.\n\n**Zalecenia:**\n- Kontrola za [liczba] miesięcy/tygodni\n- W razie pojawienia się niepokojących objawów, prosimy o ponowną wizytę\n\nZ poważaniem,\n[Twoje imię i nazwisko]\nLekarz specjalista",
+        "gender": "kobieta",
+        "age": 59,
+        "icd9": [
+            {
+                "code": "86.53",
+                "name": "Szycie pojedynczej rany skóry i tkanki podskórnej, do 4 cm",
+                "frequency": "high"
+            }
+        ],
+        "icd10": [
+            {
+                "icd10": "N18",
+                "name": "Przewlekła choroba nerek",
+                "prevalence_percent": 4.2,
+                "sex": "Both"
+            }
+        ],
+        "matcher_cosine_cross": {
+            "matches": [
+                {
+                    "icd9": "88.199",
+                    "description": "RTG jamy brzusznej – inne",
+                    "cross_score": 0.4266447424888611,
+                    "score": 0.9590556621551514
+                },
+                {
+                    "icd9": "88.752",
+                    "description": "USG nerek, moczowodów, pęcherza moczowego",
+                    "cross_score": 0.4042245149612427,
+                    "score": 0.9585418701171875
+                },
+                {
+                    "icd9": "88.761",
+                    "description": "USG brzucha i przestrzeni zaotrzewnowej",
+                    "cross_score": 0.4033139646053314,
+                    "score": 0.9594581127166748
+                },
+                {
+                    "icd9": "88.011",
+                    "description": "TK jamy brzusznej lub miednicy małej bez i ze wzmocnieniem kontrastowym",
+                    "cross_score": 0.39787253737449646,
+                    "score": 0.9595322608947754
+                },
+                {
+                    "icd9": "88.191",
+                    "description": "RTG jamy brzusznej przeglądowe",
+                    "cross_score": 0.3749634921550751,
+                    "score": 0.9572598338127136
+                },
+                {
+                    "icd9": "54.29",
+                    "description": "Zabiegi diagnostyczne okolicy jamy brzusznej - inne",
+                    "cross_score": 0.35491830110549927,
+                    "score": 0.9625744819641113
+                },
+                {
+                    "icd9": "51.199",
+                    "description": "Zabiegi diagnostyczne dróg żółciowych - inne",
+                    "cross_score": 0.35225561261177063,
+                    "score": 0.9573331475257874
+                },
+                {
+                    "icd9": "00.251",
+                    "description": "Wewnątrznaczyniowa ultrasonografia (IVUS), naczyń nerkowych",
+                    "cross_score": 0.35050639510154724,
+                    "score": 0.9583498239517212
+                }
+            ],
+            "time_ms": 1076
+        }
+    },
+    {
+        "desc": "Drogi Pacjencie,\r\n\r\nW dniu [data] o godzinie [godzina], przeprowadziłem/am badanie przedmiotowe oraz wykonałem/am następujące procedury:\r\n\r\n**Wywiad i badanie przedmiotowe:**\nPacjent, 50-letni mężczyzna, zgłosił się na wizytę kontrolną. W wywiadzie podaje przewlekły ból w nadbrzuszu trwający od kilku tygodni, bez utraty apetytu ani masy ciała. Pacjent nie zgłasza innych dolegliwości. W badaniu fizykalnym stwierdzono:\n- Skóra blada, wilgotna\n- Tętno 80 uderzeń/minutę, regularne\n- Ciśnienie tętnicze 125/85 mmHg\n- Akcja serca miarowa\n- Brzuch miękki, bez objawów otrzewnowych\n- Wątroba i śledziona niepowiększone\n- Objawy patologiczne: w nadbrzuszu palpacyjnie wyczuwalny guzek o średnicy około 2 cm, bez bolesności przy ucisku.\n\r\n**Opis procedury/badania:**\nW związku z podejrzeniem zmiany w obrębie jamy brzusznej oraz objawami klinicznymi, wykonano badanie ultrasonograficzne (USG) jamy brzusznej. Badanie uwidoczniło:\n- Wątroba o jednorodnej strukturze echogeniczności, bez zmian ogniskowych\n- Pęcherzyk żółciowy pusty, ściany gładkie\n- Trzustka i śledziona o prawidłowej wielkości i strukturze\n- Nerki o prawidłowym zróżnicowaniu korowo-rdzeniowym, bez zmian ogniskowych\n- W nadbrzuszu widoczna hipoechogeniczna zmiana o średnicy około 2 cm, dobrze odgraniczona, bez cech unaczynienia patologicznego.\n\nW związku ze stwierdzoną zmianą w nadbrzuszu, pacjent został skierowany na dalszą diagnostykę obrazową (TK jamy brzusznej) oraz konsultację chirurgiczną.\n\n**Wynik badania:**\nStwierdzono obecność zmiany w nadbrzuszu, która może odpowiadać torbieli lub guzkowi łagodnemu. Dalsza diagnostyka i leczenie będą zależne od wyników kolejnych badań obrazowych oraz konsultacji specjalistycznej.\n\n**Zalecenia:**\nProszę o wykonanie zleconych badań w najbliższym możliwym terminie oraz kontrolę po ich przeprowadzeniu. W razie nasilenia dolegliwości proszę o niezwłoczne zgłoszenie się na SOR.\n\nZ poważaniem,\n[Twoje Imię i Nazwisko]",
+        "gender": "mężczyzna",
+        "age": 50,
+        "icd9": [
+            {
+                "code": "87.51",
+                "name": "RTG kręgosłupa (grupa badań RTG)",
+                "frequency": "medium"
+            }
+        ],
+        "icd10": [
+            {
+                "icd10": "G20",
+                "name": "Choroba Parkinsona",
+                "prevalence_percent": 0.3,
+                "sex": "Both"
+            },
+            {
+                "icd10": "C50",
+                "name": "Rak piersi",
+                "prevalence_percent": 1.4,
+                "sex": "F"
+            },
+            {
+                "icd10": "F41",
+                "name": "Zaburzenia lękowe",
+                "prevalence_percent": 7.0,
+                "sex": "Both"
+            },
+            {
+                "icd10": "C34",
+                "name": "Rak płuca",
+                "prevalence_percent": 0.6,
+                "sex": "Both"
+            }
+        ],
+        "matcher_cosine_cross": {
+            "matches": [
+                {
+                    "icd9": "88.199",
+                    "description": "RTG jamy brzusznej – inne",
+                    "cross_score": 0.40171048045158386,
+                    "score": 0.9576556086540222
+                },
+                {
+                    "icd9": "88.011",
+                    "description": "TK jamy brzusznej lub miednicy małej bez i ze wzmocnieniem kontrastowym",
+                    "cross_score": 0.38715383410453796,
+                    "score": 0.9566766023635864
+                },
+                {
+                    "icd9": "88.761",
+                    "description": "USG brzucha i przestrzeni zaotrzewnowej",
+                    "cross_score": 0.37144795060157776,
+                    "score": 0.9581611156463623
+                },
+                {
+                    "icd9": "88.013",
+                    "description": "TK tętnic jamy brzusznej (w tym aorta)",
+                    "cross_score": 0.3627082109451294,
+                    "score": 0.9592467546463013
+                },
+                {
+                    "icd9": "88.191",
+                    "description": "RTG jamy brzusznej przeglądowe",
+                    "cross_score": 0.3540613055229187,
+                    "score": 0.9568861126899719
+                },
+                {
+                    "icd9": "88.743",
+                    "description": "USG przełyku",
+                    "cross_score": 0.3520180284976959,
+                    "score": 0.9587427377700806
+                },
+                {
+                    "icd9": "54.22",
+                    "description": "Przezskórna igłowa biopsja narządów jamy brzusznej",
+                    "cross_score": 0.3467560112476349,
+                    "score": 0.9585644602775574
+                },
+                {
+                    "icd9": "88.09",
+                    "description": "Badanie rtg ścian jamy brzusznej - inne",
+                    "cross_score": 0.34611400961875916,
+                    "score": 0.95930415391922
+                }
+            ],
+            "time_ms": 1313
+        }
+    }
+]

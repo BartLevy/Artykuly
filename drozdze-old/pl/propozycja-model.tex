@@ -1,0 +1,463 @@
+% ============================================================
+%  SEKCJA 7: PROPOZYCJA MODELU OCENY DOJRZAŁOŚCI FUNKCJONALNEJ
+% ============================================================
+
+\section{Propozycja modelu oceny dojrzałości funkcjonalnej}
+
+Rozważania prowadzone w~poprzednich sekcjach doprowadziły
+do~sformułowania tezy, że~dojrzałość miodu jest zjawiskiem
+ciągłym i~wielowymiarowym, i~że żaden pojedynczy parametr,
+ani~morfologiczny (zasklepienie), ani~mikrobiologiczny (CFU/g),
+nie~jest wystarczający do~jej wiarygodnej oceny. 
+Skoro dojrzałość/dojrzewanie miodu jest zjawiskiem ciągłym winno się posługiwać wyłącznie pojęciem “stopień dojrzałości”. Wprowadzenie jakiejkolwiek klasyfikacji w tym zakresie jest nie tyle niezwykle trudne, co praktycznie niemożliwe z uwagi na naturalną zmienność miodu wynikającą co najmniej z uwarunkowań klimatycznych, pogodowych, metod prowadzenia gospodarki pasiecznej, zróżnicowania pożytków. Ograniczyć można jednak istotne ryzyko jakie dla bezpieczeństwa produktu  i jego wartości handlowej wnosi dojrzałość miodu czyli ryzyko wystąpienia fermentacji. Ta, jak powyżej  wskazano, jest zależna bezpośrenio od aktywności wody.
+
+% W~niniejszej
+% sekcji proponujemy operacyjny \textbf{model oceny dojrzałości
+% funkcjonalnej miodu} (MODF), oparty na~hierarchicznym podejściu
+% trójpoziomowym: od~szybkich, tanich parametrów przesiewowych
+% do~zaawansowanych narzędzi metabolomicznych stosowanych
+% w~przypadkach spornych. Proponowany model jest kompatybilny
+% z~obowiązującymi regulacjami (Codex STAN 12-1981,
+% Dyrektywa UE 2001/110/WE) i~nie wymaga ich formalnej rewizji, jedynie uzupełnienia i~reinterpretacji w~świetle aktualnej
+% wiedzy naukowej.
+
+% %,----------------------------------------------------------
+% \subsection{Proponowane biomarkery dojrzałości funkcjonalnej}
+% %,----------------------------------------------------------
+
+% Wybór biomarkerów do~modelu oceny dojrzałości funkcjonalnej
+% opiera się na~czterech kryteriach: (1)~związku
+% z~konkretnym mechanizmem biologicznym dojrzewania miodu,
+% (2)~zwalidowaniu analitycznym lub~zaawansowanym stadium
+% walidacji, (3)~dostępności technicznej i~ekonomicznej
+% w~laboratoriach kontrolnych, (4)~niezależności od~warunków
+% klimatycznych i~systemu produkcji. Tabela~\ref{tab:biomarkers}
+% przedstawia zestawienie proponowanych biomarkerów wraz
+% z~ich charakterystyką.
+
+% \begin{table}[H]
+% % \begin{adjustwidth}{-\extralength}{0cm}
+% \centering
+% \caption{Proponowane biomarkery dojrzałości funkcjonalnej miodu w~modelu MODF.
+%          Źródła: opracowanie własne na~podstawie~\cite{ruegg1981,zhang2021,sun2021,nmrhoney2023,invertase2020,schoder2026}.}
+% \label{tab:biomarkers}
+% \small
+% \begin{tabular}{p{3.2cm}p{2.2cm}p{2.8cm}p{3.4cm}p{1.8cm}}
+% %\begin{tabularx}{\fulllength}{LCCCC}
+% \hline
+% \textbf{Biomarker} &
+% \textbf{Mechanizm biologiczny} &
+% \textbf{Metoda oznaczania} &
+% \textbf{Wartość progowa / zakres} &
+% \textbf{Status walidacji} \\
+% \hline
+% Aktywność wody ($a_w$)
+%     & Mikrobiologiczna stabilność osmotyczna
+%     & Elektryczna metoda pojemnościowa (Rotronic, AquaLab)
+%     & $a_w < 0{,}60$ (dojrzały); $> 0{,}62$ (ryzyko fermentacji)
+%     & Zwalidowana \\
+% \hline
+% Wilgotność (\%H$_2$O)
+%     & Odparowanie wody z~nektaru
+%     & Refraktometria (n. Abbego)
+%     & $\leq 20{,}0\%$ (Codex); $\leq 18{,}0\%$ (zalecane)
+%     & Zwalidowana \\
+% \hline
+% Aktywność diastazy (DN)
+%     & Aktywność amylaz ze~ślinianek pszczoły
+%     & Phadebas, spektrofotometria
+%     & $\geq 8$~j.~Schade (Codex); $\geq 3$~j. dla~miodów o~niskiej aktywności enzym.
+%     & Zwalidowana \\
+% \hline
+% Aktywność inwertazy ($\alpha$-gluko\-zydazy)
+%     & Hydroliza sacharozy; wskaźnik freshness
+%     & Spektrofotometria UV/VIS, p-NPG
+%     & $\geq 4$~j.~Siegenthaler; obniżona: wskaźnik obróbki termicznej lub~niedojrzałości
+%     & Zwalidowana~\cite{invertase2020} \\
+% \hline
+% Aktywność oksydazy glukozowej
+%     & Biosynteza H$_2$O$_2$ i~kwasu glukonowego
+%     & Spektrofotometria; test peroksydazowy
+%     & Wartości referencyjne: 0--11,2~$\mu$g H$_2$O$_2$/g$\cdot$h (raw honey)~\cite{invertase2020}; max.\ przed pełnym zasklepieniem
+%     & Częściowo zwalidowana \\
+% \hline
+% Profil kwasów organicznych (glukonian, mleczan, cytrynian, jabłczan)
+%     & Metabolizm enzymatyczny i~bakteryjny; wskaźnik dojrzałości metabolomicznej
+%     & HPLC-DAD, GC-MS
+%     & Glukonian: 3,72--8,29~g/kg (zal. od~typu botan.)~\cite{nature2025}; mleczan: marker aktywności LAB w~miodach bezżądłowych
+%     & Zwalidowana (HPLC-DAD)~\cite{orgacids2025} \\
+% \hline
+% Stosunek fruktozy do~glukozy (F/G)
+%     & Profil cukrowy jako wynik hydrolizy sacharozy
+%     & NMR, HPLC
+%     & $\geq 0{,}9$ dla~miodu dojrzałego; $< 0{,}8$ wskazuje na~niedojrzałość lub~adulterację
+%     & Zwalidowana \\
+% \hline
+% \textsuperscript{1}H-NMR fingerprinting
+%     & Kompleksowy obraz składu chemicznego (cukry, aminokwasy, kwasy, polifenole)
+%     & \textsuperscript{1}H-NMR 400--600~MHz; bazy: Bruker HMDB, QC-Expert
+%     & Klasyfikacja botaniczna, geograficzna, wykrywanie adulteracji syropowej
+%     & Zwalidowana~\cite{nmrhoney2023,schoder2026} \\
+% \hline
+% Kwas dekenodwukarboksylowy (\textit{decenedioic acid})
+%     & Kwas tłuszczowy pszczelego pochodzenia; gromadzony w~miodzie dojrzałym
+%     & GC-MS, LC-MS
+%     & Istotnie wyższe stężenie w~miodzie dojrzałym vs.~niedojrzałym ($p < 0{,}01$)~\cite{sun2021}; 3 typy botaniczne (rzepak, akacja, jujube)
+%     & Częściowo zwalidowana~\cite{sun2021} \\
+% \hline
+% Liczba drożdży (CFU/g)
+%     & Potencjał fermentacyjny (zależny od~$a_w$, $T$, $t$)
+%     & Metoda płytkowa (DRBC Agar, ISO 21527-1)
+%     & Brak limitu normatywnego; $> 1000$~CFU/g + $a_w > 0{,}62$: ryzyko wysokie
+%     & Zwalidowana metodycznie, lecz niewystarczająca jako izolowany parametr \\
+% \hline
+% %\end{tabularx}
+% \end{tabular}
+% % \end{adjustwidth}
+% \end{table}
+
+\subsubsection{Aktywność wody jako parametr priorytetowy}
+
+Spośród wszystkich wymienionych biomarkerów aktywność wody
+($a_w$) jest proponowana jako parametr priorytetowy z~trzech
+powodów. Po~pierwsze, jest ona thermodynamiczną miarą
+\emph{dostępności wody dla~drobnoustrojów}, a~nie jedynie
+zawartości wody w~masie produktu; bezpośrednio koreluje
+z~biologiczną możliwością wzrostu drożdży osmofilnych,
+co~czyni ją~jedynym parametrem, który może zastąpić
+całą gamę pośrednich wskaźników mikrobiologicznych~\cite{ruegg1981,waaw2006}.
+Po~drugie, pomiar $a_w$ jest szybki (3-5~minut), tani
+i~możliwy do~wykonania w~pasiece czy laboratorium kontrolnym
+standardowym przyrządem typu AquaLab CX3TE lub~Rotronic
+HygroLab; wynik jest powtarzalny i~jednoznaczny,
+nie~wymaga interpretacji eksperckiej~\cite{zamora2006}.
+Po~trzecie, kryterium $a_w < 0{,}60$ jest oparte
+na~biologicznie uzasadnionym mechanizmie, jest progiem
+fizjologicznym drożdży osmofilnych wyznaczonym
+in~vitro w~warunkach izobarycznych~\cite{waaw2006,ruegg1981}
+, a~nie na~arbitralnie wybranej wartości administracyjnej.
+
+Należy przeprowadzić jednak badania czy podobnie jak dla dopuszczalnych wyjątków w zakresie zawartości wody i w tym względzie nie należy ustanowić wyjątków. Stabilność mikrobiologiczna pewnych typów miodów może wynikać nie tyle z niskiej aktywności wody, a ze specyficznych składników obecnych w nektarze roślin. 
+
+% \subsubsection{Aktywność inwertazy i oksydazy glukozowej jako wskaźniki freshness i dojrzałości}
+
+% Aktywność inwertazy ($\alpha$-glukozydazy) jest w~aktualnej
+% literaturze uznawana za~czulszy wskaźnik jakości miodu
+% niż aktywność diastazy, gdyż inwertaza ulega inaktywacji
+% termicznej przy niższej temperaturze i~krócej
+% niż~diastaza, przez co~jej obniżona aktywność może
+% sygnalizować zarówno przetwarzanie termiczne produktu,
+% jak i~jego niedojrzałość~\cite{invertase2020,kostic2022}.
+% Badanie Chen i~in.~\cite{zhang2021} wykazało, że~aktywność
+% inwertazy wzrasta gradientowo od~0 do~wartości stabilnych
+% w~trakcie naturalnego dojrzewania, przy czym tempo wzrostu
+% jest najwyższe w~pierwszych 4--8 dniach procesu. Aktywność
+% oksydazy glukozowej wykazuje odmienny, nielinearny profil
+% kinetyczny: osiąga maksimum tuż przed zasklepieniem
+% komórek, a~następnie nieznacznie spada w~miodzie
+% zasklepionym~\cite{zhang2021,invertase2020}, co~potwierdza,
+% że~zasklepienie nie~jest momentem kulminacyjnym aktywności
+% enzymatycznej, lecz jednym z~etapów ciągłego procesu
+% biologicznego (por.~Sekcja~3).
+
+% \subsubsection{Profil kwasów organicznych, walidacja HPLC-DAD}
+
+% Niedawna publikacja z~2025~roku~\cite{orgacids2025} opisuje
+% w~pełni zwalidowaną metodę HPLC-DAD dla~oznaczania
+% 12~kwasów organicznych w~miodzie, osiągając separację
+% wszystkich analitów w~ciągu 15~minut, z~LOD 0,01--4,45~$\mu$g/ml
+% i~LOQ 0,03--13,50~$\mu$g/ml. Dominującym kwasem organicznym
+% we~wszystkich typach miodu jest kwas glukonowy (manuka:
+% 3,72~g/kg, lucerna: 8,29~g/kg)~\cite{nature2025},
+% podczas gdy kwas mlekowy stanowi marker aktywności
+% bakterii kwasu mlekowego (LAB), istotny zwłaszcza
+% dla~miodów bezżądłowych. W~kontekście modelu MODF,
+% profil kwasów organicznych dostarcza wielowymiarowego
+% wektora cech metabolomicznych, który pozwala różnicować
+% typy botaniczne i~etapy dojrzewania niezależnie
+% od~systemu produkcji.
+
+% \subsubsection{\texorpdfstring{\textsuperscript{1}H-NMR fingerprinting}{1H-NMR fingerprinting}, złoty standard autentyczności}
+
+% \textsuperscript{1}H-NMR w~modelu MODF pełni rolę
+% narzędzia weryfikacyjnego na~poziomie III (patrz niżej),
+% lecz ze~względu na~wyjątkową wartość diagnostyczną zasługuje
+% na~szczegółowe omówienie. NMR pozwala na~jednoczesną
+% kwantyfikację cukrów (fruktozy, glukozy, sacharozy,
+% erlozy, turanoza), kwasów organicznych, aminokwasów,
+% polifenoli i~związków lotnych w~jednym eksperymencie,
+% osiągając klasyfikację botaniczną i~geograficzną miodów
+% z~dokładnością powyżej 95\% dla~miodów z~dobrze
+% reprezentowanymi bazami referencyjnymi~\cite{nmrhoney2023,schoder2026}.
+% Platforma Bruker FoodScreener i~analogiczne systemy komercyjne
+% (Eurofins FoodAuthentics, QC-Expert MBiotech) są aktualnie
+% stosowane przez kilkanaście europejskich laboratoriów
+% referencyjnych jako metoda przesiewowa kontroli
+% granicznych~\cite{schoder2026}.
+
+% Badanie Tsagkaris i~in.~\cite{tsagkaris2021} podkreśla jednak,
+% że~\textsuperscript{1}H-NMR ma~ograniczoną moc różnicującą
+% dla~miodów z~regionów niereprezentowanych w~bazach
+% referencyjnych. Przegląd z~2025~roku~\cite{schoder2026}
+% formułuje to~wprost: \textit{,,high analytical resolution alone
+% therefore does not guarantee unambiguous fraud attribution''}
+% , co~oznacza, że~wynik NMR dla~miodu etiopskiego z~ula
+% kłodowego będzie niepewny bez~etiopskiej bazy referencyjnej.
+% Wniosek ten wzmacnia postulat z~Sekcji~6 dotyczący rozszerzenia
+% baz EURL o~próbki z~systemów tropikalnych i~tradycyjnych.
+
+%,----------------------------------------------------------
+\subsection{Hierarchiczny model decyzyjny}
+%,----------------------------------------------------------
+
+Na~podstawie opisanych biomarkerów proponujemy hierarchiczny
+model decyzyjny (HMD) składający się z~trzech poziomów,
+zorganizowanych zgodnie z~zasadą proporcjonalności
+, każdy kolejny poziom jest bardziej kosztowny analitycznie
+i~stosowany wyłącznie wtedy, gdy poprzedni nie~daje
+jednoznacznego wyniku lub~gdy wynik Poziomu~I jest
+pozytywny (tj.~kryteria są spełnione):
+
+
+
+
+% \begin{figure}[H]
+% \centering % Wyśrodkowanie rysunku
+% \begin{tikzpicture}[
+%   node distance=2.2cm, % Automatyczne odstępy między węzłami
+%   level/.style = {
+%     draw, 
+%     rectangle, 
+%     rounded corners, 
+%     minimum width=9cm, 
+%     text width=8.5cm,      
+%     minimum height=1.2cm, 
+%     align=center, % Lepiej zastępuje "text centered" przy łamaniu linii
+%     font=\small
+%   },
+%   arrow/.style = {->, thick, >=stealth}
+% ]
+%   % Definicja węzłów
+%   \node[level, fill=green!15]  (L1) 
+%     {\textbf{Poziom I (przesiewowy):} Wilgotność $\leq 20\%$ \textsc{oraz} $a_w < 0{,}60$ \\ 
+%      $\Rightarrow$ Brak dyskwalifikacji niezależnie od~CFU/g};
+
+%   \node[level, fill=yellow!20, below of=L1] (L2) 
+%     {\textbf{Poziom II (jakościowy):} Diastaza $\geq 8$~j.~Sch., Inwertaza $\geq 4$~j., F/G $\geq 0{,}9$, HMF $\leq 40$~mg/kg \\ 
+%      $\Rightarrow$ Ocena dojrzałości funkcjonalnej};
+
+%   \node[level, fill=orange!20, below of=L2, node distance=2.5cm] (L3) 
+%     {\textbf{Poziom III (arbitrażowy):} NMR fingerprinting + metabolomika + analiza łańcucha dostaw \\ 
+%      $\Rightarrow$ Rozróżnienie: stabilizacja vs.\ fałszowanie};
+
+%   % Strzałki - naprawiona składnia (-- zamiast przecinka)
+%   \draw[arrow] (L1) -- (L2) node[midway, right, xshift=0.1cm, text width=4cm, font=\scriptsize, align=left] 
+%     {wynik graniczny lub\\CFU/g $> 1000$};
+    
+%   \draw[arrow] (L2) -- (L3) node[midway, right, xshift=0.1cm, text width=4cm, font=\scriptsize, align=left] 
+%     {wyniki rozbieżne lub\\podejrzenie adulteracji};
+% \end{tikzpicture}
+% \caption{Schemat wielopoziomowej oceny jakości i autentyczności miodu.} % Dobra praktyka: dodanie podpisu
+% \label{fig:hmd}
+% \end{figure}
+
+
+\subsubsection{Poziom I – Podstawowy (przesiewowy)}
+
+Poziom I stanowi filtr pierwszego rzędu oparty na~dwóch
+parametrach mierzonych bezpośrednio na~produkcie:
+
+\begin{itemize}
+    \item \textbf{Wilgotność $\leq 20\%$} przy uwzględnieniu prawnie określonych wyjątków (refraktometria,
+          metoda Codex STAN 12-1981), parametr normatywny,
+          obligatoryjny we~wszystkich głównych standardach;
+    \item \textbf{Aktywność wody $a_w < 0{,}60$} przy uwzględnieniu możliwych wyjątków, parametr
+          proponowany jako uzupełnienie normatywne; przy spełnieniu
+          obu tych kryteriów miód jest \emph{mikrobiologicznie
+          stabilny z~mocy stanu wiedzy mikrobiologii}, wzrost drożdży
+          jest niemożliwy niezależnie od~ich liczebności~\cite{ruegg1981,waaw2006}.
+\end{itemize}
+
+\textbf{Zasada kluczowa poziomu I:} jeżeli wilgotność $\leq 20\%$
+\textsc{ORAZ} $a_w < 0{,}60$, produkt nie~podlega dyskwalifikacji
+na~podstawie liczby drożdży (CFU/g), niezależnie od~stwierdzonej
+wartości tego parametru. Dyskwalifikacja na~podstawie samego
+CFU/g, bez~potwierdzenia przekroczenia progu $a_w$, jest
+nieuzasadniona naukowo i~nieadekwatna prawnie~\cite{codex_stan12,eudir2001110}.
+
+Jeżeli Poziom I wskazuje na~stan graniczny ($18{,}1$--$20{,}0\%$
+wilgotności lub~$a_w = 0{,}60$--$0{,}62$) lub~liczba drożdży
+przekracza $1000$~CFU/g, analiza jest eskalowana do~Poziomu~II.
+
+\subsubsection{Poziom II – Rozszerzony (jakościowy)}
+
+Poziom II dostarcza oceny dojrzałości funkcjonalnej
+we~wszystkich trzech wymiarach zdefiniowanych w~Sekcji~3.3:
+stabilności mikrobiologicznej, chemicznej i~biologicznej.
+Parametry Poziomu~II obejmują:
+
+\begin{enumerate}
+    \item \textbf{Profil enzymatyczny:}
+    \begin{itemize}
+        \item Aktywność diastazy $\geq 8$~j.~Schade (lub $\geq 3$~j.
+              dla~typów botanicznych z~naturalnie niską aktywnością
+              amylolityczną, np.~akacja, cytrusy, lawenda)~\cite{codex_stan12};
+      %   \item Aktywność inwertazy $\geq 4$~j.~Siegenthaler;
+      %         wartości poniżej 4~j. wskazują na~niedojrzałość
+      %         lub~przetwarzanie termiczne, wymaga korelacji
+      %         z~HMF~\cite{invertase2020};
+      %   \item Aktywność oksydazy glukozowej, marker biologiczny
+      %         aktywności antyoksydacyjnej i~antybakteryjnej;
+      %         wartości referencyjne dla~danego typu botanicznego~\cite{invertase2020};
+    \end{itemize}
+    \item \textbf{Parametry chemiczne:}
+    \begin{itemize}
+        \item Stosunek F/G $\geq 0{,}9$; HMF $\leq 40$~mg/kg;
+              kwasowość wolna $\leq 50$~mEq/kg (Codex)~\cite{codex_stan12};
+      %   \item Profil kwasów organicznych (opcjonalnie):
+      %         kwas glukonowy jako dominujący; relacja
+      %         mleczan/glukonian jako marker aktywności LAB~\cite{orgacids2025};
+    \end{itemize}
+%     \item \textbf{Parametry biologiczne:}
+%     \begin{itemize}
+%         \item Aktywność antyoksydacyjna (DPPH, FRAP)
+%               w~porównaniu z~wartościami referencyjnymi
+%               dla~danego typu botanicznego~\cite{guo2020};
+%         \item Zawartość polifenoli ogółem (metoda Folin-Ciocalteu)
+%               jako wskaźnik integralności biologicznej produktu~\cite{guo2020}.
+%     \end{itemize}
+\end{enumerate}
+
+% Jeżeli Poziom~II dostarcza wyników rozbieżnych (np.~niska
+% aktywność diastazy przy niskim HMF i~prawidłowej aktywności
+% inwertazy, co~może wskazywać na~typ botaniczny o~niskiej
+% aktywności amylolitycznej) lub~jeśli wyniki sugerują
+% potencjalne fałszowanie, analiza przechodzi do~Poziomu~III.
+
+% \subsubsection{Poziom III – Arbitrażowy}
+
+% Poziom III jest przeznaczony wyłącznie do~rozstrzygania
+% przypadków spornych i~weryfikacji podejrzenia celowego
+% fałszowania. Jest on~kosztowny analitycznie i~wymaga
+% dostępu do~specjalistycznej infrastruktury laboratoryjnej;
+% nie~jest wskazany jako rutynowy element kontroli
+% jakości w~punkcie odbioru. Narzędzia Poziomu~III obejmują:
+
+% \begin{enumerate}
+%     \item \textbf{\textsuperscript{1}H-NMR fingerprinting}
+%           (400--600~MHz), kompleksowa analiza składu,
+%           klasyfikacja botaniczna i~geograficzna,
+%           wykrywanie adulteracji syropowej; wynik porównywany
+%           z~bazą referencyjną EURL lub~Bruker FoodScreener~\cite{nmrhoney2023,schoder2026};
+%     \item \textbf{Izotopowa analiza masowa (IRMS):}
+%           $\delta^{13}$C, wykrywanie dodatku syropów C$_4$
+%           (kukurydza, trzcina cukrowa); LC-IRMS,
+%           izotopowe profilowanie poszczególnych cukrów
+%           z~dokładnością do~$\pm 0{,}5$\textperthousand~\cite{nmrhoney2023};
+%     \item \textbf{Metabolomika ukierunkowana i~nieukierunkowana}
+%           (UPLC-QTOF-MS, GC-MS), identyfikacja biomarkerów
+%           dojrzałości molekularnej (kwas dekenodwukarboksylowy,
+%           turanoza, lotne estry i~aldehydy)~\cite{sun2021,chromatometab2024};
+%     \item \textbf{Analiza łańcucha dostaw (traceability audit)}:
+%           weryfikacja dokumentacji wilgotności i~temperatury
+%           \textit{post-harvest}; dane logger'ów temperaturowych;
+%           certyfikaty analizy z~pasieki; deklaracje pszczelarskie
+%           dotyczące zastosowania dehumidyfikacji~\cite{cbi_traceability2024}.
+% \end{enumerate}
+
+% Wynik Poziomu~III powinien umożliwiać trójkategoryczną
+% klasyfikację produktu: (a)~miód dojrzały funkcjonalnie
+% , wolny od~ograniczeń rynkowych; (b)~miód z~zastosowaną
+% technologiczną dehumidyfikacją, dopuszczony do~obrotu
+% z~deklaracją procesu; (c)~miód adulterowany lub~niedojrzały
+% systemowo, dyskwalifikowany~\cite{garcia2025,codex_stan12}.
+
+%,----------------------------------------------------------
+\subsection{Rekomendacje dla organów regulacyjnych i Apimondia}
+%,----------------------------------------------------------
+
+Na~podstawie proponowanego modelu MODF i~przeprowadzonej
+analizy naukowej, niniejszy artykuł formułuje następujące
+rekomendacje adresowane do~kluczowych interesariuszy:
+
+\subsubsection{Rekomendacje dla Apimondia}
+
+\begin{enumerate}
+    \item \textbf{Uzupełnić stanowisko z~2023~roku o~kryterium
+          $a_w$:} rekomendacja Apimondia powinna explicite
+          wskazywać, że~obecność drożdży osmofilnych
+          w~miodzie nie~stanowi przesłanki do~stwierdzenia
+          niedojrzałości, jeśli wilgotność $\leq 20\%$
+          i~$a_w < 0{,}60$; oba parametry powinny być
+          wymienione jako jednoczesne warunki
+          konieczne~\cite{ruegg1981,waaw2006};
+%     \item \textbf{Przyjąć wieloparametryczną definicję
+%           niedojrzałości:} niedojrzały jest miód, który jednocześnie
+%           wykazuje wilgotność $> 20\%$, aktywność wody
+%           $a_w > 0{,}62$, obniżony profil enzymatyczny
+%           i~brak stabilności chemicznej, nie~zaś miód,
+%           który wyłącznie wykazuje liczbę drożdży powyżej
+%           arbitralnego progu;
+    \item \textbf{Uwzględnić regionalne zróżnicowanie systemów
+          produkcji:} stanowisko powinno zawierać
+          wyraźną klauzulę dotyczącą miodów z~klimatu
+          tropikalnego i~systemów tradycyjnych,
+          uznającą dehumidyfikację technologiczną
+          za~legalną praktykę produkcyjną~\cite{tadele2025} lub wykluczać konkretne techniki dehumidyfikacji, które negatywnie wpływają na produkt;
+    \item \textbf{Zainicjować dialog z~ISO TC~34/SC~17:}
+          norma ISO 24607:2025 dotycząca miodu pszczelego
+          powinna zostać rozszerzona o~kryterium $a_w$
+          jako parametru normatywnego;~\cite{codex_stan12}.
+\end{enumerate}
+
+\subsubsection{Rekomendacje dla organów UE (KE, DG SANTE)}
+
+\begin{enumerate}
+    \item \textbf{Wdrożyć $a_w$ jako obligatoryjny parametr
+          kontrolny} podczas urzędowych kontroli jakości miodu w tym każdorazowo przez inspekcje graniczne dla~partii miodu
+          importowanego z~krajów tropikalnych (Afryka Wschodnia,
+          Azja Południowo-Wschodnia, Ameryka Łacińska);          
+%     \item \textbf{Rozszerzyć projekt European Honey Platform
+%           (uruchomiony w~2024~roku) o~globalne bazy
+%           referencyjne NMR i~metabolomiczne,} reprezentujące
+%           systemy produkcji tropikalnej i~tradycyjnej;
+%           bez~tych baz zaawansowane metody omiczne nie~mogą
+%           pełnić funkcji narzędzi kontrolnych dla~importu
+%           z~tych regionów~\cite{schoder2026,honeyid2025};
+%     \item \textbf{Wypracować protokół oceny warunków
+%           \emph{post-harvest}:} inspekcje graniczne powinny
+%           uwzględniać dokumentację temperaturową i~wilgotnościową
+%           łańcucha dostaw; fermentacja stwierdzona
+%           w~chwili kontroli nie~powinna być automatycznie
+%           interpretowana jako wada produkcyjna bez~analizy
+%           warunków transportu i~magazynowania~\cite{analytica2020,apinz2021};
+%     \item \textbf{Promować wdrożenie NMR i~LC-IRMS
+%           jako metod pierwszorzędowych} w~inspekcjach
+%           granicznych dla~partii powyżej 5~ton, zastępując
+%           lub~uzupełniając kosztowną metodę SNIF-NMR;
+%           zastosowanie platformy Bruker FoodScreener
+%           pozwala na~wynik w~ciągu 30~minut i~jest
+%           kalibrowalne dla~nowych typów geograficznych~\cite{nmrhoney2023,schoder2026}.
+\end{enumerate}
+
+\subsubsection{Rekomendacje dla laboratoriów i środowiska naukowego}
+
+\begin{enumerate}
+    \item \textbf{Standaryzować protokół wieloparametrycznej
+          oceny mikrobiologicznej} obejmujący jednoczesny
+          pomiar CFU/g, $a_w$, temperatury i~stanu fazowego
+          miodu (płynny/skrystalizowany); wyniki powinny
+          być raportowane łącznie, nie~jako izolowane
+          wartości~\cite{zamora2006,analytica2020};
+    \item \textbf{Walidować wielolaboratoryjnie biomarker
+          kwasu dekenodwukarboksylowego} i~rozszerzyć jego
+          weryfikację poza trzy typy botaniczne (rzepak,
+          akacja, jujube) na~miody tropikalne, stingless bee
+          i~tradycyjne systemy produkcji~\cite{sun2021};
+    \item \textbf{Rozwijać przenośne narzędzia analizy \textit{in situ}:}
+          miniaturyzowane spektrometry NIR i~Raman
+          pozwalają na~pomiar wilgotności, $a_w$
+          i~profilu cukrowego bezpośrednio w~pasiece
+          lub~na~granicy, z~dokładnością porównywalną
+          z~metodami laboratoryjnymi~\cite{honeyid2025,schoder2026}.
+\end{enumerate}

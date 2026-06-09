@@ -1,0 +1,155 @@
+%  LaTeX support: latex@mdpi.com 
+%  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
+
+%=================================================================
+\documentclass[foods,review,submit,pdftex,moreauthors,lineno=false]{Definitions/mdpi} 
+
+\usepackage{lineno}
+\let\linenumbers\relax
+\let\internallinenumbers\relax
+\nolinenumbers
+
+%=================================================================
+% MDPI internal commands - do not modify
+\firstpage{1} 
+\makeatletter 
+\setcounter{page}{\@firstpage} 
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2026}
+\copyrightyear{2026}
+%\externaleditor{Firstname Lastname} % More than 1 editor, please add `` and '' before the last editor name
+\datereceived{ } 
+
+\daterevised{ } % Comment out if no revised date
+\dateaccepted{ } 
+\datepublished{ } 
+%\usepackage[colorlinks, textwidth=30pt]{todonotes}
+%\datecorrected{} % For corrected papers: "Corrected: XXX" date in the original paper.
+%\dateretracted{} % For retracted papers: "Retracted: XXX" date in the original paper.
+%\doinum{} % Used for some special journals, like molbank
+%\pdfoutput=1 % Uncommented for upload to arXiv.org
+%\CorrStatement{yes}  % For updates
+%\longauthorlist{yes} % For many authors that exceed the left citation part
+%\IsAssociation{yes} % For association journals
+
+%=================================================================
+% Add packages and commands here. The following packages are loaded in our class file: fontenc, inputenc, calc, indentfirst, fancyhdr, graphicx, epstopdf, lastpage, ifthen, float, amsmath, amssymb, lineno, setspace, enumitem, mathpazo, booktabs, titlesec, etoolbox, tabto, xcolor, colortbl, soul, multirow, microtype, tikz, totcount, changepage, attrib, upgreek, array, tabularx, pbox, ragged2e, tocloft, marginnote, marginfix, enotez, amsthm, natbib, hyperref, cleveref, scrextend, url, geometry, newfloat, caption, draftwatermark, seqsplit
+% cleveref: load \crefname definitions after \begin{document}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+% ulem provides \sout{} for struck-through revision markup; normalem keeps \emph as italic
+\usepackage[normalem]{ulem}
+% #R2.6: TikZ libraries needed for FMAM flowchart figure
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+
+%=================================================================
+% Please use the following mathematics environments: Theorem, Lemma, Corollary, Proposition, Characterization, Property, Problem, Example, ExamplesandDefinitions, Hypothesis, Remark, Definition, Notation, Assumption
+%% For proofs, please use the proof environment (the amsthm package is loaded by the MDPI class).
+
+%=================================================================
+% Full title of the paper (Capitalized)
+\Title{Immature Honey as a Quality Challenge in Global Apicultural Production}
+
+% Author Orchid ID: enter ID or remove command
+\newcommand{\orcidauthorA}{0009-0004-1158-0693} % Add \orcidA{} behind the author's name
+\newcommand{\orcidauthorB}{0009-0003-7214-4097} % Add \orcidB{} behind the author's name
+\newcommand{\orcidauthorC}{0000-0001-9178-1540} % Add \orcidB{} behind the author's name
+\newcommand{\orcidauthorD}{0000-0003-2580-7954} % Add \orcidB{} behind the author's name
+\newcommand{\orcidauthorE}{0000-0003-3900-7368} % Add \orcidB{} behind the author's name
+\newcommand{\orcidauthorF}{0000-0002-0754-0806}
+% Authors, for the paper (add full first names)
+\Author{Anna Gajda $^{1}$\orcidE{}, 
+ Bartosz Lewandowski $^{2}$\orcidA{}, 
+ Przemysław Rujna $^{3}$\orcidB{},
+ Joanna Katarzyna Banach* $^{4}$\orcidC{},
+ Renata Pietrzak-Fiećko$^{5}$\orcidF{},
+ Ewaryst Tkacz $^{6}$\orcidD{}}
+
+%\longauthorlist{yes}
+
+% MDPI internal command: Authors, for metadata in PDF
+\AuthorNames{Anna Gajda, Bartosz Lewandowski, Przemysław Rujna, Joanna Katarzyna Banach,  Renata Pietrzak-Fiećko, Ewaryst Tkacz}
+
+%\longauthorlist{yes}
+
+% Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
+\address{%
+$^{1}$ \quad Laboratory of Bee Diseases, Institute of Veterinary Medicine, Warsaw University of Life Sciences, 02-787 Warsaw, Poland; anna\_gajda@sggw.edu.pl\\
+$^{2}$ \quad Department of Clinical Engineering, Academy of Silesia in Katowice, 40-555 Katowice, Poland; bartosz.lewandowski@akademiaslaska.pl\\
+$^{3}$ \quad Polish Honey Chamber Association, 87-100 Toruń, Poland; przemyslaw@rujna.pl\\
+$^{4}$ \quad Institute of Management and Quality Sciences, Faculty of Economics, University of Warmia and Mazury in Olsztyn, 10-719 Olsztyn, Poland;  katarzyna.banach@uwm.edu.pl\\
+$^{5}$ \quad Department of Commodity Science and Food Analysis, Faculty of Food Sciences, University of Warmia and Mazury in Olsztyn, 10-719 Olsztyn, Poland; renap@uwm.edu.pl\\
+$^{6}$ \quad Department of Clinical Engineering, Academy of Silesia in Katowice, 40-555 Katowice, Poland; ewaryst.tkacz@akademiaslaska.pl\\
+
+}
+
+% Contact information of the corresponding author
+\corres{Correspondence: katarzyna.banach@uwm.edu.pl}
+
+\abstract{Honey maturity is increasingly discussed in relation to product integrity, fair trade, and the classification of immature honey production as a form of adulteration. This narrative critical review examines honey maturity using evidence from peer-reviewed microbiological, physicochemical, and metabolomic studies, combined with an analysis of international and European regulatory frameworks, including Codex Alimentarius CXS 12-1981, Council Directive 2001/110/EC, Regulation (EC) No 178/2002, and Regulation (EC) No 852/2004. Particular attention is given to the interpretation of osmophilic yeast counts, water activity (\texorpdfstring{$a_w$}{aw}), moisture content, comb cell capping, fermentation, and technological dehumidification. The reviewed evidence indicates that osmophilic yeasts are natural components of honey and that their presence, expressed as colony-forming units per gram (CFU/g), should not be treated as an independent non-compliance criterion in the absence of active fermentation. Existing honey standards define compositional and quality requirements, including moisture, hydroxymethylfurfural, enzymatic activity, and absence of fermentation or effervescence, but do not establish a honey-specific CFU/g limit for yeasts. On this basis, the review formulates a functional maturity assessment framework integrating \texorpdfstring{$a_w$}{aw}, moisture, enzymatic indicators, and metabolomic biomarkers. % #R2.2 #R3: Clarified that the FMAM is a conceptual proposal — not a meta-analysis output — and requires validation; addresses reviewer concern about article type
+\textcolor{blue}{The proposed framework is presented as a conceptual model derived from the synthesis of existing literature and requiring further multilaboratory validation prior to adoption in official control practice.} This approach may improve proportionality in honey quality assessment and reduce the risk of misclassifying microbiologically stable honeys as immature or adulterated.
+}
+
+% Keywords
+\keyword{honey maturity; immature honey; osmophilic yeasts; water activity; fermentation risk; honey adulteration; metabolomic biomarkers; honey regulatory standards.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\nolinenumbers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setcounter{section}{-1} %% Remove this when starting to work on the template.
+\include{en/wstep}
+\include{en/regulacje}
+\include{en/biologia}
+\include{en/mikrobiologia}
+\include{en/globalne-systemy}
+\include{en/rynek-ue}
+\include{en/propozycja-model}
+\include{en/wnioski}
+
+
+ 
+
+
+
+\acknowledgments{During the preparation of this work, the authors used Clause Sonnet 4.6 (Anthropic) in order to improve the readability and language of the manuscript. The authors have reviewed and edited the output and take full responsibility for the content of this publication.}
+
+\authorcontributions{Conceptualization, A.G., B.L., P.R., and J.K.B.
+methodology, A.G., B.L., and P.R.
+investigation, A.G., B.L., and P.R.,
+resources, A.G., B.L., P.R.,
+formal analysis, A.G., B.L., P.R., 
+writing - original draft preparation, A.G., B.L., P.R., J.K.B., R. P-F, and E.T.
+writing - review and editing, A.G., B.L., P.R., J.K.B. 
+supervision, A.G., B.L., P.R., J.K.B., R. P-F.
+project administration, B.L., P.R., J.K.B. 
+funding acquisition, P.R.
+All authors have read and agreed to the published version of the manuscript.}
+
+\funding{No external funding was received for the preparation of this manuscript. The article processing charge (APC) will be covered by by Stowarzyszenie Polska Izba Miodu (Polish Honey Chamber Association). The APC funder had no role in the preparation of the manuscript or in the decision to submit it for publication.}
+
+\conflictsofinterest{The authors declare no conflicts of interest.}
+\institutionalreview{Not applicable.}
+\informedconsent{Statement: Not applicable.}
+\dataavailability{No new data were created or analyzed in this study. Data sharing is not applicable to this article.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\isPreprints{}{% This command is only used for ``preprints''.
+\begin{adjustwidth}{-\extralength}{0cm}
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+%\printendnotes[custom] % Un-comment to print a list of endnotes
+
+\reftitle{References}
+
+\bibliography{bibliografia}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\PublishersNote{}
+%\isPreprints{}{% This command is only used for ``preprints''.
+\end{adjustwidth}
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+\end{document}
+

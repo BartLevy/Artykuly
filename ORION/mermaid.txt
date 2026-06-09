@@ -1,0 +1,28 @@
+Przykladowy graf
+
+
+flowchart TD
+    v0["v₀ — Organizacja [✓]\n(DORA / głębokość 0)"]
+
+    v1["v₁ - ERP [✓]\nKRYTYCZNY · on-premise\nS=0,91"]
+    v2["v₂ - CRM [~]\nWAŻNY · chmura EOG\nS=0,78"]
+    v3["v₃ - Portal SaaS [✗]\nSTANDARDOWY · kraj trzeci\nS=0,48"]
+
+    d1["d₁ - Dostawca Cloud EOG [~]\nS=0,72"]
+    d2["d₂ - Dostawca US [✗!!]\nFLAG_TIA aktywna\nS=0,31"]
+
+    p1("p₁ - CDN USA [!!]\nPoddostawca (TIA trigger)\nS=0,20")
+
+    v0 --> v1
+    v0 --> v2
+    v0 --> v3
+
+    v1 --> d1
+    v2 --> d1
+    v3 --> d2
+
+    d2 -.->|TIA trigger| p1
+
+    style p1 ry:50px,rx:50px
+
+
