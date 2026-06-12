@@ -119,7 +119,7 @@ Na podstawie powyższych atrybutów aktywowano następujące sekcje pytań:
 
   \item \textit{Dostawcy ICT} (aktywacja warunkowa: $\textit{utrzymanie\_chmura}(v) \in \{\texttt{CHMURA\_EOG},\\\texttt{CHMURA\_K3}\}$): ocena zarządzania ryzykiem zewnętrznego dostawcy ICT, w tym due diligence przedkontraktowe, kompletność wymogów umownych (SLA, prawo do audytu, klauzula exit) oraz monitorowanie sub-procesorów.
 
-  \item \textit{Plan wyjścia z usługi (exit plan)} (aktywacja warunkowa: $\textit{typ obiektu}(v) = \texttt{DOSTAWCA}\; \land\; \textit{klasyfikacja}$ $\textit{podmiotu}(v) = \texttt{FINANSOWY}$): weryfikacja planu wyjścia z relacji z dostawcą, obejmująca zdolność do pełnego eksportu danych w formacie otwartym, zmierzony czas migracji (RTE) oraz identyfikację alternatywnego dostawcy.
+  \item \textit{Plan wyjścia z usługi (exit plan)} (aktywacja warunkowa: $\textit{typ obiektu}(v) = \texttt{SYSTEM\_INFORMATYCZNY}\; \land\; \textit{klasyfikacja podmiotu}(v) \in \{\texttt{FINANSOWY},\ \texttt{KLUCZOWY}\}$): weryfikacja planu wyjścia z relacji z dostawcą, obejmująca zdolność do pełnego eksportu danych w formacie otwartym, zmierzony czas migracji (RTE) oraz identyfikację alternatywnego dostawcy.
 
   \item \textit{Plan ciągłości działania (BCP)} (aktywacja warunkowa: $\textit{krytyczność}(v) \in \{\texttt{KRYTYCZNY}, \\\texttt{WAŻNY}\}$ oraz klasyfikacja podmiotu \texttt{FINANSOWY}): ocena planów BCP i DRP, wskaźników RTO i RPO, scenariuszy odtwarzania po awarii dostawcy chmury oraz kopii zapasowych izolowanych od infrastruktury produkcyjnej.
 \end{enumerate}
@@ -330,7 +330,7 @@ Sekcja plan ciągłości działania obejmuje pięć obszarów dotyczących gotow
 \item \textit{Scenariusz awarii kaskadowej w łańcuchu dostaw} (DORA art.~11, art.~29 ust.~1): organizacja opracowała scenariusz awarii kaskadowej uwzględniający drzewo zależności między dostawcami różnych poziomów i potencjalny wpływ awarii jednego węzła na dostępność funkcji krytycznych. Scenariusz był symulowany w ramach testów BCP. Użytkownicy zostali zapoznani z koncepcją ryzyka kaskadowego podczas sesji audytowej, uzyskując praktyczne zrozumienie tego, w jaki sposób awaria jednego systemu lub dostawcy może propagować się na inne elementy infrastruktury banku.
 \end{enumerate}
 
-Wyniki sekcji plan ciągłości działania potwierdzają dojrzałość organizacyjną banku w zakresie zarządzania ciągłością działania. Szczególnie istotne jest przeprowadzenie testów z rzeczywistym przełączeniem środowiska, a nie jedynie ćwiczeń stołowych, co odpowiada wzorcowi empirycznej weryfikacji obserwowanemu w sekcji Exit Plab. Wspólnym mianownikiem rekomendacji dla obu tych sekcji jest potrzeba systematycznego włączania personelu operacyjnego w ćwiczenia i szkolenia, tak aby procedury kryzysowe były znane i zrozumiałe nie tylko na poziomie zarządu i działu IT, ale również przez pracowników bezpośrednio obsługujących audytowane systemy.
+Wyniki sekcji plan ciągłości działania potwierdzają dojrzałość organizacyjną banku w zakresie zarządzania ciągłością działania. Szczególnie istotne jest przeprowadzenie testów z rzeczywistym przełączeniem środowiska, a nie jedynie ćwiczeń stołowych, co odpowiada wzorcowi empirycznej weryfikacji obserwowanemu w sekcji Exit Plan. Wspólnym mianownikiem rekomendacji dla obu tych sekcji jest potrzeba systematycznego włączania personelu operacyjnego w ćwiczenia i szkolenia, tak aby procedury kryzysowe były znane i zrozumiałe nie tylko na poziomie zarządu i działu IT, ale również przez pracowników bezpośrednio obsługujących audytowane systemy.
 
 \subsection{Podsumowanie wyników audytu i obliczenie $S_{total}$}
 
@@ -440,7 +440,7 @@ S(\text{DOS}) = \frac{6 \times 2{,}0 \times 1{,}0 + 1 \times 1{,}0 \times 1{,}0}
 S(\text{EP}) = \frac{4 \times 2{,}0 \times 1{,}0 + 1 \times 1{,}0 \times 1{,}0 + 1 \times 0{,}5 \times 1{,}0 + 1 \times 2{,}0 \times 0{,}0}{4 \times 2{,}0 + 1 \times 1{,}0 + 1 \times 0{,}5 + 1 \times 2{,}0} = 
 \]
 \[
-S\frac{8 + 1 + 0{,}5 + 0}{8 + 1 + 0{,}5 + 2} = \frac{9{,}5}{11{,}5} \approx 0{,}826
+= \frac{8 + 1 + 0{,}5 + 0}{8 + 1 + 0{,}5 + 2} = \frac{9{,}5}{11{,}5} \approx 0{,}826
 \]
 \vspace{0.5em}
 
@@ -474,7 +474,7 @@ S_{total}(\text{CTN}) = \frac{1}{9} \sum_{\mathcal{S}_k} S(\mathcal{S}_k)
 \midrule
 Organizacja & $1{,}000$ & 0 & \\
 Bezpieczeństwo fizyczne & $0{,}846$ & 2 & zalecane \\
-Bezpieczeństwo techniczna & $1{,}000$ & 0 & \\
+Bezpieczeństwo techniczne & $1{,}000$ & 0 & \\
 System informatyczny & $0{,}889$ & 1 & obowiązkowe \\
 Usługi w chmurze & $1{,}000$ & 0 & \\
 Dane poufne & $1{,}000$ & 0 & \\

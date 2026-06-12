@@ -27,7 +27,7 @@ Pytania w sekcji:\\\\
 
 Niniejszy rozdział opisuje pełny algorytm przeprowadzenia audytu zgodności systemów informatycznych w metodologii ORION.
 Audyt jest procesem iteracyjnym, co oznacza, że po zakończeniu jednego etapu audytor przechodzi do kolejnego, składającym się z pięciu faz następujących po sobie w ściśle określonej kolejności. 
-Każda faza produkuje dane wejściowe dla fazy następnej, a wynik całości, czyli ocena zgodności podmiotu z aktualnym stanem regulacyjnym z punktu widzenia ITC,  jest wynikiem wszystkich odpowiedzi na każdym etapie.
+Każda faza produkuje dane wejściowe dla fazy następnej, a wynik całości, czyli ocena zgodności podmiotu z aktualnym stanem regulacyjnym z punktu widzenia ICT,  jest wynikiem wszystkich odpowiedzi na każdym etapie.
 Schemat ogólny procesu przedstawia rysunek~\ref{fig:fazy-audytu}.
 
 \begin{figure}[H]
@@ -64,7 +64,7 @@ Schemat ogólny procesu przedstawia rysunek~\ref{fig:fazy-audytu}.
 % ============================================================
 
 Audyt rozpoczyna się od ustalenia tożsamości regulacyjnej audytowanego podmiotu. Wynik tej fazy determinuje, które zestawy pytań zostaną zaprezentowane w dalszych etapach, jakie wymogi mają charakter obligatoryjny, a jakie fakultatywne oraz jakie progi klasyfikacji dostawców kluczowych będą stosowane. 
-Faza pierwsza składa się z dwóch kroków wykonywanych wyłącznie raz, przed przystąpieniem do analizy jakiegokolwiek obiektu i~dotyczy globalnie całe orgnanizacji.
+Faza pierwsza składa się z dwóch kroków wykonywanych wyłącznie raz, przed przystąpieniem do analizy jakiegokolwiek obiektu i~dotyczy globalnie całej organizacji.
 
 \subsection{Krok 1.1: Ustalenie reżimu regulacyjnego}
 \label{sec:krok11}
@@ -117,7 +117,7 @@ Audytor przeprowadza inwentaryzację wszystkich systemów informatycznych eksplo
 Należy również przeskanować systemy informatyczne w celu zaintwentaryzowania zainstalowanego oprogramowania, na rynku dostępne są do tego narzędzia typu \textit{open source}.
 
 Kluczowe w inwentaryzacji jest podejście wieloperspektywiczne: inwentaryzacja przeprowadzana wyłącznie przez dział IT często pomija systemy zakupione i~utrzymywane bezpośrednio przez jednostki biznesowe (\textit{shadow IT}), podczas gdy wywiad z właścicielami biznesowymi i~prawnikami ujawnia dodatkowe systemy i~usługi SaaS nieprzechodzące przez standardowy proces zakupów IT.
-Wynikiem operacji indetyfikacji będzie lista obiektów typu \texttt{SYSTEM\_INFORMATYCZNY}, która będzie dołączona do grafu ITC.
+Wynikiem operacji identyfikacji będzie lista obiektów typu \texttt{SYSTEM\_INFORMATYCZNY}, która będzie dołączona do grafu ICT.
 
 \subsection{Krok 2.2: Identyfikacja bezpośrednich dostawców}
 \label{sec:krok22}
@@ -241,7 +241,7 @@ zawiera pola z danymi PII
 \begin{itemize}
 \item \textbf{Perspektywa zgodności:} Czy system podlega
 regulacjom sektorowym
-(np.\ DORA, NIS2, Rekomendacja D KNF)?
+(np.\ DORA, NIS2, ustawa KSC)?
 \item \textbf{Perspektywa użytkownika:} Czy system był
 przedmiotem pytań audytorów lub regulatorów
 podczas kontroli?
@@ -354,8 +354,8 @@ Poniższe kryteria służą do określenia, czy system jest rozwiązaniem on-pre
 
 \begin{itemize}
 \item \textbf{Perspektywa zgodności:} Czy dane przetwarzane przez system są przechowywane w lokalizacji określonej przez dostawcę zewnętrznego oraz czy przeprowadzono pełne TIA?
-\item \textbf{Perspektywa użytkownika:} Czy jako użytkownik systemu masz pewności, czy fizycznie dane przechowywane są na serwerach kraju EOG?
-\item \textbf{Perspektywa techniczna:} Czy kopie zapasowe lub dane produkcyjne systemu są składowane na zasobach poza kontrolą  dministracyjną organizacji?
+\item \textbf{Perspektywa użytkownika:} Czy jako użytkownik systemu masz pewność, że fizycznie dane przechowywane są na serwerach kraju EOG?
+\item \textbf{Perspektywa techniczna:} Czy kopie zapasowe lub dane produkcyjne systemu są składowane na zasobach poza kontrolą administracyjną organizacji?
 \end{itemize}
 
 % ============================================================
@@ -602,7 +602,7 @@ Pytania w tej sekcji służą do oceny zgodności transferów danych osobowych r
 \paragraph{Trigger identyfikacji poddostawców i~TIA}\mbox{}\\
 \label{sec:trigger-tia}
 
-Jednym z najpoważniejszych i~najczęściej pomijanych problemów współczesnej praktyki compliance jest zjawisko \textit{deklaratywnego zatrzymania łańcucha} analizy poddostawcóœ: 
+Jednym z najpoważniejszych i~najczęściej pomijanych problemów współczesnej praktyki compliance jest zjawisko \textit{deklaratywnego zatrzymania łańcucha} analizy poddostawców: 
 organizacja lub jej dostawca deklaruje zgodność z wymogami regulacyjnymi dotyczącymi miejsca przetwarzania danych, nie weryfikując jednak,
 czy deklaracja ta jest prawdziwa w odniesieniu do wszystkich ogniw łańcucha dostaw ICT leżących poniżej.
 
@@ -635,7 +635,7 @@ Zbiór warunków aktywujących trigger:
 \;\vee\;
 \bigl(\textit{lokalizacja danych}(v) \neq \texttt{EOG}\bigr) \\
 \;\vee\;
-\bigl(\textit{wsparcie systemu}(v) \neq \texttt{EOG}\bigr) \\
+\bigl(\textit{wsparcie systemu}(v) \neq \texttt{EOG}\bigr)
 \label{eq:ctia}
 \end{multline}
 
@@ -1098,7 +1098,6 @@ Plan ciągłości działania
 \midrule
 Exit plan
 & --- & $0{,}30$ & $0{,}25$ & --- & $0{,}28$ \\
-\hline
 \midrule
 \textbf{Wynik obiektu $S_{total}$}
 & $0{,}86$ & $0{,}55$ & $0{,}48$ & $0{,}31$ & \\
