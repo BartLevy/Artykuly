@@ -1053,7 +1053,7 @@
       \verb https://www.enisa.europa.eu/publications/eucs-cloud-service-scheme
       \endverb
     \endentry
-    \entry{ec_workprogramme2026}{misc}{}{}
+    \entry{cada2026}{misc}{}{}
       \name{author}{1}{}{%
         {{hash=b283c636af01e679dd89b225b86542e3}{%
            family={{Komisja Europejska}},
@@ -1072,7 +1072,41 @@
       \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{note}{Inicjatywa Cloud and AI Development Act (CADA) planowana na I kwartał 2026 r., podstawa prawna: art. 114 TFUE}
+      \field{month}{6}
+      \field{number}{COM(2026) 502}
+      \field{title}{Proposal for a Regulation of the European Parliament and of the Council on Cloud and AI Development (CADA)}
+      \field{urlday}{11}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{year}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://digital-strategy.ec.europa.eu/pl/library/proposal-cloud-and-ai-development-act-cada
+      \endverb
+      \verb{url}
+      \verb https://digital-strategy.ec.europa.eu/pl/library/proposal-cloud-and-ai-development-act-cada
+      \endverb
+    \endentry
+    \entry{ec_workprogramme2026}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=b283c636af01e679dd89b225b86542e3}{%
+           family={{Komisja Europejska}},
+           familyi={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{fullhash}{b283c636af01e679dd89b225b86542e3}
+      \strng{fullhashraw}{b283c636af01e679dd89b225b86542e3}
+      \strng{bibnamehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authorbibnamehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authornamehash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authorfullhash}{b283c636af01e679dd89b225b86542e3}
+      \strng{authorfullhashraw}{b283c636af01e679dd89b225b86542e3}
+      \field{extraname}{5}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Inicjatywa Cloud and AI Development Act (CADA) zapowiedziana na I kwartał 2026 r.; wniosek złożony 3 czerwca 2026 jako COM(2026) 502; podstawa prawna: art. 114 TFUE}
       \field{number}{COM(2025) 870}
       \field{title}{Commission Work Programme 2026}
       \field{urlday}{21}
@@ -1415,8 +1449,8 @@
       \strng{authornamehash}{cbf44511d041dc6d1dd73cc0c033122c}
       \strng{authorfullhash}{cbf44511d041dc6d1dd73cc0c033122c}
       \strng{authorfullhashraw}{cbf44511d041dc6d1dd73cc0c033122c}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{note}{Dostęp: 2026}
@@ -1443,8 +1477,8 @@
       \strng{authornamehash}{44a1c4b7ba9d5f437a861be9db542c0d}
       \strng{authorfullhash}{44a1c4b7ba9d5f437a861be9db542c0d}
       \strng{authorfullhashraw}{44a1c4b7ba9d5f437a861be9db542c0d}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{note}{Dostęp: 2026}
@@ -1471,8 +1505,8 @@
       \strng{authornamehash}{052210b7c0d3a3d74d4afec950dbfc53}
       \strng{authorfullhash}{052210b7c0d3a3d74d4afec950dbfc53}
       \strng{authorfullhashraw}{052210b7c0d3a3d74d4afec950dbfc53}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{note}{Cytowane w: Auvik (2024), dostęp: 2026}
@@ -1675,8 +1709,8 @@
       \strng{authornamehash}{0805c245df0be5dd599819093684f86f}
       \strng{authorfullhash}{0805c245df0be5dd599819093684f86f}
       \strng{authorfullhashraw}{0805c245df0be5dd599819093684f86f}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{note}{Dostęp: 10 marca 2026}
@@ -1709,8 +1743,8 @@
       \strng{authornamehash}{64f6752446501f4e654f51a93be683dc}
       \strng{authorfullhash}{64f6752446501f4e654f51a93be683dc}
       \strng{authorfullhashraw}{64f6752446501f4e654f51a93be683dc}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{month}{5}
@@ -1742,8 +1776,8 @@
       \strng{authornamehash}{000a9a0d5f0f06101811874d891db3a2}
       \strng{authorfullhash}{000a9a0d5f0f06101811874d891db3a2}
       \strng{authorfullhashraw}{000a9a0d5f0f06101811874d891db3a2}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Official Journal of the European Union}
@@ -1959,8 +1993,8 @@
       \strng{authornamehash}{80aa98237e6944f6fad8eaf2054f7a2f}
       \strng{authorfullhash}{80aa98237e6944f6fad8eaf2054f7a2f}
       \strng{authorfullhashraw}{80aa98237e6944f6fad8eaf2054f7a2f}
-      \field{sortinit}{9}
-      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{Strona instytucjonalna AFM}

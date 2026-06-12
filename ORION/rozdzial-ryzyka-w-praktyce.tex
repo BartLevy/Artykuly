@@ -1,9 +1,9 @@
 \chapter{Ryzyka w praktyce: zagrożenia, konsekwencje i dobre praktyki}
 
-Zrozumienie architektury środowiska organizacji oraz pełna inwentaryzacja usług jest kluczem do prawidłowego zarządzania ryzykiem ICT. Badania przeprowadzone przez firmę \textit{Swimlane} wykazały, że~71\% organizacji nie jest w~stanie całościowo dokonać audytu wszystkich systemów zgodnie z~wewnętrznymi i~zewnętrznymi standardami \autocite{swimlane2025grc}.
-Badani wskazują jako przyczyny:
+Zrozumienie architektury środowiska organizacji oraz pełna inwentaryzacja usług jest kluczem do prawidłowego zarządzania ryzykiem ICT. Badania przeprowadzone przez firmę \textit{Swimlane} wykazały, że~71\% organizacji nie jest w~stanie całościowo dokonać audytu wszystkich systemów zgodnie z~wewnętrznymi i~zewnętrznymi standardami \autocite{swimlane2025grc}.\\
+Badanie wskazują jako przyczyny:
 
-\begin{itemize}
+\begin{enumerate}[label=(\roman*)]
     \item \textit{Fragmentację narzędzi}: 92\% respondentów korzysta
           z~co najmniej trzech różnych narzędzi do zbierania dowodów
           audytowych, co powoduje powielanie pracy i~niespójność danych;
@@ -20,7 +20,7 @@ Badani wskazują jako przyczyny:
     \item \textit{Rosnącą złożoność regulacyjną}: 96\% organizacji
           twierdzi, że dotrzymanie kroku rosnącej liczbie regulacji
           branżowych stanowi istotne wyzwanie.
-\end{itemize}
+\end{enumerate}
 
 
 Jakość prowadzonych audytów bywa podważana przez samych badanych. Brak kompetencji osób wypełniających kwestionariusze audytowe nie gwarantuje poprawności udzielanych odpowiedzi.
@@ -31,8 +31,7 @@ wynikami, co wskazuje na efekt Dunninga-Krugera w~środowisku audytorskim \autoc
 
 Dodatkowym problemem obniżającym jakość audytów jest zjawisko nierzetelnego wypełniania kwestionariuszy przez respondentów. Badania z zakresu ekonomii behawioralnej wskazują, że nieuczciwość w~systemach samoraportowania jest powszechna, Friesen i~Gangadharan wykazali eksperymentalnie, że~respondenci częściej podają prawdziwe
 informacje w~reżimach raportowania obowiązkowego niż dobrowolnego, co sugeruje, iż~bez odpowiednio zaprojektowanych mechanizmów egzekwowania trudno osiągnąć satysfakcjonujący poziom zgodności
-odpowiedzi ze~stanem faktycznym \autocite{friesen2013designing}. Potwierdzają to badania Peer i~in., którzy wykazali, że~zobowiązanie do złożenia przysięgi uczciwości zmniejsza skłonność do nieuczciwości
-(\textit{OR} = 0{,}79 [0{,}72; 0{,}88]), jednak sama relacja interpersonalna między wypełniającym a~audytorem nie wywiera istotnego wpływu na~rzetelność odpowiedzi
+odpowiedzi ze~stanem faktycznym \autocite{friesen2013designing}. Potwierdzają to badania Peer i~in., którzy wykazali, że~zobowiązanie do złożenia przysięgi uczciwości zmniejsza skłonność do nieuczciwości (wyrażona w miarze statystycznej ,,iloraz szans'' (ang.  \textit{Odds Ration, OR})): \textit{OR} = 0{,}79 [0{,}72; 0{,}88], jednak sama relacja interpersonalna między wypełniającym a~audytorem nie wywiera istotnego wpływu na~rzetelność odpowiedzi
 (\textit{OR} = 1{,}08 [0{,}97; 1{,}20]) \autocite{peer2023commitment}.
 Oznacza to, że~dowody pozyskane poprzez nieusystematyzowane, dobrowolne kwestionariusze audytowe mogą być obarczone istotną słabością metodologiczną, a~ich wartość jako podstawy oceny ryzyka ICT powinna być traktowana z~należytą ostrożnością.
 
@@ -69,7 +68,7 @@ Skala zjawiska jest znaczna. Raport LayerX Security wykazał, że 50\% pracownik
 
 Shadow AI generuje trzy odrębne kategorie ryzyka regulacyjnego.
 
-\begin{itemize}
+\begin{enumerate}[label=(\roman*)]
       \item \textit{Ryzyko naruszenia RODO.}
 Dane przesyłane do modeli generatywnej AI trafiają na serwery dostawców zlokalizowane poza Europejskim Obszarem Gospodarczym. Stanowi to transfer danych osobowych wymagający ważnej podstawy prawnej w~rozumieniu rozdziału~V RODO, takiej jak standardowe klauzule umowne (SCC) lub przynależność dostawcy do Ram Ochrony Prywatności Danych (DPF). W~przypadku Shadow AI transfer ten odbywa się bez wiedzy administratora, co wyklucza spełnienie wymogu rozliczalności z~art.~5 ust.~2 RODO: pracownik, bez stosownego umocowania, dokonuje transferu danych, za~który organizacja ponosi pełną odpowiedzialność.
 
@@ -79,7 +78,7 @@ Korzystanie przez pracownika z~niezatwierdzonego modelu AI do wspomagania decyzj
 
 \item \textit{Ryzyko jakości i~wiarygodności.}
 Modele generatywnej AI mogą generować błędne informacje, określane jako \textit{halucynacje modelu}. Wbudowanie wyników działania niezweryfikowanego modelu w~procesy decyzyjne, na~przykład w~analizy prawne, rekomendacje medyczne lub wyceny finansowe, bez procedury weryfikacji tworzy ryzyko operacyjne, za~które odpowiada organizacja. Warunki korzystania z~większości narzędzi generatywnej AI wprost wyłączają odpowiedzialność dostawcy za~skutki biznesowe zastosowania generowanych treści.
-\end{itemize}
+\end{enumerate}
 
 Podobnie jak Shadow IT, Shadow AI jest diagnozą organizacyjną: pracownicy sięgają po niezatwierdzone modele AI, ponieważ zatwierdzone rozwiązania nie spełniają ich potrzeb lub procedura akceptacji jest zbyt długa. Odpowiedzią nie jest wyłącznie zakaz, lecz wdrożenie zatwierdzonego środowiska AI uzupełnionego polityką dopuszczalnego użycia, która definiuje, jakich danych nie wolno wprowadzać do żadnego zewnętrznego modelu.
 
@@ -87,7 +86,7 @@ Podobnie jak Shadow IT, Shadow AI jest diagnozą organizacyjną: pracownicy się
 \section{Edukacja jako fundament ochrony danych osobowych}
 
 Problem \textit{shadow IT} oraz niewłaściwego posługiwania się danymi osobowymi jest w~znacznej mierze wynikiem niewystarczającego poziomu świadomości i~wiedzy pracowników.
-Badania przeprowadzone przez Stanford University i~firmę Tessian wskazują, że \textbf{88\%~naruszeń} bezpieczeństwa informacji wynika z~błędu ludzkiego, a~nie
+Badania przeprowadzone przez Stanford University i~firmę Tessian wskazują, że 88\%~naruszeń bezpieczeństwa informacji wynika z~błędu ludzkiego, a~nie
 z~działania cyberprzestępców~\autocite{isoqar_blad_ludzki}. Raport Verizon \textit{Data Breach Investigations Report~2024} wskazuje,
 że czynnik ludzki, zdefinowany jako  nieświadome błędy lub brak kompetencji, pozostaje głównym źródłem naruszeń bezpieczeństwa danych ~\autocite{verizon_dbir_2024}.
 Raport \textit{Cyberportret polskiego biznesu} z~2024~roku przedstawił dane dla Polski: ponad połowa pracowników w~polskich firmach nie przeszła żadnego
@@ -116,7 +115,7 @@ Niewłaściwe i~ryzykowne zachowania pracowników można zidentyfikować i~wskaz
 ich źródła. Poniżej przedstawiono najistotniejsze kategorie zachowań, udokumentowane
 przez raporty branżowe, organy nadzoru oraz literaturę naukową.
 
-\begin{itemize}
+\begin{enumerate}[label=(\roman*)]
 
 \item \textit{Przekazywanie danych do narzędzi generatywnej AI.}
 Pracownicy przekazują dane wrażliwe, treści umów, numery PESEL,
@@ -219,7 +218,7 @@ z~których monitorują jedynie ok.\ 108~\autocite{wifitalents_shadow_2025, fidel
 Gartner szacuje, że na typowego pracownika korporacyjnego przypada średnio
 13 aplikacji shadow IT używanych równolegle~\autocite{wifitalents_shadow_2025}.
 
-\end{itemize}
+\end{enumerate}
 
 
 

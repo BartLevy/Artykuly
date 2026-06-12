@@ -526,11 +526,9 @@ Zestaw aktywnych sekcji pytań dla obiektu $v$ jest wyznaczany przez funkcję:
 
 \begin{equation}
 \mathcal{S}(v) =
-\bigcup_{\tau \in \mathcal{T}}
-  \mathcal{S}_{\tau} \cdot \mathbb{1}\bigl[\mathrm{type}(v) = \tau\bigr]
+\bigcup_{\substack{\tau \in \mathcal{T} \\ \mathrm{type}(v)=\tau}} \mathcal{S}_{\tau}
 \;\cup\;
-\bigcup_{k}
-  \mathcal{S}_k \cdot \mathbb{1}\bigl[\Phi_k\bigl(\mathcal{A}(v)\bigr)\bigr]
+\bigcup_{\substack{k \in K \\ \Phi_k(\mathcal{A}(v))}} \mathcal{S}_k
 \label{eq:sekcje}
 \end{equation}
 
@@ -544,6 +542,7 @@ Zestaw aktywnych sekcji pytań dla obiektu $v$ jest wyznaczany przez funkcję:
         i~\texttt{BEZPIECZENSTWO\_FIZYCZNE} są aktywowane
         gdy $\mathrm{type}(v) = \texttt{PODMIOT}$,
         a \texttt{APLIKACJA} gdy $\mathrm{type}(v) = \texttt{SYSTEM\_INFORMATYCZNY}$),
+  \item $K$ jest zbiorem indeksów wszystkich sekcji aktywowanych warunkowo,
   \item $\mathcal{S}_k$ jest $k$-tą sekcją aktywowaną warunkowo
         na podstawie atrybutów obiektu,
   \item $\Phi_k\bigl(\mathcal{A}(v)\bigr)$ jest warunkiem logicznym
@@ -553,6 +552,14 @@ Zestaw aktywnych sekcji pytań dla obiektu $v$ jest wyznaczany przez funkcję:
 \end{itemize}
 
 Pierwszy składnik sumy pokrywa sekcje aktywowane przez \emph{typ} obiektu i~jest niezależny od jego atrybutów. Drugi składnik pokrywa sekcje aktywowane przez \emph{atrybuty} obiektu i~jest niezależny od jego typu. Oba zbiory mogą być rozłączne lub przecinać się, przy czym wynikowy zbiór aktywnych sekcji $\mathcal{S}(v)$ jest ich sumą teoriomnogościową.
+
+\noindent\textbf{Przykład.}
+Dla obiektu $v$ z~$\mathrm{type}(v) = \texttt{SYSTEM\_INFORMATYCZNY}$
+i~atrybutem $\textit{utrzymanie\_chmura}(v) = \texttt{CHMURA\_K3}$
+pierwszy składnik wzoru \eqref{eq:sekcje} daje $\mathcal{S}_{\texttt{SYSTEM\_INFORMATYCZNY}}$,
+a drugi (ponieważ warunek $\Phi_{\texttt{CHMURA}}$ jest spełniony) dodaje $\mathcal{S}_{\texttt{CHMURA}}$.
+Wynikowy zbiór aktywnych sekcji to
+$\mathcal{S}(v) = \mathcal{S}_{\texttt{SYSTEM\_INFORMATYCZNY}} \cup \mathcal{S}_{\texttt{CHMURA}}$.
 
 Pytania zostały podzielone na sekcje zgodnie z klasyfikacją przyjętą w rodziale \ref{perspektywa-pytań} \textit{Perspektywa}. Każda pozycja odnosi się do konkretnego obszaru zagadnień, zawiera podstawę prawną, definicję istotności oraz oznaczenie (flagę binarną) pytania blokującego.
 
@@ -928,7 +935,7 @@ S_{podmiot} =
 \end{equation}
 
 \noindent gdzie:
-\begin{itemize}
+\begin{enumerate}[label=(\roman*)]
   \item $w_{total}(v) = w_{krit}(v) \cdot w_{data}(v)$
   jest łączną wagą obiektu wynikającą z jego
   krytyczności i~klasyfikacji przetwarzanych danych
@@ -941,7 +948,7 @@ S_{podmiot} =
   (wartość domyślna: $\lambda = 0{,}8$),
   określającym, jak mocno niezgodności głębszych
   warstw łańcucha dostaw wpływają na wynik podmiotu.
-\end{itemize}
+\end{enumerate}
 
 Interpretacja współczynnika $\lambda$ jest następująca:
 przy $\lambda = 1{,}0$ niezgodności poddostawcy
@@ -962,7 +969,7 @@ Dostawca kluczowy (\textit{critical ICT third-party service provider}) to dostaw
 Dostawca $v$ jest uznawany za \textbf{kluczowego}
 (\textsc{KeyVendor}), jeżeli spełnia co najmniej
 jeden z następujących warunków:
-\begin{enumerate}
+\begin{enumerate}[label=(\roman*)]
   \item obsługuje co najmniej jeden system
         o klasyfikacji \textbf{KRYTYCZNY}:
         \[
@@ -1008,8 +1015,8 @@ przez audytora).
 
 Innymi słowy: dostawca jest kluczowy, jeśli
 obsługuje choćby jeden system krytyczny 
-\textbf{niezależnie od liczby obsługiwanych systemów} lub jeśli obsługuje co najmniej trzy systemy podmiotu, niezależnie od ich poziomu krytyczności.
-Spełnienie wyłącznie jednego warunku \textbf{jest wystarczające}.
+{niezależnie od liczby obsługiwanych systemów} lub jeśli obsługuje co najmniej trzy systemy podmiotu, niezależnie od ich poziomu krytyczności.
+Spełnienie wyłącznie jednego warunku {jest wystarczające}.
 
 Sekcja \texttt{KONCENTRACJA\_RYZYKA} jest aktywowana
 \textbf{wyłącznie} wtedy, gdy dostawca obsługuje
@@ -1074,22 +1081,22 @@ systemów lub dostawców te obszary dotyczą.
 & \textbf{Dostawca cloud} & \textbf{Poddos-tawca CDN}
 & \textbf{Średnia} \\
 \midrule
-\texttt{ORGANIZACJA}
+Organizacja
 & $0{,}91$ & $0{,}85$ & $0{,}78$ & $0{,}62$ & $0{,}79$ \\
 \midrule
-\texttt{BEZPIECZENSTWO\_TECHNICZNE}
+Bezpieczeństwo techniczne
 & $0{,}88$ & $0{,}72$ & $0{,}65$ & $0{,}41$ & $0{,}67$ \\
 \midrule
-\texttt{TIA}
+Transfer Impact Assessment
 & --- & $0{,}40$ & $0{,}38$ & $0{,}20$ & $0{,}33$ \\
 \midrule
-\texttt{PODDOSTAWCY\_TIA}
+Poddostawcy ICT (TIA)
 & --- & $0{,}10$ & $0{,}15$ & $0{,}10$ & $0{,}12$ \\
 \midrule
-\texttt{CIĄGŁOŚĆ\_DZIAŁANIA}
+Plan ciągłości działania
 & $0{,}80$ & $0{,}75$ & $0{,}50$ & --- & $0{,}68$ \\
 \midrule
-\texttt{EXIT\_PLAN}
+Exit plan
 & --- & $0{,}30$ & $0{,}25$ & --- & $0{,}28$ \\
 \hline
 \midrule
@@ -1168,22 +1175,22 @@ Aktywacja flagi \texttt{FLAG\_TIA} lub flagi \texttt{BLOKUJĄCY} z pytania oblig
 
 Krawędzie grafu ICT różnicowane są typem linii oraz opcjonalną etykietą:
 
-\begin{itemize}
-    \item \textbf{Linia ciągła} ($\rightarrow$) -- standardowa zależność usługowa; system korzysta z usług dostawcy na podstawie umowy;
-    \item \textbf{Linia przerywana} ($\dashrightarrow$) -- krawędź odkryta przez trigger TIA; oznacza poddostawcę niewidocznego na etapie Fazy~2, ujawnionego dopiero w toku analizy kwestionariusza szczegółowego;
-    \item \textbf{Etykieta \texttt{[KV]}} na krawędzi, dostawca kluczowy (\textit{KeyVendor}), spełniający co najmniej jeden warunek z definicji~\ref{def:dostawca-kluczowy}: obsługuje co najmniej jeden system KRYTYCZNY lub obsługuje co najmniej $n_{KV} = 3$ systemy podmiotu.
-\end{itemize}
+\begin{enumerate}[label=(\roman*)]
+    \item \textit{Linia ciągła} ($\rightarrow$) -- standardowa zależność usługowa; system korzysta z usług dostawcy na podstawie umowy;
+    \item \textit{Linia przerywana} ($\dashrightarrow$) -- krawędź odkryta przez trigger TIA; oznacza poddostawcę niewidocznego na etapie Fazy~2, ujawnionego dopiero w toku analizy kwestionariusza szczegółowego;
+    \item \textit{Etykieta \texttt{[KV]}} na krawędzi, dostawca kluczowy (\textit{KeyVendor}), spełniający co najmniej jeden warunek z definicji~\ref{def:dostawca-kluczowy}: obsługuje co najmniej jeden system KRYTYCZNY lub obsługuje co najmniej $n_{KV} = 3$ systemy podmiotu.
+\end{enumerate}
 
 \subsubsection{Przykładowy graf ICT}
 \label{sec:przykladowy-graf}
 
 Poniższy przykład ilustruje strukturę grafu ICT dla przykładowego podmiotu. Podmiot $v_0$ eksploatuje trzy systemy informatyczne:
 
-\begin{itemize}
+\begin{enumerate}[label=(\roman*)]
     \item $v_1$ - system ERP, klasyfikacja KRYTYCZNY, wdrożony on-premise, wynik $S_{total} = 0{,}91$ ($[\checkmark]$~ZGODNY);
     \item $v_2$ - system CRM, klasyfikacja WAŻNY, chmura EOG, wynik $S_{total} = 0{,}78$ ($[\sim]$~CZĘŚCIOWO ZGODNY);
     \item $v_3$ - portal kliencki SaaS, klasyfikacja STANDARDOWY, chmura kraju trzeciego (USA), wynik $S_{total} = 0{,}48$ ($[\times]$~NIEZGODNY).
-\end{itemize}
+\end{enumerate}
 
 Systemy $v_1$ i~$v_2$ obsługiwane są przez dostawcę $d_1$ (firma cloudowa z EOG, $S_{total} = 0{,}72$, $[\sim]$~CZĘŚCIOWO ZGODNY). System $v_3$ obsługiwany jest przez dostawcę $d_2$ (firma z USA, $S_{total} = 0{,}31$, $[\times!!]$~- \texttt{FLAG\_TIA} aktywna). Dostawca $d_1$ obsługuje dwa systemy podmiotu ($n < n_{KV}$), zatem nie spełnia progu dostawcy kluczowego. Trigger TIA aktywowany dla $d_2$ rozszerza graf o poddostawcę $p_1$ -- sieć CDN zlokalizowaną w USA ($S_{total} = 0{,}20$, $[\times!]$~KRYTYCZNIE NIEZGODNY), obsługiwaną przez dostawcę $p_2$ (podmiot zarejestrowany poza EOG, $S_{total}$ nieustalony na etapie Fazy~2).
 
@@ -1300,10 +1307,10 @@ Wynik podmiotu $S_{podmiot}$ obliczany jest zgodnie z równaniem~\eqref{eq:Spodm
 
 Graf ICT jest jedynym elementem raportu przeznaczonym do odczytania bez uprzedniego zapoznania się z treścią kwestionariuszy. Zarząd i~rada nadzorcza powinni być w stanie, wyłącznie na podstawie grafu, odpowiedzieć na trzy pytania operacyjne:
 
-\begin{enumerate}
-    \item \textbf{Gdzie skupia się ryzyko?} Wierzchołki oznaczone $[\times]$, $[\times!]$ lub $[\times!!]$ wymagają natychmiastowej uwagi, niezależnie od ich głębokości w grafie.
-    \item \textbf{Który dostawca jest kluczowy?} Krawędzie z etykietą \texttt{[KV]} wskazują podmioty, których awaria lub niezgodność zagraża stabilności całej organizacji.
-    \item \textbf{Jak głęboko sięga łańcuch?} Liczba poziomów grafu ujawnia, czy organizacja jest świadoma pełnej ekspozycji na ryzyko poddostawców, co jest wymogiem art.~28 DORA i~art.~6 ust.~2 dyrektywy NIS2.
+\begin{enumerate}[label=(\roman*)]
+    \item \textit{Gdzie skupia się ryzyko?} Wierzchołki oznaczone $[\times]$, $[\times!]$ lub $[\times!!]$ wymagają natychmiastowej uwagi, niezależnie od ich głębokości w grafie.
+    \item \textit{Który dostawca jest kluczowy?} Krawędzie z etykietą \texttt{[KV]} wskazują podmioty, których awaria lub niezgodność zagraża stabilności całej organizacji.
+    \item \textit{Jak głęboko sięga łańcuch?} Liczba poziomów grafu ujawnia, czy organizacja jest świadoma pełnej ekspozycji na ryzyko poddostawców, co jest wymogiem art.~28 DORA i~art.~6 ust.~2 dyrektywy NIS2.
 \end{enumerate}
 
 Brak wierzchołków na poziomie głębokości~3 i~wyżej \emph{nie} oznacza braku poddostawców, oznacza brak przeprowadzenia analizy TIA. Audytor jest zobowiązany do odnotowania w raporcie, czy głębokość grafu wynika z faktycznego braku poddostawców podlegających triggerowi, czy też z niewykonania należytej staranności przez audytowany podmiot lub jego dostawców.

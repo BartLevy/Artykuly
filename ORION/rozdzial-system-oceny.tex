@@ -172,11 +172,11 @@ GRC - \textit{Governance, Risk and Compliance} (ład, ryzyko i~zgodność).
 
 Mimo intensywności regulacyjnej prowadzonej przez regulatorów krajowych oraz międzynarodowych, brakuje usystematyzowanej metodyki, która pozwoliłaby organizacjom w sposób transparentny, co bardzo istotne powtarzalny i~oparty na obiektywnych dowodach ocenić  stan zgodności wdrożonych systemów informatycznych wraz z ich łańcuchem dostawców. Dobrze przeprowadzony audyt systemów tworzy raport czytelny i~zrozumiały dla wszystkich interesariuszy i~faktycznie wskazuje na niezgodności.
 Istniejące narzędzia i~frameworki, norma ISO/IEC 27001,  NIST Cybersecurity Framework, model COBIT czy metodyki ISACA, dostarczają  wskazówek w zakresie zarządzania bezpieczeństwem informacji, jednak żaden z nich nie adresuje jednocześnie: 
-\begin{itemize}
+\begin{enumerate}[label=(\roman*)]
   \item perspektywy wielopodmiotowej obejmującej cały łańcuch ICT, 
   \item oceny opartej na weryfikowalnych dowodach jako mechanizmu przeciwdziałającego deklaratywnej zgodności,
   \item wieloperspektywicznej analizy uwzględniającej punkt widzenia prawnika, menedżera biznesowego i~inżyniera IT, \item rozszerzalności sektorowej pozwalającej na adaptację do specyfiki regulacyjnej różnych branż przy zachowaniu wspólnego rdzenia metodycznego.
-\end{itemize}
+\end{enumerate}
 
 Rezultatem jest rozdrobniona praktyka, w której oceny prawne, techniczne i~biznesowe są przeprowadzane w izolacji, podwykonawcy pozostają niesprawdzani, a wnioski z audytu opierają się na deklaracjach, a nie na weryfikowalnych dowodach.
 Audyty przeprowadzane według istniejących metodyk często kończą się certyfikatami potwierdzającymi zgodność procesową, które nie odzwierciedlają faktycznego stanu bezpieczeństwa wdrożeń. Zjawisko to, zwane  \textit{compliance theater}, wynika ze słabości systemów oceny opartych na deklaracjach.  Organizacja może, z pełną znajomością swoich procedur oświadczyć, że wdrożyła wymagane środki ochrony, podczas gdy stan faktyczny jest odmienny, dokumentacja jest nieaktualna, mechanizmy kontrolne nieskuteczne, a dostawcy zewnętrzni nie podlegają żadnej weryfikacji.
@@ -275,19 +275,15 @@ Metodologia ORION wymaga przeprowadzenia odpowiedniej walidacji dowodu i~jakoś�
 ORION wyróżnia cztery poziomy jakości dowodu,zdefiniowane w tabeli \ref{tab:dowody}.
 oznaczane symbolem $d \in \{0;\ 0{,}5;\ 0{,}8;\ 1{,}0\}$.
 
-
-\begin{table}[H]
-\label{sec:skala-dowodow}
-\centering
-\caption{Skala jakości dowodów w metodologii ORION}
-\label{tab:dowody}
+\nopagebreak % Zapobiega łamaniu strony bezpośrednio przed tabelą, jeśli to konieczne
 \renewcommand{\arraystretch}{1.6}
-\begin{tabular}{p{1.5cm}p{2.5cm}p{4.5cm}p{4.5cm}}
+\begin{longtable}{p{1.5cm}p{2.5cm}p{4.5cm}p{4.5cm}}
+\caption{Skala jakości dowodów w metodologii ORION} \label{tab:dowody} \\
 \toprule
-\textbf{Poziom} & \textbf{Symbol $d$}
-& \textbf{Definicja}
-& \textbf{Przykłady} \\
+\textbf{Poziom} & \textbf{Symbol $d$} & \textbf{Definicja} & \textbf{Przykłady} \\
 \midrule
+\endhead % Koniec nagłówka dla pierwszej strony
+
 Brak dowodu & $d = 0$
 & Odpowiedź udzielona wyłącznie ustnie lub pisemnie
   bez jakiegokolwiek dokumentu potwierdzającego;
@@ -322,8 +318,8 @@ Dowód silny & $d = 1{,}0$
   penetracyjnego, protokół z próby odtworzenia
   z BCP, oświadczenie potwierdzone podpisem osobistym. \\
 \bottomrule
-\end{tabular}
-\end{table}
+
+\end{longtable}
 
 \subsection{Wpływ dowodu na wartość odpowiedzi}
 \label{sec:wplyw-dowodu}
@@ -343,13 +339,13 @@ jest jakością dostarczonego dowodu.
 
 Konsekwencje praktyczne wzoru~\eqref{eq:veff}
 są następujące:
-\begin{itemize}
+\begin{enumerate}[label=(\roman*)]
   \item odpowiedź TAK bez dowodu ($a=1$, $d=0$)
   daje $V_{eff} = 0$ jest traktowana identycznie jak odpowiedź NIE,
   \item odpowiedź TAK z dowodem silnym ($a=1$, $d=1{,}0$)
   daje $V_{eff} = 1{,}0$  pełna wartość,
   \item odpowiedź NIE z dowodem silnym ($a=0$, $d=1{,}0$) daje $V_{eff} = 0$ wskazuje na niezgodność między odpowiedzią, a dowodem.
-\end{itemize}
+\end{enumerate}
 
 Mechanizm ten precyzyjnie odzwierciedla cel audytu: nie interesuje nas, co organizacja mówi, że robi, interesuje nas, co jest w stanie udowodnić.
 
@@ -832,9 +828,9 @@ W metodoligii ORION, plan ciągłości działania jest wymagany dla podmiotów o
 \end{tabular}
 \end{table}
 
-\section{Exit plan}
+\section{Plan wyjścia z usługi (Exit plan)}
 
-Exit plan (plan wyjścia) to obowiązkowy element zarządzania dostawcami IT w banku, wymagany przez rozporządzenie DORA oraz ustawę KSC.
+Plan wyjścia z usłigi (ang. \textit{Exit plan})) to obowiązkowy element zarządzania dostawcami IT w banku, wymagany przez rozporządzenie DORA oraz ustawę KSC.
 
 \begin{definition}[Exit plan]
 Strategia wyjścia z usługi pozwalająca organizacji wyłączyć system, zakończyć współpracę z dotychczasowym dostawcą oraz ponownie uruchomić usługę u innego dostawcy przy zachowaniu ciągłości działania lub minimalizacji przestoju.

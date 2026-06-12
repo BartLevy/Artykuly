@@ -23,7 +23,7 @@ dotyczą, ani też żaden europejski organ nadzoru nie muszą być powiadamiani.
 
 \section{Suwerenność danych: Gaia-X, suwerenne chmury obliczeniowe i~poufne przetwarzanie danych}
 
-Europejską odpowiedzią na strukturalną zależność od dostawców spoza Unii Europejskiej jest opracowanie koncepcji \textbf{suwerenności danych cyfrowych}. Składa się ona z trzech wymiarów: rezydencja danych (\textit{data residency}), suwerenność prawna (\textit{data sovereignty}) oraz  suwerenność operacyjna (\textit{operational sovereignty}). Kluczowym problemem jest fakt, że
+Europejską odpowiedzią na strukturalną zależność od dostawców spoza Unii Europejskiej jest opracowanie koncepcji {suwerenności danych cyfrowych}. Składa się ona z trzech wymiarów: rezydencja danych (ang. \textit{data residency}), suwerenność prawna (ang. \textit{data sovereignty}) oraz  suwerenność operacyjna (ang. \textit{operational sovereignty}). Kluczowym problemem jest fakt, że
 fizyczna lokalizacja serwerów na terytorium Unii Europejskiej nie przesądza o jurysdykcji  prawnej. Stąd UE podjęła szereg inicjatyw: inicjatywę GAIA-X, suwerenne chmury, poufne przetwarzanie.
 
 \subsection*{Gaia-X}
@@ -46,15 +46,15 @@ Koncepcja suwerennej chmury odnosi się do oferty usług chmurowych, która gwar
 
 \subsection*{Przetwarzanie poufne}
 
-Szyfrowanie danych w spoczynku i~podczas przesyłania to wymóg stawiany przed przetwarzaniem poufnym \textit{confidential computing}. Jego bazę stanowią \textit{Zaufane Środowiska Wykonawcze} (TEE), sprzętowo izolowane środowiska, w których dane pozostają zaszyfrowane w czasie aktywnego przetwarzania, niedostępne ani dla hiperwizora, ani systemu operacyjnego, ani tym bardziej dla personelu dostawcy chmury \autocite{ijaibdcms2024tee}.
+Szyfrowanie danych w spoczynku i~podczas przesyłania to wymóg stawiany przed przetwarzaniem poufnym (ang. )\textit{confidential computing}). Jego bazę stanowią \textit{Zaufane Środowiska Wykonawcze} (TEE), sprzętowo izolowane środowiska, w których dane pozostają zaszyfrowane w czasie aktywnego przetwarzania, niedostępne ani dla hiperwizora, ani systemu operacyjnego, ani tym bardziej dla personelu dostawcy chmury \autocite{ijaibdcms2024tee}.
 
 TEE chronią przed nieautoryzowanym i~pozajurysdykcyjnym dostępem do danych podczas ich przechowywania, transmisji oraz podczas obliczeń \autocite{ijaibdcms2024tee}.
 
-Warto podkreślić, że takie podejście wpisuje się bezpośrednio w oczekiwania polskiego i~europejskiego nadzoru finansowego. Komisja Nadzoru Finansowego już w Komunikacie Chmurowym z 2020 roku wymagała od podmiotów nadzorowanych, by informacje prawnie chronione były szyfrowane zawsze \textit{at rest} oraz \textit{in transit} \autocite{knf2020chmura}, a kontrola nad kluczami
+Warto podkreślić, że takie podejście wpisuje się bezpośrednio w oczekiwania polskiego i~europejskiego nadzoru finansowego. Komisja Nadzoru Finansowego już w Komunikacie Chmurowym z 2020 roku wymagała od podmiotów nadzorowanych, by informacje prawnie chronione były szyfrowane zawsze w spoczynku (ang. \textit{at rest}) oraz w trakcie transferu (ang. \textit{in transit}) \autocite{knf2020chmura}, a kontrola nad kluczami
 kryptograficznymi pozostawała po stronie instytucji finansowej, nie dostawcy chmury.
-Obowiązujące od stycznia 2025~r. rozporządzenie DORA idzie o krok dalej, nakładając wymóg kompleksowej polityki szyfrowania obejmującej dane \textit{at rest}, \textit{in transit}, a także \textit{in use}, co jest bezpośrednim odniesieniem do scenariusza, w którym przetwarzanie poufne staje się nie tyle opcją, ile techniczną odpowiedzią na regulacyjne oczekiwania \autocite{dora2022}\autocite{dora_rts2024}.
+Obowiązujące od stycznia 2025~r. rozporządzenie DORA idzie o krok dalej, nakładając wymóg kompleksowej polityki szyfrowania obejmującej dane \textit{at rest}, \textit{in transit}, a także w trakcie użycia (ang. \textit{in use}), co jest bezpośrednim odniesieniem do scenariusza, w którym przetwarzanie poufne staje się nie tyle opcją, ile techniczną odpowiedzią na regulacyjne oczekiwania \autocite{dora2022}\autocite{dora_rts2024}.
 
-Z perspektywy jurysdykcyjnej, szczególnie wynikającej z ryzyk CLOUD Act, poufne obliczenia umożliwiają techniczne egzekwowanie reguł dotyczących lokalizacji przetwarzania, operacje mogą być wykonywane wyłącznie w autoryzowanych geograficznie lokalizacjach (\textit{powinowactwo lokalizacji}) i~na dedykowanych hostach (\textit{powinowactwo hosta}) \autocite{ijaibdcms2024tee}. Co ważne, choć sama technologia nie uchyla prawnych obowiązków dostawcy wynikających z amerykańskiej ustawy CLOUD Act, to utrudnia realizację ewentualnych nakazów dostępu, a przede wszystkim eliminuje ryzyko cichego dostępu
+Z perspektywy jurysdykcyjnej, szczególnie wynikającej z ryzyk CLOUD Act, poufne obliczenia umożliwiają techniczne egzekwowanie reguł dotyczących lokalizacji przetwarzania, operacje mogą być wykonywane wyłącznie w autoryzowanych geograficznie lokalizacjach ({powinowactwo lokalizacji}) i~na dedykowanych hostach ({powinowactwo hosta}) \autocite{ijaibdcms2024tee}. Co ważne, choć sama technologia nie uchyla prawnych obowiązków dostawcy wynikających z amerykańskiej ustawy CLOUD Act, to utrudnia realizację ewentualnych nakazów dostępu, a przede wszystkim eliminuje ryzyko cichego dostępu
 operacyjnego ze strony dostawcy.
 
 
@@ -70,7 +70,7 @@ Mechanizm działał na podstawie oświadczeń składanych w Departamencie Handlu
 
 \subsection{Maximilian Schrems: Tło i~strategia prawna}
 
-Maximilian Schrems, jest austiackim prawnikiem, działaczem na rzecz ochrony prywatności i~założycielem organizacji pozarządowej \textit{noyb} (None of Your Business), zajmującej się egzekwowaniem europejskich przepisów o ochronie danych. W wyniku działania Schrems-a sprawę do Trybunału Sprawiedliwości Unii Europejskiej (TSUE) z wnioskiem o wydanie orzeczenia w trybie prejudycjalnym. 
+Maximilian Schrems jest austriackim prawnikiem, działaczem na rzecz ochrony prywatności i~założycielem organizacji pozarządowej \textit{noyb} (None of Your Business), zajmującej się egzekwowaniem europejskich przepisów o ochronie danych. W wyniku działania Schremsa sprawa trafiła do Trybunału Sprawiedliwości Unii Europejskiej (TSUE) z wnioskiem o wydanie orzeczenia w trybie prejudycjalnym.
 
 \subsection{Schrems I: Unieważnienie zasad Safe Harbor}
 
@@ -180,11 +180,11 @@ Kluczowym nierozstrzygniętym zagadnieniem CADA jest definicja
 \textit{suwerennej chmury}. Projekt przekształca cyfrową suwerenność
 z~politycznej deklaracji w~wiążący wymóg prawny, jednak nie przesądza,
 jak ścisłe mają być kryteria kwalifikacji. Zarysowały się dwa
-stanowiska. Po pierwsze, \textbf{definicja wąska} (popierana m.in.\
+stanowiska. Po pierwsze, {definicja wąska} (popierana m.in.\
 przez Francję i~grupę lobby CISPE): suwerenność wymaga pełnej europejskiej
 kontroli kapitałowej nad dostawcą, co w~praktyce wyklucza z~zamówień
 publicznych podmioty kontrolowane przez korporacje spoza EOG.
-Po drugie, \textbf{definicja szeroka}: suwerenność oceniana jest
+Po drugie, {definicja szeroka}: suwerenność oceniana jest
 na podstawie faktycznych gwarancji prawno-technicznych (rezydencji danych,
 szyfrowania i~braku dostępu operacyjnego podmiotu macierzystego)
 niezależnie od struktury właścicielskiej.
@@ -226,7 +226,7 @@ procesu legislacyjnego.
 
 Stanowi to empiryczne uzasadnienie dla jednej z~kluczowych decyzji
 projektowych ORION: traktowania jurysdykcji geograficznej dostawcy jako
-\textbf{czynnika ryzyka, którego nie można się pozbyć} w~drodze samej konfiguracji
+czynnika ryzyka, którego nie można się pozbyć w~drodze samej konfiguracji
 usługi, wymagającego wymiany dostawcy lub zastosowania poufnego przetwarzania
 jako warstwy kompensacyjnej.
 
@@ -285,28 +285,28 @@ amerykańską, wchodzą automatycznie w zakres CLOUD Act.
 
 Warto przeprowadzić eksperyment myślowy ze scenariuszem, w który  uruchamiono system operacyjny na maszynie wirtualnej w centrum danych. Szczególnie wysokim profilem ryzyka charakteryzuje się konfiguracja polegająca na uruchomieniu Windows Server jako maszyny wirtualnej w Google Cloud Platform (lub innej podległej pod jurysdykcję CLOUD Act) z zainstalowanym silnikiem bazy danych.
 Wskazanie Google Cloud Platform oraz Microsoft Windows są wizualizacją przykładu i~wynikają z popularności usług.
-
+\vspace{0.3cm}
 \noindent Scenariusz ten łączy jednocześnie trzy warstwy ryzyka.
+ 
+\begin{enumerate}[label=(\roman*)]
+  \item \textit{Warstwa 1, Chmura a CLOUD Act.}
+  Hostingującą firmą jest podmiot amerykański, z tego wynika, że każda maszyna wirtualna w tym centrum danych,
+  niezależnie od regionu (w tym \texttt{europe-central2} w Warszawie), 
+  podlega CLOUD Act. Organy USA mogą żądać danych od dostawcy bezpośrednio,
+  bez informowania właściciela.
 
-\subsection{Trzy warstwy ryzyka}
+  \item \textit{Warstwa 2, Windows Server a telemetria.}
+  Windows Server uruchomiony jako VM na chmurze generuje telemetrię przesyłaną
+  do serwerów Microsoft. Oznacza to {dwa niezależne podmioty
+  objęte CLOUD Act}: Google (infrastruktura VM) oraz Microsoft (telemetria
+  systemowa). Możliwe jest równoległe żądanie skierowane do obu firm.
 
-\paragraph{Warstwa 1, Chmura a CLOUD Act.}
-Hostingującą firmą jest podmiot amerykański, z tego wynika, że każda maszyna wirtualna w tym centrum danych,
-niezależnie od regionu (w tym \texttt{europe-central2} w Warszawie), 
-podlega CLOUD Act. Organy USA mogą żądać danych od dostawcy bezpośrednio,
-bez informowania właściciela.
-
-\paragraph{Warstwa 2, Windows Server a telemetria.}
-Windows Server uruchomiony jako VM na chmurze generuje telemetrię przesyłaną
-do serwerów Microsoft. Oznacza to \textbf{dwa niezależne podmioty
-objęte CLOUD Act}: Google (infrastruktura VM) oraz Microsoft (telemetria
-systemowa). Możliwe jest równoległe żądanie skierowane do obu firm.
-
-\paragraph{Warstwa 3, Dostęp Google do danych bazy danych.}
-Google jako hypervisor ma techniczną możliwość dostępu do dysków
-Persistent Disk przypisanych do maszyny wirtualnej. Przy domyślnym
-szyfrowaniu zarządzanym przez Google KMS, firma może odczytać zawartość
-dysku w tym pliki danych bazy snapshoty, logi i~backupy.
+  \item \textit{Warstwa 3, Dostęp Google do danych bazy danych.}
+  Google jako hypervisor ma techniczną możliwość dostępu do dysków
+  Persistent Disk przypisanych do maszyny wirtualnej. Przy domyślnym
+  szyfrowaniu zarządzanym przez Google KMS, firma może odczytać zawartość
+  dysku w tym pliki danych bazy snapshoty, logi i~backupy.
+\end{enumerate}
 
 \subsection{Macierz wektorów dostępu}
 
@@ -338,30 +338,30 @@ Na podstawie przeprowadzonej analizy formułuje się następujące rekomendacje
 dla organizacji przetwarzających dane wrażliwe lub dane operacyjne
 podlegające dyrektywie NIS2 i~rozporządzeniu DORA:
 
-\begin{enumerate}
-  \item \textbf{CMEK z zewnętrznym HSM} (\textit{Customer-Managed
+\begin{enumerate}[label=(\roman*)]
+  \item \textit{CMEK z zewnętrznym HSM} (\textit{Customer-Managed
   Encryption Keys}), klucze do dysków VM przechowywane poza
   infrastrukturą dostawcy chmury eliminują techniczną możliwość
   odszyfrowania przez Google lub AWS.
 
-  \item \textbf{BYOK dla baz danych} (\textit{Bring Your Own Key}), niezależne szyfrowanie danych
+  \item \textit{BYOK dla baz danych} (\textit{Bring Your Own Key}), niezależne szyfrowanie danych
   w bazie (np. TDE \textit{Transparent Data Encryption}) z kluczem
   zarządzanym przez klienta, poza środowiskiem chmurowym.
 
-  \item \textbf{Wyłączenie telemetrii Windows} na poziomie GPO
+  \item \textit{Wyłączenie telemetrii Windows} na poziomie GPO
   (\texttt{Security level}) oraz zablokowanie ruchu do endpointów
   telemetrycznych na poziomie firewalla egress.
 
-  \item \textbf{Wybór europejskiego dostawcy infrastruktury w usłudze} spoza jurysdykcji
+  \item \textit{Wybór europejskiego dostawcy infrastruktury w usłudze} spoza jurysdykcji
   USA (w pełni zlokalizowane w EOG) jako infrastruktury
   dla systemów krytycznych.
 
-  \item \textbf{Uwzględnienie CLOUD Act w rejestrze ryzyk IT}, jako
+  \item \textit{Uwzględnienie CLOUD Act w rejestrze ryzyk IT}, jako
   ryzyko regulacyjne kategorii \textit{prawne / compliance},
   z przypisaniem prawdopodobieństwa i~wpływu zgodnie z metodologią
   przyjętą w organizacji.
 
-  \item \textbf{Audyt umów z dostawcami chmurowymi} pod kątem klauzul
+  \item \textit{Audyt umów z dostawcami chmurowymi} pod kątem klauzul
   dotyczących żądań rządowych oraz regularny monitoring
   \textit{Government Request Transparency Reports} publikowanych przez
   Google, Microsoft i~Amazon.
