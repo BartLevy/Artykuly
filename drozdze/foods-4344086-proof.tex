@@ -1,0 +1,2142 @@
+
+\documentclass[foods,review,accept,pdftex,moreauthors]{Definitions/mdpi} 
+
+
+\usepackage{lineno}
+\let\linenumbers\relax
+\let\internallinenumbers\relax
+\nolinenumbers
+
+%=================================================================
+% MDPI internal commands - do not modify
+\firstpage{1} 
+\makeatletter 
+\setcounter{page}{\@firstpage} 
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2026}
+\copyrightyear{2026}
+\externaleditor{Ali Khoddami} 
+\datereceived{12 May 2026} 
+\daterevised{30 May 2026} 
+\dateaccepted{9 June 2026} 
+\datepublished{ } 
+
+%=================================================================
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\usepackage[normalem]{ulem}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+
+%=================================================================
+
+\Title{\highlighting{Immature} %MDPI: Important: 1. We have done the initial layout for your manuscript through our layout team. Please do not change the layout, otherwise we cannot proceed to the next step. 2. Please note that after the article has been accepted, changes to authorship are not permitted. 3. Please do not delete our comments. 4. Please revise and answer all the comments we left. E.g.: “It should be italic”; “I confirm”; “I have checked and revised all.” 5. Please correct directly on this version. 6. The paper has been edited by our in-house English editor, please check carefully throughout the manuscript. 7. Please check the whole paper very carefully, any changes are not allowed after proofreading.
+ Honey as a Quality Challenge in Global \linebreak  Apicultural Production}
+
+
+\newcommand{\orcidauthorA}{0009-0004-1158-0693}
+\newcommand{\orcidauthorB}{0009-0003-7214-4097} 
+\newcommand{\orcidauthorC}{0000-0001-9178-1540} 
+\newcommand{\orcidauthorD}{0000-0003-2580-7954} 
+\newcommand{\orcidauthorE}{0000-0003-3900-7368} 
+\newcommand{\orcidauthorF}{0000-0002-0754-0806}
+\Author{\hl{Anna Gajda} %MDPI: 1. Please carefully check the accuracy of names and affiliations. 2. Please note that changing authorship is NOT acceptable during this period (including adding new authors/corresponding authors/affiliations or deleting present authors/corresponding authors/affiliations or exchanging author orders). 
+%I confirm
+ $^{1}$\orcidE{}, 
+ Bartosz Lewandowski $^{2}$\orcidA{}, 
+ Przemysław Rujna $^{3}$\orcidB{},
+ Joanna Katarzyna Banach  $^{4,}$*\orcidC{},
+ \linebreak  Renata Pietrzak-Fiećko $^{5}$\orcidF{} and
+ Ewaryst Tkacz \hl{$^{2}$}%MDPI: We merged the duplicated address into one affiliation, please confirm.
+\orcidD{}}
+
+
+\AuthorNames{Anna Gajda, Bartosz Lewandowski, Przemysław Rujna, Joanna Katarzyna Banach,  Renata Pietrzak-Fiećko, Ewaryst Tkacz}
+
+
+\address{%
+$^{1}$ \quad Laboratory of Bee Diseases, Institute of Veterinary Medicine, Warsaw University of Life Sciences, \linebreak  02-787 Warsaw, Poland; anna\_gajda@sggw.edu.pl\\
+$^{2}$ \quad Department of Clinical Engineering, Academy of Silesia in Katowice, 40-555 Katowice, Poland; bartosz.lewandowski@akademiaslaska.pl (B.L.); \hl{ewaryst.tkacz@akademiaslaska.pl (E.T.)} %MDPI: We added this email address here according to the one submitted online at susy.mdpi.com. Please confirm.
+%I confirm
+\\
+$^{3}$ \quad \hl{Polish Honey Chamber Association,} %MDPI: Please check and confirm if the address is complete.  %I confirm
+ 87-100 Toruń, Poland; przemyslaw@rujna.pl\\
+$^{4}$ \quad Institute of Management and Quality Sciences, Faculty of Economics, University of Warmia and Mazury in Olsztyn, 10-719 Olsztyn, Poland\\
+$^{5}$ \quad Department of Commodity Science and Food Analysis, Faculty of Food Sciences, University of Warmia and Mazury in Olsztyn, 10-719 Olsztyn, Poland; renap@uwm.edu.pl\\
+
+}
+
+
+\corres{Correspondence: katarzyna.banach@uwm.edu.pl}
+
+\abstract{\highlighting{Honey} %MDPI: Both genus and species name should be italic and protein name should not be italic, please check and confirm if their format is correct in whole paper.
+ maturity is increasingly discussed in relation to product integrity, fair trade, and the classification of immature honey production as a form of adulteration. This narrative critical review examines honey maturity using evidence from peer-reviewed microbiological, physicochemical, and metabolomic studies, combined with an analysis of international and European regulatory frameworks, including Codex Alimentarius CXS 12-1981, Council Directive 2001/110/EC, Regulation (EC) No 178/2002, and Regulation (EC) No 852/2004. Particular attention is given to the interpretation of osmophilic yeast counts, water activity (\texorpdfstring{$a_w$}{aw}), moisture content, comb cell capping, fermentation, and technological dehumidification. The reviewed evidence indicates that osmophilic yeasts are natural components of honey and that their presence, expressed as colony-forming units per gram (CFU/g), should not be treated as an independent non-compliance criterion in the absence of active fermentation. Existing honey standards define compositional and quality requirements, including moisture, hydroxymethylfurfural, enzymatic activity, and absence of fermentation or effervescence, but do not establish a honey-specific CFU/g limit for yeasts. On this basis, the review formulates a functional maturity assessment framework integrating \texorpdfstring{$a_w$}{aw}, moisture, enzymatic indicators, and metabolomic biomarkers. 
+{The proposed framework is presented as a conceptual model derived from the synthesis of the existing literature and requiring further multilaboratory validation prior to adoption in official control practice.} This approach may improve proportionality in honey quality assessment and reduce the risk of misclassifying microbiologically stable honeys as immature or adulterated.
+}
+
+
+\keyword{honey maturity; immature honey; osmophilic yeasts; water activity; fermentation risk; honey adulteration; metabolomic biomarkers; honey regulatory standards}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\nolinenumbers
+
+
+\section{Introduction}
+
+Honey is one of the oldest food products in human history, and at
+the same time one of the most frequently adulterated commodities
+on~the modern food market. According to data from the European Food
+Fraud Database (FoodFraudNetwork), honey ranks third on the list of
+products with the highest adulteration risk, behind only milk
+and~olive oil~\cite{apimondia_fraud_v2}. In~2023, the total volume
+of~honey imports into the European Union exceeded 360,000~tonnes
+at~a~value close to EUR~1~billion~\cite{cbi2024}, while the EU's own
+production amounted to approximately 286,000~tonnes, covering
+only 60\%~of domestic demand~\cite{pollinatorhub2025}.
+The EU's structural production deficit makes the market largely
+dependent on supplies from third countries, including China (35\%
+of~imports), Ukraine (31\%), and Argentina (12\%).
+The scale of this deficit, combined with the significant price
+disparity between authentic honey and syrup substitutes, creates
+economic incentives for fraudulent practices~\cite{apimondia_fraud_v2}.
+
+In the face of these challenges, Apimondia (the International
+Federation of Beekeepers' Associations) plays a key role. This
+organization, uniting more than 80 national organizations and
+headquartered in Rome, constitutes a global forum for cooperation
+aimed at promoting scientific, technical, and economic progress
+in beekeeping~\cite{apimondia_web}.
+
+The Apimondia position published in~2025 by the Working Group
+on~Adulteration of Bee Products constitutes an important voice
+in~the debate on product integrity~\cite{garcia2025}.
+The author identifies the systemic production of immature honey,
+defined as the deliberate collection of honey before the completion
+of the biological ripening process in the hive, combined with its
+industrial dehydration, as a separate and serious form of adulteration,
+distinct from classical practices of adulteration with sugar
+syrups~\cite{garcia2025}.
+The significance of this position is considerable: Apimondia, as the
+world's largest federation of beekeeping organizations, has real
+influence on the shaping of both international standards and control
+practices applied by sanitary inspectorates in EU member states.
+
+This article does not question the existence or seriousness of
+systemic immature honey production as a phenomenon violating the
+principles of fair food trade. \hl{The aim of this paper is,
+however, to indicate that} %MDPI: Please confirm if the bold formatting is necessary; if not, please remove it. The following highlights are the same. Please check the whole paper!
+%Bold formatting is unnecessary, removed as requested!
+ the Apimondia position, perhaps
+inadvertently, makes an excessive generalization, equating three
+qualitatively distinct phenomena:
+(1)~systemic, deliberate production of immature honey for economic
+gain; (2)~early honey harvesting under conditions forced by climatic
+or technological factors; and (3)~the presence of osmophilic yeasts
+as natural components of honey~\cite{garcia2025,munitis1976}.
+The consequence of this generalization is the creation of a
+disqualifying criterion based on the presence of yeasts, which
+remains in contradiction with both applicable regulatory standards
+and the current state of microbiological
+knowledge~\cite{codex_stan12, rodriguezmachado2024}.
+
+Analysis of applicable international standards, including Codex
+Alimentarius CODEX STAN 12-1981, EU Directive 2001/110/EC, and the
+draft \hl{ISO/DIS 24607:2025}  %MDPI: 1. The standard should be listed in the reference part and cited when it appears in the main text (in the form of a reference number, e.g., [2]). Please revise. 2. Please provide detailed information here, and we can help you add it to the reference part and rearrange the citation order. e.g., TB 10099-2017; Code for Design of Railway Station and Terminal. China Railway Publishing House: Beijing, China, 2017.
+%Thank you for the comment. The full bibliographic details for the standard are as follows: ISO/DIS 24607; Honey — Specifications. International Organization for Standardization: Geneva, Switzerland, 2025.
+standard, leads to the conclusion that
+none of these documents establishes a limit on yeast cell count
+(CFU/g) as a criterion for assessing the quality or authenticity of
+honey~\cite{codex_stan12}.
+The only legal microbiological criterion is  \hl{fermentation as an
+active state,} %MDPI: Please confirm if the italics are necessary; if not, please remove them. The following highlights are the same. Please check the whole text.
+%Italic is unnecessary - removed.
+ not merely the presence of microorganisms capable of
+fermentation~\cite{codex_stan12}. 
+
+{
+    Meanwhile, the fermentative activity of osmophilic yeasts, including \textit{Zygosaccharomyces rouxii} and \textit{Z. richteri}, is effectively inhibited at water activity $a_w < 0.60$. In honey, this value is typically, but not invariably, associated with moisture content $\leq $ $20\%$, depending on sugar composition and other matrix-specific factors~\cite{zamora2006,ruegg1981}.
+}
+
+
+The above premises lead to the three-part thesis of this article:
+{
+    first, the presence of osmophilic yeasts in honey should be interpreted in relation to water activity and the absence of active fermentation; when $a_w < 0.60$ is maintained, yeast growth and fermentation are effectively inhibited under standard storage conditions, whereas moisture content $\leq$ $20\%$ should be treated as an important regulatory criterion but not as a strict surrogate for $a_w$;
+}
+ second, no applicable national or international
+standard penalizes the mere presence of yeasts without active
+fermentation, and therefore the determination of their count by the
+plate method (CFU/g) alone constitutes neither a legal nor a scientific
+basis for disqualifying the product from trade; third, the concept of
+\hl{functional maturity}, understood as integrated microbiological,
+%Italic is unnecessary - removed.
+chemical, and biological stability, constitutes a more precise and
+operationalizable tool for honey quality assessment than the sole
+morphological criterion of comb cell
+capping~\cite{zhang2021,guo2020,sun2021}.
+
+The article is a review and covers the following areas:
+\begin{enumerate}
+    \item Analysis of international regulatory frameworks concerning the microbiological parameters of honey; 
+    \item Biology and metabolomics of the honey ripening process as a continuum;
+    \item \textls[-15]{Microbiology of osmophilic yeasts in the context of water activity and} \mbox{fermentation risk;} 
+    \item Diversity of global beekeeping production systems and their implications for standardization;     
+    \item {Analysis of the EU honey market and the regulatory consequences of overly strict interpretations;}
+    \item {A proposed framework for functional maturity assessment with recommendations for standardization bodies and Apimondia.}
+\end{enumerate}
+
+This article adopts a narrative critical review approach. It synthesizes peer-reviewed scientific literature and selected regulatory, standardization, and institutional documents relevant to honey maturity. 
+{Peer-reviewed literature was identified through searches of PubMed, Web of Science, and Scopus, using combinations of the following search terms: \hl{honey maturity}, \hl{immature honey}, \hl{osmophilic yeasts}, \hl{water activity honey}, \hl{honey fermentation}, \hl{honey adulteration}, \hl{honey metabolomics}, \hl{honey ripening}, and \hl{Zygosaccharomyces honey}. The database search covered publications from 1980 to March 2026 and was not restricted by language at the query stage; however, the final synthesis included only English-language sources, as these could be reliably assessed by all authors. Regulatory and institutional documents were selected directly from official sources: FAO/WHO (Codex Alimentarius), the European Commission, ISO technical committees, national standards bodies, and major international beekeeping federations. A source was included if it directly addressed honey quality criteria, microbiological standards, or maturity assessment methodology.} Particular attention is given to osmophilic yeasts, water activity, moisture content, fermentation risk, technological dehumidification, and honey adulteration. The reviewed sources include studies on honey microbiology, physicochemical and enzymatic indicators of ripening, metabolomic markers, international honey standards, and EU food law. The analysis is organized around four thematic areas: the regulatory interpretation of honey quality and fermentation, the biological and physicochemical mechanisms of honey ripening, the relationship between yeast counts and fermentation risk, and the applicability of maturity criteria under different climatic and production systems.
+
+% ============================================================
+
+\section{International Regulatory Frameworks: What Standards \linebreak  Actually Prohibit}\label{2}
+
+The assessment of honey quality and authenticity is based on a network
+of interrelated normative documents of both global and regional scope.
+Understanding their scope and limitations is crucial for evaluating
+whether the presence of osmophilic yeasts can constitute an independent
+basis for disqualifying a product from commercial trade.
+
+\subsection{Codex Alimentarius, CODEX STAN 12-1981}
+
+The primary document regulating honey quality at the international
+level is the Codex Alimentarius Standard for Honey
+({CODEX STAN 12-1981,}  last revision 2023), developed jointly
+by FAO and WHO~\cite{codex_stan12}. This standard defines honey
+as a natural product made by honey bees from the nectar of plants
+or from secretions of living parts of plants or excretions of
+plant-sucking insects on the living parts of plants, which the bees
+collect, transform by combining with specific substances of their own,
+deposit, dehydrate, store, and leave in the honeycomb to ripen and
+mature~\cite{codex_stan12}.
+
+In terms of physicochemical parameters, CODEX STAN 12-1981 establishes
+the following quantitative limits: water content $\leq$ $20.0\%$
+(for heather honey \textit{{Calluna}} $\leq$ $23.0\%$), content
+of~hydroxymethylfurfural (HMF) $\leq$ $40$~mg/kg (or $\leq$$80$~mg/kg
+for honeys from countries with a tropical climate), diastase
+activity $\geq$ $8$~Schade units (or $\geq$$3$~Schade units for honeys
+with naturally low enzymatic activity, such as acacia honey
+\textit{Robinia pseudoacacia}), and reducing sugar
+content~\cite{codex_stan12}. The standard contains \hl{no 
+ limit
+on yeast count expressed in CFU/g}. The only microbiological criterion
+is the prohibition on trading honey \hl{``that has begun to ferment
+or effervesce''}~\cite{codex_stan12}. This is a distinction of
+fundamental legal importance: the disqualifying criterion is
+\hl{the state of active fermentation}, not \hl{the potential
+cause} (the presence of microorganisms capable of fermentation).
+
+\subsection{EU Directive 2001/110/EC and National Law}
+
+At the European Union level, the primary legal act regulating honey
+trade is Council Directive 2001/110/EC of 20 December 2001 on honey,
+implemented in the Polish legal order by a regulation of the Minister
+of Agriculture and Rural Development~\cite{eudir2001110}.
+This Directive, modeled on the Codex standard, does not establish
+a~CFU/g limit for yeasts or fungi in honey. Microbiological parameters
+of honey are subject to general food hygiene provisions, in particular
+\hl{Regulation (EC) No.~852/2004} %MDPI: 1. The standard should be listed in the reference part and cited when it appears in the main text (in the form of a reference number, e.g., [2]). Please revise. 2. Please provide detailed information here, and we can help you add it to the reference part and rearrange the citation order. e.g., TB 10099-2017; Code for Design of Railway Station and Terminal. China Railway Publishing House: Beijing, China, 2017.
+%Thank you for the comment. The full bibliographic details are as follows: Regulation (EC) No 852/2004 of the European Parliament and of the Council of 29 April 2004 on the hygiene of foodstuffs. Official Journal of the European Union, L 139, 30 4.2004, pp. 1–54.
+  of the European Parliament and of the
+Council on the hygiene of foodstuffs~\cite{eudir2001110}.
+
+In the control practice of veterinary and sanitary inspection
+laboratories, there is an unofficial hygiene threshold of
+$100$~CFU/g for the total count of fungi and yeasts, used as a general
+indicator of production process hygiene; however, this threshold is
+not grounded in specific provisions regarding honey and cannot
+constitute an independent basis for declaring the product
+non-compliant with the requirements of food law within the meaning
+of Article~14 of Regulation~(EC)~No.~178/2002~\cite{eudir2001110}.
+Directive 2001/110/EC also permits the possibility of filtering,
+heating (to specified temperatures), and blending batches of honey
+as legal technological treatments, provided they do not lead to
+a~change in its fundamental character~\cite{eudir2001110}.
+
+
+\subsection{United States Pharmacopeia (USP) and Other National Standards}
+
+The United States Pharmacopeia (USP) classifies honey as an excipient
+for pharmaceutical and food use. USP requirements include
+physicochemical parameters similar to those of Codex but also do not
+contain a CFU/g limit for osmophilic yeasts~\cite{tsagkaris2021}.
+A similar approach is taken by national standards applicable in the
+major honey-exporting countries---China (\hl{GB/T~18796-2012}%MDPI: 1. The standard should be listed in the reference part and cited when it appears in the main text (in the form of a reference number, e.g., [2]). Please revise. 2. Please provide detailed information here, and we can help you add it to the reference part and rearrange the citation order. e.g., TB 10099-2017; Code for Design of Railway Station and Terminal. China Railway Publishing House: Beijing, China, 2017.
+% Thank you for the comment. We apologize for the typo — the correct standard number is GH/T 18796-2012 (not GB/T 18796-2012). The full bibliographic details are as follows: GH/T 18796-2012; Honey. Standards Press of China: Beijing, China, 2012.
+), Argentina
+(Código Alimentario Argentino, CAA), and Brazil \hl{(IN MAPA No.~89/2000)}%MDPI: 1. The standard should be listed in the reference part and cited when it appears in the main text (in the form of a reference number, e.g., [2]). Please revise. 2. Please provide detailed information here, and we can help you add it to the reference part and rearrange the citation order. e.g., TB 10099-2017; Code for Design of Railway Station and Terminal. China Railway Publishing House: Beijing, China, 2017.
+%Thank you for the comment. We apologize for the error — the correct reference is Instrução Normativa No. 11/2000 (not No. 89/2000). The full bibliographic details are as follows: Brazil, Ministério da Agricultura e Abastecimento. Instrução Normativa No. 11, de 20 de outubro de 2000. Regulamento Técnico de Identidade e Qualidade do Mel. Diário Oficial da União: Brasília, Brazil, 2000.
+---which define honey quality by chemical parameters and enzymatic
+activity, not by yeast count~\cite{tsagkaris2021}.
+
+\subsection{Comparative Overview of Standards}
+
+Table~\ref{tab:standardy} presents a comparison of key honey quality
+parameters in applicable international and regional standards with
+respect to microbiological criteria.
+
+\begin{table}[H]
+
+
+
+
+\caption{Comparison of honey quality parameters in major international
+         standards. Abbreviations: n.a., not applicable (no limit
+         in the document); CFU, colony-forming units;
+         HMF, \mbox{hydroxymethylfurfural.}}
+\label{tab:standardy}
+
+
+\begin{adjustwidth}{-\extralength}{0cm}
+
+
+\begin{tabularx}{\fulllength}{cCCCcc}
+\toprule
+\textbf{Standard} &
+\textbf{Moisture} &
+\textbf{HMF} &
+\textbf{Diastase} &
+\textbf{CFU/g Limit} &
+\textbf{Criterion} \\
+ & \textbf{(\%)} & \textbf{(mg/kg)} & \textbf{(Schade u.)} & \textbf{Yeasts} & \textbf{Microbiolog.} \\
+\midrule
+{Codex STAN 12-1981}        & $\leq$$20.0$ & $\leq$$40$  & $\geq$$8$   & \hl{none} & prohibition of fermentation \\%MDPI: \hl{} %MDPI: Please add an explanation for the use of bold in the table footer. If the bold is unnecessary, please remove it. The following highlights are the same.
+%Bold removed
+
+{EU Directive 2001/110/EC} & $\leq$$20.0$ & $\leq$$40$  & $\geq$$8$   & \hl{none} & prohibition of fermentation \\
+{USP (honey monograph)}    & $\leq$$21.0$ & n.a.       & n.a.        & \hl{none} & prohibition of fermentation \\
+{Reg. (EC) 852/2004}       & n.a.          & n.a.       & n.a.        & \hl{none}  & general food $^{*}$ \\
+\bottomrule
+
+\end{tabularx}
+
+\begin{adjustwidth}{--\extralength}{0cm}
+\noindent\footnotesize $^{*}$~The 100 CFU/g value may be used in some laboratory or inspection practices as a general hygiene indicator for yeasts and molds; however, it is not a honey-specific legal criterion established by Regulation (EC) No 852/2004.
+\end{adjustwidth}
+\end{adjustwidth}
+
+\end{table}
+
+
+
+\subsection{Regulatory Conclusion}
+
+Analysis of the above documents leads to an unequivocal conclusion:
+no applicable national or international standard treats \hl{the
+presence of osmophilic yeasts per~se} as a basis for disqualifying
+honey from commercial trade. The disqualifying criterion is exclusively
+the \hl{biological outcome} (active fermentation and effervescence),
+not the \hl{potential cause} (the presence of microorganisms capable
+of fermentation). 
+
+{This distinction is of fundamental practical importance: honey in which osmophilic yeasts are present at any measured count should not be disqualified on this basis alone, provided that water activity $a_w < 0.60$ is maintained, no signs of active fermentation are observed, and other compositional criteria, including the applicable moisture limit, are met}~\cite{codex_stan12,eudir2001110}.
+
+A CFU/g measurement alone, without a simultaneous assessment of water
+activity ($a_w$), temperature, and storage time, is methodologically
+insufficient for declaring the product non-compliant with the
+requirements of food law~\cite{tsagkaris2021,schoder2026}.
+
+
+
+
+
+
+\section{Biology of Honey Ripening: A Continuous Process, Not a Binary Event}
+
+Honey ripening is a complex biotransformation process in which
+nectar or honeydew undergoes a series of enzymatic, physicochemical,
+and microbiological transformations before reaching a state of
+qualitative stability. The widespread equating of honey maturity
+with the fact of comb cell capping with wax---common in beekeeping
+practice and veterinary control---constitutes a simplification that
+is inadequate from a biochemical perspective. Capping is one of the
+final, morphological indicators of ripening, not synonymous with the
+achievement of full chemical and microbiological
+stability~\cite{zhang2021,sun2021}.
+
+\subsection{Enzymatic Transformation of Nectar}
+The honey production process is initiated at the very moment nectar
+or honeydew is collected by forager bees. 
+
+Nectar, dominated by sucrose and containing a high water content, undergoes the first enzymatic transformation in the honey crop of the insect, where it mixes with secretions from the bee’s hypopharyngeal glands~\cite{biochemreactions2022}. The key enzymes initiating
+the \mbox{transformation are:}
+
+\begin{itemize}
+    \item \hl{Invertase} %MDPI: Please confirm if the bold formatting is necessary; if not, please remove it. The following highlights are the same. %Bold removed!
+ ($\beta$-D-fructosidase): It catalyzes
+          the hydrolysis of sucrose into fructose and glucose;
+          produced by the hypopharyngeal glands of worker
+          bees~\cite{biochemreactions2022};
+          its activity increases gradually from low values
+          in immature honey to maximum values in mature honey,
+          making it one of the most sensitive indicators of
+          the degree of maturity~\cite{zhang2021}.
+    \item \hl{Glucose oxidase}: It oxidizes glucose to gluconic
+          acid with the release of hydrogen peroxide (H$_2$O$_2$);
+          gluconic acid is responsible for lowering honey pH to the
+          range of 3.5--4.5 and constitutes the dominant organic
+          acid in mature honey; H$_2$O$_2$ serves as a natural
+          antibacterial agent~\cite{biochemreactions2022,zhang2021}.
+    \item \hl{Diastase} 
+ ($\alpha$- and $\beta$-amylase):
+          It catalyzes the hydrolysis of starch and nectar
+          polysaccharides into glucose and maltose; diastase
+          activity is a parameter standardized by Codex Alimentarius
+          ($\geq$$8$~Schade units) and serves as an indirect indicator
+          of thermal integrity and honey
+          maturity~\cite{codex_stan12,biochemreactions2022,zhang2021}.
+    \item \hl{Catalase}: 
+ It decomposes excess H$_2$O$_2$,
+          regulating the balance between antibacterial activity
+          and protection of the remaining honey components
+          from oxidation~\cite{biochemreactions2022}.
+\end{itemize}
+
+Studies of enzymatic activity at five successive stages of
+transformation---from floral nectar, through the honey crop of
+foragers and house bees, to uncapped and capped hive cells---showed
+a gradual increase in invertase, amylase, and glucose oxidase
+activity at each successive stage of
+processing~\cite{enzymesrole2023}. These data confirm that
+enzymatic transformation proceeds as a \hl{continuum} along
+the entire production chain, not as a step-change event occurring
+at the moment of cell capping~\cite{enzymesrole2023,zhang2021}.
+
+In parallel with enzymatic transformations, house bees actively
+dehydrate honey through hive ventilation: wing beats create a
+constant airflow over open comb cells, accelerating water
+evaporation and reducing the moisture of the raw material from
+values characteristic of nectar to a final approximately 18.5\%
+in honey before capping~\cite{zhang2021}. Full maturation under
+natural conditions typically takes several days to a few weeks,
+with this time potentially being significantly extended under
+conditions of high relative
+\mbox{humidity~\cite{zhang2021,tadele2025}.}
+
+
+\subsection{Ripening as a Process: Metabolomic Evidence}
+
+The thesis of the binary nature of honey maturity---according to
+which honey is either immature (uncapped) or mature (capped)---finds increasingly weak support in current metabolomic research.
+Sun et al.~\cite{sun2021} in a study of rapeseed honey
+(\textit{Brassica napus}) demonstrated that maturity indicators,
+including water content, fructose-to-glucose ratio, invertase and
+diastase activity, and organic acid content, change {\hl{gradually}
+during the ripening process and reach stable values independently
+of the moment of cell capping \mbox{by bees.}
+
+Guo et al.~\cite{guo2020} conducted a comprehensive comparative
+analysis of the chemical profile and biological activity of mature
+and immature honeys using HPLC/QTOF/MS-based metabolomics. The
+authors identified significant differences in polyphenol content,
+antioxidant activity (DPPH, FRAP), and amino acid profile between
+honey collected in an immature state and mature honey; however,
+these differences were closely correlated with chemical parameters
+(water content and enzymatic activity) rather than solely with
+the fact of capping~\cite{guo2020}. Importantly, some samples of
+honey collected before full capping exhibited a metabolomic profile
+similar to mature honey, provided they met the criterion of low
+moisture, which constitutes direct confirmation of the concept
+of functional maturity.
+
+Sun et al.~\cite{sun2021} using GC-MS and LC-MS identified
+decenedioic acid, a fatty acid of bee origin, as a potential
+molecular biomarker differentiating mature from immature honey.
+This biomarker, validated for rapeseed, acacia, and jujube honeys,
+was significantly more abundant in mature honey ($p < 0.01$),
+confirming that ripening is a process of gradual accumulation of
+specific metabolites, not a binary transition~\cite{sun2021}.
+
+
+{Beyond fatty acid biomarkers, the metabolomic fingerprint of honey maturity encompasses several additional compound classes. Polyamines, particularly spermidine and spermine of plant and bee origin, accumulate progressively during ripening and have been proposed as markers of enzymatic activity and cellular integrity in the maturing product~\cite{guo2020,biochemreactions2022}. Flavonoids (quercetin, kaempferol, and luteolin) and phenolic glycosides derived from floral nectar undergo concentration and partial transformation during the ripening process; their profiles are correlated with diastase and invertase activity and constitute part of the antioxidant capacity indexed by DPPH and FRAP assays~\cite{guo2020}. Organic acids, including gluconic, citric, malic, and succinic acids, increase in concentration as glucose oxidase activity rises during ripening, providing both a pH indicator and a chemical maturity marker independent of moisture content~\cite{zhang2021,biochemreactions2022}. These compound classes have been identified in multiple botanical types and are analytically accessible by LC-MS and NMR-based metabolomics platforms~\cite{nmrhoney2023}, supporting their potential inclusion in a multiparametric maturity assessment framework.}
+
+It is worth emphasizing that exposure of honey to high temperatures,
+even after full capping, can cause enzyme degradation and effectively
+revert quality parameters to values characteristic of immature
+honey~\cite{biochemreactions2022}.
+Capped honey subjected to inappropriate heat treatment may exhibit
+diastase activity below the Codex threshold (<8~Schade units)
+and elevated HMF content, demonstrating that the morphological
+criterion of capping does not guarantee the maintenance of
+functional maturity throughout the supply chain.
+
+This is also confirmed by beekeeping practice, which treats the
+fact of cell capping merely as an indicator of potential honey
+maturity. On one hand, it sometimes happens that under certain
+conditions bees cap comb cells in which honey is not yet mature
+(water content exceeds 20\% and shortly after extraction the honey
+ferments). On the other hand, common practice involves harvesting
+honey from partially capped frames (usually with a threshold of
+three-quarters of cells capped in the frame), provided that in
+the uncapped cells the honey is mature. The actual indicator of
+honey maturity is the water content, which the beekeeper determines
+either by refractometry or by other tests (e.g., shaking the frame),
+whose result is directly dependent on water content.
+
+\subsection{The Concept of Functional Maturity}\label{3.3}
+Based on the above review, functional honey maturity can be operationally defined as an integrated product state characterized by the simultaneous fulfillment of three groups of criteria:
+
+\begin{enumerate}
+    \item \hl{Microbiological stability:} %MDPI: Please confirm if the bold formatting is necessary; if not, please remove it. The following highlights are the same. %Bold removed.
+    absence of active
+          fermentation; water activity $a_w < 0.60$; moisture
+          $\leq$ $20\%$; osmophilic yeast count below the growth
+          threshold under given conditions of temperature
+          and storage~\cite{zamora2006}.
+
+    \item \hl{Chemical stability:} fructose-to-glucose ratio
+          (F/G) $\geq$ $0.9$; HMF content $\leq$ $40$~mg/kg;
+          diastase activity $\geq$ $8$~Schade units; invertase
+          activity $\geq$ $4$~units; gluconic acid content and
+          organic acid profile within the reference range
+          for the given botanical type~\cite{codex_stan12,zhang2021}.
+
+    \item \hl{Biological stability:} antioxidant activity
+          (DPPH, FRAP) at the level appropriate for the given
+          botanical and geographical type; polyphenol and flavonoid
+          content not reduced relative to reference values;
+          antibacterial activity (assessed by H$_2$O$_2$ production
+          and the presence of defensins)
+          unchanged~\cite{guo2020}.
+\end{enumerate}
+
+This definition deliberately separates the morphological criterion
+(cell capping) from the quality criterion, recognizing that honey
+may achieve functional maturity before full comb capping (e.g., at
+18\% moisture in a temperate climate). This concept is consistent
+with the Codex regulatory approach, which, as demonstrated in
+Section~\ref{2}, penalizes the state of fermentation, not
+morphology~\cite{codex_stan12,sun2021}.
+
+
+
+
+
+
+\section{Microbiology of Yeasts in Honey:
+Presence vs.\ Activity vs.\ Adulteration}\label{4}
+
+The microbiology of honey is a field relatively rarely analyzed
+in the context of product authenticity assessment, despite the fact
+that microorganisms---among them osmophilic yeasts---are an
+inseparable component of every honey produced under natural
+conditions. This section states and justifies the central
+microbiological thesis of the article: the mere presence of
+osmophilic yeasts in honey is a biologically normal phenomenon,
+and does not constitute grounds for declaring the product immature,
+let alone adulterated, provided that water activity ($a_w$) and
+water content are maintained at levels prescribed by applicable
+standards.
+
+
+\subsection{Osmophilic Yeasts as a Natural Component of Honey}
+
+
+\subsubsection{Biological Characteristics of Osmophilic Yeasts}
+
+Osmophilic yeasts, also called osmotolerant or xerotolerant, are
+microorganisms capable of growth and metabolism in environments
+with very high osmotic pressure, i.e., at water activity $a_w$
+close to $0.60$--$0.62$~\cite{ruegg1981,waaw2006}. In honey,
+the dominant role is played primarily by species of the genus
+\textit{Zygosaccharomyces}:
+\textit{Zygosaccharomyces rouxii} (Boutroux) Yarrow, first described
+in 1893 as yeasts isolated from sucrose solutions, constitutes the
+model species for fungal osmotolerance. Its minimum water activity
+for growth is $a_w = 0.62$, making it one of the most resistant
+osmotolerant fungi known to
+science~\cite{waaw2006}. Under conditions below this threshold,
+\textit{Z.~rouxii} remains in a state of cryptobiosis; cells
+retain viability and germination capacity but show no metabolic
+activity or growth~\cite{waaw2006,ruegg1981}.
+
+More recent studies using culture-dependent and culture-independent
+methods (metagenomics) have expanded the list of yeasts isolated
+from honey to include further unconventional species, including
+\textit{Candida} spp., \textit{Rhodosporidiobolus ruineniae},
+\textit{Clavispora lusitaniae}, and \textit{Metschnikowia
+chrysoperlae}~\cite{rodriguezmachado2024}.
+Metagenomic studies indicate that \textit{Zygosaccharomyces}
+remains the dominant genus in both western honey bee
+(\textit{Apis mellifera}) honeys and eastern honey bee
+(\textit{Apis cerana}) honeys, regardless of country of
+origin~\cite{yeastbiodiversity2025}.
+
+\subsubsection{Sources of Colonization and Prevalence}
+Osmophilic yeasts are an integral component of the hive ecosystem
+and beekeeping environment, which not only precludes the
+justifiability of imposing restrictions in this regard but also
+excludes the possibility of their elimination from honey without
+applying extreme technological interventions. The main colonization
+routes include floral nectar, in which yeast counts are typically
+$10^2$--$10^4$~CFU/ml depending on the plant species, microclimate,
+and season; pollen and bee bread, which are carriers of active
+yeast and lactic acid bacteria populations; as well as the bee's
+digestive tract---the honey crop and intestine constitute a natural
+reservoir of microorganisms~\cite{alwaili2012}.
+Additional sources include soil, wax, and hive surfaces, whose yeast
+biofilm is difficult to eliminate without disinfectants incompatible
+with organic production~\cite{alwaili2012}.
+
+The presence of osmophilic yeasts in honey is therefore an inevitable
+phenomenon resulting from the biology of the production process,
+not from production deficiencies. This is confirmed by the literature
+from various climatic and geographical zones, encompassing both
+western and eastern honey bee
+honeys~\cite{yeastbiodiversity2025}.
+The volume of yeasts found in normal non-fermenting commercial
+honey typically ranges from several dozen to several hundred CFU/g;
+values above 1000~CFU/g are recorded in correct samples without
+signs of fermentation, provided moisture does not exceed
+$18\%$~\cite{analytica2020}.
+{To provide concrete empirical context, Ruegg and Blanc~\cite{ruegg1981}
+reported osmophilic yeast counts of $10$--$10^3$~CFU/g in commercially
+traded European honeys showing no fermentation signs, and Rodrigue\-z-Machado
+et al.~\cite{rodriguezmachado2024} identified counts ranging from below
+detection limits to $1.5 \times 10^3$~CFU/g across 120 honey samples
+of diverse botanical origin, none of which showed active fermentation
+at moisture $\leq$ $18\%$. Metagenomic surveys confirm that
+\textit{Zygosaccharomyces} populations in this CFU/g range represent
+a stable, metabolically inactive reservoir under $a_w < 0.60$
+conditions~\cite{yeastbiodiversity2025}.}
+
+
+
+\subsection{Water Activity as a Critical Control Parameter}
+
+
+\subsubsection{Definition and Significance of Water Activity in Honey}
+
+Water activity ($a_w$) is a thermodynamic measure of the
+availability of water in a food product for chemical reactions
+and microbiological activity, defined as the ratio of the vapor
+pressure above the product to the vapor pressure of pure water
+at saturation at the same
+temperature~\cite{waaw2006}.
+In contrast to water content (moisture), expressed as mass
+percentage, $a_w$ reflects the actual availability of water to
+microorganisms and is the primary parameter determining microbial
+growth, enzymatic activity, and non-enzymatic browning of the
+product~\cite{waaw2006}.
+
+Honey is a supersaturated solution of simple sugars, fructose
+($\sim$$38\%$) and glucose ($\sim$$30\%$), and higher
+oligosaccharides, in an environment of minimal water content.
+The high osmolarity of the solution resulting from this saturation
+causes water molecules to be strongly bound to sugar molecules,
+and their thermodynamic activity is drastically
+reduced~\cite{zamora2006,waaw2006}. In honey with moisture
+$\leq$ $20\%$, water activity is typically $a_w < 0.60$,
+although the exact value depends on sugar composition, water
+content, and measurement temperature~\cite{ruegg1981,gleiter2006}.
+The study of Ruegg and Blanc~\cite{ruegg1981}, cited by all
+subsequent food microbiology textbooks as a fundamental reference
+for honey microbiology, demonstrated that for the moisture range
+of 16--21\% water activity falls between $a_w = 0.56$ and
+$a_w = 0.63$, with the value $a_w = 0.60$ corresponding to
+moisture of $\approx$$17.5$--$18.5\%$ depending on sugar
+composition.
+
+\subsubsection{Osmophilic Yeast Growth Threshold and Water Activity}
+
+The minimum water activity required for osmophilic yeast growth
+is $a_w = 0.61$--$0.62$. 
+      Below this threshold, yeast growth is effectively inhibited under standard storage conditions, and cells may remain viable but metabolically inactive or markedly restricted in activity~\cite{ruegg1981,alwaili2012}. In the context of honey, this means that in products with $a_w < 0.60$, osmophilic yeasts are not expected to grow or initiate fermentation under normal commercial storage conditions, irrespective of the measured CFU/g count.
+
+
+The practical implication is direct: 
+honey containing even $10^4$~CFU/g of osmophilic yeasts but with moisture of approximately 17\% and ($a_w \approx 0.57$--$0.58$) should remain microbiologically stable under standard storage conditions~\cite{alwaili2012}.
+
+
+The Analytica Laboratories document formulates this principle
+as a multiparametric model: fermentation is highly probable only
+at moisture > 19$\%$ \hl{and} yeast count > 10~CFU/g
+simultaneously~\cite{analytica2020}, which \hl{a~contrario} %MDPI: Please confirm if the italics are necessary; if not, please remove them. The following highlights are the same.
+precludes product disqualification on the basis of the CFU/g
+parameter alone.
+
+For reasons of microbiological stability, water activity is an
+incomparably more important parameter than the percentage water
+content. It should be noted that for certain types of honey
+(e.g., heather honey), legal requirements permit water content
+levels above 20\%. This is due to the fact that the specific
+composition of these honeys ensures microbiological stability at
+water content exceeding 20\%, and these honeys should simultaneously
+be considered ``mature'' at the values specified in legal
+requirements. If water activity studies demonstrate that the water
+activity of these honeys does not exceed the threshold
+($a_w < 0.60$), this parameter would constitute a significantly
+more universal parameter for determining the microbiological
+stability and degree of maturity of honey.
+
+\subsubsection{Glucose Crystallization as a Dynamic Factor Modifying Water Activity}
+
+The natural process of glucose crystallization in honey is a factor
+deserving particular attention in the context of fermentation risk,
+as it constitutes a mechanism by which initially microbiologically
+stable honey can become susceptible to fermentation without any
+external intervention. During crystallization, glucose transitions
+from the liquid phase to the solid phase as glucose monohydrate
+(C$_6$H$_{12}$O$_6 \cdot$ H$_2$O). Each glucose molecule binds
+one water molecule, effectively removing it from the liquid
+phase~\cite{zamora2006}. However, the liquid phase remaining
+after glucose crystallization becomes enriched in fructose and
+water, causing an \hl{increase} in water activity in the
+remaining liquid phase, even though the total water content in
+the sample does not change~\cite{zamora2006,ijfans2019}.
+
+Zamora and Chirife~\cite{zamora2006} in a study of 50 samples
+of crystallized and re-dissolved Argentine honeys demonstrated
+that crystallization causes an increase in the $a_w$ of the liquid
+phase by $0.03$--$0.04$ units compared to honey in the liquid
+state. For honeys with initial moisture of $17.5$--$18.0\%$
+($a_w \approx 0.58$--$0.59$), crystallization can shift the
+$a_w$ of the liquid phase above the threshold of $0.62$, thereby
+activating the osmophilic yeast population present in the
+product~\cite{zamora2006,ijfans2019}.
+This phenomenon leads to a key methodological conclusion: the
+microbiological control of honey must take into account the phase
+state of the product (liquid vs.\ crystallized) since the same
+CFU/g count carries different fermentation risk depending on whether
+the honey is liquid or crystallized. These processes further support the need to interpret yeast counts together with water activity and the physical state \mbox{of honey.}
+
+Given that honey crystallization proceeds in a differentiated
+manner (i.e., through different crystal forms with regard to both
+structure and dynamics of formation), changes in water activity
+and thus the potential for yeast proliferation in crystallizing
+honey are variable. This variability is observed not only with
+respect to the time/progress of crystallization but also the
+sampling point within the container. Considering that crystallization
+propagation occurs at the molecular level, the greatest potential
+for water concentration occurs in the pericrystalline and
+intercrystalline spaces. Mainly through diffusion, this fluctuation
+tends to equalize in areas increasingly distant from the crystal
+surface. It should be noted that the interphase equilibrium is a
+dynamic process in which the direction of phase transitions is
+determined by temperature (variable storage conditions). Depending
+on the conditions accompanying these phase transitions (such as
+temperature, solution density, oxygen availability, honey aeration,
+the free spaces formed in honey during crystallization, the rate of
+crystallization resulting from the proportions of individual sugars,
+etc.), the potential for yeast proliferation in solution is dynamic
+and varies throughout the volume of honey. A CFU/g measurement
+without precise specification of the phase state and~$a_w$ is
+therefore methodologically incomplete.
+
+From the above it follows that if water activity could determine
+honey maturity, if this parameter were specified in legal
+requirements, the water activity value should be set at a level
+achievable at the time of honey extraction, and should also be
+maintained (without further technical measures) despite differences
+in temperature and phase transitions occurring during storage and
+distribution.
+
+
+\subsection{Yeast Count as a Risk Indicator, Not a Disqualifying Parameter}\label{4.3}
+
+
+\subsubsection{Multiparametric Model of Fermentation Risk}
+
+Analysis of the scientific literature and practical documents
+indicates the widespread acceptance of a multiparametric model
+of honey fermentation risk, in which no single indicator is
+sufficient to determine the microbiological stability or
+instability of the product. Fermentation risk is a function
+of at least four \hl{variables:} %MDPI: 1. The format of the variables in the formulas should be consistent both in text and in equations. Please check, confirm and modify it in the whole text. 2. Please check all formulas carefully to make sure all formulas are correct and there are no duplicate formulas.
+
+%1. Checked throughout the text. One inconsistency found and corrected:
+%   line 335, $a_w < 0.60\%$ changed to $a_w < 0.60$ (water activity  is dimensionless; the % sign was erroneous). All other variable formats are consistent between text and equations.
+%2. The document contains one numbered equation (eq:fermentation_risk).
+%   No duplicate formulas found.
+
+\begin{equation}
+R_f = f\!\left(a_w,\; T,\; t,\; N_{CFU}\right)
+\label{eq:fermentation_risk}
+\end{equation}
+ where $R_f$ is fermentation risk (probability of initiating
+active fermentation), $a_w$ is water activity, $T$ is storage
+temperature [$^\circ$C], $t$ is storage time [days],
+and $N_{CFU}$ is the osmophilic yeast count [CFU/g].
+
+According to this model, yeasts can ferment honey only when
+{all} growth-promoting parameters are simultaneously fulfilled:
+$a_w$ must exceed the threshold of $0.62$, temperature must fall
+within the optimal range for yeasts ($10$--$27\,^\circ$C),
+and the exposure time must be sufficient to reach the cell density
+initiating noticeable fermentation~\cite{apinz2021}.
+The New Zealand Beekeeping Industry document states directly that
+honey with moisture > 19\% and yeast count > 10~CFU/g is
+susceptible to fermentation, which \hl{a contrario} implies
+that {
+honey with moisture < 17\%, even with a substantially higher yeast count, is not expected to ferment under normal commercial storage conditions}~\cite{apinz2021}.
+
+Table~\ref{tab:fermentation_risk} illustrates the matrix model
+of fermentation risk as a function of moisture and yeast count,
+based on available empirical data.
+
+\begin{table}[H]
+
+\caption{Estimated honey fermentation risk as a function
+         of moisture and osmophilic yeast count
+         (storage temperature $10$--$27\,^\circ$C).
+         Source: own compilation based on~\cite{analytica2020,apinz2021}.}
+\label{tab:fermentation_risk}
+
+
+\begin{adjustwidth}{-\extralength}{0cm}
+\begin{tabularx}{\fulllength}{l *{3}{>{\centering\arraybackslash}X}}
+\toprule
+\multirow{2.5}{*}{\textbf{Moisture [\%]}} &
+\multicolumn{3}{c}{\textbf{Yeast Count [CFU/g]}} \\
+\cmidrule{2-4}
+ & \textbf{<10} & \textbf{10--1000} & \textbf{>1000} \\
+\midrule
+$\leq$17.0       & {negligible risk}       & {negligible risk}               & {negligible risk} \\
+$17.1$--$18.0$  & {negligible risk}       & low risk              & moderate risk \\
+$18.1$--$19.0$  & {negligible risk}       & moderate risk         & high risk \\
+$19.1$--$20.0$  & low risk      & high risk             & {very high risk} \\
+$>$20.0          & moderate risk & {high risk} & {very high risk} \\
+\bottomrule
+\end{tabularx}
+\end{adjustwidth}
+
+\end{table}
+
+
+
+
+{The risk categories presented in Table~\ref{tab:fermentation_risk} are heuristic estimates compiled from two practitioner-oriented documents~\cite{analytica2020,apinz2021} and represent the consensus of applied honey quality practice. They have not been derived from a controlled experimental study under defined storage conditions; the term ``no risk'' should be understood as indicating negligible probability of fermentation initiation under normal commercial storage, not an absolute thermodynamic guarantee. The table is intended as a decision-support tool and should be interpreted alongside direct $a_w$ measurement rather than used as a standalone \mbox{classification system.}}
+
+\subsubsection{Limitations of the Plate Method (CFU/g) as a Risk Assessment Tool}
+
+
+The standard enumeration of yeasts and molds in foods is commonly based on plating serial dilutions on selective media, followed by incubation and colony counting.
+
+
+This method, while widely used and well-validated, has a number of significant
+limitations in the context of honey fermentation risk assessment:
+
+
+\begin{enumerate}
+    \item \hl{Failure to distinguish viable from dead cells:}
+          the plate method counts only cells capable of forming
+          colonies on solid medium under incubation conditions;
+          living cells in a state of deep anabiosis induced by
+          low honey $a_w$ may fail to grow on the medium or grow
+          atypically, leading to underestimation of the true yeast
+          count;
+    \item \highlighting{Lack of correlation with in situ \boldmath{$a_w$:}} the
+          CFU/g result is a measure of the potential population size
+          but does not indicate whether under the conditions prevailing
+          in the tested product this population is active;
+          only the combination of CFU/g with $a_w$ measurement allows
+          assessment of the actual fermentation
+          risk~\cite{ruegg1981};
+    \item \hl{Lack of species specificity:} standard selective
+          media do not differentiate yeast species with different
+          fermentation potential; \textit{Metschnikowia}
+          spp.\ with low fermentation potential are counted
+          identically to \textit{Z.~rouxii} with high
+          potential~\cite{rodriguezmachado2024}.
+\end{enumerate}
+
+\textbf{\hl{Legal--scientific conclusion:} %MDPI: Please check if this paragraph should be a part of above list content.
+} in light of the above
+methodological limitations, the mere determination of yeast count
+(CFU/g) in honey, without a simultaneous measurement of $a_w$,
+determination of the product's phase state, storage temperature,
+and time since harvest, does not constitute a sufficient scientific
+basis for assessing fermentation risk, let alone for disqualifying
+the product from commercial trade. Given that no applicable standard
+(Codex, EU, ISO) establishes a CFU/g limit for honey
+(cf.~Section~\ref{2}), a potential inspector's decision to disqualify
+a product based solely on CFU/g count would be devoid of both
+scientific and legal grounds.
+
+
+\subsection{Fermentation as a Dynamic and Post-Harvest Event}
+
+
+The Apimondia position and much of the literature on honey
+adulteration tacitly assume that fermentation detected in honey
+is evidence of its immaturity at the time of harvest.
+This assumption is, however, incorrect from the perspective of
+microbiological dynamics since fermentation is an event that can
+occur at any stage of the supply chain, not only at the time
+the product leaves the hive~\cite{apinz2021,analytica2020}.
+
+Correctly harvested honey that meets all normative criteria,
+with moisture of, for example, $18.5\%$ ($a_w \approx 0.60$)
+and a yeast count of $200$~CFU/g, stored for six months in a
+warehouse at a temperature of $22\,^\circ$C and relative humidity
+above 70\%, may locally exhibit higher water activity
+(crystallization, temperature changes, air access, etc.), shifting
+the $a_w$ above the yeast growth threshold and initiating
+fermentation~\cite{apinz2021}.
+
+Border inspection, sampling imported honey after several months
+of transport and storage, takes measurements at a point removed
+in time and space from the moment of harvest; the determination of
+fermentation or elevated active yeast count at that moment does not
+allow, without analysis of temperature and humidity documentation
+in the supply chain (\hl{cold chain monitoring}), reliable
+reconstruction of the product's state at the time of honey
+extraction (verifying the degree of capping) or departure from
+the apiary~\cite{tsagkaris2021,schoder2026}.
+Therefore, fermentation observed at the point of inspection should not be treated, by itself, as proof of deliberate adulteration at the production stage. It may indicate product instability or non-compliance, but attribution to intentional immature honey production requires additional evidence from the extraction, processing, storage, or \mbox{supply-chain stages.}
+
+Deliberate adulteration consisting of
+harvesting immature honey followed by technological treatments
+aimed at its microbiological stabilization can only be established
+through controls at the honey extraction stage, and effective
+limitation may be achieved by specifying prohibited technologies
+(e.g., vacuum dehydration). The non-use of prohibited technologies
+should be a mandatory stage of official controls of apiaries and
+establishments involved in honey extraction and placing on the
+market. Neither yeast count nor fermentation permits inference
+about this.
+
+
+\section{Global Production Systems and Climatic Conditions}\label{5}
+
+Honey quality standards, including the Apimondia position, were
+developed on the basis of the European temperate climate and
+frame beekeeping, yet more than 70\% of global honey production
+comes from regions that are climatically, technologically, and
+culturally different from
+Europe~\cite{garcia2025,eudir2001110}. Applying uniform morphological and microbiological criteria to honeys from different production systems is methodologically limited and may create disproportionate assessment outcomes for producers operating under different climatic and technological conditions~\cite{phiri2022,tadele2025}.
+
+
+\subsection{Global Landscape of Apicultural Production}
+
+
+According to FAO data from 2024, the global number of managed
+colonies exceeded 101.7~million, with Asia dominating
+at a 44.4\% share, and Europe holding 24.7\%~\cite{destatis2026}.
+Honey production in 2022 reached 1.83~million tonnes, with
+Asia accounting for 48.2\%, Europe for 22.8\%, the Americas
+for 18.5\%, and Africa for 8.5\%~\cite{phiri2022}. Adopting
+the capping criterion as the sole determinant of maturity in
+practice favors European honeys and discriminates against honeys
+from tropical and traditional
+systems~\cite{tadele2025,phiri2022}.
+
+
+
+
+
+Relative humidity in the tropical zone of Africa is typically
+70--90\% RH, exceeding 95\% RH during the rainy season.
+Under such conditions, bees are not biologically capable of
+reducing honey moisture to $\leq$$20\%$ solely through natural
+hive ventilation~\cite{tadele2025}. The beekeeper faces a choice:
+early harvesting and technological dehumidification, or the risk
+of in situ fermentation or plundering by pests. Tadele et al.~\cite{tadele2025}
+classify dehumidification as a \hl{technological necessity},
+not an intent to adulterate, emphasizing that the alternative
+is crop loss or fermented product. Studies show that honey
+subjected to proper dehumidification retains full enzymatic
+and antioxidant profile~\cite{lastriyanto2020,spel3upm}.
+
+\subsubsection*{African Production: Climatic Humidity and Traditional Hive Systems}
+
+In Ethiopia, 95.5\% of hives are traditional, with only 0.2\%
+being frame hives~\cite{ethaau2007}. Paradoxically, the study
+by Gobessa et al.~\cite{sciendo2012} demonstrated that honey
+from traditional hives is characterized by \hl{significantly
+lower} moisture than from modern hives ($p < 0.001$), as
+harvesting occurs once or twice per year, giving more time
+for natural evaporation. At the same time, traditional hives
+make frame inspection and assessment of the degree of capping
+impossible without destroying the combs; applying a frame-based morphological criterion to these systems illustrates the limited transferability of maturity indicators derived mainly from temperate-climate European production systems \cite{tadele2025}.
+
+
+\subsection{Honeys of Stingless Tropical Bees}
+
+
+Stingless bees (Meliponini, >500~species) produce honey with
+moisture typically of 25--35\% and $a_w = 0.60$--$0.86$,
+a different sugar profile, and higher acidity than
+\textit{Apis mellifera} honeys~\cite{stinglessyeastbrazil2021,stinglesswjava2024}.
+Meliponini do not possess nectar dehydration mechanisms
+comparable to the European bee: smaller honey crops and less
+developed hive ventilation are biological characteristics,
+not production deficiencies. A study of 17 species
+from Brazil~\cite{stinglessyeastbrazil2021} demonstrated a range
+of $a_w = 0.60$--$0.86$, with osmophilic yeasts isolated
+from these honeys characterized by high osmotolerance and low
+fermentative capacity---biological adaptation to an environment
+with elevated $a_w$. Meliponini honeys require separate
+standardization; assessing their quality on the basis of
+\textit{Apis mellifera} standards is biologically
+unjustified~\cite{stinglessyeastbrazil2021,stinglesswjava2024}.
+
+
+\subsection{Specific Microclimates and Weather Conditions in the Temperate Zone}
+
+Honey extraction with moisture levels that pose a real risk of
+fermentation also occurs in the temperate zone, including in
+Europe. Many areas from which honey is harvested are characterized
+by a specific microclimate with persistently elevated air humidity.
+Weather factors such as rainfall lasting for periods of several
+days to several weeks influence elevated water content in combs.
+This is precisely why the Apimondia position states that a justified
+beekeeping practice is to leave honey after extraction in open
+vessels for the purpose of evaporating excess water. The extraction of
+honey with elevated water content is therefore a fact, as is human
+intervention aimed at removing excess water for the purpose of
+microbiological stabilization. Commonly practiced by European
+beekeepers is not only the periodic mixing of honey to increase the rate
+of evaporation but also the use of various technical devices for
+this purpose (e.g., rotating discs that increase the evaporation
+surface). Technical development and process automation are visible
+at all stages of honey extraction and serve not only to increase
+efficiency but also effectively enhance product safety.
+Unquestionably, however, they cannot be instruments of honey
+adulteration. Therefore, clear, accessible, and verified criteria
+contained in normative acts should underpin the assessment of such
+activities, and within justified scope, prohibited practices should
+be precisely specified (e.g., the use of nanofiltration, ion exchange
+resins, and vacuum dehydration).
+
+\subsection{Comparison of Production Systems}
+
+
+Table~\ref{tab:hive_systems} summarizes the key characteristics of
+the three globally dominant hive types. Only the Langstroth hive
+provides full control over honey ripening; KTBH and traditional
+hive systems are structurally limited in this respect, meaning that
+honeys from these systems may fail to meet the capping criterion
+while complying with all good beekeeping
+practices~\cite{tadele2025,sciendo2012,lrrd2013}.
+
+\begin{table}[H]
+\caption{Comparison of beekeeping production systems with respect to
+         honey maturity control. Source: own compilation
+         based on~\cite{tadele2025,sciendo2012,lrrd2013}.}
+\label{tab:hive_systems}
+\begin{adjustwidth}{-\extralength}{0cm}
+
+\begin{tabularx}{\fulllength}{ccCC}
+\toprule
+\textbf{Feature} &
+\textbf{Langstroth Hive} &
+\textbf{Kenya Top Bar Hive} &
+\textbf{Traditional Hive} \\
+\midrule
+Capping control
+    & Full (frame inspection)
+    & Partial
+    & None (destructive) \\
+\midrule
+In situ dehumidification
+    & Yes
+    & Limited
+    & None \\
+\midrule
+Average yield [kg/hive/year]
+    & 20--40
+    & 15--26~\cite{lrrd2013}
+    & 5--15~\cite{tadele2025} \\
+\midrule
+Typical honey moisture
+    & 16--19\%
+    & 17--20\%
+    & 17--23\% \\
+\midrule
+Risk of yeast colonization
+    & Low
+    & Moderate
+    & High \\
+\midrule
+Global use
+    & Americas, Australia, Europe
+    & East Africa
+    & Africa, S.E. Asia \\
+\bottomrule
+\end{tabularx}
+\end{adjustwidth}
+\end{table}
+
+
+\subsection{Limitations of the Morphological Capping Criterion}
+
+
+Based on the above analysis,
+{the criterion of full capping as the sole determinant of honey maturity has limited global applicability and may be technically inadequate in several production systems for five reasons:
+} (1)~the climatic
+impossibility of fully dehydrating nectar under conditions of
+70--90\%~RH humidity~\cite{tadele2025}; (2)~the technological
+inaccessibility of capping assessment in traditional hives without
+comb destruction~\cite{sciendo2012}; (3)~the biological distinctness
+of Meliponini honeys that precludes direct application of
+\textit{Apis} standards~\cite{stinglessyeastbrazil2021};
+(4)~the empirical inconsistency between the degree of capping and
+the microbiological stability of honey~\cite{zhang2021,guo2020};
+and (5)~the impossibility of gathering, archiving, and verifying
+evidence, and of post factum proof from the degree of capping.
+It is necessary to adopt an integrated model for assessing
+functional maturity based on measurable parameters ($a_w$),
+not on a morphological
+criterion~\cite{tadele2025,codex_stan12,ruegg1981}.
+
+
+
+
+
+
+\section{EU Honey Market and Regulatory Implications}
+
+The European honey market is the world's largest regional import
+market, and its structural characteristics---chronic domestic
+production deficit, high dependence on imports from third countries,
+and wide quality variation of supplied products---constitute
+a context in which regulatory decisions concerning honey
+disqualification criteria have direct economic, trade, and consumer
+consequences. This section analyzes this market context as
+justification for the precise approach advocated in this article,
+based on functional maturity and water activity, in place of an
+overly simplified approach based on a yeast count or morphological
+criterion.
+
+
+\subsection{Structure and Dynamics of Honey Imports into the EU}
+
+
+The European Union is the world's largest regional honey importer,
+generating a trade balance deficit in the beekeeping sector that
+has no equivalent in any other region~\cite{cbi2024,pollinatorhub2025}.
+EU production in the 27 Member States was estimated at approximately 272,286 tonnes in 2022–2023, covering only 55–60\% of domestic demand, estimated at approximately 480--500 thousand tonnes~\cite{pollinatorhub2025,ec_honey_autumn2024}.
+The difference is filled by imports from third countries.
+
+
+In 2023, extra-EU honey imports amounted to approximately 163,700 tonnes, while the broader volume of honey entering and circulating within the EU supply chain, including intra-EU trade, was estimated at approximately 300,000–360,000 tonnes~\cite{cbi2024}.
+
+In 2024, total imports (extra-EU + intra-Community) amounted to
+approximately 290 thousand tonnes (a decline of 3.1\% year-on-year
+after three years of growth), but the long-term trend remains
+upward: the EU market is expected to reach a volume of 445 thousand
+tonnes by 2035 (CAGR +1.9\%)~\cite{eurostat_honey2023}.
+
+The main external suppliers in 2023 were: \hl{China} (37\% of extra-EU imports), \hl{Ukraine} (28\%),
+\hl{Argentina} (approx.\ 7\%), \hl{Mexico} and
+\hl{Cuba}~\cite{tridge2024}.
+The largest national importers within the EU were Germany
+(41 thousand tonnes, 25\% of extra-EU imports), Belgium
+(31.4 thousand tonnes, 19\%), Poland (23.3 thousand tonnes, 14\%),
+Spain (15.7 thousand tonnes), and France
+(7.7 thousand tonnes)~\cite{eurostat_honey2023}.
+
+
+\subsection{The Scale of Honey Adulteration on the EU Market: Empirical Data}
+
+
+The scale of the honey authenticity problem on the EU market is
+documented by a number of studies conducted at the institutional
+level. The coordinated control action of the European Commission
+``From the Hives'' (2021--2022), covering analysis of 320 samples
+of imported honey, demonstrated that \hl{46\%} of the analyzed
+samples were suspected of non-compliance with the Honey Directive,
+representing a threefold increase compared to a similar study from
+2015 to 2017, when the figure was 14\%~\cite{eufromhives2021}.
+The highest absolute percentage of suspect shipments concerned China
+(74\%), while Turkey showed the highest relative rate
+(93\%)~\cite{eufromhives2021}. Among the identified adulteration
+practices, the addition of sugar syrups (from sugarcane, corn, and rice)
+dominated, along with blending authentic honey with syrup products
+in proportions below the detection threshold of conventional
+\mbox{methods~\cite{eufromhives2021,schoder2026}.}
+
+These data indicate a real and serious honey authenticity problem
+on the EU market but simultaneously clearly profile the dominant
+form of adulteration as \hl{sugar syrup adulteration}, not as
+the distribution of honey with an elevated yeast count. JRC and OLAF
+documents do not indicate a single case of honey disqualification
+based solely on the yeast CFU/g count without simultaneous
+determination of active fermentation or syrup
+adulteration~\cite{eufromhives2021}. This is a significant
+observation from the perspective of this article: adulteration
+practices focus on the chemical dilution of honey, not on the manipulation
+of its microflora.
+
+In response to this crisis, the European Commission adopted
+Directive (EU) 2024/1438 (part of the ``Breakfast Directives''
+package), introducing from 2026 an obligation to declare all
+countries of origin of honey blend components in the principal
+field of view of the label~\cite{cbi_traceability2024}. The
+implementation of this requirement strengthens the traceability
+infrastructure but does not resolve the problem of the lack of
+validated parameters specific to immaturity.
+
+
+\subsection{Analytical Gaps: Absence of a Validated Immaturity Biomarker}
+
+
+The identification of immature honey as a distinct category of
+adulteration requires the existence of analytical tools capable of
+reliably distinguishing between immature and mature honey, and here
+science encounters a fundamental limitation. As the review by
+Tsagkaris et al.~\cite{tsagkaris2021} demonstrated, standard
+physicochemical methods (moisture, diastase, invertase, HMF,
+and sugar profile) are not sufficient for unambiguous determination
+of immaturity, because:
+
+\begin{enumerate}
+    \item \hl{There is no specific marker:}
+          no single chemical compound or enzyme is identified
+          as a biomarker exclusively of immaturity in a manner
+          independent of botanical and geographical type;
+          the physicochemical parameters of mature honey from
+          the tropics may resemble the parameters of immature
+          honey from the temperate zone~\cite{tsagkaris2021,guo2020}.
+    \item \hl{Metagenomics and metabolomics have limited
+          discriminatory power without reference databases:}
+          as Schoder~\cite{schoder2026} emphasizes in his 2026
+          review, the high analytical resolution of omic methods
+          (genomics, proteomics, NMR, GC-MS, and LC-HRMS) does not
+          guarantee unambiguous fraud attribution without solid,
+          globally representative reference databases;
+          \hl{``high analytical resolution alone therefore
+          does not guarantee unambiguous fraud
+          attribution''}~\cite{schoder2026}.
+    \item \hl{Blending effects mask immaturity:}
+          blending immature with mature honeys in proportions
+          below 50\% is analytically indistinguishable from mature
+          honey by conventional methods~\cite{schoder2026}; it
+          should be emphasized that this problem also applies to
+          the honey extraction stage---it is impossible to
+          determine what fraction of honey was mature and what
+          was immature at the time of extraction.
+    \item \hl{Yeast presence is not a specific marker:}
+          as demonstrated in Section~\ref{4}, the osmophilic yeast count
+          in honey is determined mainly by climatic production
+          conditions and hive systems, not by the degree of
+          maturity, which excludes CFU/g as a useful immaturity
+          biomarker~\cite{rodriguezmachado2024,schoder2026}.
+\end{enumerate}
+
+The most recent studies point to promising directions in the search
+for immaturity biomarkers: Sun et al.~\cite{sun2021} identified
+decenedioic acid and other fatty acids of bee origin as potential
+molecular markers whose concentration correlates with the degree of
+maturity in a manner independent of yeast count. NMR-based
+metabolomics~\cite{nmrhoney2023} enables simultaneous quantification
+of several dozen compounds in a single measurement, providing
+a basis for developing a multidimensional maturity index. However,
+to date, none of the proposed biomarkers has undergone full
+multilaboratory validation encompassing the global diversity of
+botanical and geographical types~\cite{tsagkaris2021}.
+
+It should be borne in mind that legally established methods should
+be as simple, rapid, and accessible as possible since they will
+constitute the basic tool of every beekeeper (similar to the current
+refractometer) for determining the timing of extraction, as it is
+this stage that determines whether honey is mature or not.
+
+
+\subsection{Regulatory Risk: Consequences of Overly Strict Interpretation}
+
+
+Adopting a disqualification criterion based on yeast CFU/g count,
+without taking into account water activity, climatic production
+conditions, and the absence of active fermentation entails a number
+of serious regulatory and market risks, whose analysis is necessary
+for a proper assessment of the implications of the Apimondia
+position:
+
+\begin{itemize}
+        \item {\hl{Risk} %MDPI: We formatted this as a list. Please confirm. The same applies to the following highlights.
+%I confirm
+ of discrimination against tropical producers.}
+        \end{itemize}
+
+As demonstrated in Section~\ref{5}, honeys from tropical and traditional
+systems naturally contain higher concentrations of osmophilic yeasts
+due to hive type, climatic conditions, and richer endemic
+microbiological
+biodiversity~\cite{tadele2025,stinglessyeastbrazil2021}.
+Disqualification of these honeys based on CFU/g would effectively
+result in excluding from the EU market products legally produced
+in countries of East Africa, Southeast Asia, and Latin America,
+while not affecting syrup-adulterated honeys (which contain a
+standard or reduced yeast count following the ultrafiltration
+process)~\cite{eufromhives2021}.
+
+\begin{itemize}
+        \item {\hl{Risk} 
+ of aggravating the deficit and price increases.}
+        \end{itemize}
+
+Excluding from the EU market honeys from China, Ukraine, and
+Argentina---the three largest suppliers collectively accounting
+for $\approx72\%$ of extra-EU imports~\cite{tridge2024}---based
+on the CFU/g criterion would cause a sharp rise in honey prices
+on the European market and an aggravation of the deficit,
+particularly severe for consumers in countries with low domestic
+consumption (Poland, Germany, and Belgium as net
+importers)~\cite{eurostat_honey2023}.
+
+\begin{itemize}
+        \item {\hl{Risk} 
+ of creating arbitrary trade barriers.}
+\end{itemize}
+
+Applying a criterion that has no basis in Codex Alimentarius or
+EU Directive 2001/110/EC can be challenged by trading partners
+under the WTO-SPS Agreement (Agreement on the Application of
+Sanitary and Phytosanitary Measures), which requires that
+trade-restrictive measures have a scientific basis and be
+proportionate to the identified risk~\cite{codex_stan12,eudir2001110}.
+The risk of harvesting immature honey exists for all honeys,
+regardless of where the apiary is located. Introduced requirements
+and restrictions should have a global dimension and their
+proportional reflection in EU law with respect to EU honey producers.
+
+
+\begin{itemize}
+        \item {\hl{Risk} 
+ of missing the actual problem.}
+\end{itemize}
+
+As demonstrated by the ``From the Hives'' action, the dominant
+form of honey adulteration in the EU is sugar syrup adulteration,
+not the distribution of immature honey with an elevated yeast
+count~\cite{eufromhives2021}.
+Focusing inspection resources on CFU/g measurement at the expense
+of isotope ratio analysis ($\delta^{13}$C, $\delta^{2}$H,
+$\delta^{18}$O) and NMR fingerprinting would lead to the allocation
+of inspection resources inconsistent with the actual adulteration
+risk profile.
+It should be noted, however, that the European Commission later
+withdrew from treating $^1$H-NMR profiling as a sufficiently
+established official control method, emphasizing the need for
+further research, validation, and harmonization of analytical
+methods~\cite{EuropeanCommission2023NMR}.
+
+
+
+\subsection{Regulatory Proposals: Harmonization, Traceability, and Proportionality}
+
+
+Based on the above market and regulatory analysis, this article
+formulates the following proposals addressed to standardization
+bodies (ISO, Codex), EU institutions (DG SANTE, EC), and industry
+organizations (Apimondia, Copa-Cogeca):
+
+\begin{enumerate}
+    \item \highlighting{Update EU Directive 2001/110/EC with a water
+          activity (\boldmath{$a_w$}) criterion:}
+          introduction of mandatory $a_w$ measurement alongside
+          moisture content as a primary parameter for fermentation
+          risk assessment. Measurement of $a_w$ is a validated,
+          commercially available method (instruments such as
+          AquaLab, Rotronic HygroLab) and inexpensive; this would
+          constitute a substitution of the morphological criterion
+          with a physicochemical criterion having direct scientific
+          justification~\cite{ruegg1981,zamora2006}.
+
+    \item \hl{Establish 
+ a multiparametric microbiological
+          assessment protocol:} fermentation risk assessment should
+          be conducted simultaneously for $a_w$, water content,
+          storage temperature, and yeast count (in accordance with
+          the risk Equation (\ref{eq:fermentation_risk}) proposed
+          in Section~\ref{4.3}); none of these parameters may be
+          decisive in isolation from the
+          others~\cite{analytica2020,apinz2021}.
+
+
+\end{enumerate}
+
+
+
+
+
+
+\section{Proposed Framework for Functional Maturity Assessment}
+
+The preceding sections indicate that honey maturity is a continuous and multidimensional phenomenon. Therefore, no single parameter, whether morphological, microbiological, or physicochemical, is sufficient for its reliable assessment. Rather than treating honey as simply “mature” or “immature”, it is more appropriate to assess the degree of functional maturity in relation to microbiological stability, chemical quality, and fermentation risk. Natural variability related to botanical origin, climate, weather conditions, hive type, and beekeeping practices makes rigid universal classification difficult. However, the main quality and commercial risk associated with insufficient maturity, namely fermentation, can be assessed using measurable parameters, particularly water activity. The framework proposed in this section should be regarded as a conceptual and operational tool requiring further validation before possible use in official control practice.
+
+
+
+\subsection{Water Activity as a Priority Parameter}
+
+Among all the biomarkers mentioned, water activity
+($a_w$) is proposed as the priority parameter for three reasons.
+First, it is a thermodynamic measure of the \hl{availability
+of water to microorganisms}, not merely the water content per unit
+mass of product; it directly correlates with the biological
+possibility of osmophilic yeast growth, making it the only
+parameter that can replace the entire range of indirect
+microbiological indicators~\cite{ruegg1981,waaw2006}.
+Second, measurement of $a_w$ is rapid (3--5 min), inexpensive,
+and can be performed at an apiary or control laboratory using a
+standard instrument such as AquaLab CX3TE or Rotronic HygroLab;
+the result is reproducible and unambiguous, requiring no expert
+interpretation~\cite{zamora2006}.
+Third, the criterion $a_w < 0.60$ is based on a biologically
+justified mechanism---it is the physiological threshold of
+osmophilic yeasts determined in vitro under isobaric
+conditions~\cite{waaw2006,ruegg1981}---and not on an arbitrarily
+chosen administrative value.
+
+It is nevertheless necessary to conduct studies on whether,
+similarly to permitted exceptions regarding water content, exceptions
+should also be established in this regard. The microbiological
+stability of certain honey types may result not so much from low
+water activity as from specific components present in plant nectar.
+
+
+\subsection{Hierarchical Decision Framework}
+
+{
+Based on the biomarkers described above, the proposed functional maturity assessment framework can be structured into two main analytical levels, organized according to the principle of proportionality. Level I provides basic screening based on moisture and water activity, whereas Level II provides an extended qualitative assessment based on enzymatic and chemical parameters for borderline or uncertain cases. Candidate metabolomic biomarkers are treated as a research-oriented validation layer requiring further multilaboratory verification rather than as routine official control parameters.
+}
+
+\subsubsection{Level I ---Basic Screening}
+
+Level I constitutes a first-order filter based on two parameters
+measured directly on the product:
+
+\begin{itemize}
+    \item \highlighting{Moisture \boldmath{$\leq 20\%$}} taking into account
+          legally specified exceptions (refractometry,
+          Codex STAN 12-1981 method), a normative parameter,
+          mandatory in all major standards;
+    \item \highlighting{Water activity \boldmath{$a_w < 0.60$}} taking into
+          account possible exceptions, a parameter proposed as
+          a normative supplement; when both of these criteria
+          are met, the honey is \hl{microbiologically stable
+          by virtue of the state of microbiological knowledge},
+          and yeast growth is  {not observed and is effectively inhibited under standard storage conditions,}
+          regardless of their count~\cite{ruegg1981,waaw2006}.
+\end{itemize}
+
+\hl{Key rule of Level I:} if moisture $\leq$ $20\%$
+\textsc{AND} $a_w < 0.60$, the product is not subject to
+disqualification based on yeast count (CFU/g), regardless of the
+determined value of this parameter. Disqualification based solely
+on CFU/g, without confirmation of exceeding the $a_w$ threshold,
+is scientifically unjustified and legally
+inadequate~\cite{codex_stan12,eudir2001110}.
+
+If Level I indicates a borderline state ($18.1$--$20.0\%$
+moisture or $a_w = 0.60$--$0.62$) or the yeast count exceeds
+$1000$~CFU/g, analysis is escalated to Level~II.
+
+\subsubsection{Level II ---Extended Qualitative}
+
+{The hierarchical decision structure of the proposed functional maturity assessment framework, including the transition from basic screening to extended qualitative assessment, is summarized in Figure \ref{fig:fmam}}.
+Level II provides an assessment of functional maturity in all
+three dimensions defined in Section~\ref{3.3}: microbiological, chemical,
+and biological stability. Level~II parameters include:
+
+\begin{enumerate}
+    \item {\hl{Enzymatic profile:}}
+    \begin{itemize}
+        \item Diastase activity $\geq$ $8$~Schade units (or $\geq$$3$~units
+              for botanical types with naturally low amylolytic
+              activity, e.g., acacia, citrus, lavender)~\cite{codex_stan12}.
+    \end{itemize}
+    \item {\hl{Chemical parameters:}}
+    \begin{itemize}
+        \item F/G ratio $\geq$ $0.9$; HMF $\leq$ $40$~mg/kg;
+              free acidity $\leq$ $50$~mEq/kg
+              (Codex)~\cite{codex_stan12}.
+    \end{itemize}
+\end{enumerate}
+
+
+\begin{figure}[H]
+\centering
+\tikzset{
+  fmbox/.style={rectangle, rounded corners=4pt, draw=black, fill=gray!10,
+                text width=4.2cm, align=center, minimum height=0.7cm, font=\footnotesize},
+  levelbox/.style={rectangle, rounded corners=4pt, draw=blue!70!black, fill=blue!8,
+                   text width=5.0cm, align=center, minimum height=1.0cm, font=\footnotesize},
+  okbox/.style={rectangle, rounded corners=4pt, draw=green!60!black, fill=green!8,
+                text width=3.4cm, align=center, minimum height=0.7cm, font=\footnotesize},
+  warnbox/.style={rectangle, rounded corners=4pt, draw=orange!80!black, fill=orange!8,
+                  text width=3.4cm, align=center, minimum height=0.7cm, font=\footnotesize},
+  fmarrow/.style={-{Stealth[length=2mm]}, thick}
+}
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[node distance=0.6cm and 0.8cm]
+  \node[fmbox] (start)
+    {Honey sample};
+
+  \node[levelbox, below=of start] (lI)
+    {\textbf{Level I -- Basic Screening}\\
+     Moisture $\leq 20\%$ \textsc{and} $a_w < 0.60$\\
+     \scriptsize(refractometry + $a_w$ meter)};
+
+  \node[okbox,  below left =1.2cm and 0.6cm of lI] (pass1)
+    {Microbiologically stable\\No CFU/g disqualification};
+
+  \node[warnbox, below right=1.2cm and 0.6cm of lI] (border)
+    {Borderline or CFU/g\,$> 1000$\\$\Rightarrow$ escalate to Level~II};
+
+  \node[levelbox, below=1.0cm of border] (lII)
+    {\textbf{Level II -- Extended Qualitative Assessment}\\
+     Diastase $\geq 8$\,Schade u.;\; HMF $\leq 40$\,mg/kg\\
+     F/G $\geq 0.9$;\; Acidity $\leq 50$\,mEq/kg\\
+     Metabolomic indicators: validation context
+     };
+
+  \node[okbox,  below left =1.2cm and 0.5cm of lII] (pass2)
+    {Functionally mature\\Compliant};
+
+  \node[warnbox, below right=1.2cm and 0.5cm of lII] (fail2)
+    {Parameter(s) exceeded\\Further investigation};
+
+  \draw[fmarrow] (start) -- (lI);
+  \draw[fmarrow] (lI) -- node[above left,  font=\scriptsize]{Both met}   (pass1);
+  \draw[fmarrow] (lI) -- node[above right, font=\scriptsize]{Borderline / fail} (border);
+  \draw[fmarrow] (border) -- (lII);
+  \draw[fmarrow] (lII) -- node[above left,  font=\scriptsize]{All met}       (pass2);
+  \draw[fmarrow] (lII) -- node[above right, font=\scriptsize]{Any exceeded}  (fail2);
+\end{tikzpicture}}
+\caption{{\hl{Hierarchical} %MDPI: 1. Please note that changes to the position/size of figures or tables may occur during the production stage. 2. Please note that figures and captions require careful review at this stage as well. Please verify them thoroughly before returning your proofread manuscript. Doing so helps us avoid an additional round of revisions and ensures timely publication.
+ decision structure of the proposed functional maturity assessment framework (FMAM). Level I provides rapid basic screening based on moisture content and water activity $(a_w)$. Level II provides extended qualitative assessment for borderline or analytically uncertain cases using enzymatic and chemical parameters. Candidate metabolomic biomarkers are considered a~research-oriented validation component requiring further multilaboratory verification. The framework is a conceptual model and should not be regarded as a validated official control procedure at this stage.}}
+ %Figure and caption verified. All parameter values are consistent
+%with the text and Codex STAN 12-1981. One correction made in the
+%Level II node: "SU" changed to "Schade u." to match the
+%abbreviation used in Table 1 and the main text.
+
+\label{fig:fmam}
+\end{figure}
+
+
+\subsection{Recommendations for Regulatory Bodies and Apimondia}
+
+
+
+Based on the proposed FMAM and the conducted scientific analysis,
+this article formulates the following recommendations addressed
+to key stakeholders:
+
+
+\subsubsection{Recommendations for Apimondia}
+
+\begin{enumerate}
+    \item {\highlighting{Supplement the 2023 position with the \boldmath{$a_w$}
+          criterion:}} the Apimondia recommendation should
+          explicitly state that the presence of osmophilic yeasts
+          in honey does not constitute grounds for declaring
+          immaturity, provided moisture $\leq$ $20\%$ and
+          $a_w < 0.60$; both parameters should be listed as
+          simultaneous necessary
+          conditions~\cite{ruegg1981,waaw2006}.
+    \item {\hl{Take into account the regional diversity of
+          production systems:}} the position should contain a clear
+          clause regarding honeys from tropical climates and
+          traditional systems, recognizing technological
+          dehumidification as a legal production practice~\cite{tadele2025}
+          or excluding specific dehumidification techniques
+          that negatively affect the product.
+    \item {\hl{Initiate dialogue with ISO TC~34/SC~17:}} %MDPI: 1. The standard should be listed in the reference part and cited when it appears in the main text (in the form of a reference number, e.g., [2]). Please revise. 2. Please provide detailed information here, and we can help you add it to the reference part and rearrange the citation order. e.g., TB 10099-2017; Code for Design of Railway Station and Terminal. China Railway Publishing House: Beijing, China, 2017.
+    
+    %Thank you for the comment. We would like to clarify that ISO TC 34/SC 17 is not a standard but an ISO technical subcommittee (Management Systems for Food Safety). It does not require a bibliographic reference. However, we have added a reference to the committee's webpage for transparency: ISO/TC 34/SC 17. Management Systems for Food Safety. International Organization for Standardization. Available online: https://www.iso.org/committee/583916.html
+          the ISO 24607:2025 standard on bee honey should be
+          extended to include the $a_w$ criterion as a normative
+          parameter~\cite{codex_stan12}.
+\end{enumerate}
+
+\subsubsection{Recommendations for EU Bodies (EC, DG SANTE)}
+
+
+{\hl{Consider the inclusion of} \highlighting{\boldmath{$a_w$}} \hl{as a risk-based control parameter in official honey quality controls}}, particularly for consignments with borderline moisture values, products from high-humidity production systems, or cases in which fermentation risk is analytically uncertain.
+
+
+\subsubsection{Recommendations for Laboratories and the Scientific Community}
+
+\begin{enumerate}
+    \item {\hl{Standardize the multiparametric microbiological
+          assessment protocol}} encompassing the simultaneous measurement
+          of CFU/g, $a_w$, temperature, and phase state of honey
+          (liquid/crystallized); results should be reported
+          jointly, not as isolated values~\cite{zamora2006,analytica2020}.
+    \item {\hl{Perform multilaboratory validation of the
+          decenedioic acid biomarker}} and extend its verification
+          beyond three botanical types (rapeseed, acacia, and jujube)
+          to tropical, stingless bee, and traditional production
+          system honeys~\cite{sun2021}.
+    \item {\hl{Develop portable in situ analysis tools:}}
+          miniaturized NIR and Raman spectrometers allow
+          measurement of moisture, $a_w$, and sugar profile
+          directly at the apiary or at the border, with accuracy
+          comparable to laboratory
+          methods~\cite{honeyid2025,schoder2026}.
+\end{enumerate}
+
+
+
+ 
+
+
+\section{Conclusions and Future Perspectives}
+
+The conclusions of this review are presented in four complementary parts, covering the scientific interpretation of honey maturity, the regulatory implications of the Apimondia position, the proposed functional maturity assessment framework, and the limitations requiring further research.
+
+This article undertook an analysis of the Apimondia position
+on the production and distribution of immature honey, with
+particular attention to the microbiological, regulatory, and
+market implications of using osmophilic yeast count and the
+morphological criterion of comb cell capping as quality indicators.
+The conducted analysis has led to a number of conclusions of varying
+degrees of generalization, from specific biochemical findings
+to normative recommendations of global scope.
+
+
+\subsection{Main Scientific Conclusions}
+
+
+{\hl{(C1) The presence of osmophilic yeasts in honey is a biologically normal phenomenon.}}
+Yeasts of the genera \textit{Zygosaccharomyces}, \textit{Schizosaccharomyces},
+and \textit{Metschnikowia} are an inseparable component of the hive
+ecosystem, regardless of production method, hive system, and country
+of origin. The natural yeast population count in correct, non-fermenting
+commercial honey may amount to several hundred to a few thousand CFU/g
+without any effect on the microbiological stability of the product,
+provided water activity $a_w < 0.60$~\cite{ruegg1981}.
+This conclusion has been well established in the literature for decades
+and confirmed by all current systematic
+reviews~\cite{biochemreactions2022,rodriguezmachado2024}.
+
+{\hl{(C2) Water activity, not moisture content or yeast count, is the primary fermentation risk parameter.}}
+The physiological growth threshold of osmophilic yeasts
+($a_w = 0.61$--$0.62$) defines a biologically justified
+boundary below which honey fermentation is  {thermodynamically unfeasible and has not been
+observed under standard storage and temperature conditions,}
+regardless of the yeast count expressed in
+CFU/g~\cite{waaw2006,ruegg1981}.
+Glucose crystallization constitutes an additional factor that
+dynamically modifies the $a_w$ of the liquid phase, meaning that
+fermentation risk assessment must take into account the phase state
+of the product and cannot be based solely on the global water
+content~\cite{zamora2006,ijfans2019}.
+
+{\hl{(C3) Honey ripening is a continuous biological process, not a binary event.}}
+Maturity indicators---invertase, glucose oxidase, and diastase
+activity, organic acid profile, and fructose-to-glucose ratio---change gradually during the ripening process and do not correlate
+unambiguously with the moment of cell capping by
+bees~\cite{zhang2021,sun2021}.
+Uncapped honey may exhibit a chemical profile appropriate for
+mature honey if moisture is low; capped honey may lose maturity
+characteristics as a result of inappropriate heat
+treatment~\cite{codex_stan12,guo2020,zhang2021}.
+
+{\hl{(C4) Some honey maturity criteria are derived mainly from temperate-climate, frame-hive production systems and may have limited applicability under diverse global production and microclimatic conditions.}}
+The climatic, technological, and biological conditions of honey
+production in tropical and subtropical zones, including high
+environmental humidity, log and basket hive systems, and the
+distinct properties of stingless bee honeys (Meliponini), mean
+that uniform morphological (capping) and microbiological (CFU/g
+without $a_w$) criteria cannot serve as global quality indicators
+without systematically favoring honeys produced in European
+systems~\cite{tadele2025,stinglessyeastbrazil2021,sciendo2012}.
+This position is consistent with the general trend in food
+legislation toward recognizing the diversity of local production
+systems and moving away from norms derived exclusively from
+Western European practices~\cite{phiri2022}.
+
+{\hl{(C5) The dominant form of honey adulteration on the EU market is sugar syrup adulteration, not the distribution of honey with elevated yeast count.}}
+Data from the coordinated control action of the European Commission
+``From the Hives'' (2021--2022) unambiguously indicate that 46\%
+of suspect imported honey shipments contained additions of
+C$_3$/C$_4$ syrups or oligosaccharides~\cite{eufromhives2021}.
+None of the available control reports identifies elevated CFU/g
+count as the primary indicator of adulteration in inspection
+practice. Allocation of inspection resources toward $a_w$
+measurement is therefore more appropriate to the actual market
+risk profile than the intensification of microbiological
+methods~\cite{schoder2026,eufromhives2021}.
+
+
+\subsection{Regulatory and Practical Implications of the Apimondia Position}
+
+
+The Apimondia position of 2023 on immature honey is a valuable and
+necessary contribution to the protection of the integrity of the
+beekeeping market. The threat posed by systemically immature honey,
+produced by the method of industrial nectar dehydration in a short
+time and without maintaining the biological ripening processes, is
+real and constitutes unfair competition with producers adhering to
+quality standards. In this respect, the Apimondia position addresses an important and legitimate concern related to honey integrity and fair trade.
+
+This article does not undermine this intention but indicates that
+the current formulation of the position is analytically incomplete
+in two important areas. First, it does not distinguish between
+(a)~fermentation as a product characteristic at the time of harvest,
+and (b)~fermentation as a post-harvest event resulting from supply
+chain errors. Second, it does not take into account the fundamental
+role of water activity as a parameter superior to yeast count in the
+assessment of fermentation risk. Supplementing the Apimondia position
+with these two elements will not weaken its protective message but
+will instead strengthen it scientifically and make it more resistant
+to legal challenges in trade disputes with importers from tropical
+countries~\cite{ruegg1981,tadele2025,analytica2020}.
+
+{Furthermore, an overly broad interpretation of yeast presence as an indicator of immaturity may lead to disproportionate assessment outcomes for honeys in which naturally elevated osmophilic yeast counts are frequent and not associated with active fermentation.}
+
+
+\subsection{Functional Maturity Assessment Framework}
+
+
+The proposed functional maturity assessment framework (FMAM) offers a conceptual and operational basis for further development of honey quality assessment because it is:
+
+\begin{itemize}
+    \item {\hl{Scientifically justified}}, based on the
+          thermodynamic properties of water activity, enzymatic
+          ripening kinetics, and
+          metabolomics~\cite{ruegg1981,zhang2021,guo2020};
+    \item {\hl{Compliant with applicable regulations}}---Codex STAN 12-1981 and EU Directive 2001/110/EC,
+          and does not require their revision, only interpretive
+          extension~\cite{codex_stan12,eudir2001110};
+    \item {\hl{Technically accessible}}, as $a_w$ measurement
+          and refractometry can be performed in any control
+          laboratory without specialized
+          infrastructure~\cite{waaw2006,zamora2006};
+    \item {\hl{Potentially globally applicable}}, since criteria based
+          on $a_w$ and enzymatic profile are independent of the
+          hive system and climatic conditions of the place of
+          \mbox{production~\cite{tadele2025,stinglessyeastbrazil2021};}
+    \item {\hl{Proportionate to the risk}}, preventing
+          escalation to costly
+          methods~\cite{schoder2026,nmrhoney2023}.
+\end{itemize}
+
+
+\subsection{Limitations and Directions for Future Research}
+
+
+The authors of the article are aware of the limitations of this
+study. The proposed FMAM model is based on empirical data available
+at the time of manuscript preparation and requires further
+verification through prospective multilaboratory studies.
+The following directions for further research are particularly
+indicated:
+
+\begin{enumerate}
+    \item {\hl{Multilaboratory validation of the decenedioic
+          acid biomarker}} on samples representing the global
+          diversity of botanical types and production systems,
+          extending beyond the three types (rapeseed, acacia,
+          and jujube) studied by Sun et al.~\cite{sun2021}; validation
+          should encompass stingless bee honeys (Meliponini)
+          and honeys from traditional East African
+          systems~\cite{tadele2025}.
+
+    \item {\hl{Development and validation of a multidimensional
+          functional maturity index}} (FMI,
+          {\hl{Functional Maturity Index}}) integrating the
+          results of Level~II parameters into a single index
+          with a value of 0--100, calibrated for different
+          botanical and geographical types; such an index could
+          replace binary disqualification decisions with a
+          gradient approach proportionate to the deviation from
+          the optimal state~\cite{zhang2021,guo2020,sun2021}.
+
+    \item {\hl{Harmonization of ISO TC~34/SC~17 standards
+          taking into account the meliponiculture production
+          system}}---the stingless bee honey category requires
+          a separate standardization track with its own moisture
+          thresholds, $a_w$, and enzymatic criteria, taking
+          into account the biological properties of these
+          insects~\cite{stinglessyeastbrazil2021,stinglesswjava2024}.
+\end{enumerate}
+
+Undertaking this research is possible only within the framework
+of international cooperation encompassing scientific institutions,
+beekeeping organizations, and regulatory bodies from countries of
+both the ``Global North'' and tropical countries that are the
+main honey producers. This dialogue is not only a scientific need but a necessary condition for building a globally equitable and
+scientifically credible quality assessment system for one of the
+oldest food products manufactured by humankind.
+
+
+\vspace{12pt}
+ 
+\authorcontributions{Conceptualization, A.G., B.L., P.R., and J.K.B.
+methodology, A.G., B.L., and P.R.
+investigation, A.G., B.L., and P.R.,
+resources, A.G., B.L., P.R.,
+formal analysis, A.G., B.L., P.R., 
+writing---original draft preparation, A.G., B.L., P.R., J.K.B., R.P.-F., and E.T.
+writing---review and editing, A.G., B.L., P.R., J.K.B. 
+supervision, A.G., B.L., P.R., J.K.B., R.P.-F.
+project administration, B.L., P.R., J.K.B. 
+funding acquisition, P.R.
+All authors have read and agreed to the published version of the manuscript.}
+
+\funding{\hl{No} %MDPI: Information regarding the funder and the funding number should be provided. Please check the accuracy of funding data and any other information carefully.
+ external funding was received for the preparation of this manuscript. The article processing charge (APC) will be covered by by Stowarzyszenie Polska Izba Miodu (Polish Honey Chamber Association). The APC funder had no role in the preparation of the manuscript or in the decision to submit it for publication.}
+%Thank you for the comment. We confirm that no external funding was received for the research presented in this manuscript. The article processing charge (APC) is covered by Stowarzyszenie Polska Izba Miodu (Polish Honey Chamber Association). The APC funder had no role in the design of the study, collection, analysis, or interpretation of data, preparation of the manuscript, or in the decision to submit it for publication.
+
+
+
+
+
+
+\institutionalreview{Not applicable.}
+\informedconsent{Not applicable.}
+\dataavailability{No new data were created or analyzed in this study. Data sharing is not applicable to this article.}
+
+\acknowledgments{\hl{During} %MDPI: Please ensure that all individuals included in this section have consented to the acknowledgement.
+ the preparation of this work, the authors used Claude Sonnet 4.6 (Anthropic) in order to improve the readability and language of the manuscript. The authors have reviewed and edited the output and take full responsibility for the content of this publication.}
+
+ %Thank you for the comment. We confirm that all individuals acknowledged in this section have consented to being acknowledged. We fixed a typo: Clause > Claude
+\conflictsofinterest{The authors declare no conflicts of interest.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{adjustwidth}{-\extralength}{0cm}
+
+\reftitle{\highlighting{References} %MDPI: Please do NOT change the reference format. Our production editor has done thoroughly layout work for the reference. If any changes are necessary, please use the "highlight". Thanks for your cooperation.
+}
+
+\begin{thebibliography}{999}
+
+\bibitem[{Apimondia Working Group on Adulteration of Bee
+  Products}(2023)]{apimondia_fraud_v2}
+{Apimondia Working Group on Adulteration of Bee Products}. 
+\newblock {\emph{Apimondia Statement on Honey Fraud}; Version 2}; Apimondia Federation: \hl{Rome, Italy,} %MDPI: Newly added information. Please confirm. The following highlights are the same.
+\newblock   2023.  
+%I confirm
+
+\bibitem[{CBI---Centre for the Promotion of Imports}(2024)]{cbi2024}
+{CBI---Centre for the Promotion of Imports}.
+\newblock {\emph{The European Market Potential for Certified Honey}}; 
+\newblock CBI Market Intelligence: \hl{The Hague, The Netherlands,} 
+  2024.
+%Fixed - Rotterdam is incorrect, correct:  The Hague, The Netherlands
+
+\bibitem[{EU Pollinator Hub}(2025)]{pollinatorhub2025}
+{EU Pollinator Hub}.
+\newblock {\emph{European Honey Market}};
+\newblock EU Pollinator Hub: \hl{Brussels, Belgium,}  2025.
+%I confirm
+
+\bibitem[{Apimondia International Federation of Beekeepers'
+  Associations}(2026)]{apimondia_web}
+{Apimondia International Federation of Beekeepers' Associations}.
+\newblock Apimondia Official Website.  2026.  Available online:  \url{https://apimondia.org/}  (accessed on 3 April 2026).
+
+\bibitem[Garc{\'i}a(2025)]{garcia2025}
+Garc{\'i}a, N.
+\newblock {Apimondia Statement on Immature Honey Production}.
+\newblock {\em Bee World} {\bf 2025}, {\em 102},~56--60.
+\newblock {\url{https://doi.org/10.1080/0005772X.2025.2557068}}.
+
+\bibitem[Munitis et~al.(1976)]{munitis1976}
+Munitis, M.T.;  Cabrera, E.; Rodriguez-Navarro, A.
+\newblock {An Obligate Osmophilic Yeast from Honey}.
+\newblock {\em Appl. Microbiol.} {\bf 1976}, \hl{\emph{32}, 3.}
+ \url{https://doi.org/10.1128/aem.32.3.320-323.1976}
+%I confirm
+
+\bibitem[{Codex Alimentarius Commission}(2023)]{codex_stan12}
+{\emph{CODEX STAN 12-1981}}; 
+\newblock {Codex Standard for Honey, Revised 2023}. Codex Alimentarius Commission; 
+\newblock FAO/WHO: \hl{Geneva, Switzerland,}  2023.
+%I confirm
+
+\bibitem[Rodr{\'i}guez~Machado et~al.(2024)]{rodriguezmachado2024}
+Rodr{\'i}guez~Machado, A.;  Caro, C.M.; Hurtado-Murillo, J.J.; Gomes, Lobo, C.J.; Zúñiga, R.N.; Franco, W.
+\newblock {Unconventional Yeasts Isolated from Chilean Honey}.
+\newblock {\em Foods} {\bf 2024}, {\em 13},~1582.
+\newblock {\url{https://doi.org/10.3390/foods13101582}}.
+
+\bibitem[Zamora and Chirife(2006)]{zamora2006}
+\hl{Zamora, M.C.; Chirife, J.} %MDPI: Refs. 9 and 21 are duplicated. Please just confirm that all references are cited in main text and we will help you to remove duplicated references and rearrange the order.
+%References duplicated, please fix it.
+\newblock {Determination of Water Activity Change Due to Crystallization in
+  Honeys from Argentina}.
+\newblock {\em Food Control} {\bf 2006}, {\em 17},~\hl{59--64.}
+\newblock {\url{https://doi.org/10.1016/j.foodcont.2004.09.003}}.
+
+\bibitem[Rüegg and Blanc(1981)]{ruegg1981}
+Rüegg, M.; Blanc, B.
+\newblock The water activity of honey and related sugar solutions.
+\newblock {\em Lebensm.-Wiss. Technol.} {\bf 1981}, {\em
+  14},~1--6.
+
+\bibitem[Zhang et~al.(2021)Zhang, Tian, Zhang, Li, Zheng, and Hu]{zhang2021}
+Zhang, G.Z.; Tian, J.; Zhang, Y.Z.; Li, S.S.; Zheng, H.Q.; Hu, F.L.
+\newblock Investigation of the Maturity Evaluation Indicator of Honey in
+  Natural Ripening Process: The Case of Rape Honey.
+\newblock {\em Foods} {\bf 2021}, {\em 10},~2882.
+\newblock  {\url{https://doi.org/10.3390/foods10112882}}.
+
+\bibitem[Guo et~al.(2020)]{guo2020}
+Guo, N.;  Zhao, L.; Zhao, Y.; Li, Q.; Xue, X.; Wu, L.; Gomez Escalada, M.; Wang, K.; Peng, W.
+\newblock {Comparison of the Chemical Composition and Biological Activity of
+  Mature and Immature Honey: An HPLC/QTOF/MS-Based Metabolomic Approach}.
+\newblock {\em J. Agric. Food Chem.} {\bf 2020}, {\em
+  68},~4062--4071.
+\newblock {\url{https://doi.org/10.1021/acs.jafc.9b07604}}.
+%I confirm
+
+\bibitem[Sun et~al.(2021)]{sun2021}
+Sun, J.;  Zhao, H.; Wu, F.; Zhu, M.; Zhang, Y.; Cheng, N.; Xue, X.; Wu, L.; Cao, W.
+\newblock {Molecular Mechanism of Mature Honey Formation by GC-MS- and
+  LC-MS-Based Metabolomics}.
+\newblock {\em J. Agric. Food Chem.} {\bf 2021}, \hl{\emph{69}, 3362--3370.} 
+\newblock {\url{https://doi.org/10.1021/acs.jafc.1c00318}}.
+%I confirm
+
+\bibitem[{European Parliament and Council}(2001)]{eudir2001110}
+{European Parliament and Council}.
+\newblock {Council Directive 2001/110/EC of 20~December 2001 relating to
+  honey}.
+\newblock \emph{Off. J. Eur. Communities}  \textbf{2001},  \emph{L10}, 47--52,  .
+
+\bibitem[Tsagkaris et~al.(2021)]{tsagkaris2021}
+Tsagkaris, A.S.;  Koulis, G.A.; Danezis, G.P.; Martakos, I.; Dasenaki, M.; Georgiou, C.A.; Thomaidis, N.S.
+\newblock {Honey Authenticity: Analytical Techniques, State of the Art and
+  Challenges}.
+\newblock {\em RSC Adv.} {\bf 2021}, {\em 11},~11273--11294.
+\newblock {\url{https://doi.org/10.1039/D1RA00069A}}.
+
+\bibitem[Schoder(2026)]{schoder2026}
+Schoder, D.
+\newblock Honey Fraud as a Moving Analytical Target: Omics-Informed
+  Authentication Within a Multi-Layer Analytical Framework.
+\newblock {\em Foods} {\bf 2026}, {\em 15},~712.
+\newblock {\url{https://doi.org/10.3390/foods15040712}}.
+
+\bibitem[Alaerjani et~al.()Alaerjani, Abu-Melha, Alshareef, Al-Farhan, Ghramh,
+  Al-Shehri, Bajaber, Khan, Alrooqi, Modawe, and
+  Mohammed]{biochemreactions2022}
+Alaerjani, W.M.A.; Abu-Melha, S.; Alshareef, R.M.H.; Al-Farhan, B.S.; Ghramh,
+  H.A.; Al-Shehri, B.M.A.; Bajaber, M.A.; Khan, K.A.; Alrooqi, M.M.; Modawe,
+  G.A.;  et~al.
+\newblock Biochemical Reactions and Their Biological Contributions in Honey.
+\newblock {\em Molecules} \hl{\textbf{2022}, \emph{27}, 4719.} 
+\newblock {\url{https://doi.org/10.3390/molecules27154719}}.
+%I confirm
+
+\bibitem[Balasubramanyam(2023)]{enzymesrole2023}
+Balasubramanyam, M.V.
+\newblock {Role of Different Enzymes in Nectar to Honey Transformations in
+  Indigenous Rock Bee \textit{Apis dorsata} F.} In {\em Cutting Edge Research
+  in Biology}; Book Publisher International: \hl{Bhanjipur, India,}  2023; Volume~6, pp. 130--141.
+\newblock {\url{https://doi.org/10.9734/bpi/cerb/v6/17763D}}.
+%Thank you for the comment. The publisher is Book Publisher International (BP International); its registered office is in London, UK (with an Indian office in Hooghly, West Bengal). We suggest listing the location as London, UK. We also note this chapter has a co-author (Misbhauddin Khan). Full details:
+%Balasubramanyam, M.V.; Khan, M. Role of Different Enzymes in Nectar to Honey Transformations in Indigenous Rockbee, Apis dorsata F. In Cutting Edge Research in Biology Vol. 6; B P International: London, UK, 2023; pp. 130–141. https://doi.org/10.9734/bpi/cerb/v6/17763D
+
+
+\bibitem[Tadele et~al.(2025)]{tadele2025}
+Tadele, E.;  Worku, D.; Muluneh, T.; Ayana, Y.; Melese, A.
+\newblock {Comprehensive Review on Improved Honey Production: Techniques,
+  Challenges, Opportunities, and Future Prospects in Africa}.
+\newblock {\em Front. Bee Sci.} {\bf 2025}, {\em 3},~1588416.
+\newblock {\url{https://doi.org/10.3389/frbee.2025.1588416}}.
+
+\bibitem[Biswas et~al.(2023)Biswas, Naresh, Jaygadkar, and
+  Chaudhari]{nmrhoney2023}
+Biswas, A.; Naresh, K.S.; Jaygadkar, S.S.; Chaudhari, S.R.
+\newblock Enabling honey quality and authenticity with NMR and LC-IRMS based
+  platform.
+\newblock {\em Food Chem.} {\bf 2023}, {\em 418},~135825.
+\newblock {\url{https://doi.org/10.1016/j.foodchem.2023.135825}}.
+
+\bibitem[Zamora and Chirife(2006)]{waaw2006}
+\hl{Zamora, M.C.; Chirife, J.}
+\newblock Determination of water activity change due to crystallization in
+  honeys from {Argentina}.
+\newblock {\em Food Control} {\bf 2006}, {\em 17},~59--64.
+\newblock {\url{https://doi.org/10.1016/j.foodcont.2004.09.003}}.
+%I confirm
+
+\bibitem[Xue et~al.(2025)Xue, Zhou, Guo, Zhao, Jiang, Huang, and
+  Zhang]{yeastbiodiversity2025}
+Xue, S.J.; Zhou, M.; Guo, J.; Zhao, F.Y.; Jiang, W.W.; Huang, X.; Zhang, J.Y.
+\newblock Unveiling the culturable and non-culturable yeast biodiversity in
+  chaste honey produced by the sympatric Apis cerana and Apis mellifera from
+  eastern China.
+\newblock {\em Int. J. Food Microbiol.} {\bf 2025}, {\em
+  410},~111423.
+\newblock {\url{https://doi.org/10.1016/j.ijfoodmicro.2025.111423}}.
+
+\bibitem[Al-Waili et~al.(2012)Al-Waili, Salom, Al-Ghamdi, and
+  Ansari]{alwaili2012}
+Al-Waili, N.S.; Salom, K.; Al-Ghamdi, A.; Ansari, M.J.
+\newblock Antibiotic, Pesticide, and Microbial Contaminants of Honey: Human
+  Health Hazards.
+\newblock {\em  Sci. World J.} {\bf 2012}, {\em 2012},~930849.
+\newblock {\url{https://doi.org/10.1100/2012/930849}}.
+
+\bibitem[{Analytica Laboratories}(2020)]{analytica2020}
+{Analytica Laboratories}.
+\newblock Managing the Risk of Fermenting Honey.
+\newblock Technical Report; Analytica Laboratories.  2020.  Available online:  \url{https://www.analytica.co.nz/media/nuwbyumm/managing-the-risk-of-furmenting-honey.pdf}  \hl{(accessed on 31 May 2026.).} %MDPI: Please add the access date (format: Date Month Year), e.g., accessed on 1 January 2020. Please notice that the accessed date should be before the accepted date.
+%Date added
+
+
+\bibitem[Gleiter et~al.(2006)Gleiter, Horn, and Isengard]{gleiter2006}
+Gleiter, R.A.; Horn, H.; Isengard, H.D.
+\newblock {Influence of Type and State of Crystallisation on the Water Activity
+  of Honey}.
+\newblock {\em Food Chem.} {\bf 2006}, {\em 96},~441--445.
+\newblock {\url{https://doi.org/10.1016/j.foodchem.2005.02.051}}.
+
+\bibitem[Magar et~al.(2019)]{ijfans2019}
+Shafiq, H.; Iftikhar, F.; Ahmad, A.; Kaleem, M.; Sair, A.T.
+\newblock {Effect of Crystallization on the Water Activity of Honey}.
+\newblock \emph{Int. J. Food Nutr. Sci.}  \hl{\textbf{2014}, \emph{3}, 1--6.} 
+
+%I changed the year from 2019 to 2014. The full details are:
+%Shafiq, H.; Iftikhar, F.; Ahmad, A.; Kaleem, M.; Sair, A.T. Effect of Crystallization on the Water Activity of Honey. Int. J. Food %Nutr. Sci. 2014, 3 (3), 1–6.
+%https://www.ijfans.org/uploads/paper/9edaa46c917db303412fd7200b88b447.pdf
+
+\bibitem[{Apiculture New Zealand}(2021)]{apinz2021}
+{Apiculture New Zealand}.
+\newblock {\emph{Managing the Risk of Fermenting Honey}};
+\newblock Apiculture NZ Industry Document: \hl{Wellington, New Zealand,} 
+  2021.
+%Thank you for the comment. We have identified that this reference (apinz2021) is a duplicate of another reference in our list (analytica2020) — both point to the same document, "Managing the Risk of Fermenting Honey" (New Zealand Beekeeper, November 2018). Please remove this duplicate (apinz2021) and rearrange the citation order accordingly. We confirm the remaining reference is cited in the main
+
+\bibitem[Phiri et~al.(2022)]{phiri2022}
+Phiri, B.J.; Fèvre, D.; Hidano, A.
+\newblock {Uptrend in global managed honey bee colonies and production based on
+  a six-decade viewpoint}.
+\newblock {\em Sci. Rep.} {\bf 2022}, {\em 12},~2045--2322.
+\newblock {\url{https://doi.org/10.1038/s41598-022-25290-3}}.
+
+\bibitem[{Destatis---Statistisches Bundesamt}(2026)]{destatis2026}
+{Destatis---Statistisches Bundesamt}.
+\newblock {\emph{International Statistics: Global Honey Bee Population on the Rise}}; 
+\newblock Destatis, Federal Statistical Office Germany: \hl{Wiesbaden,  Germany,} 
+ 2026.
+ %Berling is incorrect. Changed to: Wiesbaden, Germany
+
+\bibitem[Lastriyanto et~al.(2020)Lastriyanto, Wibowo, Erwan, Jaya, Batoro,
+  Masyithoh, and Lamerkabel]{lastriyanto2020}
+Lastriyanto, A.; Wibowo, S.A.; Erwan.; Jaya, F.; Batoro, J.; Masyithoh, D.;
+  Lamerkabel, J.S.A.
+\newblock Moisture Reduction of Honey in Dehumidification and Evaporation
+  Processes.
+\newblock {\em J. Mech. Eng. Sci. Technol.} {\bf
+  2020}, {\em 4},~153--163.
+\newblock {\url{https://doi.org/10.17977/um016v4i22020p153}}.
+
+\bibitem[Ikhsan et~al.(2022)Ikhsan, Chin, and Ahmad]{spel3upm}
+Ikhsan, L.N.; Chin, K.Y.; Ahmad, F.
+\newblock Methods of the Dehydration Process and Its Effect on the
+  Physicochemical Properties of Stingless Bee Honey: {A} Review. \emph{Molecules}   \textbf{2022}, \emph{27}, 7243.
+\newblock {\url{https://doi.org/10.3390/molecules27217243}}.
+
+\bibitem[Beyene et~al.(2015)Beyene, Abi, Chalchissa, and
+  WoldaTsadik]{ethaau2007}
+Beyene, T.; Abi, D.; Chalchissa, G.; WoldaTsadik, M.
+\newblock Evaluation of Transitional and Modern Hives for Honey Production in
+  Mid Rift Valley of Ethiopia. \emph{Glob. J. Anim. Sci. Res.}   \textbf{2015}, \emph{3}, 48--56.
+
+\bibitem[Gobessa et~al.(2012)]{sciendo2012}
+Gobessa, S.;  Seifu, E.;  Bezabih, A.
+\newblock {Physicochemical Properties of Honey Produced in the Homesha District
+  of Western Ethiopia}.
+\newblock {\em J. Apic. Sci.} {\bf 2012}, \emph{56}, 56.
+\newblock {\url{https://doi.org/10.2478/v10289-012-0004-z}}.
+
+\bibitem[Echeverrigaray et~al.(2021)Echeverrigaray, Scariot, Foresti, Schwarz,
+  Rocha, da~Silva, Moreira, and Delamare]{stinglessyeastbrazil2021}
+Echeverrigaray, S.; Scariot, F.J.; Foresti, L.; Schwarz, L.V.; Rocha, R.K.M.;
+  da~Silva, G.P.; Moreira, J.P.; Delamare, A.P.L.
+\newblock Yeast biodiversity in honey produced by stingless bees raised in the
+  highlands of southern {Brazil}.
+\newblock {\em Int. J. Food Microbiol.} {\bf 2021}, {\em
+  347},~109200.
+\newblock {\url{https://doi.org/10.1016/j.ijfoodmicro.2021.109200}}.
+
+\bibitem[Melia et~al.(2024)Melia, Juliyarsi, Kurnia, Aritonang, Rusdimansyah,
+  Sukma, Setiawan, Pratama, and Supandil]{stinglesswjava2024}
+Melia, S.; Juliyarsi, I.; Kurnia, Y.F.; Aritonang, S.N.; Rusdimansyah, R.;
+  Sukma, A.; Setiawan, R.D.; Pratama, Y.E.; Supandil, D.
+\newblock Profile of stingless bee honey and microbiota produced in {West
+  Sumatra}, {Indonesia}, by several species ({Apidae, Meliponinae}).
+\newblock {\em Vet. World} {\bf 2024}, {\em 17},~785--795.
+\newblock {\url{https://doi.org/10.14202/vetworld.2024.785-795}}.
+
+\bibitem[Haftom et~al.(2013)]{lrrd2013}
+Gebremedhn, H.;  Estifanos, A..
+\newblock {On Farm Evaluation of Kenyan Top Bar Hive (KTBH) for Honey
+  Production in Tigray, Ethiopia}.
+\newblock {\em Livest. Res. Rural. Dev.} {\bf 2013}, {\em 25}, \hl{page.} %MDPI: please add page or doi information
+%Thank you for the comment. Livestock Research for Rural Development uses article numbers rather than page numbers. The correct reference is Article #86, Volume 25 (5). Full details:
+%Gebremedhn, H.; Estifanos, A. On Farm Evaluation of Kenyan Top Bar Hive (KTBH) for Honey Production in Tigray, Ethiopia. Livest. Res. Rural Dev. 2013, 25 (5), Article 86. Available online: https://www.lrrd.org/lrrd25/5/haft25086.htm
+
+\bibitem[{European Commission, DG Agriculture and Rural
+  Development}(2024)]{ec_honey_autumn2024}
+{European Commission; DG Agriculture and Rural Development}.
+\newblock \emph{Honey Market Presentation}; 
+\newblock Technical report; European Commission: \hl{Brussels, Belgium,} 
+  2024.
+%Thank you for the comment. We apologize - the location should be Brussels, Belgium, not Ispra, Italy. DG Agriculture and Rural Development is based in Brussels. Corrected reference:
+%European Commission, DG Agriculture and Rural Development. Honey Market Presentation; Technical report; European Commission: Brussels, Belgium, 2024.
+
+\bibitem[{Eurostat}(2024)]{eurostat_honey2023}
+{Eurostat}.
+\newblock {EU} Imported \texteuro 359.3 Million Worth of Honey in 2023.
+\newblock Eurostat Daily Data News, World Bee Day Release.  2024.  Available online:  \url{https://ec.europa.eu/eurostat/web/products-eurostat-news/w/ddn-20240520-1}  \hl{(accessed on 31 May 2026).} %MDPI: Please add the access date (format: Date Month Year), e.g., accessed on 1 January 2020. Please notice that the accessed date should be before the accepted date.
+%Date added
+
+
+\bibitem[{Tridge Global Intelligence}(2024)]{tridge2024}
+{Tridge Global Intelligence}.
+\newblock {\emph{China Is the Largest Supplier of Honey to the EU: 37\% of Extra-EU
+  Imports in 2023}}; 
+\newblock Tridge Market Intelligence: \hl{Seoul, Republic of Korea,} 
+  2024.
+%I confirm
+
+\bibitem[{European Commission, DG SANTE}(2022)]{eufromhives2021}
+{European Commission, DG SANTE}.
+\newblock {\emph{EU Coordinated Action `From the Hives' (Honey 2021--2022): 46\% of
+  Imported Honey Suspicious of Adulteration}};
+\newblock European Commission, Food Safety: \hl{Brussels, Belgium,} 
+  2022.
+%Thank you for the comment. We apologize — the location should be Brussels, Belgium, not Ispra, Italy. DG SANTE (Health and Food Safety) is based in Brussels. Corrected reference:
+%European Commission, DG SANTE. EU Coordinated Action 'From the Hives' (Honey 2021–2022): 46% of Imported Honey Suspicious of Adulteration; European Commission, Food Safety: Brussels, Belgium, 2022.
+
+\bibitem[{European Parliament and Council of the European
+  Union}(2024)]{cbi_traceability2024}
+{European Parliament and Council of the European Union}.
+\newblock Directive ({EU}) 2024/1438 of the {European Parliament} and of the
+  Council of 14~{May} 2024 amending {Council} {Directives} 2001/110/{EC}
+  relating to honey, 2001/112/{EC} relating to fruit juices, 2001/113/{EC}
+  relating to fruit jams, jellies and marmalades, and 2001/114/{EC} relating to
+  certain partly or wholly dehydrated preserved milk for human consumption.
+\newblock \emph{Off. J. Eur. Union}  \textbf{2024}, \emph{L}, 1438.
+
+\bibitem[{European Commission}(2023)]{EuropeanCommission2023NMR}
+{European Commission}.
+\newblock Response to Written Question {E-001756/2023} on the Use of {1H-NMR}
+  Profiling in Honey Authenticity Control (Reply by Commissioner Stella
+  Kyriakides on Behalf of the {European Commission}).
+\newblock European Parliament---Written questions.  2023.  Available online: \url{https://www.europarl.europa.eu/RegData/seance_pleniere/textes_deposes/interpellations/2023/01756/P9_I(2023)01756_EN.pdf}  (accessed on 7 May 2026).
+
+
+\bibitem[{\'A}lvarez-Su{\'a}rez et~al.(2025){\'A}lvarez-Su{\'a}rez, Majtan,
+  Tejera, Santos-Buelga, and Gonz{\'a}lez-Param{\'a}s]{honeyid2025}
+{\'A}lvarez-Su{\'a}rez, J.M.; Majtan, J.; Tejera, E.; Santos-Buelga, C.;
+  Gonz{\'a}lez-Param{\'a}s, A.M.
+\newblock The molecular identity of honey: Toward reliable biochemical
+  authentication.
+\newblock {\em Trends Food Sci. Technol.} {\bf 2025}, {\em
+  155},~105331.
+\newblock {\url{https://doi.org/10.1016/j.tifs.2025.105331}}.
+
+\end{thebibliography}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\PublishersNote{}
+\end{adjustwidth}
+\end{document}
+
