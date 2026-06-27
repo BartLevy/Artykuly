@@ -1,0 +1,182 @@
+
+
+\subsection{Statystyki opisowe}
+
+\begin{table}[h]
+\centering
+\caption{Statystyki opisowe zmiennych sensorycznych}
+\begin{tabular}{lrrrr}
+\toprule
+Zmienna            & Średnia            & Odch.\ std          & Min                & Max               \\
+\midrule
+Ogólna akceptacja  & 3.377   & 1.197     & 1.0    & 5.0   \\
+Słodycz            & 2.17 & 0.63   & 1.0  & 3.0 \\
+Kwasowość          & 1.838   & 0.551     & 1.0    & 3.0   \\
+Intensywność       & 1.884 & 0.66   & 1.0  & 3.0 \\
+Akceptacja smakowa & 0.606  & 0.489    & 0.0   & 1.0  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Wpływ autoryzacji na akceptację smakową}
+
+Odsetek ocen z akceptowalnym smakiem wyniósł \textbf{0.643} dla
+miodów autoryzowanych i~\textbf{0.556} dla nieautoryzowanych.
+Test $\chi^2$ (na poziomie wierszy) nie wykazał istotnej zależności
+($\chi^2 = 4.15$, $p = 0.0417$, $\phi = 0.089$);
+iloraz szans wyniósł $\mathrm{OR} = 1.44$.
+
+\subsection{Analiza sparowana per respondent}
+
+Analiza uwzględniająca powtarzalność pomiarów w obrębie respondentów
+($n = 75$) wykazała średnią różnicę akceptacji
+(autoryzowane $-$ nieautoryzowane) równą $\Delta = 0.088$
+(95\% CI: $[0.015,\;0.161]$).
+Test Wilcoxona dla par: $p = 0.0054$; Cohen $d = 0.278$.
+
+\subsection{Test równoważności (TOST)}
+
+Przy granicy praktycznej istotności $\pm0.1$ test TOST dał wynik
+$p_{\mathrm{TOST}} = 0.3694$ --- \textbf{brak równoważności}.
+
+\subsection{Stosunek sygnału do szumu}
+
+Różnica akceptacji między grupami (sygnał: 0.088) była
+\textbf{0.75}~razy \emph{mniejsza} niż naturalna zmienność między próbkami
+(szum: 0.117); zakres akceptacji między lotami:
+$[0.44,\;0.91]$.
+
+\subsection{Zdolność dyskryminacyjna oceny sensorycznej}
+
+Pole pod krzywą ROC dla cechy \emph{akceptacja smakowa} jako predyktora
+autoryzacji wyniosło $\mathrm{AUC} = 0.544$, a dla ogólnej
+akceptacji $\mathrm{AUC} = 0.538$ (0{,}50~=~rzut monetą).
+Hipotetyczna reguła decyzyjna \emph{„odrzuć próbkę, gdy smak nieakceptowalny"}
+błędnie odrzucałaby \textbf{35.7\%} próbek autoryzowanych
+i~pomijałaby \textbf{55.6\%} próbek nieautoryzowanych.
+
+% ------------------------------------------------------------------ %
+\subsection{Modele z efektami mieszanymi}
+
+Liniowy model mieszany (LMM) z~losowym efektem respondenta i~kontrolą dla
+rodzaju nektaru wykazał efekt autoryzacji $\hat{\beta} = 0.311$
+(95\,\% CI: $[0.117,\;0.506]$, $p = 0.0017$)
+na skalę ogólnej akceptacji.
+Uogólnione równania szacujące (GEE, rodzina Binomial, struktura wymienna)
+dla binarnej akceptacji smakowej dały iloraz szans
+$\mathrm{OR} = 1.988$
+(95\,\% CI: $[1.441,\;2.743]$,
+$p = <0.001$).
+Wyniki obu modeli należy interpretować z~ostrożnością: przy zaledwie
+7~lotach ($n_{\mathrm{auth}} = 4$,
+$n_{\mathrm{nieauth}} = 3$) zmienna \emph{authorized}
+jest pseudoreplikowana — każdy respondent powtarza obserwację dokładnie
+$7.0$ razy dla tej samej partii.
+
+% ------------------------------------------------------------------ %
+\subsection{Analiza bayesowska}
+
+Dla testu t sparowanego ($t = 2.404$, $n = 75$) obliczono
+czynnik Bayesa z~pryorem Cauchy'ego JZS ($r = 0{,}707$;
+Rouder i~in., 2009): $\mathrm{BF}_{10} = 1.87$, co odpowiada
+$\mathrm{BF}_{01} = 0.53$.
+Interpretacja: \textbf{słabe poparcie dla H$_1$}.
+Dane nie dostarczają zatem silnych dowodów \emph{za} brakiem efektu (H$_0$) —
+efekt jest statystycznie wykrywalny, lecz mały i~niepewny praktycznie.
+
+% ------------------------------------------------------------------ %
+\subsection{Analiza mocy}
+
+Na poziomie lotów zaobserwowany Cohen $d = 0.57$
+(4~vs 3~próbki).
+Moc przeprowadzonego porównania wyniosła jedynie
+\textbf{9.4\%}.
+Przy równolicznych grupach osiągnięcie mocy 80\,\% wymagałoby
+co~najmniej \textbf{50~lotów w~każdej grupie} —
+wartości nieosiągalnej w~typowych warunkach kontrolnych.
+Brak istotności na poziomie lotów należy zatem interpretować jako
+\emph{brak dostatecznej mocy}, a~nie jako potwierdzenie H$_0$.
+
+% ------------------------------------------------------------------ %
+\subsection{Porównanie wewnątrz typów miodu}
+
+Zestawienie sparowane per respondent w~obrębie tego samego rodzaju nektaru
+eliminuje confound gatunkowy (tabela~\ref{tab:within}).
+
+\begin{table}[h]
+\centering
+\caption{Akceptacja smakowa auth vs nieauth wewnątrz typu miodu
+         (test Wilcoxona, sparowany per respondent)}
+\label{tab:within}
+\begin{tabular}{lrrr}
+\toprule
+Typ miodu  & Auth        & Nieauth          & $p$ \\
+\midrule
+Robinia    & 0.573  & 0.533  & 0.5127 \\
+Polyfloral & 0.78 & 0.567 & <0.001 \\
+Tilia      & 0.44     & brak próby           & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Dla robinii różnica jest statystycznie nieistotna ($p = 0.5127$), co
+sugeruje brak efektu autoryzacji w~obrębie tego gatunku.
+Istotna różnica dla poliflory ($p = <0.001$) wynika głównie z~silnej
+dominacji lotu~3 ($3-4/02/2020$: akceptacja~$0.907$),
+który sam z~siebie winduje średnią grupy autoryzowanej.
+
+% ------------------------------------------------------------------ %
+\subsection{Heterogeniczność wewnątrz grupy autoryzowanej}
+
+Rozrzut akceptacji między lotami autoryzowanymi wyniósł
+\textbf{0.467} (od~$0.44$ dla~$5-cq25111501-1$
+do~$0.907$ dla~$3-4/02/2020$), tj.\
+\textbf{5.3~razy} więcej niż efekt autoryzacji.
+Dla lotów nieautoryzowanych analogiczny rozrzut wyniósł~0.067.
+Fakt, że wewnątrz grupy autoryzowanej jeden lot (tilia) charakteryzuje się
+niższą akceptacją niż dwa spośród trzech lotów nieautoryzowanych,
+potwierdza, że status autoryzacji nie wyznacza akceptacji konsumenckiej.
+
+% ------------------------------------------------------------------ %
+\subsection{Analiza czułości granicy SESOI}
+
+\begin{table}[h]
+\centering
+\caption{$p_{\mathrm{TOST}}$ w~zależności od przyjętej granicy równoważności}
+\begin{tabular}{rr}
+\toprule
+Granica SESOI  & $p_{\mathrm{TOST}}$ \\
+\midrule
+$\pm 0{,}10$   & 0.3694 \\
+$\pm 0{,}15$   & 0.0463 \\
+$\pm 0{,}20$   & 0.0015 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Minimalna granica SESOI zapewniająca stwierdzenie równoważności
+($p_{\mathrm{TOST}} < 0{,}05$) wynosi $\pm 0.15$.
+Przy granicy $\pm 0{,}15$ (odpowiadającej 15~pp różnicy akceptacji, którą
+można uznać za klinicznie / ekonomicznie istotną) wynik TOST jest już istotny
+($p = 0.0463$), co formalnie potwierdza równoważność efektu.
+
+% ------------------------------------------------------------------ %
+\section{Wnioski}
+
+Różnica akceptacji smakowej między miodami autoryzowanymi
+a~nieautoryzowanymi wyniosła 8.8~pp
+($\phi = 0.089$, $d_{\mathrm{par}} = 0.278$,
+$\mathrm{BF}_{01} = 0.53$) i~była 5.3~razy mniejsza
+niż naturalny rozrzut akceptacji wewnątrz samej grupy autoryzowanej.
+Model z~efektami mieszanymi potwierdza statystyczną istotność różnicy po
+kontroli dla rodzaju nektaru ($\hat{\beta} = 0.311$,
+$p = 0.0017$), jednak analiza wewnątrz typu robinia ($p = 0.5127$)
+i~analiza mocy na poziomie lotów (moc~9.4\%,
+potrzeba~50~lotów na grupę) ujawniają, że wynik jest
+artefaktem pseudoreplikacji i~skrajnej heterogeniczności jednej próbki.
+$\mathrm{AUC} \approx 0.544$ wskazuje na zdolność dyskryminacyjną
+zbliżoną do losowej.
+Przy granicy $\pm 0.15$ efekt jest formalnie równoważny zeru.
+Ocena sensoryczna nie może stanowić wiarygodnego i~proporcjonalnego kryterium
+niedopuszczenia próbki miodu do~obrotu.
+

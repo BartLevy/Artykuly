@@ -1,0 +1,431 @@
+
+\section{Materiał i metody}
+
+Badanie objęło \textbf{<<n_respondentow>>} respondentów, którzy łącznie
+dokonali \textbf{<<n_ocen>>} ocen sensorycznych \textbf{<<n_lotow>>} próbek
+miodu (<<n_auth_lot>>~dopuszczone do obiegu, <<n_nieauth_lot>>~niedopuszczone
+do obiegu).
+Średnia liczba ocen przypadających na jednego respondenta wynosiła
+<<ocen_per_respondent>>.
+
+\subsection{Charakterystyka respondentów}
+
+Wśród <<n_respondentow>>~uczestników badania dominowały kobiety
+(<<gender_k_n>>~osób, <<gender_k_pct>>\,\%), mężczyźni stanowili
+<<gender_m_pct>>\,\% próby.
+Najliczniej reprezentowaną grupą wiekową byli respondenci w~przedziale
+25-45~lat (<<age_25_45_n>>~osób; <<age_25_45_pct>>\,\%) oraz 46-65~lat
+(<<age_46_65_n>>~osób; <<age_46_65_pct>>\,\%); respondenci poniżej 25.~roku
+życia stanowili <<age_lt25_pct>>\,\%, a~powyżej 65.~roku
+życia <<age_gt65_pct>>\,\%.
+Miód spożywany jest przez większość respondentów okazyjnie
+(<<freq_occasional_n>>~osób; <<freq_occasional_pct>>\,\%)
+lub raz w~miesiącu (<<freq_monthly_n>>~osób; <<freq_monthly_pct>>\,\%);
+codziennie spożywa miód <<freq_daily_n>>~osób (<<freq_daily_pct>>\,\%).
+Rozkład demograficzny ilustruje rysunek~\ref{fig:demographics}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_demographics.pdf}
+\caption{Rozkład demograficzny respondentów: grupy wiekowe, płeć
+         i~częstotliwość spożycia miodu ($n = <<n_respondentow>>$).}
+\label{fig:demographics}
+\end{figure}
+
+\subsection{Metody statystyczne}
+
+Wszystkie analizy przeprowadzono w języku Python (biblioteki
+\texttt{pandas}, \texttt{NumPy}, \texttt{SciPy}, \texttt{statsmodels}
+oraz \texttt{scikit-learn}). Za poziom istotności przyjęto
+$\alpha = 0{,}05$; testy miały charakter dwustronny, o ile nie
+zaznaczono inaczej. Ze względu na porządkowy charakter ocen sensorycznych
+(skale 1--3 oraz 1--5) oraz binarny charakter zmiennej akceptacji
+smakowej, w analizie konsekwentnie stosowano metody nieparametryczne
+i metody właściwe dla danych jakościowych.
+
+\paragraph{Statystyki opisowe i miary asocjacji.}
+Profil sensoryczny próbek scharakteryzowano za pomocą średnich,
+odchyleń standardowych oraz rozkładów procentowych ocen. Związek między
+statusem dopuszczenia do obrotu a binarną akceptacją smakową oceniono
+wstępnie testem $\chi^2$ niezależności wraz ze współczynnikiem $\varphi$
+oraz ilorazem szans (OR). Miary te zastosowano wyłącznie jako opis
+zależności na poziomie pojedynczych ocen; ze względu na strukturę danych
+(zob.\ niżej) nie traktowano ich jako podstawy wnioskowania.
+
+\paragraph{Uwzględnienie powtarzalności pomiarów.}
+Każdy respondent oceniał wszystkie siedem próbek, a status dopuszczenia
+do obrotu był stały w obrębie każdej partii. Obserwacje nie były zatem
+niezależne, a zmienna objaśniająca podlegała pseudoreplikacji. Aby
+uwzględnić tę strukturę, dla każdego respondenta uśredniono akceptację
+osobno dla miodów dopuszczonych i niedopuszczonych, a różnicę poddano
+testowi kolejności par Wilcoxona (test sparowany, $n = <<n_paired>>$); wielkość
+efektu wyrażono za pomocą $d$~Cohena dla par, raportując 95\% przedział
+ufności różnicy. Podejście to przenosi wnioskowanie z poziomu
+pojedynczej oceny na poziom respondenta, eliminując zawyżenie istotności
+wynikające z powtórzeń.
+
+\paragraph{Modele z efektami mieszanymi.}
+W celu jednoczesnej kontroli zmienności międzyosobniczej oraz czynnika
+zakłócającego, jakim jest rodzaj nektaru, zastosowano liniowy model
+mieszany (LMM) z losowym efektem respondenta dla skali ogólnej
+akceptacji oraz uogólnione równania szacujące (GEE; rodzina dwumianowa,
+wymienna struktura korelacji) dla binarnej akceptacji smakowej. Modele
+te pozwalają oddzielić efekt statusu dopuszczenia od różnic między
+odmianami miodu. Ich wyniki interpretowano jednak z ostrożnością:
+przy zaledwie <<n_lotow>>~partiach (<<n_auth_lot>>~dopuszczone, <<n_nieauth_lot>>~niedopuszczone)
+zmienna statusu pozostaje pseudoreplikowana, a estymaty obarczone są
+ryzykiem przeszacowania precyzji.
+
+\paragraph{Test równoważności (TOST) i analiza czułości granicy.}
+Ponieważ celem pracy była ocena, czy efekt jest na tyle mały, by nie
+stanowić praktycznego kryterium decyzyjnego, samo nieodrzucenie hipotezy
+zerowej byłoby niewystarczające:  brak istotności nie dowodzi braku
+efektu. Zastosowano zatem procedurę dwóch jednostronnych testów (TOST),
+która formalnie weryfikuje, czy efekt mieści się w z góry przyjętym
+przedziale równoważności wyznaczonym przez najmniejszy efekt istotny
+praktycznie (SESOI). Dla przejrzystości przeprowadzono analizę czułości,
+raportując wynik TOST dla kilku granic SESOI ($\pm 0{,}10$;
+$\pm 0{,}15$; $\pm 0{,}20$).
+
+\paragraph{Wnioskowanie bayesowskie.}
+Aby skwantyfikować siłę dowodu zarówno za, jak i przeciw istnieniu
+efektu, dla sparowanego testu $t$ obliczono czynnik Bayesa z domyślnym
+priorem Cauchy'ego JZS ($r = 0{,}707$; \cite{Rouder2009}). W odróżnieniu
+od klasycznego testu istotności podejście to pozwala bezpośrednio ocenić,
+na ile dane wspierają hipotezę o braku efektu względem hipotezy
+alternatywnej.
+
+\paragraph{Analiza mocy.}
+Dla porównania na poziomie partii ($n_{\mathrm{dop.}} = <<lot_n_auth>>$ vs.\ $n_{\mathrm{niedop.}} = <<lot_n_nonauth>>$) przeprowadzono
+analizę mocy, szacując prawdopodobieństwo wykrycia zaobserwowanego efektu
+oraz liczebność wymaganą do osiągnięcia mocy 80\%. Celem było wykazanie,
+że ewentualny brak istotności na poziomie partii wynika z niedostatecznej
+mocy badania, a nie stanowi potwierdzenia hipotezy zerowej.
+
+\paragraph{Zdolność dyskryminacyjna i symulacja reguły decyzyjnej.}
+Praktyczną przydatność oceny sensorycznej jako kryterium dopuszczenia do
+obrotu oceniono za pomocą pola pod krzywą ROC (AUC), traktując akceptację
+smakową oraz ogólną ocenę jako predyktory statusu partii. Dodatkowo, dla
+hipotetycznej reguły decyzyjnej ,,odrzuć próbkę przy nieakceptowalnym
+smaku'' obliczono odsetki błędnej klasyfikacji (błędne odrzucenie partii
+dopuszczonych oraz przepuszczenie partii niedopuszczonych). Analiza ta
+przekłada wielkość efektu na bezpośrednio interpretowalne konsekwencje
+regulacyjne.
+
+\paragraph{Stosunek sygnału do szumu i heterogeniczność.}
+Zaobserwowaną różnicę między grupami (sygnał) odniesiono do naturalnej
+zmienności akceptacji między partiami w obrębie tej samej grupy (szum),
+a także zestawiono rozrzut akceptacji wewnątrz grupy miodów dopuszczonych
+z różnicą międzygrupową. Analiza ta służyła ocenie, czy efekt statusu
+dopuszczenia jest większy niż zmienność próbka-do-próbki, niezależna od
+statusu administracyjnego.
+
+% ----------- %
+\section{Wyniki}
+
+\subsection{Charakterystyka próbek}
+
+Tabela~\ref{tab:lots} przedstawia profil sensoryczny każdej z~siedmiu
+badanych próbek miodu.
+Rysunek~\ref{fig:lots} ilustruje akceptację smakową i~ogólną ocenę per lot.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Profile sensoryczne próbek miodu.
+         \emph{Ocena} — średnia ogólna akceptacja (1-5);
+         \emph{Smak ok} — odsetek ocen z akceptowalnym smakiem;
+         \emph{Słodycz/Kwasowość/Intensywność} — średnia na skali 1-3
+         (1~=~za słaba, 2~=~w sam raz, 3~=~za silna).}
+\label{tab:lots}
+\begin{tabular}{llcrrrrrr}
+\toprule
+Próbka & Typ nektaru & Dop. & $n$ & Ocena & Smak ok & Słodycz & Kwasowość & Intens. \\
+\midrule
+<<lot_profile_rows>>
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_lots.pdf}
+\caption{Akceptacja smakowa (\%) i~ogólna ocena sensoryczna (1-5) dla 7~próbek miodu.
+Niebieski oznacza próbki dopuszczone do obiegu, pomarańczowy oznacza
+próbki niedopuszczone do obiegu.}
+\label{fig:lots}
+\end{figure}
+
+\subsection{Statystyki opisowe}
+
+\begin{table}[htbp]
+\centering
+\caption{Statystyki opisowe zmiennych sensorycznych (wszystkie próbki łącznie)}
+\begin{tabular}{lrrrr}
+\toprule
+Zmienna            & Średnia            & Odch.\ std          & Min                & Max               \\
+\midrule
+Ogólna akceptacja  & <<mean_overall>>   & <<std_overall>>     & <<min_overall>>    & <<max_overall>>   \\
+Słodycz            & <<mean_sweetness>> & <<std_sweetness>>   & <<min_sweetness>>  & <<max_sweetness>> \\
+Kwasowość          & <<mean_acidity>>   & <<std_acidity>>     & <<min_acidity>>    & <<max_acidity>>   \\
+Intensywność       & <<mean_intensity>> & <<std_intensity>>   & <<min_intensity>>  & <<max_intensity>> \\
+Akceptacja smakowa & <<mean_taste_ok>>  & <<std_taste_ok>>    & <<min_taste_ok>>   & <<max_taste_ok>>  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Rysunek~\ref{fig:overall} przedstawia rozkład ogólnej akceptacji per lot.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_overall_boxplot.pdf}
+\caption{Rozkład ogólnej akceptacji sensorycznej (skala 1-5) dla każdej
+         z~7~próbek miodu.
+         Linia przerywana oznacza wartość neutralną (3).}
+\label{fig:overall}
+\end{figure}
+
+\subsection{Profil sensoryczny według statusu dopuszczenia do obiegu}
+
+Tabela~\ref{tab:sensory} zestawia rozkład procentowy ocen ordinalnych
+cech sensorycznych (słodycz, kwasowość, intensywność) w~podziale na grupę
+miodów dopuszczonych i~niedopuszczonych do obiegu.
+Skala trzystopniowa: 1~=~\emph{za słaba/słaby}, 2~=~\emph{w sam raz},
+3~=~\emph{za silna/silny}.
+
+\begin{table}[htbp]
+\centering
+\caption{Rozkład ocen sensorycznych (\%) według statusu dopuszczenia do obiegu.}
+\label{tab:sensory}
+\begin{tabular}{lrrrrrr}
+\toprule
+ & \multicolumn{2}{c}{Słodycz} & \multicolumn{2}{c}{Kwasowość} & \multicolumn{2}{c}{Intensywność} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+Ocena & Dop. & Niedop. & Dop. & Niedop. & Dop. & Niedop. \\
+\midrule
+za słaba (1) & <<sweet_auth_1_pct>>\% & <<sweet_nieauth_1_pct>>\% & <<acid_auth_1_pct>>\% & <<acid_nieauth_1_pct>>\% & <<intens_auth_1_pct>>\% & <<intens_nieauth_1_pct>>\% \\
+w sam raz (2) & <<sweet_auth_2_pct>>\% & <<sweet_nieauth_2_pct>>\% & <<acid_auth_2_pct>>\% & <<acid_nieauth_2_pct>>\% & <<intens_auth_2_pct>>\% & <<intens_nieauth_2_pct>>\% \\
+za silna (3) & <<sweet_auth_3_pct>>\% & <<sweet_nieauth_3_pct>>\% & <<acid_auth_3_pct>>\% & <<acid_nieauth_3_pct>>\% & <<intens_auth_3_pct>>\% & <<intens_nieauth_3_pct>>\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Rysunek~\ref{fig:sensory} wizualizuje te różnice jako wykresy słupkowe skumulowane.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_sensory.pdf}
+\caption{Rozkład procentowy ocen ordinalnych cech sensorycznych
+         (1~=~za słaba, 2~=~w sam raz, 3~=~za silna) w~grupach
+         miodów dopuszczonych i~niedopuszczonych do obiegu.}
+\label{fig:sensory}
+\end{figure}
+
+\subsection{Wpływ statusu dopuszczenia do obiegu na akceptację smakową}
+
+Odsetek ocen z akceptowalnym smakiem wyniósł \textbf{<<rate_auth>>} dla
+miodów dopuszczonych do obiegu i~\textbf{<<rate_nieauth>>} dla
+niedopuszczonych do obiegu.
+Test $\chi^2$ (na poziomie wierszy) nie wykazał istotnej zależności
+($\chi^2 = <<chi2>>$, $p = <<p_chi>>$, $\phi = <<phi>>$);
+iloraz szans wyniósł $\mathrm{OR} = <<orr>>$.
+
+\subsection{Analiza sparowana per respondent}
+
+Analiza uwzględniająca powtarzalność pomiarów w obrębie respondentów
+($n = <<n_paired>>$) wykazała średnią różnicę akceptacji
+(dopuszczone do obiegu minus niedopuszczone do obiegu) równą $\Delta = <<diff_mean>>$
+(95\% CI: $[<<ci_low>>,\;<<ci_high>>]$).
+Test Wilcoxona dla par: $p = <<p_wilcoxon>>$; Cohen $d = <<cohen_d>>$.
+Rysunek~\ref{fig:paired} ilustruje sparowane oceny per respondent.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.55\textwidth]{fig_paired.pdf}
+\caption{Sparowane średnie oceny akceptacji smakowej dla każdego respondenta:
+         oś~$x$ oznacza miody niedopuszczone do obiegu,
+         oś~$y$ oznacza miody dopuszczone do obiegu.
+         Linia przerywana oznacza równość obu ocen ($y = x$).}
+\label{fig:paired}
+\end{figure}
+
+\subsection{Test równoważności (TOST)}
+
+Przy granicy praktycznej istotności $\pm<<sesoi>>$ test TOST dał wynik
+$p_{\mathrm{TOST}} = <<p_tost>>$ (\textbf{<<tost_verdict>>}).
+
+\subsection{Stosunek sygnału do szumu}
+
+Różnica akceptacji między grupami (sygnał: <<signal>>) była
+\textbf{<<snr>>}~razy \emph{mniejsza} niż naturalna zmienność między próbkami
+(szum: <<noise>>); zakres akceptacji między lotami:
+$[<<lot_ok_min>>,\;<<lot_ok_max>>]$.
+
+\subsection{Zdolność dyskryminacyjna oceny sensorycznej}
+
+Pole pod krzywą ROC dla cechy \emph{akceptacja smakowa} jako predyktora
+dopuszczenia do obiegu wyniosło $\mathrm{AUC} = <<auc_taste>>$, a dla ogólnej
+akceptacji $\mathrm{AUC} = <<auc_overall>>$ (0{,}50~=~rzut monetą).
+Hipotetyczna reguła decyzyjna \emph{„odrzuć próbkę, gdy smak nieakceptowalny"}
+błędnie odrzucałaby \textbf{<<fp_pct>>\%} próbek miodów dopuszczonych do obiegu
+i~pomijałaby \textbf{<<fn_pct>>\%} próbek niedopuszczonych do obiegu.
+
+% ----------- %
+\subsection{Modele z efektami mieszanymi}
+
+Liniowy model mieszany (LMM) z~losowym efektem respondenta i~kontrolą dla
+rodzaju nektaru wykazał efekt dopuszczenia do obiegu $\hat{\beta} = <<lmm_auth_coef>>$
+(95\,\% CI: $[<<lmm_auth_ci_low>>,\;<<lmm_auth_ci_high>>]$, $p = <<lmm_auth_p>>$)
+na skalę ogólnej akceptacji.
+Uogólnione równania szacujące (GEE, rodzina Binomial, struktura wymienna)
+dla binarnej akceptacji smakowej dały iloraz szans
+$\mathrm{OR} = <<gee_auth_or>>$
+(95\,\% CI: $[<<gee_auth_or_ci_low>>,\;<<gee_auth_or_ci_high>>]$,
+$p = <<gee_auth_p>>$).
+Wyniki obu modeli należy interpretować z~ostrożnością: przy zaledwie
+<<n_lotow>>~lotach ($n_{\mathrm{dop.}} = <<lot_n_auth>>$,
+$n_{\mathrm{niedop.}} = <<lot_n_nonauth>>$) zmienna dopuszczenia do obiegu
+jest pseudoreplikowana, ponieważ każdy respondent powtarza obserwację dokładnie
+$<<ocen_per_respondent>>$ razy dla tej samej partii.
+
+% ----------- %
+\subsection{Analiza bayesowska}
+
+Dla testu t sparowanego ($t = <<t_stat>>$, $n = <<n_paired>>$) obliczono
+czynnik Bayesa z~pryorem Cauchy'ego JZS ($r = 0{,}707$;
+Rouder i~in., 2009): $\mathrm{BF}_{10} = <<bf10>>$, co odpowiada
+$\mathrm{BF}_{01} = <<bf01>>$.
+Interpretacja: \textbf{<<bf_verdict>>}.
+Dane nie dostarczają zatem silnych dowodów za brakiem efektu (H$_0$),
+efekt jest statystycznie wykrywalny, lecz mały i~niepewny praktycznie.
+
+% ----------- %
+\subsection{Analiza mocy}
+
+Na poziomie lotów zaobserwowany Cohen $d = <<lot_cohen_d>>$
+(<<lot_n_auth>>~vs <<lot_n_nonauth>>~próbki).
+Moc przeprowadzonego porównania wyniosła jedynie
+\textbf{<<power_observed_pct>>\%}.
+Przy równolicznych grupach osiągnięcie mocy 80\,\% wymagałoby
+co~najmniej \textbf{<<n_lots_needed_80>>~lotów w~każdej grupie},
+co stanowi wartość nieosiągalną w~typowych warunkach kontrolnych.
+Brak istotności na poziomie lotów należy zatem interpretować jako
+\emph{brak dostatecznej mocy}, a~nie jako potwierdzenie H$_0$.
+
+% ----------- %
+\subsection{Porównanie wewnątrz typów miodu}
+
+Zestawienie sparowane per respondent w~obrębie tego samego rodzaju nektaru
+eliminuje confound gatunkowy (tabela~\ref{tab:within}).
+
+\begin{table}[h]
+\centering
+\caption{Akceptacja smakowa miodów dopuszczonych vs niedopuszczonych do obiegu
+         wewnątrz tego samego typu miodu
+         (test Wilcoxona, sparowany per respondent)}
+\label{tab:within}
+\begin{tabular}{lrrr}
+\toprule
+Typ miodu  & Dop.        & Niedop.          & $p$ \\
+\midrule
+Robinia    & <<rob_auth_ok>>  & <<rob_nonauth_ok>>  & <<rob_p>> \\
+Polyfloral & <<poly_auth_ok>> & <<poly_nonauth_ok>> & <<poly_p>> \\
+Tilia      & <<tilia_ok>>     & brak próby          & b.d. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Dla robinii różnica jest statystycznie nieistotna ($p = <<rob_p>>$), co
+sugeruje brak efektu dopuszczenia do obiegu w~obrębie tego gatunku.
+Istotna różnica dla poliflory ($p = <<poly_p>>$) wynika głównie z~silnej
+dominacji lotu~3 ($<<auth_best_lot>>$: akceptacja~$<<auth_best_ok>>$),
+który sam z~siebie winduje średnią grupy miodów dopuszczonych do obiegu.
+
+% ----------- %
+\subsection{Heterogeniczność wewnątrz grupy miodów dopuszczonych do obiegu}
+
+Rozrzut akceptacji między lotami dopuszczonymi do obiegu wyniósł
+\textbf{<<auth_range>>} (od~$<<auth_worst_ok>>$ dla~$<<auth_worst_lot>>$
+do~$<<auth_best_ok>>$ dla~$<<auth_best_lot>>$), tj.\
+\textbf{<<auth_range_vs_signal>>~razy} więcej niż efekt dopuszczenia do obiegu.
+Dla lotów niedopuszczonych do obiegu analogiczny rozrzut wyniósł~<<nonauth_range>>.
+Fakt, że wewnątrz grupy miodów dopuszczonych do obiegu jeden lot (tilia) charakteryzuje się
+niższą akceptacją niż dwa spośród trzech lotów niedopuszczonych,
+potwierdza, że status dopuszczenia do obiegu nie wyznacza akceptacji konsumenckiej.
+
+% ----------- %
+\subsection{Analiza czułości granicy SESOI}
+
+\begin{table}[h]
+\centering
+\caption{$p_{\mathrm{TOST}}$ w~zależności od przyjętej granicy równoważności}
+\begin{tabular}{rr}
+\toprule
+Granica SESOI  & $p_{\mathrm{TOST}}$ \\
+\midrule
+$\pm 0{,}10$   & <<p_tost_010>> \\
+$\pm 0{,}15$   & <<p_tost_015>> \\
+$\pm 0{,}20$   & <<p_tost_020>> \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Minimalna granica SESOI zapewniająca stwierdzenie równoważności
+($p_{\mathrm{TOST}} < 0{,}05$) wynosi $\pm <<sesoi_min_equiv>>$.
+Przy granicy $\pm 0{,}15$ (odpowiadającej 15~pp różnicy akceptacji, którą
+można uznać za praktycznie istotną) wynik TOST jest już istotny
+($p = <<p_tost_015>>$), co formalnie potwierdza równoważność efektu.
+
+% ----------- %
+\section{Wnioski}
+
+Zebrany materiał empiryczny dostarcza spójnego obrazu: smak miodu, oceniany
+przez konsumentów za pomocą standardowej ankiety sensorycznej, nie wiąże się
+w~wiarygodny sposób ze statusem dopuszczenia próbki do obiegu.
+
+Różnica akceptacji smakowej między miodami dopuszczonymi do obiegu
+a~niedopuszczonymi wyniosła <<signal_pct>>~pp
+($\phi = <<phi>>$, $d_{\mathrm{par}} = <<cohen_d>>$,
+$\mathrm{BF}_{01} = <<bf01>>$) i~była <<auth_range_vs_signal>>~razy mniejsza
+niż naturalny rozrzut akceptacji wewnątrz samej grupy miodów dopuszczonych
+do obiegu.
+Model z~efektami mieszanymi potwierdza statystyczną istotność różnicy po
+kontroli dla rodzaju nektaru ($\hat{\beta} = <<lmm_auth_coef>>$,
+$p = <<lmm_auth_p>>$), jednak analiza wewnątrz typu robinia ($p = <<rob_p>>$)
+i~analiza mocy na poziomie lotów (moc~<<power_observed_pct>>\%,
+potrzeba~<<n_lots_needed_80>>~lotów na grupę) ujawniają, że wynik jest
+artefaktem pseudoreplikacji i~skrajnej heterogeniczności jednej próbki.
+$\mathrm{AUC} \approx <<auc_taste>>$ wskazuje na zdolność dyskryminacyjną
+zbliżoną do losowej, a~przy granicy $\pm <<sesoi_min_equiv>>$ efekt jest
+formalnie równoważny zeru.
+
+Praktyczna konsekwencja tych ustaleń jest istotna.
+Gdyby organ kontrolny stosował regułę opartą na ocenie sensorycznej, tzn.\
+odrzucał próbkę, gdy konsumenci nie akceptują jej smaku, narzędzie to
+błędnie wykluczyłoby z~obrotu \textbf{<<fp_pct>>\%} próbek miodów legalnie
+dopuszczonych do obiegu, a~jednocześnie przepuszczało
+\textbf{<<fn_pct>>\%} próbek niedopuszczonych.
+Skuteczność tak skonstruowanego kryterium ($\mathrm{AUC} \approx <<auc_taste>>$)
+jest zatem zbliżona do decyzji podejmowanej losowo i~nie spełnia wymogów
+proporcjonalności ani rzetelności, jakie powinno spełniać każde administracyjne
+kryterium dopuszczenia produktu do obrotu.
+
+Należy przy tym podkreślić, że smak miodu zależy w~pierwszej kolejności od
+gatunku nektaru, warunków zbioru i~przetwarzania, a~nie od statusu
+administracyjnego próbki.
+Wewnątrz grupy miodów dopuszczonych do obiegu rozrzut akceptacji między lotami
+wyniósł <<auth_range>> (od~$<<auth_worst_ok>>$ do~$<<auth_best_ok>>$),
+przy czym jeden z~miodów posiadających dopuszczenie (typ lipowy) był przez
+respondentów oceniany gorzej niż dwa z~trzech miodów niedopuszczonych do obiegu.
+Ten fakt pokazuje dobitnie, że etykieta administracyjna i~percepcja konsumencka
+mierzą różne rzeczy i~nie powinny być traktowane jako wzajemnie zastępowalne.
+
+Ocena sensoryczna może i~powinna być wartościowym narzędziem badawczym
+i~marketingowym, służącym doskonaleniu produktu i~komunikacji z~konsumentami.
+Wyniki niniejszego badania wskazują jednak, że nie spełnia ona wymagań
+stawianych kryterium o~charakterze prawno-administracyjnym.
+Nie jest wystarczająco precyzyjna, by obiektywnie i~powtarzalnie odróżnić próbkę
+spełniającą wymogi jakościowe od próbki ich niespełniającej.
+Włączenie takiego kryterium do procedur dopuszczenia do obiegu prowadziłoby
+do decyzji obarczonych wysokim odsetkiem błędów klasyfikacji, narażając
+producentów na arbitralne i~nieuzasadnione straty gospodarcze.

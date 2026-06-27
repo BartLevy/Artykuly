@@ -1,0 +1,337 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{enumitem}
+% --- IMPORT PAKIETÓW DO KOLORÓW I ZAKREŚLANIA ---
+\usepackage{color} % Potrzebne do obsługi kolorów
+\usepackage{soul}  % Pakiet do zakreślania tekstu
+% ------------------------------------------------------------------ %
+
+\title{Ocena organoleptyczna miodu jako kryterium dopuszczenia do obrotu - analiza w warunkach badania ślepego}
+\usepackage{authblk}
+\author[1,*]{Bartosz Lewandowski, \small{(ORCID:0009-0004-1158-0693)}}
+\author[2]{Przemysław Rujna \small{(ORCID:0000-0001-9178-1540)}}
+\author[3]{Katarzyna Banach \small{(ORCID:0000-0003-2580-7954)}}
+
+\affil[1]{Department of Clinical Engineering, Academy of Silesia in Katowice}
+\affil[2]{Uniwersytet Morski w Gdyni, XXXX}
+\affil[3]{Uniwersytet Warmińsko-Mazurski w Olsztynie, XXXX}
+
+% Autor korespondencyjny - definicja przypisu
+\affil[*]{Corresponding author: Bartosz Lewandowski, Ph.D., bartosz.lewandowski@akademiaslaska.pl}   
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Celem pracy była weryfikacja, czy konsumencka ocena organoleptyczna miodu,
+przeprowadzona w warunkach badania ślepego, stanowi obiektywne i~powtarzalne
+kryterium dopuszczenia produktu do obrotu. W~ślepym teście panelowym
+respondenci dokonali oceny sensorycznej siedmiu próbek miodu o~znanym statusie
+dopuszczenia, oceniając ogólną akceptację smaku, słodycz, kwasowość,
+intensywność aromatu oraz typowość smaku. Zależność między statusem dopuszczenia
+a~akceptacją konsumencką analizowano z~wykorzystaniem miar asocjacji, modeli
+z~efektami mieszanymi, testu równoważności, podejścia bayesowskiego, analizy
+mocy oraz oceny zdolności dyskryminacyjnej.
+
+Stwierdzona różnica akceptacji smakowej między miodami dopuszczonymi
+a~niedopuszczonymi do obrotu była niewielka i~kilkukrotnie mniejsza niż
+naturalny rozrzut akceptacji wewnątrz samej grupy miodów dopuszczonych. Choć
+formalnie istotna statystycznie, okazała się artefaktem powtarzalności pomiarów
+w~obrębie respondentów oraz nietypowości pojedynczej próbki, a~jej wielkość
+mieściła się w~granicach praktycznej równoważności. Zdolność oceny sensorycznej
+do rozróżnienia statusu próbki była zbliżona do losowej, a~hipotetyczna reguła
+decyzyjna oparta na akceptacji smaku prowadziłaby do błędnego wykluczenia
+znacznej części miodów dopuszczonych do obrotu i~jednoczesnego przepuszczenia
+większości próbek niedopuszczonych.
+
+Wyniki wskazują, że konsumencka ocena organoleptyczna nie różnicuje
+w~wiarygodny sposób miodów dopuszczonych i~niedopuszczonych do obrotu i~nie
+spełnia wymogów obiektywności, powtarzalności oraz proporcjonalności stawianych
+kryterium prawno-administracyjnemu. Ocena sensoryczna pozostaje wartościowym
+narzędziem badawczym i~marketingowym, nie powinna jednak stanowić samodzielnej
+podstawy decyzji o~dopuszczeniu produktu do obrotu.
+
+\vspace{0.5em}
+\noindent\textbf{Słowa kluczowe:} miód, ocena organoleptyczna, badanie ślepe,
+analiza sensoryczna, dopuszczenie do obrotu.
+\end{abstract}
+
+\section{Wstęp}
+
+Miód jest cenionym produktem żywnościowym o wysokiej wartości odżywczej
+i zdrowotnej, odgrywającym istotną rolę w tradycji kulinarnej w Polsce.
+Jako produkt naturalny o znacznej wartości rynkowej podlega on jednocześnie
+licznym wymaganiom jakościowym oraz regulacjom prawnym, których celem jest
+ochrona konsumenta przed produktami zafałszowanymi lub niespełniającymi norm.
+W praktyce kontroli jakości miodu współistnieją dwa rodzaje kryteriów:
+parametry fizykochemiczne, oznaczane laboratoryjnie i mające charakter
+obiektywny i powtarzalny, oraz cechy organoleptyczne, oceniane przez człowieka
+i z natury obarczone większą zmiennością.
+
+Ocena organoleptyczna, obejmująca smak, zapach, barwę oraz konsystencję,
+pozostaje powszechnie stosowanym narzędziem opisu jakości miodu i badania
+preferencji konsumenckich. Jej zaletą jest bezpośrednie odwzorowanie
+doświadczenia konsumenta, wadą natomiast subiektywny charakter percepcji
+i podatność na błędy systematyczne wynikające ze znajomości marki, ceny,
+odmiany czy pochodzenia próbki. W celu ograniczenia tej stronniczości stosuje
+się metodę badań ślepych (\emph{blind tests}), w której próbki podawane są
+w formie zakodowanej i w losowej kolejności, bez ujawniania panelistom
+informacji mogących wpłynąć na ocenę.
+
+Pomimo szerokiego zastosowania oceny sensorycznej otwarte pozostaje pytanie
+o jej rolę w procesie dopuszczania produktu do obrotu. Narzędzie wykorzystywane
+z powodzeniem do celów badawczych i marketingowych nie musi bowiem spełniać
+wymogów stawianych kryterium o charakterze prawno-administracyjnym, od którego
+oczekuje się obiektywności, powtarzalności oraz niskiego odsetka błędnych
+klasyfikacji. Jeżeli akceptacja smakowa miodu nie różnicuje w sposób wiarygodny
+próbek dopuszczonych i niedopuszczonych do obrotu, oparcie na niej decyzji
+administracyjnych prowadziłoby do rozstrzygnięć arbitralnych i obarczonych
+wysokim ryzykiem błędu.
+
+Należy przy tym odróżnić mierzalność danego parametru od jego przydatności
+jako kryterium dopuszczenia produktu do obrotu: nie każda cecha, którą można
+ilościowo oznaczyć, niesie informację wystarczającą do podjęcia decyzji
+administracyjnej spełniającej wymóg proporcjonalności. Problem ten wykazano już
+w odniesieniu do mikrobiologicznych parametrów miodu, gdzie sama liczba drożdży
+osmofilnych (CFU/g),  przy braku aktywnej fermentacji, nie stanowi
+wystarczającej podstawy do uznania produktu za niezgodny z wymaganiami
+\cite{Gajda2026}.
+
+Niniejsza praca podejmuje to zagadnienie empirycznie. W badaniu zastosowano
+ślepą ocenę panelową siedmiu próbek miodu o znanym statusie dopuszczenia do
+obrotu oraz zestaw metod analizy statystycznej, od miar asocjacji i modeli
+z efektami mieszanymi, przez test równoważności i analizę bayesowską, po ocenę
+zdolności dyskryminacyjnej i analizę mocy, pozwalających ocenić nie tylko
+istnienie, lecz przede wszystkim wielkość, wiarygodność i praktyczną
+przydatność zależności między oceną sensoryczną a statusem administracyjnym
+próbki.
+
+\section{Przegląd literatury}
+
+W literaturze opisano liczne standardy jakości miodu, w tym wymagania prawne i kryteria handlowe, koncentrujące się zarówno na parametrach fizykochemicznych, jak i cechach organoleptycznych.
+
+W literaturze podejmowano już krytyczną analizę proporcjonalności kryteriów
+jakościowych miodu, wskazując, że pojedynczy parametr o ograniczonej zdolności
+różnicowania nie powinien stanowić samodzielnej przesłanki dyskwalifikacji
+produktu \cite{Gajda2026}.
+
+\hl{Przemek - czy mozesz to przygotowac? Na 100procent masz to w doktoracie}
+\section{Cel i zakres pracy}
+
+
+Celem głównym pracy jest weryfikacja, czy ocena organoleptyczna miodu,
+dokonywana przez konsumentów za pomocą standardowej ankiety sensorycznej
+w warunkach badania ślepego, stanowi obiektywne, rzetelne i powtarzalne
+kryterium dopuszczenia miodu do obrotu.
+
+Cele szczegółowe obejmują:
+\begin{enumerate}[label=\roman*.]
+    \item określenie siły i kierunku zależności między statusem dopuszczenia
+    próbki do obrotu, a konsumencką akceptacją smakową oraz ogólną oceną
+    sensoryczną miodu,
+    \item ocenę zdolności dyskryminacyjnej oceny sensorycznej jako predyktora
+    statusu dopuszczenia do obrotu, z wykorzystaniem pola pod krzywą ROC (AUC),
+    \item oszacowanie odsetka błędów klasyfikacji (błędnego odrzucenia próbek
+    dopuszczonych oraz przepuszczenia próbek niedopuszczonych) dla hipotetycznej
+    reguły decyzyjnej opartej na akceptacji smakowej,
+    \item ocenę wiarygodności i odporności zaobserwowanego efektu z
+    uwzględnieniem powtarzalności pomiarów w obrębie respondentów, z
+    zastosowaniem modeli z efektami mieszanymi, testu równoważności (TOST),
+    analizy bayesowskiej oraz analizy mocy,
+    \item oddzielenie wpływu statusu dopuszczenia do obrotu od czynnika
+    zakłócającego, jakim jest rodzaj nektaru, poprzez porównanie wewnątrz tego
+    samego typu miodu oraz ocenę heterogeniczności akceptacji między próbkami.
+\end{enumerate}
+
+\section{Materiał i metody}
+
+\subsection{Charakterystyka badanych próbek miodu}
+
+- siedem probek miodow
+- pobrane z polskich pasiek w 2026 roku
+- wszyskie probki przebadane przez certyfkowane laboratoria
+- probki to: 2x akacja (robinia falszywa), 4x wielokwiat. 1x lipa
+- 4 probki mialy oznaczone, ze smak jest nienaturalny, szczegolowo... tu uzupelnic na podstawie danych.
+
+Próbki przechowywano w kontrolowanych warunkach (temperatura, czas, ochrona przed światłem), zapewniając ich stabilność do momentu oceny.
+
+
+\subsection{Dobór i struktura panelu oceniającego}
+\label{sub:dobor_panelu}
+
+Skład panelu oceniającego (zespołu degustacyjnego) został wyłoniony w drodze rekrutacji opartej na losowym doborze uczestników. W celu zapewnienia maksymalnego obiektywizmu oraz rzetelności wyników w badaniu wykorzystano metodę \textbf{ślepego testu} (analizy sensorycznej z użyciem próbek kodowanych).
+
+Kandydaci musieli spełnić kryteria włączenia do grupy badawczej:
+\begin{enumerate}[label=\roman*.]
+    \item \textit{kryterium bezpieczeństwa:} całkowity brak alergii lub nadwrażliwości na produkty pszczele,
+    \item \textit{kryterium fizjologiczne:} prawidłowa sprawność sensoryczna (brak czasowych lub stałych zaburzeń zmysłu węchu i smaku),
+    \item \textit{kryterium dyspozycyjności:} dobrowolna gotowość do wzięcia udziału w obligatoryjnym szkoleniu sensorycznym, ujednolicającym standardy oceny.
+\end{enumerate}
+
+Ostateczny skład zespołu został skompletowany losowo spośród osób spełniających powyższe wymogi, co pozwoliło wyeliminować błąd systematyczny i zapewnić reprezentatywność ocen.
+
+
+\subsection{Projekt ślepego badania}
+
+Badanie przeprowadzono w warunkach ślepej oceny.
+Próbki miodu zakodowano i podawano w losowej kolejności, bez ujawniania informacji o odmianie, producencie i pochodzeniu.
+Zapewniono standaryzowane warunki oceny (temperatura podawania próbek, oświetlenie, neutralizacja podniebienia między próbkami).
+\\
+\\
+Arkusz oceny sensorycznej miodu obejmował następujące pytania:
+\begin{enumerate}[label=\roman*.]
+  \item \textit{data badania:} wszyskie badania przeprowadzono w 2026 roku,
+  \item \textit{grupa wiekowa panelisty:} mniej niż 25, 26-45, 46-65, więcej niż 65 lat,
+  \item \textit{częstotliwość spożywania miodu:} codziennie lub kilka razy w tygodniu, raz w miesiącu, okazyjnie / rzadziej,
+  \item \textit{płeć panelisty:} kobieta, mężczyzna.
+\end{enumerate}
+
+Następnie dla każdej próbki panelista oceniał cechy organoleptyczne w następujących kategoriach:
+
+\begin{enumerate}[label=\roman*.]
+  \item \textit{ogólna akceptowalność smaku:} skala od 1 (nieakceptowalny) do 5 (niezwykle mi odpowiada),
+  \item \textit{słodycz:} za słaba, w sam raz, za silna,
+  \item \textit{kwasowość:} za słaba, w sam raz, za silna,
+  \item \textit{intensywność aromatu:} za słaba, w sam raz, za silna,
+  \item \textit{czy wg respondanta smak jest typowy dla miodu naturalnego:} tak, nie.
+\end{enumerate}
+
+\input{out.tex}
+
+
+\section{Dyskusja}
+
+\subsection{Efekt jest istotny statystycznie, ale w praktyce bez znaczenia}
+
+Wynik tego badania na pierwszy rzut oka wygląda na sprzeczny, ale taki nie jest.
+Różnica w akceptacji smaku między miodami dopuszczonymi a niedopuszczonymi do
+obrotu jest z jednej strony zauważalna statystycznie, z drugiej zbyt mała, by
+miała jakiekolwiek znaczenie w praktyce. Analiza par (porównanie ocen tego samego
+respondenta) potwierdziła, że różnica istnieje, ale jest niewielka, a powiązanie
+między statusem miodu a akceptacją smaku jest bliskie zeru \cite{Wilcoxon1945,
+Cohen1988}. Powód jest prosty: ocen było bardzo dużo, a przy tak dużej liczbie
+danych nawet maleńka różnica „zalicza się" jako istotna. Dlatego sama informacja,
+że coś jest istotne statystycznie, niczego tu nie rozstrzyga.
+
+Z tego powodu nie oparliśmy się na samym teście istotności, lecz sprawdziliśmy,
+jak duży i jak pewny jest ten efekt. Test równoważności (sprawdza, czy efekt jest
+na tyle mały, że można go uznać za nieistotny) pokazał, że dla rozsądnie
+przyjętej granicy różnica jest praktycznie równa zeru \cite{Lakens2017}.
+Dodatkowa analiza bayesowska (która waży, czy dane bardziej przemawiają za
+istnieniem efektu, czy za jego brakiem) dała poparcie dla efektu jedynie
+śladowe \cite{Rouder2009}. Krótko mówiąc, dane są zbyt słabe, by przesądzić
+cokolwiek w którąkolwiek stronę i to samo w sobie jest ważną odpowiedzią na
+pytanie, czy ocena smaku nadaje się na kryterium.
+
+\subsection{Dlaczego nie można ufać samej istotności}
+
+Najważniejsze jest to, że status dopuszczenia do obrotu opisuje całą partię
+miodu, a nie pojedynczą ocenę. Partii było tylko kilka, więc tak naprawdę
+oceniano wielokrotnie te same kilka miodów, a nie setki niezależnych próbek (to
+zjawisko nazywa się pseudoreplikacją). Zastosowaliśmy modele, które częściowo
+biorą to pod uwagę, i one również wskazały na istotny efekt \cite{LiangZeger1986}.
+Nie można jednak traktować tego jako dowodu, że to właśnie autoryzacja decyduje
+o smaku. Przy tak małej liczbie partii nie da się oddzielić „efektu statusu" od
+„efektu tego konkretnego miodu", model i tak przypisze różnice między miodami
+zmiennej statusu.
+
+Dlatego najmocniejszy wniosek nie wynika z jednego testu, tylko z tego, że kilka
+różnych analiz mówi to samo. Gdy porównaliśmy miody w obrębie tego samego rodzaju
+(co usuwa wpływ gatunku), dla miodów robiniowych różnicy nie było, a dla miodów
+wielokwiatowych całą różnicę „robiła" jedna, wyjątkowo wysoko oceniona próbka.
+Sprawdziliśmy też moc badania (czyli jego zdolność do wykrycia efektu) i okazała
+się ona dalece za niska, by cokolwiek pewnego stwierdzić \cite{Cohen1988}. Brak
+istotności na poziomie partii oznacza więc, że badanie było za słabe, a nie że
+udowodniono brak efektu. Wszystko to razem wskazuje, że pozorna istotność bierze
+się z pseudoreplikacji i z jednej nietypowej próbki, a nie z prawdziwego wpływu
+autoryzacji.
+
+\subsection{Różnice między samymi miodami są większe niż efekt statusu}
+
+Najlepiej pokazuje to proste zestawienie. Różnica między grupami (dopuszczone vs
+niedopuszczone) okazała się mniejsza niż zwykłe różnice między poszczególnymi
+miodami w tej samej grupie. Mówiąc inaczej: dwa legalne miody potrafią różnić się
+oceną o wiele bardziej, niż wynosi średnia różnica między miodami dopuszczonymi
+a niedopuszczonymi. Co więcej, jeden z miodów z dopuszczeniem wypadł gorzej niż
+większość miodów bez dopuszczenia. To jasno pokazuje, że o akceptacji decyduje
+konkretny miód, a nie jego status urzędowy.
+
+\subsection{Co to oznacza dla kontroli i dopuszczania do obrotu}
+
+Z punktu widzenia ewentualnej kontroli nie liczy się to, czy jakaś różnica
+istnieje, tylko czy na podstawie smaku da się rozpoznać status miodu. Tu wynik
+jest jednoznaczny: trafność takiego rozpoznania była bliska rzutowi monetą
+\cite{HanleyMcNeil1982}. Ocena smaku praktycznie nic nie mówi o tym, czy miód ma
+dopuszczenie. Gdyby zastosować regułę „odrzuć miód, którego konsumenci nie
+akceptują", taka reguła błędnie wykluczyłaby z rynku dużą część miodów w pełni
+legalnych, a jednocześnie przepuściła większość tych bez dopuszczenia. Narzędzie,
+które myli się równie często jak loteria, nie spełnia wymogu rzetelności
+i proporcjonalności, jakiego oczekuje się od kryterium decydującego o dopuszczeniu
+produktu do obrotu.
+
+Podobny problem opisano już wcześniej dla innego parametru. W ocenie
+mikrobiologicznej sama obecność drożdży osmofilnych (bez oznak fermentacji) też
+nie wystarcza, by uznać miód za niezgodny z wymaganiami \cite{Gajda2026}. W obu
+przypadkach kłopotem nie jest sama idea kryterium jakościowego, tylko wybór cechy,
+która słabo różnicuje produkty dobre i złe. To prowadzi do prostego wniosku: zanim
+jakiś parametr trafi do procedur dopuszczania do obrotu, trzeba najpierw pokazać,
+że potrafi on odróżnić produkty zgodne od niezgodnych, a nie tylko że da się go
+zmierzyć.
+
+\subsection{Ocena smaku a metody laboratoryjne}
+
+Słabość oceny smaku widać najlepiej w porównaniu z metodami laboratoryjnymi.
+Pochodzenie i autentyczność miodu ustala się obiektywnie, przede wszystkim
+analizą pyłkową, którą dziś coraz częściej wspiera sztuczna inteligencja
+osiągająca niemal pełną zgodność z oceną eksperta \cite{Banach2025}. Tymczasem
+ocena smaku rozpoznaje status miodu na poziomie zbliżonym do przypadku. Wniosek
+jest taki, że dobre, powtarzalne narzędzia kontroli istnieją; problemem nie jest
+sama idea kryterium, tylko to, że smak się do tej roli nie nadaje. Status urzędowy
+i odczucia konsumenta to po prostu dwie różne rzeczy, których nie da się stosować
+zamiennie.
+
+Nie znaczy to, że ocena smaku jest bezużyteczna. Przeciwnie, to cenne narzędzie
+do badania preferencji konsumentów, ulepszania produktu i marketingu, a użyta tu
+metoda ślepej degustacji dobrze ograniczyła wpływ marki czy pochodzenia na oceny.
+Wyniki mówią jedynie, że miejsce oceny smaku jest po stronie rozwoju i opisu
+produktu, a nie po stronie decyzji urzędowych.
+
+\subsection{Ograniczenia badania}
+
+Najważniejszym ograniczeniem jest mała liczba partii miodu. Nawet przy dużej
+liczbie osób oceniających to właśnie liczba partii decyduje o sile wniosków
+o samej autoryzacji i to ona powoduje opisaną wyżej pseudoreplikację oraz niską
+moc badania. Po drugie, status dopuszczenia mieszał się z rodzajem miodu,
+a miód lipowy był tylko jeden (i to z dopuszczeniem), więc nie dało się tych
+czynników w pełni rozdzielić. Po trzecie, oceniali konsumenci, a nie wyszkoleni
+degustatorzy, to dobrze oddaje rynek, ale zwiększa rozrzut ocen. Po czwarte,
+badano miody z jednego sezonu i z ograniczonej liczby odmian oraz regionów, więc
+wyników nie należy uogólniać na wszystkie miody. Trzeba też pamiętać, że praca
+ocenia smak jako \emph{narzędzie do podejmowania decyzji}, a nie chemiczną
+autentyczność badanych miodów, to dwie osobne sprawy.
+
+\subsection{Co warto zbadać dalej}
+
+Aby pewnie rozstrzygnąć, czy autoryzacja wpływa na smak, potrzeba badania
+z dużo większą liczbą partii w każdej grupie, tak, by partię można było
+traktować jako właściwą jednostkę i by badanie miało wystarczającą moc.
+Warto też tak zaplanować próbki, żeby każdy rodzaj miodu był obecny zarówno
+
+
+% koniec sekcji dyskusja
+
+\bibliographystyle{plain}
+\bibliography{bibliografia} % plik .bib z literaturą
+
+\end{document}
