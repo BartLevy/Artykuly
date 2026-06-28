@@ -85,6 +85,9 @@ dopuszczonych oraz przepuszczenie partii niedopuszczonych). Analiza ta
 przekłada wielkość efektu na bezpośrednio interpretowalne konsekwencje
 regulacyjne.
 
+%% TODO: wstawić Krippendorff alpha dla typowości (z 525 ocen) — argument
+%% o niepowtarzalności pomiaru jako klasy; ICC dla skali ogólnej akceptacji.
+
 \paragraph{Stosunek sygnału do szumu i heterogeniczność.}
 Zaobserwowaną różnicę między grupami (sygnał) odniesiono do naturalnej
 zmienności akceptacji między partiami w obrębie tej samej grupy (szum),
@@ -93,7 +96,7 @@ z różnicą międzygrupową. Analiza ta służyła ocenie, czy efekt statusu
 dopuszczenia jest większy niż zmienność próbka-do-próbki, niezależna od
 statusu administracyjnego.
 
-% ----------- %
+%,,, -- %
 \section{Wyniki}
 
 \subsection{Charakterystyka respondentów}
@@ -281,7 +284,7 @@ Hipotetyczna reguła decyzyjna \emph{„odrzuć próbkę, gdy smak uznany za~nie
 błędnie odrzucałaby \textbf{<<fp_pct>>\%} próbek miodów dopuszczonych do obrotu
 i~pomijałaby \textbf{<<fn_pct>>\%} próbek niedopuszczonych do obrotu.
 
-% ----------- %
+%,,, -- %
 \subsection{Modele z efektami mieszanymi}
 
 Liniowy model mieszany (LMM) z~losowym efektem respondenta i~kontrolą dla
@@ -310,7 +313,7 @@ przy <<lot_n_auth>>~dopuszczonych i~<<lot_n_nonauth>>~niedopuszczonych partiach
 nie jest możliwe oddzielenie efektu statusu administracyjnego od właściwości
 tych konkretnych partii.
 
-% ----------- %
+%,,, -- %
 \subsection{Analiza bayesowska}
 
 Dla testu t sparowanego ($t = <<t_stat>>$, $n = <<n_paired>>$) obliczono
@@ -321,7 +324,7 @@ Interpretacja: \textbf{<<bf_verdict>>}.
 Dane nie dostarczają zatem silnych dowodów za brakiem efektu (H$_0$),
 efekt jest statystycznie wykrywalny, lecz mały i~niepewny praktycznie.
 
-% ----------- %
+%,,, -- %
 \subsection{Analiza mocy}
 
 Na poziomie partii miodów zaobserwowany Cohen $d = <<lot_cohen_d>>$
@@ -334,7 +337,7 @@ co stanowi wartość nieosiągalną w~typowych warunkach kontrolnych.
 Brak istotności na poziomie partii miodu należy zatem interpretować jako
 \emph{brak dostatecznej mocy}, a~nie jako potwierdzenie H$_0$.
 
-% ----------- %
+%,,, -- %
 \subsection{Porównanie wewnątrz typów miodu}
 
 Zestawienie sparowane per respondent w~obrębie tego samego rodzaju nektaru
@@ -363,7 +366,7 @@ Istotna różnica dla wielokwiatu ($p = <<poly_p>>$) wynika głównie z~silnej
 dominacji lotu~3 ($<<auth_best_lot>>$: akceptacja~$<<auth_best_ok>>$),
 który sam z~siebie winduje średnią grupy miodów dopuszczonych do obrotu.
 
-% ----------- %
+%,,, -- %
 \subsection{Heterogeniczność wewnątrz grupy miodów dopuszczonych do obrotu}
 
 Rozrzut akceptacji między lotami dopuszczonymi do obrotu wyniósł
@@ -375,7 +378,7 @@ Fakt, że wewnątrz grupy miodów dopuszczonych do obrotu jednej partii (lipa) c
 niższą akceptacją niż dwa spośród trzech partii niedopuszczonych,
 potwierdza, że status dopuszczenia do obrotu nie wyznacza akceptacji konsumenckiej.
 
-% ----------- %
+%,,, -- %
 \subsection{Analiza czułości granicy SESOI}
 
 \begin{table}[h]
@@ -398,12 +401,14 @@ Przy granicy $\pm 0{,}15$ (odpowiadającej 15~pp różnicy akceptacji, którą
 można uznać za praktycznie istotną) wynik TOST jest już istotny
 ($p = <<p_tost_015>>$), co formalnie potwierdza równoważność efektu.
 
-% ----------- %
+%,,, -- %
 \section{Wnioski}
 
-Zebrany materiał empiryczny dostarcza spójnego obrazu: smak miodu, oceniany
-przez konsumentów za pomocą standardowej ankiety sensorycznej, nie wiąże się
-w~wiarygodny sposób ze statusem dopuszczenia próbki do obrotu.
+Zebrany materiał empiryczny dostarcza spójnego obrazu: subiektywna ocena
+organoleptyczna smaku nie spełnia warunków stawianych kryterium
+dopuszczenia do obrotu, obiektywności, powtarzalności i~proporcjonalności, 
+i~nie powinna stanowić samodzielnej przesłanki dyskwalifikacji produktu
+spełniającego wszystkie ilościowo oznaczane wymagania.
 
 Różnica typowości smaku między miodami dopuszczonymi do obrotu
 a~niedopuszczonymi wyniosła <<signal_pct>>~pp
@@ -421,16 +426,28 @@ $\mathrm{AUC} \approx <<auc_typical>>$ wskazuje na zdolność dyskryminacyjną
 zbliżoną do losowej, a~przy granicy $\pm <<sesoi_min_equiv>>$ efekt jest
 formalnie równoważny zeru.
 
-Praktyczna konsekwencja tych ustaleń jest istotna.
-Gdyby organ kontrolny stosował regułę opartą na ocenie sensorycznej, tzn.\
-odrzucał próbkę, gdy konsumenci nie akceptują jej smaku, narzędzie to
-błędnie wykluczyłoby z~obrotu \textbf{<<fp_pct>>\%} próbek miodów legalnie
-dopuszczonych do obrotu, a~jednocześnie przepuszczało
+Ilustratywny jest przypadek próbki~P4: spełniała ona wszystkie oznaczane
+ilościowo wymagania fizykochemiczne i~została niedopuszczona do obrotu
+wyłącznie na podstawie jednej jakościowej obserwacji smaku, podanej bez
+deklaracji niepewności pomiaru.
+Ta sama cecha oceniona niezależnie przez 75~osób w~warunkach ślepego testu dała
+wskaźnik typowości~0{,}653, wyższy niż dla dwóch miodów dopuszczonych do
+obrotu (P1:~0{,}573; P5:~0{,}440), co wskazuje, że odczyt tej cechy nie jest
+powtarzalny między oceniającymi.
+
+Metryki dyskryminacyjne (AUC, odsetki błędów klasyfikacji) są obliczane na
+poziomie 525~pojedynczych ocen i~nie zależą od liczby siedmiu partii;
+ich wartości są zatem niezależne od opisanych wyżej ograniczeń mocy badania
+na poziomie grup i~stanowią miarodajną miarę przydatności cechy jako kryterium.
+$\mathrm{AUC} = <<auc_typical>>$ (95\,\% CI: $[<<auc_typical_ci_low>>,\;<<auc_typical_ci_high>>]$)
+obejmujący 0{,}50 wskazuje na zdolność dyskryminacyjną nieodróżnialną od losowej.
+Gdyby organ kontrolny stosował regułę opartą na typowości smaku,
+narzędzie to błędnie wykluczyłoby z~obrotu \textbf{<<fp_pct>>\%} próbek miodów
+legalnie dopuszczonych, a~jednocześnie przepuszczało
 \textbf{<<fn_pct>>\%} próbek niedopuszczonych.
-Skuteczność tak skonstruowanego kryterium ($\mathrm{AUC} \approx <<auc_typical>>$)
-jest zatem zbliżona do decyzji podejmowanej losowo i~nie spełnia wymogów
-proporcjonalności ani rzetelności, jakie powinno spełniać każde administracyjne
-kryterium dopuszczenia produktu do obrotu.
+Kryterium o~takiej skuteczności nie spełnia wymogów proporcjonalności
+ani rzetelności, jakie powinno spełniać każde administracyjne kryterium
+dopuszczenia produktu do obrotu.
 
 Należy przy tym podkreślić, że smak miodu zależy w~pierwszej kolejności od
 gatunku nektaru, warunków zbioru i~przetwarzania, a~nie od statusu
@@ -444,10 +461,12 @@ mierzą różne rzeczy i~nie powinny być traktowane jako wzajemnie zastępowaln
 
 Ocena sensoryczna może i~powinna być wartościowym narzędziem badawczym
 i~marketingowym, służącym doskonaleniu produktu i~komunikacji z~konsumentami.
-Wyniki niniejszego badania wskazują jednak, że nie spełnia ona wymagań
-stawianych kryterium o~charakterze prawno-administracyjnym.
-Nie jest wystarczająco precyzyjna, by obiektywnie i~powtarzalnie odróżnić próbkę
-spełniającą wymogi jakościowe od próbki ich niespełniającej.
-Włączenie takiego kryterium do procedur dopuszczenia do obrotu prowadziłoby
+Wyniki niniejszego badania wskazują jednak, że nie spełnia ona trzech warunków
+stawianych kryterium prawno-administracyjnemu: \emph{obiektywności} (wynik zależy
+od oceniającego i~nie jest mierzalny bez wzorca), \emph{powtarzalności} (ta sama
+próbka uzyskuje różne oceny w~zależności od doboru degustatorów) oraz
+\emph{proporcjonalności} (narzędzie o~dyskryminacyjności losowej nie powinno
+samodzielnie dyskwalifikować produktu spełniającego wszystkie ilościowo oznaczane
+normy). Włączenie takiego kryterium do procedur dopuszczenia do obrotu prowadziłoby
 do decyzji obarczonych wysokim odsetkiem błędów klasyfikacji, narażając
 producentów na arbitralne i~nieuzasadnione straty gospodarcze.

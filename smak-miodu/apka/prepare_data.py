@@ -104,6 +104,7 @@ def load_and_merge(fname):
         dm.age = parse_number_from_cell(row[2])
         dm.how_often = parse_number_from_cell(row[3])
         dm.gender = "m" if row[4] == "m" else "k"
+        if (dm.gender is None): dm.gender = "k"
         dm.lot = row_res[1]
         dm.overall_rate = row_res[2]
         dm.sweetness = parse_number_from_cell(row_res[3])
