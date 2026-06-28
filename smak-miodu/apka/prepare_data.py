@@ -65,7 +65,8 @@ def interpolate_missing_by_knn(records: list[DataModel], k: int = 3) -> list[Dat
     return result
 
 def get_authorized(lot):
-    if (lot in ["1-250906","3-4/02/2020","4-cq23120101-2","5-cq25111501-1"]):
+    #                                        zła
+    if (lot in ["1-250906","3-4/02/2020","5-cq25111501-1"]):
         return 1
     else:
         return 0
@@ -102,13 +103,13 @@ def load_and_merge(fname):
         # dm.date = row[1] if row[1] is not None else "2026-07-01"
         dm.age = parse_number_from_cell(row[2])
         dm.how_often = parse_number_from_cell(row[3])
-        dm.gender = row[4]
+        dm.gender = "m" if row[4] == "m" else "k"
         dm.lot = row_res[1]
         dm.overall_rate = row_res[2]
         dm.sweetness = parse_number_from_cell(row_res[3])
         dm.acidity = parse_number_from_cell(row_res[4])
         dm.intensity = parse_number_from_cell(row_res[5])
-        dm.is_taste_ok = 1 if row_res[6] == "t" else 0
+        dm.is_typical = 1 if row_res[6] == "t" else 0
         dm.authorized = get_authorized(row_res[1])
         dm.type_of_honey = get_flower(row_res[1])
         result.append(dm)

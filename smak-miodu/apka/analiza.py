@@ -31,9 +31,8 @@ from scipy import stats
 def to_dataframe(data: List[Any]) -> pd.DataFrame:
     """Lista DataModel -> DataFrame. Normalizuje typy (bool/int -> 0/1)."""
     df = pd.DataFrame([asdict(d) for d in data])
-    # is_taste_ok bywa bool -> sprowadzamy do 0/1 int
-    if "is_taste_ok" in df:
-        df["is_taste_ok"] = df["is_taste_ok"].astype("float").round().astype("Int64")
+    if "is_typical" in df:
+        df["is_typical"] = df["is_typical"].astype("float").round().astype("Int64")
     for c in ("authorized", "age", "how_often", "overall_rate",
               "sweetness", "acidity", "intensity"):
         if c in df:
@@ -43,7 +42,7 @@ def to_dataframe(data: List[Any]) -> pd.DataFrame:
  
 # zmienne ilościowe/porządkowe używane w korelacjach
 _NUMERIC = ["overall_rate", "sweetness", "acidity", "intensity",
-            "is_taste_ok", "authorized", "age", "how_often"]
+            "is_typical", "authorized", "age", "how_often"]  # is_typical = typowość smaku
  
  
 def _stars(p: float) -> str:
@@ -97,7 +96,7 @@ def general_info(df: pd.DataFrame) -> None:
 def basic_parameters(df: pd.DataFrame) -> None:
     _h("2. PARAMETRY PODSTAWOWE (statystyki opisowe)")
     cols = ["overall_rate", "sweetness", "acidity", "intensity",
-            "is_taste_ok", "authorized"]
+            "is_typical", "authorized"]
     desc = df[cols].describe().T[["mean", "std", "min", "50%", "max"]]
     desc.columns = ["średnia", "odch.std", "min", "mediana", "max"]
     print(desc.round(3).to_string())
@@ -106,7 +105,7 @@ def basic_parameters(df: pd.DataFrame) -> None:
     by_lot = df.groupby("lot").agg(
         authorized=("authorized", "first"),
         overall_rate=("overall_rate", "mean"),
-        is_taste_ok=("is_taste_ok", "mean"),
+        is_typical=("is_typical", "mean"),
         sweetness=("sweetness", "mean"),
         acidity=("acidity", "mean"),
         intensity=("intensity", "mean"),
@@ -152,27 +151,55 @@ def _auc(score: np.ndarray, target: np.ndarray) -> float:
         return float("nan")
     u, _ = stats.mannwhitneyu(pos, neg, alternative="two-sided")
     return u / (len(pos) * len(neg))
+
+
+def _cluster_bootstrap_auc(
+    df: pd.DataFrame, score_col: str, target_col: str,
+    n_boot: int = 2000, rng_seed: int = 42,
+) -> tuple:
+    """95% CI dla AUC metodą bootstrapu klastrowego po respondentach.
+
+    Resamplingujemy respondentów (zachowując ich 7 ocen) zamiast wierszy.
+    Zwraca (ci_low, ci_high).
+    """
+    id_arr    = df["id"].values
+    score_arr = df[score_col].astype(float).values
+    tgt_arr   = df[target_col].astype(int).values
+    unique_ids = np.unique(id_arr)
+
+    # prekomputowane indeksy per respondent — koszt stały
+    id_to_idx = {sid: np.where(id_arr == sid)[0] for sid in unique_ids}
+
+    rng = np.random.default_rng(rng_seed)
+    aucs = np.empty(n_boot)
+    for i in range(n_boot):
+        sampled = rng.choice(unique_ids, size=len(unique_ids), replace=True)
+        idx = np.concatenate([id_to_idx[sid] for sid in sampled])
+        val = _auc(score_arr[idx], tgt_arr[idx])
+        aucs[i] = val
+    valid = aucs[~np.isnan(aucs)]
+    return float(np.percentile(valid, 2.5)), float(np.percentile(valid, 97.5))
  
  
 def prove_thesis(df: pd.DataFrame, sesoi: float = 0.10) -> None:
     """
-    Teza: różnica akceptacji smakowej między miodami autoryzowanymi
+    Teza: różnica typowości smaku między miodami autoryzowanymi
     a nieautoryzowanymi jest zbyt mała i obarczona zbyt dużym błędem,
     by stanowić podstawę niedopuszczenia próbki do obrotu.
  
     sesoi = granica efektu istotnego praktycznie (do testu równoważności).
     """
-    _h("4. DOWÓD TEZY: authorized vs is_taste_ok")
+    _h("4. DOWÓD TEZY: authorized vs is_typical (typowość smaku)")
  
     a = df["authorized"].astype(int)
-    b = df["is_taste_ok"].astype(int)
+    b = df["is_typical"].astype(int)
  
     # 4.1 tabela 2x2 + miary asocjacji
     print("--- 4.1 Tabela 2x2 i miary asocjacji ---")
     ct = pd.crosstab(a, b)
     print(ct.to_string())
-    rate = df.groupby("authorized")["is_taste_ok"].mean()
-    print(f"\nAkceptacja (taste_ok=1)  nieauth: {rate.get(0, float('nan')):.3f} | "
+    rate = df.groupby("authorized")["is_typical"].mean()
+    print(f"\nTypowość smaku (is_typical=1)  nieauth: {rate.get(0, float('nan')):.3f} | "
           f"auth: {rate.get(1, float('nan')):.3f}")
     phi = np.corrcoef(a, b)[0, 1]
     chi2, p_chi, _, _ = stats.chi2_contingency(ct, correction=False)
@@ -184,7 +211,7 @@ def prove_thesis(df: pd.DataFrame, sesoi: float = 0.10) -> None:
  
     # 4.2 analiza poprawna: sparowana per respondent
     print("\n--- 4.2 Test sparowany per respondent (poprawny dla powtórzeń) ---")
-    g = (df.groupby(["id", "authorized"])["is_taste_ok"].mean()
+    g = (df.groupby(["id", "authorized"])["is_typical"].mean()
          .unstack().dropna())
     g.columns = ["nieauth", "auth"]
     d = (g["auth"] - g["nieauth"]).values
@@ -211,7 +238,7 @@ def prove_thesis(df: pd.DataFrame, sesoi: float = 0.10) -> None:
     # 4.4 sygnał/szum: efekt vs naturalna zmienność między próbkami
     print("\n--- 4.4 Sygnał vs szum (kluczowe dla tezy) ---")
     lot = df.groupby("lot").agg(auth=("authorized", "first"),
-                                ok=("is_taste_ok", "mean"))
+                                ok=("is_typical", "mean"))
     signal = abs(lot.groupby("auth")["ok"].mean().diff().iloc[-1])
     noise = lot.groupby("auth")["ok"].std().mean()
     rng = lot["ok"].max() - lot["ok"].min()
@@ -226,13 +253,13 @@ def prove_thesis(df: pd.DataFrame, sesoi: float = 0.10) -> None:
  
     # 4.5 zdolność rozróżniania + błędy reguły decyzyjnej
     print("\n--- 4.5 Czy ocena sensoryczna nadaje się na kryterium? ---")
-    auc_taste = _auc(b.values.astype(float), a.values)
+    auc_typical = _auc(b.values.astype(float), a.values)
     auc_overall = _auc(df["overall_rate"].values.astype(float), a.values)
-    print(f"AUC (is_taste_ok  -> authorized):  {auc_taste:.3f}")
-    print(f"AUC (overall_rate -> authorized):  {auc_overall:.3f}")
+    print(f"AUC (is_typical / typowość  -> authorized):  {auc_typical:.3f}")
+    print(f"AUC (overall_rate / ogólna  -> authorized):  {auc_overall:.3f}")
     print("(0,50 = rzut monetą; 1,00 = idealne rozróżnienie)")
  
-    print("\nReguła hipotetyczna: 'odrzuć próbkę gdy is_taste_ok = 0'")
+    print("\nReguła hipotetyczna: 'odrzuć próbkę gdy smak uznany za nietypowy (is_typical = 0)'")
     fp = ct.loc[1, 0]; n_auth = ct.loc[1].sum()
     fn = ct.loc[0, 1]; n_non = ct.loc[0].sum()
     print(f"   legalnych (auth) błędnie odrzuconych:   "
@@ -244,7 +271,7 @@ def prove_thesis(df: pd.DataFrame, sesoi: float = 0.10) -> None:
     print("\n--- WNIOSEK ---")
     print(f"Różnica akceptacji = {signal*100:.1f} pkt proc. (phi={phi:.3f}, "
           f"d={m/d.std(ddof=1):.2f}), mniejsza niż zmienność między próbkami "
-          f"(sygnał/szum={signal/noise:.2f}); AUC={auc_taste:.2f} ~ poziom "
+          f"(sygnał/szum={signal/noise:.2f}); AUC={auc_typical:.2f} ~ poziom "
           f"losowy. Reguła decyzyjna myliłaby ~{100*fp/n_auth:.0f}% próbek "
           f"zgodnych. Efekt zbyt mały i zbyt niepewny, by uzasadniać "
           f"niedopuszczenie próbki do obrotu.")
@@ -284,10 +311,10 @@ def _compute_general(df: pd.DataFrame) -> dict:
 
 
 def _compute_basic(df: pd.DataFrame) -> dict:
-    cols = ["overall_rate", "sweetness", "acidity", "intensity", "is_taste_ok"]
+    cols = ["overall_rate", "sweetness", "acidity", "intensity", "is_typical"]
     desc = df[cols].describe()
     short = {"overall_rate": "overall", "sweetness": "sweetness",
-             "acidity": "acidity", "intensity": "intensity", "is_taste_ok": "taste_ok"}
+             "acidity": "acidity", "intensity": "intensity", "is_typical": "typical"}
     r = {}
     for col, name in short.items():
         for stat in ("mean", "std", "min", "max"):
@@ -297,19 +324,19 @@ def _compute_basic(df: pd.DataFrame) -> dict:
 
 def _compute_thesis(df: pd.DataFrame, sesoi: float) -> dict:
     a = df["authorized"].astype(int)
-    b = df["is_taste_ok"].astype(int)
+    b = df["is_typical"].astype(int)
 
     ct = (pd.crosstab(a, b)
           .reindex([0, 1]).reindex([0, 1], axis=1)
           .fillna(0).astype(int))
-    rate = df.groupby("authorized")["is_taste_ok"].mean()
+    rate = df.groupby("authorized")["is_typical"].mean()
     phi = float(np.corrcoef(a, b)[0, 1])
     chi2_val, p_chi, _, _ = stats.chi2_contingency(ct, correction=False)
     tab = ct.values
     denom = tab[1, 0] * tab[0, 1]
     orr = (tab[1, 1] * tab[0, 0]) / denom if denom else float("nan")
 
-    g = (df.groupby(["id", "authorized"])["is_taste_ok"].mean()
+    g = (df.groupby(["id", "authorized"])["is_typical"].mean()
          .unstack().dropna())
     g.columns = ["nieauth", "auth"]
     d = (g["auth"] - g["nieauth"]).values
@@ -323,7 +350,7 @@ def _compute_thesis(df: pd.DataFrame, sesoi: float) -> dict:
     t2 = (m - sesoi) / se
     p_tost = max(stats.t.sf(t1, n - 1), stats.t.cdf(t2, n - 1))
 
-    lot = df.groupby("lot").agg(auth=("authorized", "first"), ok=("is_taste_ok", "mean"))
+    lot = df.groupby("lot").agg(auth=("authorized", "first"), ok=("is_typical", "mean"))
     signal = abs(lot.groupby("auth")["ok"].mean().diff().iloc[-1])
     noise = lot.groupby("auth")["ok"].std().mean()
 
@@ -331,32 +358,41 @@ def _compute_thesis(df: pd.DataFrame, sesoi: float) -> dict:
     n_non_rows = int(ct.loc[0].sum())
     fp, fn = int(ct.loc[1, 0]), int(ct.loc[0, 1])
 
+    auc_typ = round(float(_auc(b.values.astype(float), a.values)), 3)
+    auc_ov  = round(float(_auc(df["overall_rate"].values.astype(float), a.values)), 3)
+    typ_lo, typ_hi = _cluster_bootstrap_auc(df, "is_typical", "authorized")
+    ov_lo,  ov_hi  = _cluster_bootstrap_auc(df, "overall_rate", "authorized")
+
     return {
-        "rate_auth":      round(float(rate.get(1, float("nan"))), 3),
-        "rate_nieauth":   round(float(rate.get(0, float("nan"))), 3),
-        "phi":            round(phi, 3),
-        "chi2":           round(float(chi2_val), 2),
-        "p_chi":          round(float(p_chi), 4),
-        "orr":            round(float(orr), 2),
-        "n_paired":       n,
-        "diff_mean":      round(float(m), 3),
-        "ci_low":         round(float(ci[0]), 3),
-        "ci_high":        round(float(ci[1]), 3),
-        "p_wilcoxon":     round(float(p_w), 4),
-        "cohen_d":        round(float(cohen_d), 3),
-        "sesoi":          sesoi,
-        "p_tost":         round(float(p_tost), 4),
-        "tost_verdict":   "RÓWNOWAŻNE" if p_tost < 0.05 else "brak równoważności",
-        "signal":         round(float(signal), 3),
-        "signal_pct":     round(float(signal) * 100, 1),
-        "noise":          round(float(noise), 3),
-        "snr":            round(float(signal / noise), 2),
-        "lot_ok_min":     round(float(lot["ok"].min()), 2),
-        "lot_ok_max":     round(float(lot["ok"].max()), 2),
-        "auc_taste":      round(float(_auc(b.values.astype(float), a.values)), 3),
-        "auc_overall":    round(float(_auc(df["overall_rate"].values.astype(float), a.values)), 3),
-        "fp_pct":         round(100 * fp / n_auth_rows, 1) if n_auth_rows else 0.0,
-        "fn_pct":         round(100 * fn / n_non_rows, 1) if n_non_rows else 0.0,
+        "rate_auth":            round(float(rate.get(1, float("nan"))), 3),
+        "rate_nieauth":         round(float(rate.get(0, float("nan"))), 3),
+        "phi":                  round(phi, 3),
+        "chi2":                 round(float(chi2_val), 2),
+        "p_chi":                round(float(p_chi), 4),
+        "orr":                  round(float(orr), 2),
+        "n_paired":             n,
+        "diff_mean":            round(float(m), 3),
+        "ci_low":               round(float(ci[0]), 3),
+        "ci_high":              round(float(ci[1]), 3),
+        "p_wilcoxon":           round(float(p_w), 4),
+        "cohen_d":              round(float(cohen_d), 3),
+        "sesoi":                sesoi,
+        "p_tost":               round(float(p_tost), 4),
+        "tost_verdict":         "RÓWNOWAŻNE" if p_tost < 0.05 else "brak równoważności",
+        "signal":               round(float(signal), 3),
+        "signal_pct":           round(float(signal) * 100, 1),
+        "noise":                round(float(noise), 3),
+        "snr":                  round(float(signal / noise), 2),
+        "lot_ok_min":           round(float(lot["ok"].min()), 2),
+        "lot_ok_max":           round(float(lot["ok"].max()), 2),
+        "auc_typical":          auc_typ,
+        "auc_typical_ci_low":   round(typ_lo, 3),
+        "auc_typical_ci_high":  round(typ_hi, 3),
+        "auc_overall":          auc_ov,
+        "auc_overall_ci_low":   round(ov_lo, 3),
+        "auc_overall_ci_high":  round(ov_hi, 3),
+        "fp_pct":               round(100 * fp / n_auth_rows, 1) if n_auth_rows else 0.0,
+        "fn_pct":               round(100 * fn / n_non_rows, 1) if n_non_rows else 0.0,
     }
 
 
@@ -404,10 +440,10 @@ def _compute_mixed_models(df: pd.DataFrame) -> dict:
 
     try:
         df_gee = df2.copy()
-        df_gee["is_taste_ok"] = df_gee["is_taste_ok"].astype(float)
-        df_gee = df_gee.dropna(subset=["is_taste_ok", "authorized"])
+        df_gee["is_typical"] = df_gee["is_typical"].astype(float)
+        df_gee = df_gee.dropna(subset=["is_typical", "authorized"])
         res = GEE.from_formula(
-            "is_taste_ok ~ authorized + C(type_of_honey)",
+            "is_typical ~ authorized + C(type_of_honey)",
             groups="id_str", data=df_gee,
             family=Binomial(), cov_struct=Exchangeable(),
         ).fit()
@@ -432,7 +468,7 @@ def mixed_effects_results(df: pd.DataFrame) -> None:
     print(f"LMM overall_rate ~ authorized + type:  "
           f"β={r['lmm_auth_coef']}  95%CI=[{r['lmm_auth_ci_low']}, {r['lmm_auth_ci_high']}]  "
           f"p={r['lmm_auth_p']}")
-    print(f"GEE is_taste_ok  ~ authorized + type:  "
+    print(f"GEE is_typical (typowość) ~ authorized + type:  "
           f"OR={r['gee_auth_or']}  95%CI=[{r['gee_auth_or_ci_low']}, {r['gee_auth_or_ci_high']}]  "
           f"p={r['gee_auth_p']}")
 
@@ -457,7 +493,7 @@ def _jzs_bf10(t_stat: float, n: int, r: float = 0.707) -> float:
 
 
 def _compute_bayes(df: pd.DataFrame) -> dict:
-    g = (df.groupby(["id", "authorized"])["is_taste_ok"].mean()
+    g = (df.groupby(["id", "authorized"])["is_typical"].mean()
          .unstack().dropna())
     g.columns = ["nieauth", "auth"]
     d = (g["auth"] - g["nieauth"]).values
@@ -497,7 +533,7 @@ def bayes_analysis(df: pd.DataFrame) -> None:
 def _compute_power(df: pd.DataFrame) -> dict:
     from statsmodels.stats.power import TTestIndPower
 
-    lot = df.groupby("lot").agg(auth=("authorized", "first"), ok=("is_taste_ok", "mean"))
+    lot = df.groupby("lot").agg(auth=("authorized", "first"), ok=("is_typical", "mean"))
     auth_ok    = lot.loc[lot.auth == 1, "ok"].values
     nonauth_ok = lot.loc[lot.auth == 0, "ok"].values
     n1, n2 = len(auth_ok), len(nonauth_ok)
@@ -550,11 +586,13 @@ def _compute_within_type(df: pd.DataFrame) -> dict:
         except Exception:
             return "N/A"
 
-    rob_a = df[df.lot == "1-250906"].set_index("id")["is_taste_ok"].astype(float)
-    rob_n = df[df.lot == "2-25c062101"].set_index("id")["is_taste_ok"].astype(float)
+    rob_a = df[df.lot == "1-250906"].set_index("id")["is_typical"].astype(float)
+    rob_n = df[df.lot == "2-25c062101"].set_index("id")["is_typical"].astype(float)
 
-    poly_a = df[df.lot.isin(["3-4/02/2020", "4-cq23120101-2"])].groupby("id")["is_taste_ok"].mean().astype(float)
-    poly_n = df[df.lot.isin(["6-02/09", "7-4/21/05"])].groupby("id")["is_taste_ok"].mean().astype(float)
+    # poly_a: tylko jedyna dopuszczona partia wielokwiatowa (P3)
+    # poly_n: wszystkie niedopuszczone wielokwiatowe (P4, P6, P7) uśrednione per respondent
+    poly_a = df[df.lot == "3-4/02/2020"].set_index("id")["is_typical"].astype(float)
+    poly_n = df[df.lot.isin(["4-cq23120101-2", "6-02/09", "7-4/21/05"])].groupby("id")["is_typical"].mean().astype(float)
 
     return {
         "rob_auth_ok":    round(float(rob_a.mean()), 3),
@@ -563,7 +601,7 @@ def _compute_within_type(df: pd.DataFrame) -> dict:
         "poly_auth_ok":   round(float(poly_a.mean()), 3),
         "poly_nonauth_ok":round(float(poly_n.mean()), 3),
         "poly_p":         _wilcoxon_paired(poly_a, poly_n),
-        "tilia_ok":       round(float(df[df.lot == "5-cq25111501-1"]["is_taste_ok"].astype(float).mean()), 3),
+        "tilia_ok":       round(float(df[df.lot == "5-cq25111501-1"]["is_typical"].astype(float).mean()), 3),
     }
 
 
@@ -580,7 +618,7 @@ def within_type_analysis(df: pd.DataFrame) -> None:
 # --------------------------------------------------------------------------- #
 
 def _compute_heterogeneity(df: pd.DataFrame) -> dict:
-    lot = df.groupby("lot").agg(auth=("authorized", "first"), ok=("is_taste_ok", "mean"))
+    lot = df.groupby("lot").agg(auth=("authorized", "first"), ok=("is_typical", "mean"))
     auth_ok    = lot.loc[lot.auth == 1, "ok"]
     nonauth_ok = lot.loc[lot.auth == 0, "ok"]
     signal = abs(auth_ok.mean() - nonauth_ok.mean())
@@ -612,7 +650,7 @@ def heterogeneity_analysis(df: pd.DataFrame) -> None:
 # --------------------------------------------------------------------------- #
 
 def _compute_sesoi_sensitivity(df: pd.DataFrame) -> dict:
-    g = (df.groupby(["id", "authorized"])["is_taste_ok"].mean()
+    g = (df.groupby(["id", "authorized"])["is_typical"].mean()
          .unstack().dropna())
     g.columns = ["nieauth", "auth"]
     d = (g["auth"] - g["nieauth"]).values
@@ -684,12 +722,12 @@ def _compute_demographics(df: pd.DataFrame) -> dict:
 
 def _compute_lot_profile(df: pd.DataFrame) -> dict:
     _LOT_NAMES = {
-        "1-250906": "Lot~1", "2-25c062101": "Lot~2",
-        "3-4/02/2020": "Lot~3", "4-cq23120101-2": "Lot~4",
-        "5-cq25111501-1": "Lot~5", "6-02/09": "Lot~6", "7-4/21/05": "Lot~7",
+        "1-250906": "P1", "2-25c062101": "P2",
+        "3-4/02/2020": "P3", "4-cq23120101-2": "P4",
+        "5-cq25111501-1": "P5", "6-02/09": "P6", "7-4/21/05": "P7",
     }
     _TYPE_PL = {
-        "robinia": "robinia", "polyfloral": "wielokwiatowy",
+        "robinia": "akacja", "polyfloral": "wielokwiatowy",
         "tilia": "lipowy", "other": "inny",
     }
     _ORDER = [
@@ -702,7 +740,7 @@ def _compute_lot_profile(df: pd.DataFrame) -> dict:
         honey_type=("type_of_honey", "first"),
         n=("id", "count"),
         overall=("overall_rate", "mean"),
-        taste_ok=("is_taste_ok", "mean"),
+        typical=("is_typical", "mean"),
         sweet=("sweetness", "mean"),
         acid=("acidity", "mean"),
         intens=("intensity", "mean"),
@@ -718,10 +756,9 @@ def _compute_lot_profile(df: pd.DataFrame) -> dict:
         typ = _TYPE_PL.get(row["honey_type"], row["honey_type"])
         rows.append(
             f"{name} & {typ} & {auth_str} & {int(row['n'])} & "
-            f"{row['overall']:.2f} & {row['taste_ok']:.3f} & "
+            f"{row['overall']:.2f} & {row['typical']:.3f} & "
             f"{row['sweet']:.2f} & {row['acid']:.2f} & {row['intens']:.2f} \\\\"
         )
-
     return {"lot_profile_rows": "\n".join(rows)}
 
 
@@ -754,17 +791,29 @@ def compute_results(df: pd.DataFrame, sesoi: float = 0.10) -> dict:
     """Zwraca płaski słownik placeholder -> wartość do wypełnienia szablonu LaTeX."""
     r = {}
     r.update(_compute_general(df))
+    print("compute 1")
     r.update(_compute_basic(df))
+    print("compute 2")
     r.update(_compute_thesis(df, sesoi=sesoi))
+    print("compute 3")
     r.update(_compute_mixed_models(df))
+    print("compute 4")
     r.update(_compute_bayes(df))
+    print("compute 5")
     r.update(_compute_power(df))
+    print("compute 6")
     r.update(_compute_within_type(df))
+    print("compute 7")
     r.update(_compute_heterogeneity(df))
+    print("compute 8")
     r.update(_compute_sesoi_sensitivity(df))
+    print("compute 9")
     r.update(_compute_demographics(df))
+    print("compute 10")
     r.update(_compute_lot_profile(df))
+    print("compute 11")
     r.update(_compute_sensory_dist(df))
+    print("compute 12")
     return r
 
 
@@ -777,9 +826,11 @@ def render_latex(
     """Wypełnia placeholdery <<var>> w szablonie LaTeX i zapisuje wynik."""
     df = data if isinstance(data, pd.DataFrame) else to_dataframe(data)
     values = compute_results(df, sesoi=sesoi)
+    print("wypełnianie szablonu LaTeX...")
 
     text = Path(template_path).read_text(encoding="utf-8")
     for key, val in values.items():
         text = text.replace(f"<<{key}>>", str(val))
 
     Path(output_path).write_text(text, encoding="utf-8")
+    print("done")

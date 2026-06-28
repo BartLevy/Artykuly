@@ -16,13 +16,13 @@ LOT_ORDER = [
     "4-cq23120101-2", "5-cq25111501-1", "6-02/09", "7-4/21/05",
 ]
 LOT_LABELS = {
-    "1-250906":        "Lot 1\n(robinia, auth.)",
-    "2-25c062101":     "Lot 2\n(robinia, nieauth.)",
-    "3-4/02/2020":     "Lot 3\n(wielokwiat., auth.)",
-    "4-cq23120101-2":  "Lot 4\n(wielokwiat., auth.)",
-    "5-cq25111501-1":  "Lot 5\n(lipowy, auth.)",
-    "6-02/09":         "Lot 6\n(wielokwiat., nieauth.)",
-    "7-4/21/05":       "Lot 7\n(wielokwiat., nieauth.)",
+    "1-250906":        "P1\n(akacja, dop.)",
+    "2-25c062101":     "P2\n(akacja, niedop.)",
+    "3-4/02/2020":     "P3\n(wielokwiat., dop.)",
+    "4-cq23120101-2":  "P4\n(wielokwiat., niedop.)",
+    "5-cq25111501-1":  "P5\n(lipowy, dop.)",
+    "6-02/09":         "P6\n(wielokwiat., niedop.)",
+    "7-4/21/05":       "P7\n(wielokwiat., niedop.)",
 }
 
 
@@ -103,11 +103,11 @@ def save_demographics(df: pd.DataFrame, out_dir: str = ".") -> None:
 
 
 def save_lots_chart(df: pd.DataFrame, out_dir: str = ".") -> None:
-    """Fig 2: Akceptacja smakowa i ogólna ocena per lot — słupki poziome."""
+    """Fig 2: Typowość smaku i ogólna ocena per lot — słupki poziome."""
     _style()
     lot = df.groupby("lot").agg(
         auth=("authorized", "first"),
-        taste_ok=("is_taste_ok", "mean"),
+        typical=("is_typical", "mean"),
         overall=("overall_rate", "mean"),
     )
     order = [l for l in LOT_ORDER if l in lot.index]
@@ -117,13 +117,13 @@ def save_lots_chart(df: pd.DataFrame, out_dir: str = ".") -> None:
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
-    bars1 = ax1.barh(labels, lot["taste_ok"] * 100, color=colors, edgecolor="white", height=0.6)
+    bars1 = ax1.barh(labels, lot["typical"] * 100, color=colors, edgecolor="white", height=0.6)
     ax1.axvline(50, color="gray", linewidth=0.8, linestyle="--", alpha=0.6)
-    for bar, val in zip(bars1, lot["taste_ok"]):
+    for bar, val in zip(bars1, lot["typical"]):
         ax1.text(val * 100 + 1.2, bar.get_y() + bar.get_height() / 2,
                  f"{val:.1%}", va="center", fontsize=8.5)
-    ax1.set_xlabel("Odsetek ocen z akceptowalnym smakiem (%)")
-    ax1.set_title("Akceptacja smakowa")
+    ax1.set_xlabel("Odsetek ocen z typowym smakiem (%)")
+    ax1.set_title("Typowość smaku")
     ax1.set_xlim(0, 110)
 
     bars2 = ax2.barh(labels, lot["overall"], color=colors, edgecolor="white", height=0.6)
@@ -135,8 +135,8 @@ def save_lots_chart(df: pd.DataFrame, out_dir: str = ".") -> None:
     ax2.set_title("Ogólna akceptacja")
     ax2.set_xlim(0, 5.8)
 
-    leg = [mpatches.Patch(facecolor=AUTH_CLR, label="Autoryzowane"),
-           mpatches.Patch(facecolor=NOAUTH_CLR, label="Nieautoryzowane")]
+    leg = [mpatches.Patch(facecolor=AUTH_CLR, label="Dopuszczone"),
+           mpatches.Patch(facecolor=NOAUTH_CLR, label="Niedopuszczone")]
     ax1.legend(handles=leg, loc="lower right", fontsize=9)
 
     fig.tight_layout()
@@ -156,7 +156,7 @@ def save_sensory_distribution(df: pd.DataFrame, out_dir: str = ".") -> None:
 
     fig, axes = plt.subplots(1, 3, figsize=(14, 5))
     fig.suptitle(
-        "Rozkład intensywności cech sensorycznych według grupy autoryzacji",
+        "Rozkład intensywności cech sensorycznych według dopuszczenia do obrotu",
         fontsize=11, fontweight="bold", y=1.02,
     )
 
@@ -181,7 +181,7 @@ def save_sensory_distribution(df: pd.DataFrame, out_dir: str = ".") -> None:
             bottoms += vals
 
         ax.set_xticks(x)
-        ax.set_xticklabels(["Autoryzowane", "Nieautoryz."], fontsize=9)
+        ax.set_xticklabels(["Dopuszczone", "Niedopuszczone"], fontsize=9)
         ax.set_ylabel("Odsetek ocen (%)")
         ax.set_title(title)
         ax.set_ylim(0, 115)
@@ -219,8 +219,8 @@ def save_overall_boxplot(df: pd.DataFrame, out_dir: str = ".") -> None:
     ax.set_ylim(0.3, 5.7)
     ax.axhline(3, color="gray", linewidth=0.8, linestyle="--", alpha=0.6)
 
-    leg = [mpatches.Patch(facecolor=AUTH_CLR, alpha=0.72, label="Autoryzowane"),
-           mpatches.Patch(facecolor=NOAUTH_CLR, alpha=0.72, label="Nieautoryzowane")]
+    leg = [mpatches.Patch(facecolor=AUTH_CLR, alpha=0.72, label="Dopuszczone"),
+           mpatches.Patch(facecolor=NOAUTH_CLR, alpha=0.72, label="Niedopuszczone")]
     ax.legend(handles=leg, fontsize=9)
 
     fig.tight_layout()
@@ -231,23 +231,31 @@ def save_paired_scatter(df: pd.DataFrame, out_dir: str = ".") -> None:
     """Fig 5: Scatter sparowanych ocen per respondent (auth vs nieauth)."""
     _style()
     g = (
-        df.groupby(["id", "authorized"])["is_taste_ok"].mean()
+        df.groupby(["id", "authorized"])["is_typical"].mean()
         .unstack().dropna()
     )
     g.columns = ["nieauth", "auth"]
 
+    counts = g.groupby(["nieauth", "auth"]).size().reset_index(name="n")
+    sizes = counts["n"] * 60
+
     fig, ax = plt.subplots(figsize=(6, 6))
-    ax.scatter(g["nieauth"], g["auth"], alpha=0.45, color=AUTH_CLR, s=40, edgecolors="none")
+    ax.scatter(counts["nieauth"], counts["auth"], s=sizes,
+                    color=AUTH_CLR, alpha=0.75, edgecolors="white", linewidths=0.5)
+
+    for n_val in sorted(counts["n"].unique()):
+        ax.scatter([], [], s=n_val * 60, color=AUTH_CLR, alpha=0.75,
+                   edgecolors="white", linewidths=0.5, label=f"n = {n_val}")
 
     mn = g["nieauth"].mean()
     ma = g["auth"].mean()
-    ax.axvline(mn, color=NOAUTH_CLR, linewidth=1.6, linestyle=":", label=f"śr. nieauth = {mn:.3f}")
-    ax.axhline(ma, color=AUTH_CLR, linewidth=1.6, linestyle=":", label=f"śr. auth = {ma:.3f}")
+    ax.axvline(mn, color=NOAUTH_CLR, linewidth=1.6, linestyle=":", label=f"śr. niedop = {mn:.3f}")
+    ax.axhline(ma, color=AUTH_CLR, linewidth=1.6, linestyle=":", label=f"śr. dop = {ma:.3f}")
     ax.plot([0, 1], [0, 1], "k--", linewidth=0.8, alpha=0.4)
 
-    ax.set_xlabel("Śr. akceptacja smakowa — miody nieautoryzowane")
-    ax.set_ylabel("Śr. akceptacja smakowa — miody autoryzowane")
-    ax.set_title("Sparowane oceny per respondent: auth vs nieauth\n(każdy punkt = jeden respondent)")
+    ax.set_xlabel("Śr. typowość smaku — miody niedopuszczone")
+    ax.set_ylabel("Śr. typowość smaku — miody dopuszczone")
+    ax.set_title("Sparowane oceny per respondent: dopuszczony vs niedopuszczony\n(każdy punkt = jeden respondent)")
     ax.set_xlim(-0.05, 1.05)
     ax.set_ylim(-0.05, 1.05)
     ax.legend(fontsize=9)
@@ -257,10 +265,10 @@ def save_paired_scatter(df: pd.DataFrame, out_dir: str = ".") -> None:
 
 
 def save_age_analysis(df: pd.DataFrame, out_dir: str = ".") -> None:
-    """Fig 6: Akceptacja smakowa i ogólna ocena wg grupy wiekowej."""
+    """Fig 6: Typowość smaku i ogólna ocena wg grupy wiekowej."""
     _style()
     resp_mean = df.groupby(["id", "age"]).agg(
-        taste_ok=("is_taste_ok", "mean"),
+        typical=("is_typical", "mean"),
         overall=("overall_rate", "mean"),
     ).reset_index()
 
@@ -276,14 +284,14 @@ def save_age_analysis(df: pd.DataFrame, out_dir: str = ".") -> None:
     labels = [age_vals.get(int(a), str(a)) for a in age_groups]
     clrs = [age_clrs[i % len(age_clrs)] for i in range(len(age_groups))]
 
-    means_taste = [resp_mean[resp_mean["age"] == a]["taste_ok"].mean() * 100
+    means_taste = [resp_mean[resp_mean["age"] == a]["typical"].mean() * 100
                    for a in age_groups]
     bars = ax1.bar(labels, means_taste, color=clrs, edgecolor="white", width=0.6)
     for bar, val in zip(bars, means_taste):
         ax1.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 1.5,
                  f"{val:.1f}%", ha="center", va="bottom", fontsize=9)
-    ax1.set_ylabel("Odsetek akceptacji smaku (%)")
-    ax1.set_title("Akceptacja smakowa (is_taste_ok)")
+    ax1.set_ylabel("Odsetek typowości smaku (%)")
+    ax1.set_title("Typowość smaku")
     ax1.set_ylim(0, 115)
 
     # ogólna ocena per wiek — box plot
@@ -312,7 +320,7 @@ def save_freq_analysis(df: pd.DataFrame, out_dir: str = ".") -> None:
     freq_clrs = ["#2874A6", "#70AD47", "#CA6F1E"]
 
     resp_mean = df.groupby(["id", "how_often"]).agg(
-        taste_ok=("is_taste_ok", "mean"),
+        typical=("is_typical", "mean"),
         overall=("overall_rate", "mean"),
     ).reset_index()
 
@@ -324,14 +332,14 @@ def save_freq_analysis(df: pd.DataFrame, out_dir: str = ".") -> None:
     fig.suptitle("Oceny sensoryczne według częstotliwości spożycia miodu",
                  fontsize=11, fontweight="bold", y=1.02)
 
-    means_taste = [resp_mean[resp_mean["how_often"] == f]["taste_ok"].mean() * 100
+    means_taste = [resp_mean[resp_mean["how_often"] == f]["typical"].mean() * 100
                    for f in freq_groups]
     bars = ax1.bar(labels, means_taste, color=clrs, edgecolor="white", width=0.5)
     for bar, val in zip(bars, means_taste):
         ax1.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 1.5,
                  f"{val:.1f}%", ha="center", va="bottom", fontsize=9)
-    ax1.set_ylabel("Odsetek akceptacji smaku (%)")
-    ax1.set_title("Akceptacja smakowa (is_taste_ok)")
+    ax1.set_ylabel("Odsetek typowości smaku (%)")
+    ax1.set_title("Typowość smaku")
     ax1.set_ylim(0, 115)
 
     data_by_freq = [resp_mean[resp_mean["how_often"] == f]["overall"].dropna().values
@@ -404,7 +412,7 @@ def save_age_sensory(df: pd.DataFrame, out_dir: str = ".") -> None:
 
 
 def save_age_auth_interaction(df: pd.DataFrame, out_dir: str = ".") -> None:
-    """Fig 9: Interakcja: akceptacja smaku (auth vs nieauth) × wiek respondenta."""
+    """Fig 9: Interakcja: akceptacja smaku (dopuszczone vs niedopuszczone) × wiek respondenta."""
     _style()
     age_vals = {1: "<25 lat", 2: "25–45 lat", 3: "46–65 lat", 4: ">65 lat"}
     age_groups = sorted(df["age"].dropna().unique())
@@ -413,17 +421,17 @@ def save_age_auth_interaction(df: pd.DataFrame, out_dir: str = ".") -> None:
     auth_means, nonauth_means = [], []
     for a in age_groups:
         sub = df[df["age"] == a]
-        auth_means.append(sub[sub["authorized"] == 1]["is_taste_ok"].mean() * 100)
-        nonauth_means.append(sub[sub["authorized"] == 0]["is_taste_ok"].mean() * 100)
+        auth_means.append(sub[sub["authorized"] == 1]["is_typical"].mean() * 100)
+        nonauth_means.append(sub[sub["authorized"] == 0]["is_typical"].mean() * 100)
 
     x = np.arange(len(age_groups))
     w = 0.35
 
     fig, ax = plt.subplots(figsize=(9, 5))
     bars1 = ax.bar(x - w / 2, auth_means, width=w, color=AUTH_CLR,
-                   edgecolor="white", label="Autoryzowane")
+                   edgecolor="white", label="Dopuszczone")
     bars2 = ax.bar(x + w / 2, nonauth_means, width=w, color=NOAUTH_CLR,
-                   edgecolor="white", label="Nieautoryzowane")
+                   edgecolor="white", label="Niedopuszczone")
 
     for bar, val in zip(bars1, auth_means):
         ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 1.5,
@@ -435,7 +443,7 @@ def save_age_auth_interaction(df: pd.DataFrame, out_dir: str = ".") -> None:
     ax.set_xticks(x)
     ax.set_xticklabels(labels, fontsize=9)
     ax.set_ylabel("Odsetek akceptacji smaku (%)")
-    ax.set_title("Akceptacja smaku miodów autoryzowanych vs nieautoryzowanych\nwedług grupy wiekowej respondentów")
+    ax.set_title("Typowość smaku miodów dopuszczonych vs niedopuszczonych\nwedług grupy wiekowej respondentów")
     ax.set_ylim(0, 120)
     ax.legend(fontsize=9)
 

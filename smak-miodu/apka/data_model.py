@@ -14,6 +14,6 @@ class DataModel:
     sweetness: Optional[int] = None
     acidity: Optional[int] = None
     intensity: Optional[int] = None
-    is_taste_ok: Optional[bool] = None
+    is_typical: Optional[bool] = None
     authorized : Optional[int] = None
     type_of_honey : Optional[str] = None

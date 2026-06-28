@@ -10,6 +10,15 @@
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\usepackage{placeins}
+
+% wymagane pakiety w preambule:
+
+
+
+
+%\usepackage{threeparttable} % opcjonalnie, dla przypisów
+
 % --- IMPORT PAKIETÓW DO KOLORÓW I ZAKREŚLANIA ---
 \usepackage{color} % Potrzebne do obsługi kolorów
 \usepackage{soul}  % Pakiet do zakreślania tekstu
@@ -22,8 +31,8 @@
 \author[3]{Katarzyna Banach \small{(ORCID:0000-0003-2580-7954)}}
 
 \affil[1]{Department of Clinical Engineering, Academy of Silesia in Katowice}
-\affil[2]{Uniwersytet Morski w Gdyni, XXXX}
-\affil[3]{Uniwersytet Warmińsko-Mazurski w Olsztynie, XXXX}
+\affil[2]{Wydział Nauk o Pszczółkach, Uniwersytet Morski w Gdyni}
+\affil[3]{Instytut Nauk o Zarządzaniu i Jakości, Uniwersytet Warmińsko-Mazurski w Olsztynie}
 
 % Autor korespondencyjny - definicja przypisu
 \affil[*]{Corresponding author: Bartosz Lewandowski, Ph.D., bartosz.lewandowski@akademiaslaska.pl}   
@@ -44,7 +53,7 @@ a~akceptacją konsumencką analizowano z~wykorzystaniem miar asocjacji, modeli
 z~efektami mieszanymi, testu równoważności, podejścia bayesowskiego, analizy
 mocy oraz oceny zdolności dyskryminacyjnej.
 
-Stwierdzona różnica akceptacji smakowej między miodami dopuszczonymi
+Stwierdzona różnica typowości smaku między miodami dopuszczonymi
 a~niedopuszczonymi do obrotu była niewielka i~kilkukrotnie mniejsza niż
 naturalny rozrzut akceptacji wewnątrz samej grupy miodów dopuszczonych. Choć
 formalnie istotna statystycznie, okazała się artefaktem powtarzalności pomiarów
@@ -94,7 +103,7 @@ o jej rolę w procesie dopuszczania produktu do obrotu. Narzędzie wykorzystywan
 z powodzeniem do celów badawczych i marketingowych nie musi bowiem spełniać
 wymogów stawianych kryterium o charakterze prawno-administracyjnym, od którego
 oczekuje się obiektywności, powtarzalności oraz niskiego odsetka błędnych
-klasyfikacji. Jeżeli akceptacja smakowa miodu nie różnicuje w sposób wiarygodny
+klasyfikacji. Jeżeli ocena typowości smaku miodu nie różnicuje w sposób wiarygodny
 próbek dopuszczonych i niedopuszczonych do obrotu, oparcie na niej decyzji
 administracyjnych prowadziłoby do rozstrzygnięć arbitralnych i obarczonych
 wysokim ryzykiem błędu.
@@ -119,16 +128,18 @@ próbki.
 
 \section{Przegląd literatury}
 
-W literaturze opisano liczne standardy jakości miodu, w tym wymagania prawne i kryteria handlowe, koncentrujące się zarówno na parametrach fizykochemicznych, jak i cechach organoleptycznych.
+W literaturze opisano liczne standardy jakości miodu, w tym wymagania prawne i kryteria handlowe, 
+koncentrujące się zarówno na parametrach fizykochemicznych, jak i cechach organoleptycznych.
 
 W literaturze podejmowano już krytyczną analizę proporcjonalności kryteriów
 jakościowych miodu, wskazując, że pojedynczy parametr o ograniczonej zdolności
 różnicowania nie powinien stanowić samodzielnej przesłanki dyskwalifikacji
-produktu \cite{Gajda2026}.
+produktu \cite{Gajda2026}. \hl{cytuje tylko nas, poszukac wiecej literatury}
 
-\hl{Przemek - czy mozesz to przygotowac? Na 100procent masz to w doktoracie}
+\hl{Przemek - czy mozesz przygotowac całą sekcje przeglądową? Na 100procent masz to w doktoracie.}
+\hl{Pytania: czy warto dodać metodologie badań prowadzonych przez IJHARS, Erufins, etc? Czy dodać ogólnie metodologie badań laboratoryjnych?}
+
 \section{Cel i zakres pracy}
-
 
 Celem głównym pracy jest weryfikacja, czy ocena organoleptyczna miodu,
 dokonywana przez konsumentów za pomocą standardowej ankiety sensorycznej
@@ -158,15 +169,96 @@ Cele szczegółowe obejmują:
 
 \subsection{Charakterystyka badanych próbek miodu}
 
-- siedem probek miodow
-- pobrane z polskich pasiek w 2026 roku
-- wszyskie probki przebadane przez certyfkowane laboratoria
-- probki to: 2x akacja (robinia falszywa), 4x wielokwiat. 1x lipa
-- 4 probki mialy oznaczone, ze smak jest nienaturalny, szczegolowo... tu uzupelnic na podstawie danych.
+Badaniom poddano siedem próbek miodu pochodzących z polskich oraz chińskich pasiek, pozyskanych w 2025 roku. 
+Wszystkie próbki zostały przebadane w certyfikowanych laboratoriach, 
+a uzyskane wyniki spełniały wymagania w zakresie analizy pyłkowej (zgodność z deklaracją producenta), 
+zawartości antybiotyków, profilowania metodą NMR, przewodności elektrycznej oraz składu cukrów. 
+Zestaw obejmował dwa miody akacjowe (z robinii akacjowej), cztery miody wielokwiatowe oraz jeden miód lipowy. 
+W przypadku czterech próbek odnotowano zastrzeżenia dotyczące nienaturalnego charakteru smaku, 
+których szczegółowy opis uzupełniono na podstawie dostępnych danych sensorycznych. 
+Wszystkie próbki przechowywano w kontrolowanych warunkach (ustalona temperatura, ograniczony czas przechowywania, 
+ochrona przed światłem), co miało zapewnić stabilność ich właściwości do momentu oceny.
 
-Próbki przechowywano w kontrolowanych warunkach (temperatura, czas, ochrona przed światłem), zapewniając ich stabilność do momentu oceny.
+Próbki przechowywano w kontrolowanych warunkach (temperatura, czas, ochrona przed światłem), 
+zapewniając ich stabilność do momentu oceny.
 
+Szczególowe dane próbek miodu \hl{Rozważam usunięcie nr badania i LOTu z tabeli, bo nie ma to znaczenia dla oceny sensorycznej.}:
 
+\begin{table}[h!]
+\centering
+\caption{Identyfikacja badanych próbek miodu pszczelego.}
+\label{tab:probki}
+\footnotesize
+\begin{tabular}{@{}llll@{}}
+\toprule
+Symbol & Rodzaj / pochodzenie & Identyfikacja partii \\
+\midrule
+P1 & akacjowy / Chiny & atest Huzar 179/2026, LOT 250906 \\
+P2 & akacjowy / Chiny & IJHARS 446/Kgr/2025, LOT 25C061401 \\
+P3 & wielokwiatowy / Polska & Eurofins, próbka 4/02/2020/NK \\
+P4 & wielokwiatowy / Chiny & IJHARS 131/Kgr/2024, LOT CQ23120101-2 \\
+P5 & lipowy / Chiny & atest Huzar 180/2026, LOT CQ25111501-1 \\
+P6 & wielokwiatowy & sprawozdanie bez numeru \\
+P7 & wielokwiatowy & „Sprawozdanie z badań nr 4\dots'' \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\hl{Katarzyna S. posprawdza czy wszystkie parametry fizykochemiczne w tabeli 2 są dostępne w dokumentacji, bo niektóre są niekompletne.}
+\begin{table}[h!]
+\centering
+\caption{Zestawienie parametrów fizykochemicznych badanych miodów.
+Puste komórki oznaczają brak oznaczenia w danym sprawozdaniu.}
+\label{tab:chemia}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+Parametr [jednostka] & P1 & P2 & P3 & P4 & P5 & P6 & P7 \\
+\midrule
+Woda / wilgotność [\%]              & 18,2  & 17,3  & --    & 17,3  & 17,8  & --    & 18,0 \\
+Przewodność elektr. [mS/cm]         & --    & $<$0,100 & 0,24 & --   & --    & --    & $<$0,100 \\
+Wolne kwasy [mval/kg]               & 11    & 5,9   & --    & 5,4   & 8,0   & --    & $<$5,9 \\
+Liczba diastazowa [--]\textsuperscript{a} & 18,97 & 12,9 & -- & 13,9 & 17,83 & 10,0 & 8,8 \\
+HMF [mg/kg]                         & 10,60 & 7,8   & $<$5  & $<$6,0 & 6,46 & 7,1   & 9,6 \\
+Fruktoza [g/100g]                   & 46,07 & 43,7  & 38,9  & 43,5  & 41,45 & 40,4  & 44,3 \\
+Glukoza [g/100g]                    & 28,61 & 33,2  & 35,6  & 36,2  & 34,83 & 35,2  & 33,5 \\
+Sacharoza [g/100g]                  & 0,0   & 0,38  & 1,5   & 0,69  & 0,0   & 0,4   & 0,48 \\
+Suma F+G [g/100g]                   & 74,68 & 76,9  & 74,5  & 79,7  & 76,28 & 75,6  & 77,8 \\
+Stosunek F/G [--]                   & 1,61  & --    & 1,09\textsuperscript{b} & -- & 1,19 & -- & -- \\
+Prolina [mg/kg]                     & 337   & --    & 306   & --    & 264   & 256   & -- \\
+Barwa / kolor [mm]                  & 6     & --    & --    & --    & 26    & --    & -- \\
+Pyłek przewodni [\%]                & 45    & --    & 95\textsuperscript{c} & 49 & 60 & --\textsuperscript{d} & -- \\
+Skrobia / dekstryny / melasa        & n.s.  & --    & --    & --    & n.s.  & n.s.  & n.w. \\
+\bottomrule
+\end{tabular}%
+}
+
+\vspace{2pt}
+{\footnotesize
+\begin{flushleft}
+n.s. -- nie stwierdzono; n.w. -- nie wykryto.\\
+\textsuperscript{a} Liczba diastazowa oznaczana różnymi metodami: skala Schade (P1, P5, P6)
+oraz metoda Phadebas (P2, P4, P7); wartości nie są wprost porównywalne.\\
+\textsuperscript{b} Wartość z profilu \textsuperscript{1}H-NMR; metoda LC-IRMS dała F/G = 1,04.\\
+\textsuperscript{c} Brassicaceae / rzepak (\textit{Brassica napus}).\\
+\textsuperscript{d} Profil pyłkowy: Brassicaceae 47\%, gryka 32\%, słonecznik 10\%,
+arbuz 1\%, wargowate 1\%, inne 9\% (brak jednego pyłku przewodniego).
+\end{flushleft}
+}
+\end{table}
+\FloatBarrier 
+
+Spośród siedmiu próbek następujące zostały odrzucone przez certyfikowane laboratorium (uznane za niezgodne z wymaganiami) z powodu cech organoleptycznych obejmujących smak:
+\begin{enumerate}
+  \item \textit{P2:} próbka nie spełnia wymagań rozporządzenia MRiRW pod względem cech organoleptycznych: zapach obcy, nietypowy dla miodu, oraz smak landrynkowy, nietypowy dla miodu. Pod względem fizykochemicznym (woda, przewodność, wolne kwasy, diastaza, HMF, sacharoza, suma cukrów) próbka była zgodna.
+  \item \textit{P4:} próbka nie spełnia wymagań pod względem cech organoleptycznych: smak obcy, metaliczny. Parametry fizykochemiczne były zgodne.
+  \item \textit{P6:} próbka nie spełnia wymagań pod względem cech organoleptycznych: smak opisany jako „bardzo słodki, nietypowy dla miodu, przypominający smak szczypki cukrowej" i zapach „słabo wyczuwalny, nietypowy"
+  \item \textit{P7:} próbka nie spełnia wymagań pod względem cech organoleptycznych: opisany smak jako „bardzo słodki, landrynkowy, nietypowy dla miodu".  
+\end{enumerate}
+\hl{P6 i P7 maja obcietą dokumentacje, do walidacji czy zostały faktycznie odrzucone.}
 \subsection{Dobór i struktura panelu oceniającego}
 \label{sub:dobor_panelu}
 
@@ -181,22 +273,21 @@ Kandydaci musieli spełnić kryteria włączenia do grupy badawczej:
 
 Ostateczny skład zespołu został skompletowany losowo spośród osób spełniających powyższe wymogi, co pozwoliło wyeliminować błąd systematyczny i zapewnić reprezentatywność ocen.
 
-
 \subsection{Projekt ślepego badania}
 
-Badanie przeprowadzono w warunkach ślepej oceny.
+Badanie przeprowadzono w warunkach ślepej oceny. 
 Próbki miodu zakodowano i podawano w losowej kolejności, bez ujawniania informacji o odmianie, producencie i pochodzeniu.
 Zapewniono standaryzowane warunki oceny (temperatura podawania próbek, oświetlenie, neutralizacja podniebienia między próbkami).
 \\
 \\
 Arkusz oceny sensorycznej miodu obejmował następujące pytania:
 \begin{enumerate}[label=\roman*.]
-  \item \textit{data badania:} wszyskie badania przeprowadzono w 2026 roku,
+  \item \textit{data badania:} wszyskie badania przeprowadzono w maju oraz czerwcu 2026 roku,
   \item \textit{grupa wiekowa panelisty:} mniej niż 25, 26-45, 46-65, więcej niż 65 lat,
   \item \textit{częstotliwość spożywania miodu:} codziennie lub kilka razy w tygodniu, raz w miesiącu, okazyjnie / rzadziej,
   \item \textit{płeć panelisty:} kobieta, mężczyzna.
 \end{enumerate}
-
+ 
 Następnie dla każdej próbki panelista oceniał cechy organoleptyczne w następujących kategoriach:
 
 \begin{enumerate}[label=\roman*.]
@@ -209,7 +300,6 @@ Następnie dla każdej próbki panelista oceniał cechy organoleptyczne w nastę
 
 \input{out.tex}
 
-
 \section{Dyskusja}
 
 \subsection{Efekt jest istotny statystycznie, ale w praktyce bez znaczenia}
@@ -219,12 +309,12 @@ Różnica w akceptacji smaku między miodami dopuszczonymi a niedopuszczonymi do
 obrotu jest z jednej strony zauważalna statystycznie, z drugiej zbyt mała, by
 miała jakiekolwiek znaczenie w praktyce. Analiza par (porównanie ocen tego samego
 respondenta) potwierdziła, że różnica istnieje, ale jest niewielka, a powiązanie
-między statusem miodu a akceptacją smaku jest bliskie zeru \cite{Wilcoxon1945,
+między statusem miodu a typowością smaku jest bliskie zeru \cite{Wilcoxon1945,
 Cohen1988}. Powód jest prosty: ocen było bardzo dużo, a przy tak dużej liczbie
 danych nawet maleńka różnica „zalicza się" jako istotna. Dlatego sama informacja,
 że coś jest istotne statystycznie, niczego tu nie rozstrzyga.
 
-Z tego powodu nie oparliśmy się na samym teście istotności, lecz sprawdziliśmy,
+Z tego powodu autorzy nie oparli się na samym teście istotności, lecz sprawdzono,
 jak duży i jak pewny jest ten efekt. Test równoważności (sprawdza, czy efekt jest
 na tyle mały, że można go uznać za nieistotny) pokazał, że dla rozsądnie
 przyjętej granicy różnica jest praktycznie równa zeru \cite{Lakens2017}.
@@ -236,24 +326,26 @@ pytanie, czy ocena smaku nadaje się na kryterium.
 
 \subsection{Dlaczego nie można ufać samej istotności}
 
-Najważniejsze jest to, że status dopuszczenia do obrotu opisuje całą partię
-miodu, a nie pojedynczą ocenę. Partii było tylko kilka, więc tak naprawdę
-oceniano wielokrotnie te same kilka miodów, a nie setki niezależnych próbek (to
-zjawisko nazywa się pseudoreplikacją). Zastosowaliśmy modele, które częściowo
-biorą to pod uwagę, i one również wskazały na istotny efekt \cite{LiangZeger1986}.
-Nie można jednak traktować tego jako dowodu, że to właśnie autoryzacja decyduje
-o smaku. Przy tak małej liczbie partii nie da się oddzielić „efektu statusu" od
-„efektu tego konkretnego miodu", model i tak przypisze różnice między miodami
-zmiennej statusu.
+Projekt badania był celowo sparowany: każdy respondent oceniał wszystkie siedem
+próbek, co pozwoliło porównywać oceny \emph{tych samych} miodów przez \emph{tych samych}
+ludzi, zamiast pytać różne osoby o różne produkty. Taki układ eliminuje
+zmienność między respondentami i jest standardem w analizie sensorycznej
+\cite{LiangZeger1986}. Modele z efektami mieszanymi, uwzględniające tę strukturę,
+potwierdziły statystyczną istotność efektu.
+
+Właściwe ograniczenie leży gdzie indziej: status dopuszczenia do obrotu opisuje
+\emph{całą partię}, a partii było siedem. Przy takiej liczbie jednostek
+klastrowych nie da się oddzielić „efektu statusu" od „efektu właściwości tego
+konkretnego miodu", model przypisze zmiennej statusu każdą różnicę między
+partiami, niezależnie od jej prawdziwego źródła.
 
 Dlatego najmocniejszy wniosek nie wynika z jednego testu, tylko z tego, że kilka
-różnych analiz mówi to samo. Gdy porównaliśmy miody w obrębie tego samego rodzaju
-(co usuwa wpływ gatunku), dla miodów robiniowych różnicy nie było, a dla miodów
+różnych analiz mówi to samo. Gdy zostały porównane miody w obrębie tego samego rodzaju
+(co usuwa wpływ gatunku), dla miodów akacjowych (robinia fałszywa) różnicy nie było, a dla miodów
 wielokwiatowych całą różnicę „robiła" jedna, wyjątkowo wysoko oceniona próbka.
-Sprawdziliśmy też moc badania (czyli jego zdolność do wykrycia efektu) i okazała
-się ona dalece za niska, by cokolwiek pewnego stwierdzić \cite{Cohen1988}. Brak
-istotności na poziomie partii oznacza więc, że badanie było za słabe, a nie że
-udowodniono brak efektu. Wszystko to razem wskazuje, że pozorna istotność bierze
+Sprawdzona została też moc badania (czyli jego zdolność do wykrycia efektu) i okazała
+się ona dalece za niska, by cokolwiek pewnego stwierdzić \cite{Cohen1988}. 
+Wszystko to razem wskazuje, że pozorna istotność bierze
 się z pseudoreplikacji i z jednej nietypowej próbki, a nie z prawdziwego wpływu
 autoryzacji.
 
@@ -261,7 +353,7 @@ autoryzacji.
 
 Najlepiej pokazuje to proste zestawienie. Różnica między grupami (dopuszczone vs
 niedopuszczone) okazała się mniejsza niż zwykłe różnice między poszczególnymi
-miodami w tej samej grupie. Mówiąc inaczej: dwa legalne miody potrafią różnić się
+miodami w tej samej grupie. Mówiąc inaczej: dwa dopuszczone do obrotu miody potrafią różnić się
 oceną o wiele bardziej, niż wynosi średnia różnica między miodami dopuszczonymi
 a niedopuszczonymi. Co więcej, jeden z miodów z dopuszczeniem wypadł gorzej niż
 większość miodów bez dopuszczenia. To jasno pokazuje, że o akceptacji decyduje
@@ -270,8 +362,8 @@ konkretny miód, a nie jego status urzędowy.
 \subsection{Co to oznacza dla kontroli i dopuszczania do obrotu}
 
 Z punktu widzenia ewentualnej kontroli nie liczy się to, czy jakaś różnica
-istnieje, tylko czy na podstawie smaku da się rozpoznać status miodu. Tu wynik
-jest jednoznaczny: trafność takiego rozpoznania była bliska rzutowi monetą
+istnieje, tylko czy na podstawie smaku da się rozstrzygnąć status (dopuszczenia do obrotu) miodu. 
+Tu wynik jest jednoznaczny: trafność takiego rozpoznania była bliska rzutowi monetą
 \cite{HanleyMcNeil1982}. Ocena smaku praktycznie nic nie mówi o tym, czy miód ma
 dopuszczenie. Gdyby zastosować regułę „odrzuć miód, którego konsumenci nie
 akceptują", taka reguła błędnie wykluczyłaby z rynku dużą część miodów w pełni
@@ -320,13 +412,6 @@ badano miody z jednego sezonu i z ograniczonej liczby odmian oraz regionów, wi�
 wyników nie należy uogólniać na wszystkie miody. Trzeba też pamiętać, że praca
 ocenia smak jako \emph{narzędzie do podejmowania decyzji}, a nie chemiczną
 autentyczność badanych miodów, to dwie osobne sprawy.
-
-\subsection{Co warto zbadać dalej}
-
-Aby pewnie rozstrzygnąć, czy autoryzacja wpływa na smak, potrzeba badania
-z dużo większą liczbą partii w każdej grupie, tak, by partię można było
-traktować jako właściwą jednostkę i by badanie miało wystarczającą moc.
-Warto też tak zaplanować próbki, żeby każdy rodzaj miodu był obecny zarówno
 
 
 % koniec sekcji dyskusja
