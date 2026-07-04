@@ -112,10 +112,9 @@ do obrotu).
 Wśród <<n_respondentow>>~uczestników badania dominowały kobiety
 (<<gender_k_n>>~osób, <<gender_k_pct>>\,\%), mężczyźni stanowili
 <<gender_m_pct>>\,\% próby.
-Najliczniej reprezentowaną grupą wiekową byli respondenci w~przedziale
-25-45~lat (<<age_25_45_n>>~osób; <<age_25_45_pct>>\,\%) oraz 46-65~lat
-(<<age_46_65_n>>~osób; <<age_46_65_pct>>\,\%); respondenci poniżej 25.~roku
-życia stanowili <<age_lt25_pct>>\,\%, a~powyżej 65.~roku
+Najliczniej reprezentowaną grupą wiekową byli respondenci poniżej 25.~roku
+życia stanowili <<age_lt25_pct>>\,\% (<<age_lt25_n>> osób), następnie respondenci w~przedziale 25-45~lat (<<age_25_45_n>>~osób; <<age_25_45_pct>>\,\%) oraz 46-65~lat
+(<<age_46_65_n>>~osób; <<age_46_65_pct>>\,\%);  a~powyżej 65.~roku
 życia <<age_gt65_pct>>\,\%.
 Miód spożywany jest przez większość respondentów okazyjnie
 (<<freq_occasional_n>>~osób; <<freq_occasional_pct>>\,\%)

@@ -4,7 +4,7 @@ from prepare_data import load_and_merge, save_to_excel
 from analiza import run_full_analysis, render_latex
 from plots import save_all
 
-data = load_and_merge("badania-1.xlsx")
+data = load_and_merge("badania-2.xlsx")
 save_to_excel(data, "gotowe.xlsx")
 
 df = run_full_analysis(data)
