@@ -1,0 +1,13 @@
+<ns0:svg xmlns:ns0="http://www.w3.org/2000/svg" width="178.609" height="30.388" viewBox="0 0 178.609 30.388">
+  <ns0:g id="Group_1" data-name="Group 1" transform="translate(-121.049 -246.617)">
+    <ns0:path id="Path_1" data-name="Path 1" d="M349.308,294.2h14.444l-3.344-5.065H345.963Z" transform="translate(-157.938 -29.858)" fill="#2c2e34"/>
+    <ns0:path id="Path_2" data-name="Path 2" d="M664.451,294.156h14.444l-3.344-5.065H661.106Z" transform="translate(-379.236 -29.826)" fill="#d30057"/>
+    <ns0:path id="Path_3" data-name="Path 3" d="M157.485,319.713h15.177l-3.344-5.065H154.141Z" transform="translate(-23.237 -47.773)" fill="#d30057"/>
+    <ns0:path id="Path_4" data-name="Path 4" d="M231.307,251.728H220.178v-5.065H247.5v5.065H236.372v25.309h-5.065Z" transform="translate(-69.61 -0.032)" fill="#2c2e34"/>
+    <ns0:path id="Path_5" data-name="Path 5" d="M445.053,267.7V246.617h5.065v30.388H446.2l-18.431-21.827v21.827h-5.065V246.617h3.962Z" transform="translate(-211.828)" fill="#2c2e34"/>
+    <ns0:path id="Path_6" data-name="Path 6" d="M543.973,246.665c11.01,0,16.03,6.947,16.168,14.918.184,8.154-4.884,15.456-16.168,15.456H531.765V246.665Zm-7.144,25.309h7.1c7.878,0,11.24-4.773,11.1-10.438-.138-5.435-3.5-9.807-11.1-9.807h-7.1Z" transform="translate(-288.411 -0.034)" fill="#2c2e34"/>
+    <ns0:path id="Path_7" data-name="Path 7" d="M666.938,276.992H644.08V246.618h22.858v5.065H649.145v20.241h17.794Z" transform="translate(-367.28 -0.001)" fill="#2c2e34"/>
+    <ns0:path id="Path_8" data-name="Path 8" d="M149.7,277.037h5.064l-14.326-30.374h-5.065l-14.325,30.374h5.065L137.907,252.1l6.748,14.411Z" transform="translate(0 -0.032)" fill="#d30057"/>
+    <ns0:path id="Path_9" data-name="Path 9" d="M351.8,277.037H328.937V246.663H351.8v5.065H334v20.241H351.8Z" transform="translate(-145.982 -0.032)" fill="#2c2e34"/>
+  </ns0:g>
+</ns0:svg>

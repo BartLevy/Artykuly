@@ -1,0 +1,183 @@
+Poniższa dokumentacja opisuje interfejsy API oraz komponenty zaimplementowane w kodzie źródłowym systemu, zweryfikowane na dzień przygotowania niniejszego załącznika.
+\subsection*{Moduły systemu}
+
+System został zbudowany z modułów, które wykorzystują model AI do świadczenia usług komercyjnych. System składa się z następujących modułów:
+
+\begin{itemize}
+\item \textbf{IQText} -- moduł automatycznie wykrywający i klasyfikujący dane, umożliwiający identyfikację typów informacji na podstawie ich treści i kontekstu. Analizuje treść dokumentów wejściowych, dzieląc ją na fragmenty z uwzględnieniem struktury tekstu prawnego (numeracja, paragrafy, artykuły, rozdziały), a następnie przy użyciu modelu językowego (LLM) ekstrahuje z niej zdefiniowane pola danych. Wyniki cząstkowe są scalane w jeden spójny obiekt danych, walidowane względem schematu XSD i udostępniane w formacie XML/JSON poprzez REST API, wraz z interfejsem umożliwiającym użytkownikowi weryfikację i edycję wyekstrahowanych danych (szczegóły w podrozdziałach 1.1 i 1.2).
+\item \textbf{Anonymizer} -- moduł anonimizacji danych w dokumentach, zastępujący dane poufne tokenami w celu ochrony informacji wrażliwych. Automatycznie wykrywa fragmenty danych wrażliwych, łącząc podejście regułowe dla danych o ściśle zdefiniowanym formacie (np. PESEL, NIP, IBAN) z modelem klasyfikującym typu NER/LLM dla danych o zmiennym formacie (imiona, nazwiska, adresy), a następnie ukrywa je jedną z metod dobieranych w zależności od wymaganej odwracalności: nieodwracalnym maskowaniem/redakcją, odwracalną tokenizacją z osobno przechowywanym mapowaniem, jednokierunkowym haszowaniem z solą lub szyfrowaniem AES-256 z kluczem zarządzanym przez dedykowany mechanizm KMS/HSM (szczegóły w podrozdziałach 2.1 i 2.2).
+\item \textbf{DLP} -- rozproszony system Atende DLP (\emph{Data Loss Prevention}) wykrywający i przeciwdziałający nieautoryzowanemu wyciekowi danych wrażliwych ze stacji roboczych. Składa się z trzech niezależnie rozwijanych modułów: \emph{DLP Agent} (usługa Windows w C\#/.NET, monitorująca operacje plikowe mechanizmem ETW oraz zawartość schowka systemowego), \emph{DLP Backend Server} (serwer Java/Spring Boot z bazą MySQL/MariaDB, jedyny moduł wystawiający publiczne REST API panelu administracyjnego oraz API przyjmujące dane od agentów, pracujący w profilu \emph{collector} -- u klienta -- lub \emph{aggregator} -- centralnie agregującym alerty z wielu instalacji) oraz \emph{DLP Parser} (skrypty wsadowe w Pythonie, uruchamiane cyklicznie przez backend, ekstrahujące treść plików, w tym poprzez OCR, i wykrywające w niej dane wrażliwe regułami oraz wtyczkami). Wykryte naruszenia rejestrowane są jako alerty w panelu administracyjnym, a alerty krytyczne dodatkowo rozsyłane e-mailem (szczegóły w podrozdziale 3).
+\item \textbf{Etykietowanie} -- moduł wspierający prace treningowe modelu poprzez oznaczanie i przygotowywanie danych do procesu uczenia. Udostępnia narzędzie do kontekstowego, ręcznego klasyfikowania dokumentów przez zespół analityczny oraz zarządzania zbiorami etykiet -- zarówno kategorii dokumentów, jak i typów danych wrażliwych -- a także przygotowywania mapowań typu NER (Named Entity Recognition), łączących typy danych, kontekst ich występowania oraz przypisane etykiety. Tak przygotowane zbiory stanowią materiał wejściowy dla modeli klasyfikujących i ekstrahujących dane wrażliwe wykorzystywanych w pozostałych modułach systemu (szczegóły w podrozdziale 4).
+\end{itemize}
+
+W poniższym rozdziale opisano kolejno każdy z powyższych modułów, a na końcu -- wyniki testów prototypu wypracowanego w toku ich integracji (zadania R1--R3).
+
+\subsection*{Moduł 1: IQText}
+\addcontentsline{toc}{subsection}{Moduł 1: IQText}
+
+\subsubsection*{1.1. Backend systemu IQText}
+
+Backend zaimplementowano w technologii \textbf{Flask} (Python), z wykorzystaniem bibliotek \texttt{flask-cors} (obsługa CORS), \texttt{flask\_apscheduler} (zadania cykliczne) oraz \texttt{flasgger} (automatyczna dokumentacja Swagger/OpenAPI dostępna pod ścieżką \texttt{/apidocs} działającej instancji serwera). Aplikacja przechowuje dane w bazie SQLite oraz na systemie plików (katalogi dokumentów wejściowych, sparsowanych i wynikowych, konfigurowane zmiennymi środowiskowymi).
+
+\begingroup
+\small
+\begin{longtable}{p{0.09\textwidth} p{0.20\textwidth} p{0.30\textwidth} p{0.32\textwidth}}
+\caption{Endpointy REST API backendu IQText} \\
+\toprule
+\rowcolor{tablehead!15}
+Metoda & Ścieżka & Parametry & Odpowiedź \\
+\midrule
+\endfirsthead
+\toprule
+\rowcolor{tablehead!15}
+Metoda & Ścieżka & Parametry & Odpowiedź \\
+\midrule
+\endhead
+GET & \texttt{/api} & brak & Prosty komunikat tekstowy potwierdzający dostępność usługi (adres IP klienta). \\
+GET & \texttt{/api/get-xml} & query: \texttt{project} (numer projektu) & Treść XML wygenerowana dla wskazanego projektu lub komunikat błędu. \\
+GET & \texttt{/api/get-json} & query: \texttt{project} & JSON: dane wyekstrahowane przez model AI (\texttt{data}), dane po edycji użytkownika (\texttt{editedData}), znaczniki błędów i czasu edycji. \\
+POST & \texttt{/api/save-json} & body JSON: \texttt{json}, \texttt{project\_number} & JSON z potwierdzeniem zapisu edytowanych danych lub komunikatem błędu. \\
+POST & \texttt{/api/login} & body JSON: \texttt{email}, \texttt{password} & JSON z potwierdzeniem/odrzuceniem logowania (hasło weryfikowane wobec skrótu bcrypt). \\
+GET & \texttt{/api/projects} & brak & JSON z listą numerów projektów zarejestrowanych w systemie. \\
+POST & \texttt{/api/add-\allowbreak document} & form-data: \texttt{project}, \texttt{file} (jeden lub więcej plików) & JSON z informacją o zapisanych plikach lub komunikatem błędu. \\
+POST & \texttt{/api/szop/\allowbreak analyze} & body JSON: \texttt{request\_id} & JSON potwierdzający przyjęcie żądania do przetworzenia (integracja z usługą zewnętrzną SZOP) lub komunikat błędu. \\
+POST & \texttt{/api/generate\_\allowbreak xml} & body JSON: \texttt{content} & Dokument XML zweryfikowany wobec schematu XSD lub JSON z opisem błędu walidacji. \\
+POST & \texttt{/api/get\_xml\_\allowbreak szop} & query: \texttt{project} & Odpowiedź przekazana bez zmian z usługi zewnętrznej SZOP (XML lub JSON). \\
+POST & \texttt{/api/init-xml} & query: \texttt{project} & JSON z informacją o zapisanych plikach inicjujących projekt. \\
+\bottomrule
+\end{longtable}
+\endgroup
+
+Niezależnie od endpointów HTTP, backend uruchamia zadanie cykliczne (harmonogram co 10 sekund) realizujące pełny potok przetwarzania nowych dokumentów: parsowanie treści plików, wywołanie modelu językowego (LLM) do ekstrakcji danych, wygenerowanie i walidację pliku XML względem schematu XSD, a następnie przekazanie wyniku do usługi zewnętrznej.
+
+
+
+\subsubsection*{1.2. Moduł ekstrakcji danych z dokumentów (\texttt{contract\_extractor} / EL-GENERATOR / EM-GENERATOR)}
+
+Moduł nie udostępnia własnego, oddzielnego API REST (poza wyjątkiem opisanym w podrozdziale 1.3) -- jest wywoływany bezpośrednio przez backend IQText w ramach zadania cyklicznego. Jego działanie obejmuje:
+
+\begin{itemize}
+    \item wygenerowanie zadań/promptów dla modelu LLM na podstawie struktury schematu XSD (klasa \texttt{XSDTaskGenerator});
+    \item podział treści dokumentu na fragmenty (\emph{chunking}) z uwzględnieniem struktury prawnej tekstu (numeracja, paragrafy, artykuły, rozdziały);
+    \item wykrycie obszarów danych występujących w dokumencie (DORA / RODO / NDA / NIS-UKSC / INNE);
+    \item właściwą ekstrakcję pól danych dla każdego fragmentu przy użyciu modelu LLM (lokalny model uruchamiany przez Ollama, domyślnie \texttt{llama3.3:70b}, lub API OpenAI);
+    \item scalenie wyników z wielu fragmentów dokumentu w jeden spójny obiekt JSON, z wykorzystaniem LLM do wyboru najlepszej z kilku kandydujących odpowiedzi;
+    \item filtrowanie z wynikowej listy kanałów notyfikacji wpisów odpowiadających adresom e-mail w domenie firmowej oraz osobom z opcjonalnej listy wykluczeń (plik CSV) -- jest to reguła biznesowa ograniczająca sugerowanie pracowników własnej organizacji jako kontaktów klienta, nie mechanizm anonimizacji danych osobowych klienta.
+\end{itemize}
+
+
+\subsubsection*{1.3. Serwer pomocniczy modułu EM-GENERATOR}
+
+Moduł EM-GENERATOR udostępnia dodatkowo lekki serwer HTTP (Flask), pośredniczący w komunikacji z lokalnym modelem LLM:
+
+\begin{longtable}{p{0.09\textwidth} p{0.20\textwidth} p{0.30\textwidth} p{0.32\textwidth}}
+\toprule
+\rowcolor{tablehead!15}
+Metoda & Ścieżka & Parametry & Odpowiedź \\
+\midrule
+\endhead
+POST & \texttt{/search} & body JSON zawierający treść zapytania/promptu oraz fragment analizowanego tekstu & Surowa odpowiedź wygenerowana przez lokalny model LLM (Ollama, domyślnie \texttt{llama3:latest}). \\
+\bottomrule
+\end{longtable}
+
+Serwer ten nie posiada mechanizmu uwierzytelniania, limitów zapytań ani walidacji pochodzenia żądania -- jest przeznaczony do użytku lokalnego/deweloperskiego.
+
+\subsection*{Moduł 2: Anonymizer}
+\addcontentsline{toc}{subsection}{Moduł 2: Anonymizer}
+
+\subsubsection*{2.1. Narzędzie redakcji dokumentów (Anonymizer)}
+
+Moduł Anonymizer to samodzielne narzędzie zaimplementowane w technologii \textbf{FastAPI}, wykorzystujące bibliotekę \textbf{PyMuPDF} (\texttt{fitz}) do operacji na warstwie tekstowej plików PDF.
+
+\begin{longtable}{p{0.07\textwidth} p{0.14\textwidth} p{0.35\textwidth} p{0.35\textwidth}}
+\caption{Endpointy narzędzia Anonymizer} \\
+\toprule
+\rowcolor{tablehead!15}
+Metoda & Ścieżka & Parametry & Odpowiedź \\
+\midrule
+\endfirsthead
+\toprule
+\rowcolor{tablehead!15}
+Metoda & Ścieżka & Parametry & Odpowiedź \\
+\midrule
+\endhead
+GET & \texttt{/} & brak & Strona HTML z interfejsem umożliwiającym wskazanie par ,,znajdź / zamień'' dla wczytanego dokumentu. \\
+GET & \texttt{/pdf} & brak & Zawartość aktualnie wczytanego dokumentu PDF (plik demonstracyjny). \\
+POST & \texttt{/process} & form-data: listy \texttt{find\_text} oraz \texttt{replace\_text} & Zmodyfikowany plik PDF, w którym wskazane fragmenty tekstu zostały fizycznie zredagowane (usunięte z warstwy treści) i zastąpione podanym tekstem zastępczym. \\
+\bottomrule
+\end{longtable}
+
+\textbf{Zasada działania:} interfejs użytkownika pozwala ręcznie wskazać dokładne fragmenty tekstu do ukrycia; dla każdego wskazanego fragmentu przeglądarka generuje losowy token zastępczy o długości oryginalnego tekstu. Backend wyszukuje dokładne dopasowania wskazanego tekstu na każdej stronie dokumentu, stosuje redakcję (fizyczne usunięcie z warstwy treści PDF), a następnie wstawia w to samo miejsce tekst zastępczy.
+
+\textbf{Zakres funkcjonalny obecnej wersji narzędzia -- ograniczenia:}
+\begin{itemize}
+    \item brak automatycznej detekcji danych wrażliwych -- użytkownik samodzielnie wskazuje fragmenty tekstu do zamiany;
+    \item narzędzie operuje na jednym, wskazanym w konfiguracji pliku dokumencie demonstracyjnym -- brak funkcji wgrywania dowolnego pliku przez użytkownika;
+    \item token zastępczy generowany jest losowo po stronie przeglądarki i nie jest nigdzie zapisywany -- proces jest jednokierunkowy (nieodwracalny), bez mechanizmu odtworzenia oryginalnej wartości;
+    \item brak mechanizmów szyfrowania, tokenizacji odwracalnej lub haszowania -- opcje te są zaznaczone w interfejsie użytkownika jako punkt wyjścia do dalszych prac, lecz nie są jeszcze połączone z logiką przetwarzania;
+    \item brak uwierzytelniania dostępu do endpointów.
+\end{itemize}
+
+
+\subsubsection*{2.2. Specyfikacja funkcjonalna modułu anonimizacji}
+
+Moduł anonimizacji automatycznie wykrywa dane wrażliwe w dokumentach przetwarzanych przez system i ukrywa je jedną z dostępnych metod (maskowanie, tokenizacja, haszowanie lub szyfrowanie AES), zależnie od tego, czy dane mają pozostać nieodwracalne, czy odtwarzalne przez uprawnionego użytkownika. Stanowi rozszerzenie wcześniejszego narzędzia (moduł Anonymizer, podrozdział 2.1), które obejmowało wyłącznie ręczną redakcję wskazanego tekstu w dokumentach PDF, o warstwę automatycznej detekcji oraz mechanizmy szyfrowania i tokenizacji.
+
+\subhead{Cel modułu}
+
+Celem modułu anonimizacji jest automatyczne wykrywanie danych wrażliwych w dokumentach przekazywanych do systemu oraz ich nieodwracalne lub odwracalne ukrycie, zgodnie z zasadą \emph{privacy by design/by default} (art. 25 RODO), przed dalszym przetwarzaniem, prezentacją lub archiwizacją dokumentu.
+
+\subhead{Zakres wykrywanych kategorii danych}
+
+Moduł wykorzystuje istniejące zbiory etykiet danych wrażliwych opracowane w zadaniu B3 (33 etykiety) jako punkt wyjścia, uzupełnione o wzorce charakterystyczne dla polskiego i europejskiego kontekstu prawnego, w tym co najmniej:
+
+\begin{itemize}
+    \item dane identyfikacyjne osoby: imię, nazwisko, numer PESEL, numer dowodu osobistego/paszportu;
+    \item dane kontaktowe: adres zamieszkania/korespondencyjny, adres e-mail, numer telefonu;
+    \item dane identyfikacyjne podmiotów: NIP, REGON, numer KRS, numer rachunku bankowego (IBAN);
+    \item daty istotne z punktu widzenia ochrony danych (data urodzenia) oraz retencji (rozpoznawane przez model opracowany w zadaniu B5);
+    \item dane finansowe (kwoty, waluty) rozpoznawane regułowo, analogicznie do istniejącej walidacji kwot w module ekstrakcji danych.
+\end{itemize}
+
+Detekcja łączy podejście regułowe (wyrażenia regularne dla danych o ściśle zdefiniowanym formacie, np. PESEL, NIP, IBAN) z modelem klasyfikującym typu NER/LLM, wykorzystującym mapowania i etykiety wypracowane w zadaniu B3, w celu rozpoznawania danych o zmiennym formacie (imiona, nazwiska, adresy) w kontekście dokumentu.
+
+\subhead{Architektura modułu}
+
+\begin{itemize}
+    \item \textbf{Warstwa detekcji} -- komponent analizujący treść dokumentu i zwracający listę wykrytych fragmentów wraz z: kategorią danych, lokalizacją w dokumencie (strona, współrzędne/zakres znaków) oraz poziomem pewności detekcji.
+    \item \textbf{Warstwa anonimizacji} -- komponent stosujący do każdego wykrytego fragmentu jedną z metod ukrycia danych, wybieraną w zależności od dalszego przeznaczenia danych:
+    \begin{itemize}
+        \item \emph{Maskowanie/redakcja} -- zastąpienie wartości stałym symbolem (np. \texttt{[DANE\_USUNIĘTE]}) lub gwiazdkami; nieodwracalne, najniższy koszt implementacji; rozszerza już zrealizowany mechanizm redakcji PDF o automatyczne źródło fragmentów do ukrycia (z warstwy detekcji, zamiast ręcznego wskazywania przez użytkownika).
+        \item \emph{Tokenizacja odwracalna} -- zastąpienie oryginalnej wartości losowym identyfikatorem (tokenem), przy czym mapowanie token~$\rightarrow$~wartość oryginalna przechowywane jest osobno, w zaszyfrowanej postaci, z dostępem ograniczonym do uprawnionych ról.
+        \item \emph{Haszowanie jednokierunkowe} -- dla przypadków, w których wymagana jest wyłącznie możliwość porównania dwóch wartości bez ich odtwarzania (np. deduplikacja rekordów), z wykorzystaniem funkcji skrótu z solą (SHA-256 + losowa sól per rekord), analogicznie do stosowanego w systemie mechanizmu haszowania haseł (bcrypt).
+        \item \emph{Szyfrowanie odwracalne (AES)} -- dla przypadków wymagających pełnego odtworzenia oryginalnej wartości przez uprawnionego użytkownika: szyfrowanie symetryczne AES-256 w trybie uwierzytelnionym (AES-256-GCM), z kluczem zarządzanym przez dedykowany mechanizm zarządzania kluczami (zewnętrzny KMS/HSM), nieprzechowywanym w tej samej bazie co dane zaszyfrowane.
+    \end{itemize}
+    \item \textbf{Warstwa zarządzania kluczami i mapowaniami} -- osobny magazyn (odizolowany od bazy danych `Metadata`/`Results`/`Json`) przechowujący klucze szyfrujące oraz mapowania tokenizacyjne, z rejestrowaniem (audytem) każdego dostępu do funkcji odtworzenia danych oryginalnych.
+    \item \textbf{Warstwa API} -- zestaw endpointów udostępniających funkcjonalność modułu pozostałym komponentom systemu (backend IQText, wizualizator IQText-GUI).
+\end{itemize}
+
+\subhead{API modułu}
+
+Poniższe endpointy stanowią interfejs programistyczny modułu, zaimplementowany spójnie ze stylem API backendu IQText (Flask, prefiks \texttt{/api}).
+
+\begingroup
+\small
+\begin{longtable}{p{0.06\textwidth} p{0.27\textwidth} p{0.29\textwidth} p{0.29\textwidth}}
+\caption{Endpointy modułu anonimizacji} \\
+\toprule
+\rowcolor{tablehead!15}
+Metoda & Ścieżka & Parametry wejściowe & Odpowiedź \\
+\midrule
+\endfirsthead
+\toprule
+\rowcolor{tablehead!15}
+Metoda & Ścieżka & Parametry wejściowe & Odpowiedź \\
+\midrule
+\endhead
+POST & \texttt{/api/anonymize/\allowbreak detect} & identyfikator dokumentu lub treść dokumentu & lista wykrytych fragmentów danych wrażliwych wraz z kategorią, lokalizacją i poziomem pewności \\
+POST & \texttt{/api/anonymize/\allowbreak apply} & identyfikator dokumentu, lista fragmentów do ukrycia, wybrana metoda (maskowanie / tokenizacja / haszowanie / AES) & zanonimizowany dokument lub jego identyfikator; w przypadku metod odwracalnych -- identyfikator zapisanego mapowania/klucza \\
+POST & \texttt{/api/anonymize/\allowbreak reveal} & identyfikator zanonimizowanego fragmentu/dokumentu, autoryzacja uprawnionego użytkownika & oryginalna wartość danych (wyłącznie dla metod odwracalnych, z zapisem w dzienniku audytowym) \\
+GET & \texttt{/api/anonymize/\allowbreak methods} & brak & lista dostępnych metod anonimizacji wraz z opisem ich odwracalności \\
+\bottomrule
+\end{longtable}
+\endgroup

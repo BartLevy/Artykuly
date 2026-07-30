@@ -1,0 +1,892 @@
+\subsection*{Moduł 3: DLP (Atende DLP)}
+\addcontentsline{toc}{subsection}{Moduł 3: DLP (Atende DLP)}
+
+\subsubsection*{3.1. Cel systemu}
+
+System \textbf{Atende DLP} (\emph{Data Loss Prevention}) jest rozproszonym rozwiązaniem do wykrywania
+i przeciwdziałania nieautoryzowanemu wyciekowi danych wrażliwych ze stacji roboczych w organizacji.
+System monitoruje operacje wykonywane przez użytkowników na plikach oraz w schowku systemowym,
+przechwytuje kopiowane pliki i treści, a następnie analizuje je pod kątem obecności danych
+wrażliwych (np. numerów PESEL, numerów telefonów, treści zgodnych z regułami zdefiniowanymi przez
+administratora). Wykryte naruszenia są rejestrowane jako alerty, prezentowane w panelu
+administracyjnym oraz -- w przypadku alertów krytycznych -- zgłaszane e-mailem odpowiedzialnym
+osobom.
+
+System składa się z trzech niezależnie rozwijanych i wdrażanych modułów, które razem tworzą
+kompletny łańcuch: \emph{zbieranie danych na stacji roboczej} $\rightarrow$ \emph{gromadzenie
+i przechowywanie po stronie serwera} $\rightarrow$ \emph{analiza treści i wykrywanie naruszeń}.
+
+\subsubsection*{3.2. Moduły systemu -- przegląd}
+
+\subhead{DLP Agent (\ep{dlp-agent})}
+Usługa systemu Windows instalowana na stacjach roboczych użytkowników. Napisana w języku C\#
+(.NET Framework 4.8), uruchamiana jako usługa Windows o nazwie \ep{AtendeDLPMonitor} przy użyciu
+frameworku \textbf{Topshelf}. Agent w czasie rzeczywistym monitoruje operacje plikowe (poprzez
+mechanizm \emph{Event Tracing for Windows}, ETW), śledzi sesje logowania użytkowników oraz uruchamia
+towarzyszący proces monitorujący zawartość schowka systemowego (\ep{DLPClipboardMonitor.exe}).
+Zebrane logi zdarzeń oraz skopiowane pliki są okresowo wysyłane do serwera backendowego przez HTTP/REST.
+Agent \textbf{nie wystawia} własnego API -- jest wyłącznie klientem API serwera backendowego.
+
+\subhead{DLP Backend Server (\ep{dlp-backend-server})}
+Centralny serwer aplikacyjny napisany w Javie 17 z wykorzystaniem Spring Boot 3.4. Odpowiada za:
+przyjmowanie logów i plików od agentów, przechowywanie ich w bazie danych MySQL/MariaDB,
+udostępnianie API panelu administracyjnego (logowanie, przegląd logów, alertów, użytkowników,
+grup, reguł DLP i raportów), a także za komunikację z lokalnym silnikiem parsująco-skanującym
+(\ep{dlp-parser}) poprzez dedykowany, wewnętrzny interfejs HTTP. Serwer może pracować w jednym
+z dwóch trybów (profili Spring): \textbf{\ep{collector}} (serwer wdrażany u klienta, zbiera dane
+z agentów) oraz \textbf{\ep{aggregator}} (centralny serwer zbierający alerty z wielu instalacji
+typu \emph{collector}). Jest to jedyny moduł systemu wystawiający publiczne REST API.
+
+\subhead{DLP Parser (\ep{dlp-parser})}
+Silnik analityczny napisany w Pythonie, uruchamiany jako zestaw skryptów wsadowych (nie jest
+serwerem HTTP). Skrypty są cyklicznie wywoływane przez harmonogram (\emph{Script Scheduler})
+wbudowany w serwer backendowy. Parser pobiera z backendu (poprzez wewnętrzne API) pliki oczekujące
+na przetworzenie, ekstrahuje z nich tekst (parsery dokumentów Word/Excel/PDF, OCR obrazów),
+a następnie uruchamia na wyekstrahowanej treści silnik reguł (parsery zdefiniowane w plikach JSON
+oraz podpięte pod nie wtyczki Pythona) w celu wykrycia danych wrażliwych. Wynik analizy (lista
+alertów) jest odsyłany z powrotem do backendu, a w przypadku alertów krytycznych -- rozsyłany
+e-mailem.
+
+\subsubsection*{3.3. Architektura i przepływ danych}
+
+Poniższy diagram przedstawia relacje pomiędzy modułami systemu oraz kierunki komunikacji.
+
+\begin{figure}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    node distance=1.6cm and 2.2cm,
+    box/.style={draw, rounded corners, minimum width=3.6cm, minimum height=1.3cm,
+                align=center, fill=blue!6, font=\small},
+    dbbox/.style={draw, cylinder, shape border rotate=90, minimum width=2.2cm,
+                  minimum height=1.2cm, aspect=0.3, fill=gray!12, font=\small, align=center},
+    arrow/.style={-{Latex[length=2.5mm]}, thick}
+]
+\node[box] (agent) {Stacja robocza\\\textbf{DLP Agent}\\(C\#, Windows Service)};
+\node[box, right=of agent, xshift=1.2cm] (backend) {\textbf{DLP Backend Server}\\(Java / Spring Boot)\\profil \emph{collector}};
+\node[box, right=of backend, xshift=1.2cm] (parser) {\textbf{DLP Parser}\\(Python, skrypty wsadowe)};
+\node[dbbox, below=of backend] (db) {MySQL /\\ MariaDB};
+\node[box, above=2.0cm of parser, fill=orange!8] (aggregator) {\textbf{DLP Backend Server}\\profil \emph{aggregator}\\(centralny)};
+\node[box, below=1.4cm of agent, fill=green!8] (admin) {Panel\\administracyjny};
+
+\draw[arrow] (agent.east) -- node[above,font=\scriptsize,align=center]{REST/HTTPS\\logi, pliki, konfiguracja} (backend.west);
+\draw[arrow] (backend) -- (db);
+\draw[arrow] (backend.east) -- node[above,font=\scriptsize,align=center]{API wewnętrzne\\(port 8081)} (parser.west);
+\draw[arrow] (parser.west) to[out=200,in=-20] node[below,font=\scriptsize]{wynik: alerty} (backend.south east);
+\draw[arrow] (backend.north) |- node[above,font=\scriptsize, pos=0.25]{alerty (harmonogram)} (aggregator.west);
+\draw[arrow] (admin.east) -- node[below,font=\scriptsize]{JWT / REST} (backend.south west);
+\end{tikzpicture}%
+}
+\caption{Architektura systemu Atende DLP i kierunki komunikacji między modułami.}
+\end{figure}
+
+\noindent Kluczowe cechy architektury:
+\begin{itemize}
+  \item Serwer backendowy udostępnia \textbf{dwa niezależne punkty wejścia HTTP} na osobnych
+        portach: port główny (domyślnie \ep{8080}) dla agentów i panelu administracyjnego oraz
+        port wewnętrzny (domyślnie \ep{8081}, prefiks \ep{/internal/}) wyłącznie dla lokalnego
+        procesu parsera. Rozdzielenie portów wymuszane jest przez filtr
+        \ep{DlpInternalEndpointsFilter}.
+  \item Agent i parser \textbf{nie komunikują się ze sobą bezpośrednio} -- cała wymiana danych
+        odbywa się za pośrednictwem serwera backendowego, który pełni rolę centralnego magazynu
+        stanu (pliki, logi, statusy przetwarzania, alerty).
+  \item W topologii wielooddziałowej serwery typu \emph{collector} (po jednym na lokalizację
+        klienta) okresowo wysyłają zagregowane alerty do jednego, centralnego serwera typu
+        \emph{aggregator}, korzystając z klienta Feign i tokenu autoryzacyjnego przypisanego do
+        danego klienta.
+\end{itemize}
+
+% =========================================================================
+\subsubsection*{3.4. API wystawiane przez serwery}
+\label{sec:dlp-api}
+% =========================================================================
+
+Jedynym modułem systemu wystawiającym interfejs API jest \textbf{DLP Backend Server}. Agent oraz
+parser są wyłącznie konsumentami tego API. API podzielone jest na cztery grupy funkcjonalne,
+różniące się mechanizmem uwierzytelniania i portem, na którym są dostępne (zob. rozdz.~\ref{ch:bezpieczenstwo}):
+
+\begin{itemize}
+  \item \textbf{API uwierzytelniania i panelu administracyjnego} (\ep{/auth}, \ep{/admin}) --
+        port główny, uwierzytelnianie JWT, aktywne zawsze.
+  \item \textbf{API agenta} (\ep{/device}, \ep{/log}, \ep{/upload}) -- port główny, uwierzytelnianie
+        nagłówkami \ep{WinKey}/\ep{BiosSN}, aktywne w profilu \emph{collector}.
+  \item \textbf{API agregacji alertów} (\ep{/alert}) -- port główny, uwierzytelnianie tokenem
+        klienta, aktywne w profilu \emph{aggregator}.
+  \item \textbf{API wewnętrzne} (\ep{/internal/...}) -- osobny port wewnętrzny, bez
+        uwierzytelniania (izolacja na poziomie sieci/portu), używane wyłącznie przez
+        \ep{dlp-parser}, aktywne w profilu \emph{collector}.
+\end{itemize}
+
+Wszystkie odpowiedzi API (poza pobieraniem plików binarnych) mają wspólną kopertę
+\ep{ApiResult} zawierającą co najmniej pola \ep{errorCode} oraz \ep{message}, rozszerzaną
+w konkretnych odpowiedziach o właściwe dane (pojedynczy obiekt lub listę wraz z \ep{totalCount}
+dla wyników stronicowanych).
+
+\subhead{Auth API -- \texorpdfstring{\code{/auth}}{/auth}}
+
+Interfejs logowania i zarządzania sesją administratora panelu. Dostępny zawsze, niezależnie od
+aktywnego profilu.
+
+\begingroup\footnotesize
+\begin{longtable}{M{1.4cm} M{2.6cm} M{5.3cm} M{5.8cm}}
+\toprule
+\rowcolor{tablehead!15}
+\textbf{Metoda} & \textbf{Ścieżka} & \textbf{Body} & \textbf{Opis} \\
+\midrule
+\endhead
+\httpmethod{POST} & \ep{/auth/login} & \ep{LoginDTO\{login, password\}} &
+  Logowanie administratora. Zwraca parę tokenów JWT (\ep{accessToken}, \ep{refreshToken}) wraz z czasem ważności. \\
+\httpmethod{POST} & \ep{/auth/refreshToken} & \ep{RefreshTokenRequest\{refreshToken\}} &
+  Odświeżenie tokenu dostępowego na podstawie ważnego tokenu odświeżającego. \\
+\httpmethod{POST} & \ep{/auth/logout} & -- (JWT w nagłówku \ep{Authorization}) &
+  Unieważnia bieżącą sesję administratora (dodaje token do listy odwołanych). \\
+\httpmethod{POST} & \ep{/auth/logoutAll} & -- (JWT w nagłówku) &
+  Unieważnia wszystkie aktywne sesje danego administratora. \\
+\httpmethod{POST} & \ep{/auth/recoverPassword} & \ep{PasswordRecoveryRequest\{login, email\}} &
+  Generuje jednorazowy token resetu hasła i wysyła e-mail z linkiem. Zawsze zwraca sukces (nie ujawnia, czy konto istnieje). \\
+\httpmethod{POST} & \ep{/auth/resetPassword} & \ep{ResetPasswordRequest\{login, email, token, newPassword, newPasswordConfirmation\}} &
+  Ustawia nowe hasło po weryfikacji tokenu resetu; wylogowuje wszystkie aktywne sesje administratora. \\
+\bottomrule
+\caption{Endpointy \code{AuthController}.}
+\end{longtable}
+\endgroup
+
+\subhead{Admin API -- \texorpdfstring{\code{/admin}}{/admin}}
+
+Interfejs panelu administracyjnego. Wszystkie endpointy wymagają roli \ep{ADMIN}, wymuszanej
+adnotacją \ep{@PreAuthorize} z wyrażeniem \ep{hasAuthority('ADMIN')}.
+
+\begingroup\footnotesize
+\begin{longtable}{M{1.4cm} M{4.2cm} M{4.6cm} M{4.1cm}}
+\toprule
+\rowcolor{tablehead!15}
+\textbf{Metoda} & \textbf{Ścieżka} & \textbf{Body / parametry} & \textbf{Opis} \\
+\midrule
+\endhead
+\httpmethod{POST} & \ep{/admin/file/find} & \ep{FilesFilterCriteria} &
+  Wyszukiwanie plików wg filtrów, sortowania i paginacji. \\
+\httpmethod{GET} & \ep{/admin/file/download/\{actionId\}} & \ep{actionId} (UUID, ścieżka) &
+  Pobranie zawartości pliku powiązanego z danym wpisem logu akcji. \\
+\httpmethod{GET} & \ep{/admin/actionLogs/processNames} & -- &
+  Lista unikalnych nazw procesów występujących w logach akcji. \\
+\httpmethod{POST} & \ep{/admin/fileAlert/find} & \ep{FileAlertsFilterCriteria} &
+  Wyszukiwanie alertów plikowych (wraz z metadanymi powiązanego pliku). \\
+\httpmethod{GET} & \ep{/admin/fileAlert/\{guid\}} & \ep{guid} (ścieżka) &
+  Szczegóły pojedynczego alertu plikowego. \\
+\httpmethod{POST} & \ep{/admin/fileAlert/stats} & \ep{FileAlertStatsParams} &
+  Statystyki alertów (np. liczba wg poziomu istotności w przedziale czasowym). \\
+\httpmethod{POST} & \ep{/admin/user/find} & \ep{UsersFilterCriteria} &
+  Wyszukiwanie użytkowników zarejestrowanych w systemie. \\
+\httpmethod{POST} & \ep{/admin/actionLogs/find} & \ep{ActionLogFilterCriteria} &
+  Wyszukiwanie logów akcji (dostępne wyłącznie w profilu \emph{collector}). \\
+\httpmethod{GET} & \ep{/admin/actionLog/\{guid\}} & \ep{guid} (ścieżka) &
+  Szczegóły pojedynczego wpisu logu akcji. \\
+\httpmethod{POST} & \ep{/admin/group/find} & \ep{GroupFilterCriteria} &
+  Wyszukiwanie grup użytkowników (profil \emph{collector}). \\
+\httpmethod{POST} & \ep{/admin/group} & \ep{GroupDTO\{name, description, users[]\}} &
+  Utworzenie lub aktualizacja grupy użytkowników. \\
+\httpmethod{DELETE} & \ep{/admin/group} & \ep{GroupNameDTO\{name\}} &
+  Usunięcie grupy. \\
+\httpmethod{POST} & \ep{/admin/group/info} & \ep{GroupNameDTO\{name\}} &
+  Szczegóły grupy wraz z listą przypisanych użytkowników. \\
+\httpmethod{GET} & \ep{/admin/reports} & -- &
+  Lista zdefiniowanych raportów. \\
+\httpmethod{GET} & \ep{/admin/reports/\{guid\}} & \ep{guid} (ścieżka) &
+  Szczegóły raportu, w tym lista jego parametrów wejściowych. \\
+\httpmethod{POST} & \ep{/admin/reports/run/\{guid\}} & \ep{guid} (ścieżka), \ep{Map<String,Object>} (parametry) &
+  Wykonanie zapisanego w bazie zapytania SQL raportu z podanymi parametrami. \\
+\httpmethod{POST} & \ep{/admin/rule/find} & \ep{RuleFilterCriteria} &
+  Wyszukiwanie reguł DLP. \\
+\httpmethod{DELETE} & \ep{/admin/rule/\{guid\}} & \ep{guid} (ścieżka) &
+  Usunięcie reguły DLP. \\
+\httpmethod{POST} & \ep{/admin/rule} & \ep{multipart/form-data}: część \ep{file} (plik wtyczki .py, opcjonalny), część \ep{metadata} (\ep{RuleDTO}) &
+  Utworzenie lub aktualizacja reguły DLP (nazwa, wyrażenie regularne, definicja, wtyczka, flaga aktywności). \\
+\bottomrule
+\caption{Endpointy \code{AdminController}.}
+\end{longtable}
+\endgroup
+
+\subhead{Device API -- \texorpdfstring{\code{/device}}{/device}}
+
+Interfejs pobierania konfiguracji agenta. Wymaga roli \ep{USER}, przyznawanej po pozytywnej
+weryfikacji nagłówków \ep{WinKey}/\ep{BiosSN}. Aktywny w profilu \emph{collector}.
+
+\begingroup\footnotesize
+\begin{longtable}{M{1.4cm} M{2.8cm} M{5.2cm} M{5.0cm}}
+\toprule
+\rowcolor{tablehead!15}
+\textbf{Metoda} & \textbf{Ścieżka} & \textbf{Nagłówki / Body} & \textbf{Opis} \\
+\midrule
+\endhead
+\httpmethod{POST} & \ep{/device/getConfig} &
+  Nagłówki: \ep{WinKey}, \ep{BiosSN}. Body: \ep{UserIdentifier\{userName, ip, winKey, biosSN\}} &
+  Zwraca aktualną konfigurację agenta (\ep{DeviceConfigDTO}: interwał synchronizacji, maksymalny
+  rozmiar pliku, lista monitorowanych rozszerzeń, lista wykluczonych procesów/ścieżek, flaga
+  wysyłania plików). Jeśli użytkownik/stacja o danym \ep{WinKey}/\ep{BiosSN} nie istnieje --
+  zostaje utworzony automatycznie. \\
+\bottomrule
+\caption{Endpoint \code{DeviceController}.}
+\end{longtable}
+\endgroup
+
+\subhead{Log API -- \texorpdfstring{\code{/log}}{/log}}
+
+Interfejs przyjmowania logów aktywności z agenta. Wymaga roli \ep{USER}. Aktywny w profilu
+\emph{collector}.
+
+\begingroup\footnotesize
+\begin{longtable}{M{1.4cm} M{2.8cm} M{5.2cm} M{5.0cm}}
+\toprule
+\rowcolor{tablehead!15}
+\textbf{Metoda} & \textbf{Ścieżka} & \textbf{Nagłówki / Body} & \textbf{Opis} \\
+\midrule
+\endhead
+\httpmethod{POST} & \ep{/log/test/} & \ep{String} &
+  Endpoint testowy (echo), bez wymaganej autoryzacji -- służy do weryfikacji łączności agenta z serwerem. \\
+\httpmethod{POST} & \ep{/log/actionLogs} &
+  Nagłówki: \ep{WinKey}, \ep{BiosSN}. Body: \ep{ActionLogUploadDTO\{userName, ip, winKey, biosSN, agentVersion, logs[]\}} &
+  Zbiorczy import logów operacji na plikach zebranych przez agenta; każdy wpis otrzymuje status
+  początkowy \ep{WAITING} (oczekuje na sprawdzenie przez parser). \\
+\httpmethod{POST} & \ep{/log/fileActions} &
+  Nagłówki: \ep{WinKey}, \ep{BiosSN}. Body: \ep{FileActionUploadDTO\{..., fileActions[]\}} &
+  Zapis powiązań pomiędzy wpisem akcji a przesłanym plikiem. \\
+\bottomrule
+\caption{Endpointy \code{LogController}.}
+\end{longtable}
+\endgroup
+
+\subhead{File Upload API -- \texorpdfstring{\code{/upload}}{/upload}}
+
+\begingroup\footnotesize
+\begin{longtable}{M{1.4cm} M{2.8cm} M{5.2cm} M{5.0cm}}
+\toprule
+\rowcolor{tablehead!15}
+\textbf{Metoda} & \textbf{Ścieżka} & \textbf{Nagłówki / Body} & \textbf{Opis} \\
+\midrule
+\endhead
+\httpmethod{POST} & \ep{/upload/file} &
+  Nagłówki: \ep{WinKey}, \ep{BiosSN}. \ep{multipart/form-data}: część \ep{file} (opcjonalna),
+  część \ep{metadata} (\ep{FileUploadDTO}) &
+  Przyjmuje plik skopiowany przez użytkownika (np. wynik operacji schowka lub kopiowania pliku)
+  do dalszej analizy. Deduplikacja po skrócie SHA-256 pliku (\ep{fileHash}) -- ten sam plik nie
+  jest zapisywany dwukrotnie. Plik zapisywany jest fizycznie na dysku serwera. Zwraca \ep{guid}
+  utworzonego rekordu pliku. \\
+\bottomrule
+\caption{Endpoint \code{FileUploadController}.}
+\end{longtable}
+\endgroup
+
+\subhead{Alert API -- \texorpdfstring{\code{/alert}}{/alert} (profil \emph{aggregator})}
+
+Interfejs przyjmujący zbiorczo alerty wysyłane przez serwery typu \emph{collector} do centralnego
+serwera \emph{aggregator}. Wymaga roli \ep{DLP\_COLLECTOR}, przyznawanej na podstawie tokenu
+klienta.
+
+\begingroup\footnotesize
+\begin{longtable}{M{1.4cm} M{2.4cm} M{5.6cm} M{5.0cm}}
+\toprule
+\rowcolor{tablehead!15}
+\textbf{Metoda} & \textbf{Ścieżka} & \textbf{Body} & \textbf{Opis} \\
+\midrule
+\endhead
+\httpmethod{POST} & \ep{/alert/add} & \ep{List<FileAlertInfoDTO>} &
+  Odbiera paczkę alertów od serwera typu \emph{collector}. Dla każdego alertu wyszukiwany lub
+  tworzony jest odpowiadający mu plik (po \ep{guid}); alerty o już istniejącym \ep{guid} są
+  pomijane (idempotentność). \\
+\bottomrule
+\caption{Endpoint \code{AlertController}.}
+\end{longtable}
+\endgroup
+
+\subhead{API wewnętrzne (\texorpdfstring{\code{/internal/...}}{/internal/...})}
+\label{sec:internal-api}
+
+Interfejs przeznaczony wyłącznie dla lokalnego procesu \ep{dlp-parser}. Dostępny tylko na
+osobnym porcie wewnętrznym serwera (domyślnie \ep{8081}) -- próba wywołania tych ścieżek na
+porcie głównym kończy się błędem \ep{RESOURCE\_NOT\_FOUND}. Ze względu na izolację sieciową
+endpointy te nie wymagają dodatkowego uwierzytelniania aplikacyjnego (\ep{permitAll}).
+
+\begingroup\footnotesize
+\begin{longtable}{M{1.4cm} M{4.6cm} M{4.5cm} M{4.0cm}}
+\toprule
+\rowcolor{tablehead!15}
+\textbf{Metoda} & \textbf{Ścieżka} & \textbf{Body / parametry} & \textbf{Opis} \\
+\midrule
+\endhead
+\httpmethod{GET} & \ep{/internal/actionLog/nextToCheck} & \ep{pageSize} (domyślnie 5) &
+  Zwraca kolejną paczkę logów akcji oczekujących na sprawdzenie przez parser. \\
+\httpmethod{GET} & \ep{/internal/file/download/\{guid\}} & \ep{guid} (identyfikator akcji, ścieżka) &
+  Pobranie surowej zawartości binarnej pliku. \\
+\httpmethod{GET} & \ep{/internal/file/nextToCheck/\{ruleGuid\}} & \ep{ruleGuid} (ścieżka) &
+  Zwraca kolejny plik do sprawdzenia wskazaną regułą DLP. \\
+\httpmethod{POST} & \ep{/internal/file/updateRuleExecutionResult} & \ep{RuleExecDTO\{ruleGuid, fileGuid, status, alerts[]\}} &
+  Zapisuje wynik wykonania reguły na danym pliku wraz z ewentualnie wygenerowanymi alertami. \\
+\httpmethod{POST} & \ep{/internal/file/update} & \ep{FileProcessingUpdateDTO\{guid, status, alerts[]\}} &
+  Aktualizuje status przetwarzania pliku (np. na \ep{COMPLETED}) oraz zapisuje wygenerowane alerty. \\
+\httpmethod{GET} & \ep{/internal/file/nextToParse/\{status\}} & \ep{status} (\ep{FileProcessingStatus}, ścieżka) &
+  Zwraca surową zawartość kolejnego pliku oczekującego na parsowanie w danym statusie. \\
+\httpmethod{GET} & \ep{/internal/file/nextToParse/content/\{status\}} & \ep{status} (ścieżka) &
+  Zwraca metadane i wcześniej wyekstrahowaną treść tekstową pliku (bez surowych bajtów). \\
+\httpmethod{POST} & \ep{/internal/file/saveParsedContent} & \ep{FileProcessingUpdateDTO\{guid, status, content\}} &
+  Zapisuje wyekstrahowaną treść tekstową pliku (np. wynik OCR) oraz zmienia jego status na
+  \ep{READY\_TO\_PARSE}. \\
+\httpmethod{POST} & \ep{/internal/group/import} & \ep{ImportGroupsDTO\{groups[]\}} &
+  Pełna synchronizacja grup i przypisań użytkowników na podstawie danych z Active Directory
+  (dodaje/aktualizuje/usuwa grupy zgodnie z przekazanym stanem docelowym). \\
+\bottomrule
+\caption{Endpointy wewnętrzne (\code{ActionLogInternalController}, \code{FileInternalController}, \code{GroupInternalController}).}
+\end{longtable}
+\endgroup
+
+\noindent\textbf{Uwaga:} metoda aktualizacji logów akcji (\ep{/internal/actionLog/update}) jest
+obecnie zakomentowana w kodzie serwera i nieaktywna, mimo że widnieje w kolekcji testowej Postman
+-- traktować jako element planowany, a nie wdrożony.
+
+% =========================================================================
+\subsubsection*{3.5. Szczegółowy opis funkcji -- DLP Agent (C\#)}
+% =========================================================================
+
+\subhead{Architektura i uruchomienie}
+
+\ep{DLPAgent} jest usługą systemu Windows uruchamianą przez framework \textbf{Topshelf}. Punktem
+wejścia jest metoda \ep{Program.Main(string[] args)}:
+
+\begin{itemize}
+  \item tryb \ep{--console} -- uruchomienie interaktywne w konsoli, przeznaczone do debugowania;
+  \item tryb domyślny -- rejestracja jako usługa Windows (\ep{HostFactory.Run}), z serwisem
+        \ep{DLPMonitor} obsługującym zdarzenia \ep{Start}/\ep{Stop}.
+\end{itemize}
+
+Przy starcie usługa pobiera numer seryjny BIOS oraz klucz produktu Windows (funkcje
+\ep{Tools.GetBiosSerialNumber()}, \ep{Tools.GetWindowsProductKey()}) -- wartości te służą jako
+trwały identyfikator stacji roboczej i podstawa uwierzytelniania wobec serwera. Następnie odczytuje
+minimalną konfigurację z rejestru systemowego (\ep{ConfManager.GetConfigurationFromRegistry()}),
+weryfikuje łączność z serwerem i pobiera z niego aktualną, pełną konfigurację
+(\ep{ConfManager.CheckForUpdate()}).
+
+Solucja \ep{DLPAgent.sln} obejmuje trzy projekty: \ep{DLPAgent} (właściwa usługa),
+\ep{DLPAgentSetup} (instalator MSI) oraz \ep{DLPClipboardMonitor} (aplikacja WinForms
+monitorująca schowek). Równolegle rozwijany jest niezależny projekt
+\ep{DLPClipboardMonitor\_net80} -- migracja monitora schowka do platformy .NET 8, niepodpięta
+jeszcze do głównej solucji ani instalatora.
+
+\subhead{Monitorowanie operacji plikowych}
+
+Klasa \ep{services/FileServiceMonitor.cs} realizuje monitoring plikowy w oparciu o mechanizm ETW
+(\emph{Event Tracing for Windows}):
+
+\begin{itemize}[leftmargin=1.6em]
+  \item \ep{StartMonitoring()} -- tworzy sesję ETW \ep{TraceEventSession("FileMonitorSession")},
+        włącza dostawcę jądra (\emph{kernel provider}) dla zdarzeń \ep{FileIOInit}, \ep{FileIO}
+        oraz \ep{Process}, a także dostawcę \ep{TerminalServices} (śledzenie sesji), po czym
+        podpina odpowiednie procedury obsługi zdarzeń.
+  \item \ep{StopMonitoring()} -- zatrzymuje sesję ETW.
+  \item Procedury obsługi zdarzeń: \ep{OnDynamicEvent} (logowanie/wylogowanie/reconnect sesji),
+        \ep{OnProcessStart}, \ep{OnProcessStop}, \ep{OnFileCreate}, \ep{OnFileRead},
+        \ep{OnFileWrite}, \ep{OnFileDelete}, \ep{OnFileRename}, \ep{OnFileCleanup}.
+  \item \ep{ClassifyAndFilter(pid, fileName)} -- odrzuca zdarzenia dotyczące plików/procesów
+        systemowych i tła (ścieżki zawierające katalogi \code{windows} i \code{temp}, procesy typu
+        \ep{SearchIndexer}, \ep{MsMpEng}, \ep{svchost}), procesy nieinteraktywne oraz sesje
+        headless.
+  \item \ep{LogFile(...)} -- dla zdarzeń przechodzących przez filtr: liczy skrót SHA-256 pliku
+        (\ep{HashStorage.GetFileHash}), dodaje wpis do wspólnej listy logów akcji, a jeżeli plik
+        spełnia kryteria wysyłki (\ep{Filter.FileUploadFilter}), zleca jego skopiowanie
+        w tle (\ep{SyncFileHelper.BackgroundCopyWhenIdle}).
+\end{itemize}
+
+Klasyfikacja operacji użytkownika na wyższym poziomie (np. rozróżnienie \emph{kopiuj/wklej},
+\emph{archiwizacja}) jest zamodelowana w postaci wyliczenia \ep{UserActionType}, lecz -- zgodnie
+z komentarzami w kodzie (\ep{HandleUserFileAccess}) -- sama logika korelacji zdarzeń w spójne
+akcje użytkownika nie jest jeszcze zaimplementowana.
+
+\subhead{Orkiestracja usługi}
+
+Klasa \ep{services/DLPMonitor.cs} spina wszystkie komponenty w jeden cykl życia usługi:
+
+\begin{itemize}[leftmargin=1.6em]
+  \item \ep{Start(hostControl)} -- włącza wymagane uprawnienia systemowe
+        (\ep{ServiceHelper.EnablePrivilege}, w tym \ep{SeAssignPrimaryTokenPrivilege},
+        \ep{SeTcbPrivilege} potrzebne do uruchamiania procesów w cudzej sesji), uruchamia monitor
+        plikowy (\ep{FileServiceMonitor.StartMonitoring}), opcjonalnie monitor sesji użytkownika
+        (\ep{UserSessionMonitor.StartMonitoring}) oraz cykliczny \ep{Timer} odpalany co
+        \ep{ConfManager.timeInterval} sekund.
+  \item \ep{Stop(hostControl)} -- zatrzymuje wszystkie powyższe komponenty.
+  \item \ep{onTimer(state)} -- obsługa cyklu synchronizacji: wywołanie
+        \ep{Synchronizer.SyncData}, sprawdzenie łączności z serwerem, ewentualne odświeżenie
+        konfiguracji (\ep{ConfManager.CheckForUpdate}) oraz -- jeśli włączona jest flaga
+        \ep{sendFiles} -- wysyłka zgromadzonych plików (\ep{SyncFileHelper.SendFiles}).
+\end{itemize}
+
+\subhead{Monitorowanie sesji i uruchamianie monitora schowka}
+
+Klasa \ep{services/UserSessionMonitor.cs} odpowiada za wykrywanie aktywnych sesji użytkowników
+Windows (lokalnych i terminalowych) i uruchamianie w ich kontekście procesu monitorującego schowek:
+
+\begin{itemize}[leftmargin=1.6em]
+  \item \ep{StartMonitoring()}/\ep{StopMonitoring()} -- pętla sprawdzająca sesje co 1 sekundę.
+  \item \ep{OnUserLogon(sessionId)}/\ep{OnUserLogoff(sessionId)} -- reakcja na zmiany stanu sesji.
+  \item \ep{LaunchClipboardMonitor(sessionId)} -- za pomocą wywołań natywnych API Windows
+        (\ep{WTSQueryUserToken}, \ep{CreateEnvironmentBlock}, \ep{CreateProcessAsUser})
+        uruchamia proces \ep{DLPClipboardMonitor.exe} bezpośrednio na pulpicie zalogowanego
+        użytkownika (stacja \ep{winsta0}, pulpit \ep{default}), co jest niezbędne, ponieważ usługa
+        Windows działa w izolowanej sesji 0 i nie ma bezpośredniego dostępu do schowka użytkownika.
+  \item \ep{CheckExistingSessions()} -- weryfikuje, czy proces monitora schowka nadal działa dla
+        każdej aktywnej sesji, i restartuje go w razie potrzeby.
+\end{itemize}
+
+\subhead{Monitorowanie schowka (DLPClipboardMonitor)}
+
+Osobna aplikacja \ep{DLPClipboardMonitor.exe} (WinForms, klasa
+\ep{ClipboardMonitor : NativeWindow, IDisposable}) rejestruje się jako nasłuchujący zmian schowka
+(\ep{AddClipboardFormatListener}) i reaguje na komunikat systemowy \ep{WM\_CLIPBOARDUPDATE}
+w nadpisanej metodzie \ep{WndProc}. Zastosowano mechanizm "uspokajający" (timer 350~ms), aby
+uniknąć wielokrotnego zrzucania tej samej zawartości przy jednej operacji kopiowania.
+
+Metoda \ep{GetClipboardContent} odczytuje bieżącą zawartość schowka
+(\ep{Clipboard.GetDataObject()}) i dla rozpoznanych formatów (tekst, HTML, mapa bitowa, RTF,
+lista plików) zapisuje ją do plików w lokalnym katalogu cache. Dla nierozpoznanych strumieni danych
+rozszerzenie pliku jest wykrywane na podstawie sygnatury bajtowej (\ep{Tools.DetectExtension}).
+W wersji .NET Framework dodatkowo filtrowane są zrzuty formatów bitmapowych pochodzących z aplikacji
+pakietu biurowego (Excel, Word, PowerPoint, Outlook), aby ograniczyć ilość generowanego szumu.
+
+\subhead{Komunikacja z serwerem backendowym}
+
+Cała komunikacja HTTP odbywa się za pośrednictwem klasy \ep{utils/Http.cs}
+(\ep{SendRequest(url, content)}), która do każdego żądania dołącza nagłówki \ep{WinKey},
+\ep{BiosSN} oraz \ep{AuthToken} (skrót SHA-256 z kombinacji klucza Windows, numeru seryjnego
+BIOS i bieżącej daty). Agent wywołuje trzy grupy endpointów serwera opisane szczegółowo w
+podrozdziale~\ref{sec:dlp-api}: pobranie konfiguracji (\ep{/device/getConfig}), wysyłkę logów akcji
+(\ep{/log/actionLogs}) oraz wysyłkę skopiowanych plików wraz z metadanymi
+(\ep{/upload/file}, \ep{multipart/form-data}).
+
+\subhead{Konfiguracja i przechowywanie stanu}
+
+Klasa \ep{utils/ConfManager.cs} zarządza konfiguracją agenta w dwóch warstwach:
+
+\begin{itemize}[leftmargin=1.6em]
+  \item lokalny rejestr Windows, klucz \code{HKLM/SOFTWARE/Atende/DLPAgent}
+        (odczyt metodą \code{GetConfigurationFromRegistry}, zapis metodą \code{SaveConfigurationToRegistry});
+  \item konfiguracja centralna pobierana z serwera metodą \ep{CheckForUpdate()} (wywołanie
+        \ep{/device/getConfig}), która nadpisuje wartości lokalne przy każdym starcie usługi oraz
+        cyklicznie co \ep{TimeInterval} sekund.
+\end{itemize}
+
+Domyślne wartości instalacyjne (plik \ep{resources/DLPAgent.reg}) obejmują m.in.: adres serwera
+(\ep{Host}), maksymalny rozmiar wysyłanego pliku (\ep{MaxFileSize}, domyślnie 5~MB), interwał
+synchronizacji (\ep{TimeInterval}, domyślnie 30~s), listę monitorowanych rozszerzeń plików
+(m.in. \ep{doc, docx, xls, xlsx, pdf, ppt, pptx, odt, csv}) oraz listę procesów wykluczonych
+z monitorowania.
+
+\subhead{Logowanie}
+
+Zdarzenia diagnostyczne i błędy zapisywane są do \textbf{Dziennika zdarzeń systemu Windows}
+(\emph{Windows Event Log}) poprzez metody \ep{Tools.LogInfo}/\ep{Tools.LogError}, pod źródłem
+odpowiadającym nazwie usługi (\ep{AtendeDLPMonitor}). Niezależnie od tego, klasa
+\ep{services/EtwCsvLogger.cs} umożliwia -- w celach diagnostycznych -- zapis surowych zdarzeń ETW
+do pliku CSV w tle, z wykorzystaniem kolejki \ep{BlockingCollection<string>}.
+
+% =========================================================================
+\subsubsection*{3.6. Szczegółowy opis funkcji -- DLP Backend Server (Java)}
+% =========================================================================
+
+\subhead{Architektura i profile pracy}
+
+\ep{dlp-backend-server} zbudowany jest w oparciu o Spring Boot 3.4 (Java 17), z wykorzystaniem
+\textbf{Spring Data JDBC} (nie JPA/Hibernate) w połączeniu z QueryDSL do budowy zapytań
+filtrujących, Spring Security do uwierzytelniania, Spring Cloud OpenFeign do komunikacji między
+instancjami serwera oraz MapStruct do mapowania encji na DTO. Baza danych: MySQL/MariaDB.
+
+Ta sama baza kodu, w zależności od aktywnego profilu Spring (\ep{--spring.profiles.active=...}),
+pełni jedną z dwóch ról:
+
+\begin{itemize}[leftmargin=1.6em]
+  \item \textbf{\ep{collector}} -- instancja wdrażana lokalnie u klienta. Uruchamia dodatkowy,
+        wewnętrzny serwer HTTP (\ep{DlpInternalHttpServer}) na osobnym porcie, przeznaczony do
+        komunikacji z lokalnym procesem \ep{dlp-parser}; przyjmuje dane od agentów; wysyła
+        zagregowane alerty do serwera typu \emph{aggregator} przy pomocy klienta Feign
+        (\ep{FileAlertsNotifier}, zadanie cykliczne).
+  \item \textbf{\ep{aggregator}} -- centralna instancja zbierająca alerty z wielu wdrożeń typu
+        \emph{collector}, uwierzytelniająca klientów tokenem przypisanym do rekordu \ep{Customer},
+        uruchamiana z włączonym SSL.
+\end{itemize}
+
+Kontrolery API panelu administracyjnego (\ep{/auth}, \ep{/admin}) są aktywne niezależnie od profilu.
+
+\subhead{Struktura pakietów}
+
+\begin{itemize}[leftmargin=1.6em]
+  \item \ep{auth/} -- konfiguracja Spring Security, generowanie i walidacja JWT
+        (\ep{auth/jwt}), filtr tokenu klienta dla profilu \emph{aggregator}
+        (\ep{auth/token}), filtr \ep{WinKey} dla agentów (\ep{auth/winkey}).
+  \item \ep{client/} -- klient Feign do komunikacji z serwerem \emph{aggregator}, komponent
+        wysyłający alerty (\ep{FileAlertsNotifier}), dekoder błędów REST.
+  \item \ep{config/} -- właściwości konfiguracyjne aplikacji, konfiguracja harmonogramu zadań.
+  \item \ep{controller/} -- osiem kontrolerów REST opisanych w podrozdziale~\ref{sec:dlp-api}.
+  \item \ep{db/model} -- encje Spring Data JDBC; \ep{db/repository} -- interfejsy repozytoriów
+        (Spring Data JDBC/QueryDSL); \ep{DlpDBConnector}/\ep{DlpJDBCConnector} -- centralna
+        klasa łącząca logikę biznesową z dostępem do danych.
+  \item \ep{error/} -- hierarchia wyjątków domenowych, \ep{ApiErrorCode}, globalny handler
+        błędów (\ep{RestExceptionHandler}).
+  \item \ep{filter/} -- filtr izolujący endpointy wewnętrzne na osobnym porcie.
+  \item \ep{mail/} -- wysyłka e-maili (reset hasła) przez SMTP (SendGrid).
+  \item \ep{model/} i \ep{model/dto} -- klasy odpowiedzi API (\ep{*ApiResult}) oraz DTO
+        żądań/odpowiedzi, kryteriów filtrowania i grup walidacji.
+  \item \ep{schedule/} -- \ep{ScriptScheduler}, cykliczne uruchamianie skryptów silnika parsera.
+  \item \ep{services/} -- \ep{LogWriter} (zapis logów alertów).
+  \item \ep{storage/} -- przechowywanie plików i wtyczek reguł na lokalnym dysku.
+\end{itemize}
+
+Warto odnotować, że projekt nie stosuje klasycznej, oddzielnej warstwy \emph{Service} -- kontrolery
+komunikują się bezpośrednio z klasą \ep{DlpJDBCConnector}, która łączy w sobie logikę biznesową
+i dostęp do danych (wzorzec \emph{fat connector/repository}).
+
+\subhead{Model danych}
+
+Najważniejsze encje przechowywane w bazie danych (nazwy tabel w nawiasach):
+
+\begin{itemize}[leftmargin=1.6em]
+  \item \ep{File} (\ep{dlp\_file}) -- metadane i (opcjonalnie) wyekstrahowana treść pliku:
+        \ep{guid}, \ep{fileHash}, \ep{fileName}, \ep{uploadDate}, \ep{contentType},
+        \ep{fileSize}, \ep{content}, \ep{status} (\ep{FileProcessingStatus}).
+  \item \ep{FileAlert} (\ep{dlp\_file\_alert}) -- alert wykryty dla pliku lub logu akcji:
+        \ep{guid}, \ep{type} (\ep{AlertType}), \ep{severity} (\ep{AlertSeverity}),
+        \ep{alertSource} (plik / log akcji), \ep{ruleGuid}, \ep{status} (\ep{AlertStatus}),
+        \ep{createdDate}, \ep{sentDate}.
+  \item \ep{ActionLog} (\ep{dlp\_action\_log}) -- pojedyncza operacja użytkownika na pliku:
+        \ep{guid}, \ep{userId}, \ep{fileName}, \ep{filePath}, \ep{operationType}
+        (\ep{OperationType}: \ep{CREATE}, \ep{VIEW}, \ep{MODIFY}, \ep{DELETE},
+        \ep{RENAME}, \ep{COPY}, \ep{PASTE}, \ep{CLIPBOARD\_COPY}, \ep{CLIPBOARD\_PASTE}),
+        \ep{processId/Name/Owner}, \ep{ip}, \ep{winKey}, \ep{biosSN}, \ep{agentVersion}.
+  \item \ep{Rule} (\ep{dlp\_rule}) -- definicja reguły DLP: \ep{guid}, \ep{name},
+        \ep{regex}, \ep{definition}, \ep{plugin} (nazwa pliku wtyczki Python),
+        \ep{enabled}.
+  \item \ep{User} (\ep{dlp\_user}) -- reprezentacja stacji roboczej/użytkownika: \ep{guid},
+        \ep{customerId}, \ep{winKey}, \ep{biosSN}, \ep{lastSeen}.
+  \item \ep{Group}/\ep{UserGroup} (\ep{dlp\_group}) -- grupy użytkowników (synchronizowane
+        z Active Directory) i ich przypisania.
+  \item \ep{Admin} (\ep{dlp\_admin}) -- konto administratora panelu (login, e-mail,
+        zahaszowane hasło).
+  \item \ep{AdminSession}, \ep{RevokedAccessToken}, \ep{ConfirmationToken} -- zarządzanie
+        sesjami JWT i tokenami resetu hasła.
+  \item \ep{Customer} (\ep{dlp\_customer}) -- rekord reprezentujący instalację typu
+        \emph{collector} w kontekście serwera \emph{aggregator}, zawiera token autoryzacyjny.
+  \item \ep{Report}/\ep{ReportParameter} (\ep{dlp\_report}) -- zdefiniowane raporty
+        (zapytanie SQL wraz z parametrami wejściowymi).
+\end{itemize}
+
+\subhead{Kluczowe klasy serwisowe}
+
+\begin{itemize}[leftmargin=1.6em]
+  \item \textbf{\ep{DlpDBConnector} / \ep{DlpJDBCConnector}} -- centralny komponent łączący
+        logikę biznesową z dostępem do danych. Grupy metod: obsługa plików
+        (\ep{findFiles}, \ep{saveFile}, \ep{findOrCreateFile}, \ep{getNextFileToCheck/Parse}),
+        obsługa alertów (\ep{saveFileAlerts}, \ep{findFileAlerts}, \ep{getFileAlertStats},
+        \ep{getNotSentFileAlerts}, \ep{updateFileAlertsStatus}), obsługa logów akcji
+        (\ep{saveActionLogs}, \ep{findActionLogs}, \ep{findActionLogsToCheck}), obsługa
+        użytkowników i grup (\ep{getUser} -- tworzy użytkownika, jeśli nie istnieje,
+        \ep{updateGroups} -- pełna synchronizacja z AD), obsługa reguł
+        (\ep{findRules}, \ep{saveRule}, \ep{deleteRule}, \ep{saveRuleExecutionResult}),
+        obsługa sesji administratora (\ep{saveAdminSession}, \ep{logoutAllAdminSessions},
+        \ep{isAccessTokenRevoked}), obsługa raportów (\ep{findAllReports}, \ep{executeReport}
+        -- dynamiczne wykonanie zapisanego zapytania SQL z podstawionymi parametrami).
+  \item \textbf{\ep{JwtUtil}} -- generowanie, parsowanie i walidacja tokenów JWT (algorytm
+        HS512), tworzenie pary tokenów dostęp/odświeżanie wraz z zapisem sesji administratora.
+  \item \textbf{\ep{FileAlertsNotifier}} (profil \emph{collector}) -- zadanie cykliczne
+        (\ep{@Scheduled}) wysyłające do serwera \emph{aggregator} paczki (po 50) alertów jeszcze
+        niewysłanych, aktualizujące status wysyłki (\ep{SUCCESSFULLY\_SENT}/\ep{SENDING\_FAILED}).
+  \item \textbf{\ep{ScriptScheduler}} -- cykliczne (\ep{@Scheduled(fixedRateString = "\$\{python.fixedRate\}")})
+        uruchamianie skryptów Pythona silnika \ep{dlp-parser} jako procesów zewnętrznych,
+        zabezpieczone blokadą (\ep{ReentrantLock}) uniemożliwiającą równoległe uruchomienie
+        tego samego skryptu.
+  \item \textbf{\ep{LocalStorageConnector} / \ep{FileStorageConnector}} -- przechowywanie
+        przesłanych plików (\ep{\{guid\}.file}) oraz wtyczek reguł (\ep{\{guid\}.py}) na
+        lokalnym dysku serwera.
+  \item \textbf{\ep{DlpDbDTOMapper}} (MapStruct) -- mapowanie pomiędzy encjami bazodanowymi
+        a obiektami DTO wymienianymi przez API.
+  \item \textbf{\ep{RestExceptionHandler}} -- globalny handler wyjątków (\ep{@ControllerAdvice}),
+        tłumaczący wyjątki domenowe i techniczne na spójne odpowiedzi \ep{ApiResult} wraz
+        z odpowiednim kodem błędu i statusem HTTP.
+  \item \textbf{\ep{MailSender}/\ep{SMTPMailSender}} -- wysyłka e-maili transakcyjnych
+        (reset hasła) przez SendGrid SMTP.
+\end{itemize}
+
+\subhead{Harmonogram zadań}
+
+Serwer backendowy pełni rolę \emph{orkiestratora} dla silnika parsującego: klasa
+\ep{ScriptScheduler} cyklicznie uruchamia skrypty Pythona z katalogu \ep{dlp-parser/scripts}
+jako niezależne procesy systemowe, z ustalonym limitem czasu wykonania. Wymiana danych pomiędzy
+serwerem a uruchomionym skryptem odbywa się w całości poprzez API wewnętrzne opisane w
+podrozdziale~\ref{sec:internal-api} -- skrypt, mimo że uruchamiany lokalnie, komunikuje się
+z serwerem tak samo jak zdalny klient HTTP.
+
+% =========================================================================
+\subsubsection*{3.7. Szczegółowy opis funkcji -- DLP Parser (Python)}
+% =========================================================================
+
+\subhead{Charakter modułu}
+
+\ep{dlp-parser} nie jest serwerem HTTP -- jest zbiorem niezależnych skryptów wsadowych,
+uruchamianych cyklicznie przez \ep{ScriptScheduler} serwera backendowego (rozdz.~4.5). Moduł
+pełni funkcję \textbf{klienta} REST API wewnętrznego serwera (\ep{/internal/...}), a jego zadaniem
+jest ekstrakcja tekstu z przesłanych plików oraz wykrywanie w nim danych wrażliwych.
+
+\subhead{Punkty wejścia (skrypty)}
+
+\begin{itemize}[leftmargin=1.6em]
+  \item \textbf{\ep{scripts/parse\_files.py}} -- pobiera z serwera plik gotowy do parsowania
+        (status \ep{READY\_TO\_PARSE}), uruchamia na nim wszystkie zarejestrowane definicje
+        parserów o zakresie \ep{sourceTable == "file"}, a wynik (listę alertów) odsyła z powrotem
+        do serwera (\ep{mark\_file\_as\_parsed}). Jeśli wśród wygenerowanych alertów znajdzie się
+        alert o poziomie \ep{CRITICAL}, wysyłane jest powiadomienie e-mail. Kluczowe funkcje:
+        \ep{extract\_data()}, \ep{parse\_files()}, \ep{extract\_critical\_alerts(alerts)}.
+  \item \textbf{\ep{scripts/ocr\_file.py}} -- pobiera plik oczekujący na wstępne przetworzenie
+        (status \ep{WAITING}), ekstrahuje z niego tekst (w tym poprzez OCR) i odsyła
+        wyekstrahowaną treść do serwera (\ep{set\_file\_content}), zmieniając jego status na
+        \ep{READY\_TO\_PARSE}. Kluczowa funkcja: \ep{extract\_OCR\_content()}.
+  \item \textbf{\ep{scripts/indexer.py}} -- niezależny od pozostałych skrypt indeksujący pliki
+        bezpośrednio na dysku stacji, na której jest uruchomiony: skanuje wskazane katalogi, liczy
+        skrót SHA-256 każdego pliku, a nowe/zmienione pliki zgłasza do zewnętrznego API
+        (\ep{/log/actionLogs}, \ep{/log/fileActions}, \ep{/upload/file}). Stan już zaindeksowanych
+        plików przechowuje w lokalnej bazie SQLite.
+  \item \textbf{\ep{automate/parser\_generator.py}} -- narzędzie generujące pliki definicji
+        parserów JSON na podstawie zawartości monitorowanych katalogów referencyjnych.
+\end{itemize}
+
+\subhead{Silnik reguł -- \code{services/parser\_core.py}}
+
+Klasa \ep{ParserCore} realizuje właściwą logikę dopasowywania reguł do treści:
+
+\begin{itemize}[leftmargin=1.6em]
+  \item \ep{get\_all\_parsers()} -- listuje wszystkie pliki definicji parserów z katalogu
+        wskazanego zmienną środowiskową \ep{PARSERS\_PATH}.
+  \item \ep{load\_parser(file\_name)} -- wczytuje plik JSON i waliduje go względem modelu
+        \ep{Parser} (Pydantic).
+  \item \ep{process\_all(object\_to\_parse)} -- dla każdego zadania (\ep{Task}) zdefiniowanego
+        w parserze: buduje tekst wejściowy ze wskazanych pól obiektu (\ep{fieldsToParse}),
+        sekwencyjnie stosuje filtry wstępne (\ep{preTasks}, np. lematyzację), a następnie:
+        jeśli zadanie zawiera wyrażenie regularne (\ep{regex}) -- dopasowuje je i, przy braku
+        wtyczki, samo dopasowanie generuje alert; jeśli zadanie wskazuje wtyczkę (\ep{plugin})
+        -- przekazuje do niej dopasowany fragment lub cały tekst w celu dodatkowej walidacji
+        i wygenerowania alertu (\ep{severity}, \ep{type}, \ep{taskName}, \ep{parserName}).
+\end{itemize}
+
+Definicja parsera (plik JSON) opisuje: nazwę, zakres (\ep{sourceTable}: \ep{file} lub
+\ep{actionLog}), rolę (\ep{scope}) oraz listę zadań, z których każde może łączyć wyrażenie
+regularne, listę filtrów wstępnych i opcjonalną wtyczkę.
+
+\subhead{Filtry (\code{filters/})}
+
+Filtry implementują wspólny interfejs \ep{Filter} (\ep{set\_text}, \ep{get\_filtered}) i są
+stosowane na tekście przed właściwym dopasowaniem reguły:
+
+\begin{itemize}[leftmargin=1.6em]
+  \item \ep{LowerCase} -- sprowadzenie tekstu do małych liter.
+  \item \ep{RemoveDiactrics} -- usunięcie polskich znaków diakrytycznych.
+  \item \ep{Lemmatize} -- lematyzacja tekstu z użyciem modelu spaCy dla języka polskiego.
+\end{itemize}
+
+\subhead{Wtyczki (\code{plugins/})}
+
+Wtyczki implementują wspólny interfejs \ep{Plugin} (\ep{set\_text},
+\ep{get\_alerts(task, parser\_name)}) i realizują właściwą logikę walidacji danych wrażliwych:
+
+\begin{itemize}[leftmargin=1.6em]
+  \item \ep{PeselFind} -- waliduje kandydata jako polski numer PESEL (weryfikacja sumy
+        kontrolnej, klasa pomocnicza \ep{services/pesel.py}).
+  \item \ep{PhoneNumberFind} -- wykrywa polskie numery telefonów komórkowych (wzorzec
+        \ep{+48~XXX~XXX~XXX}).
+  \item \ep{AlertFind} -- porównuje nazwę analizowanego pliku z listą plików referencyjnych
+        zebranych z monitorowanych katalogów (\ep{automate.ParserGenerator}), generując alert
+        przy dopasowaniu podciągu nazwy.
+\end{itemize}
+
+Obecnie w repozytorium dostarczona jest jedna gotowa definicja parsera
+(\ep{parsers/pesel\_parser.json}, wykrywanie numeru PESEL w treści pliku); wtyczki
+\ep{PhoneNumberFind} i \ep{AlertFind} są zaimplementowane, ale wymagają dodania odpowiadającej
+im definicji JSON, aby zostały użyte w przebiegu parsowania.
+
+\subhead{Ekstrakcja treści (\code{services/extractor.py})}
+
+Klasa \ep{Extractor} odpowiada za konwersję plików binarnych do postaci tekstowej, obsługując
+formaty: \ep{.doc}/\ep{.docx} (konwersja \ep{.doc}$\rightarrow$\ep{.docx} przez LibreOffice,
+następnie \ep{python-docx}), \ep{.xls}/\ep{.xlsx} (\ep{xlrd}/\ep{openpyxl}), \ep{.pdf}
+(\ep{pypdf}), \ep{.png}/\ep{.jpg} (OCR, \ep{pytesseract}, model językowy polski). Dla
+dokumentów Word i PDF opcjonalnie wykonywany jest dodatkowo OCR obrazów osadzonych w treści
+dokumentu. Metoda \ep{save\_temporary\_file\_and\_extract\_data} zarządza cyklem życia pliku
+tymczasowego (zapis $\rightarrow$ ekstrakcja $\rightarrow$ usunięcie).
+
+\subhead{Komunikacja z serwerem (\code{services/api\_service.py})}
+
+Klasa \ep{ApiService} jest klientem REST API wewnętrznego serwera backendowego (nagłówek
+\ep{Authorization: Bearer <token>}, jeśli token jest skonfigurowany). Udostępnia metody
+odpowiadające bezpośrednio endpointom opisanym w podrozdziale~\ref{sec:internal-api}:
+\ep{get\_file\_metadata\_to\_check()}, \ep{get\_file\_metadata\_to\_parse(status)},
+\ep{get\_file\_content\_to\_parse(status)}, \ep{get\_file\_to\_check(guid)},
+\ep{mark\_file\_as\_parsed(guid, alerts)}, \ep{mark\_action\_logs\_as\_parsed(action\_log\_alerts)}
+oraz \ep{set\_file\_content(guid, file\_content)}.
+
+\subhead{Powiadomienia e-mail (\code{mail/})}
+
+Funkcja \ep{mailer.send\_email(subject, message\_body, logger, critical\_alerts)} wysyła
+powiadomienie SMTP (STARTTLS) zawierające opis każdego wykrytego alertu o poziomie \ep{CRITICAL}.
+Wywoływana jest z poziomu \ep{scripts/parse\_files.py} po zakończeniu analizy pliku, o ile wśród
+wyników znalazł się przynajmniej jeden alert krytyczny.
+
+\subhead{Dane referencyjne i stan lokalny}
+
+Katalog \ep{db/} zawiera statyczne pliki referencyjne (listy popularnych polskich nazwisk wg
+płci), obecnie nieużywane przez żaden aktywny filtr lub wtyczkę -- przygotowane pod przyszłą
+funkcję wykrywania nazwisk w treści dokumentów. Jedyną rzeczywistą bazą danych utrzymywaną przez
+ten moduł jest lokalna baza SQLite tworzona przez \ep{scripts/indexer.py} (tabele \ep{hashes}
+-- mapa zaindeksowanych plików po skrócie SHA-256, oraz \ep{meta} -- metadane przebiegu, np.
+znacznik czasu ostatniego indeksowania).
+
+% =========================================================================
+\subsubsection*{3.8. Bezpieczeństwo i uwierzytelnianie}
+\label{ch:bezpieczenstwo}
+% =========================================================================
+
+System stosuje \textbf{trzy niezależne mechanizmy uwierzytelniania}, odpowiadające trzem różnym
+typom klientów API, egzekwowane przez łańcuch filtrów Spring Security (\ep{OncePerRequestFilter})
+oraz adnotacje \ep{@PreAuthorize} na poszczególnych metodach kontrolerów.
+
+\begingroup\footnotesize
+\begin{longtable}{M{3.2cm} M{3.6cm} M{3.6cm} M{4.6cm}}
+\toprule
+\rowcolor{tablehead!15}
+\textbf{Strefa API} & \textbf{Klient} & \textbf{Mechanizm} & \textbf{Rola} \\
+\midrule
+\endhead
+\ep{/auth}, \ep{/admin} & Panel administracyjny & JWT (\ep{Authorization: Bearer}), algorytm HS512, z możliwością odwołania tokenu & \ep{ADMIN} \\
+\ep{/device}, \ep{/log}, \ep{/upload} & Agent Windows & Nagłówki \ep{WinKey}, \ep{BiosSN}, \ep{AuthToken} (skrót powiązanych wartości) & \ep{USER} \\
+\ep{/alert} & Serwer \emph{collector} $\rightarrow$ \emph{aggregator} & Nagłówek \ep{AuthToken} porównywany ze statycznym tokenem klienta (\ep{Customer.authToken}) & \ep{DLP\_COLLECTOR} \\
+\ep{/internal/*} & Lokalny proces \ep{dlp-parser} & Izolacja sieciowa -- osobny port serwera, brak uwierzytelniania aplikacyjnego & -- \\
+\bottomrule
+\caption{Mechanizmy uwierzytelniania w poszczególnych strefach API.}
+\end{longtable}
+\endgroup
+
+\noindent Dodatkowe elementy modelu bezpieczeństwa:
+
+\begin{itemize}[leftmargin=1.6em]
+  \item Hasła administratorów przechowywane są w postaci skrótu \textbf{BCrypt} (współczynnik
+        kosztu 13) wraz z dodatkową, tajną wartością (\emph{pepper}); siła nowo ustawianego hasła
+        weryfikowana jest biblioteką \textbf{Passay}.
+  \item Reset hasła odbywa się poprzez jednorazowy, ograniczony czasowo token
+        (\ep{ConfirmationToken}); endpoint \ep{/auth/recoverPassword} zawsze zwraca odpowiedź
+        sukcesu, aby nie ujawniać, czy dane konto istnieje w systemie.
+  \item API jest bezstanowe (\ep{SessionCreationPolicy.STATELESS}), CSRF jest wyłączone
+        (nie dotyczy API bezstanowego), włączone są natomiast nagłówki \ep{X-XSS-Protection}
+        oraz polityka \ep{Content-Security-Policy} ograniczająca źródła skryptów.
+  \item Konfiguracja CORS jest parametryzowana (\ep{cors.allowedOriginPatterns}) i powinna być
+        zawężona do rzeczywistych domen panelu administracyjnego w środowisku produkcyjnym.
+  \item Po stronie agenta walidacja certyfikatu SSL serwera może zostać globalnie wyłączona
+        (flaga \ep{Globals.certValidation}) -- ustawienie to ma bezpośredni wpływ na
+        bezpieczeństwo komunikacji HTTPS i powinno być używane wyłącznie w środowiskach
+        testowych.
+  \item Uwierzytelnianie agenta (\ep{WinKey}/\ep{BiosSN}/\ep{AuthToken}) nie jest
+        standardowym mechanizmem OAuth2/JWT -- opiera się na identyfikatorach sprzętowych stacji
+        i wspólnym sekrecie wyliczanym po obu stronach.
+\end{itemize}
+
+% =========================================================================
+\subsubsection*{3.9. Konfiguracja modułów}
+% =========================================================================
+
+\subhead{DLP Agent}
+
+Konfiguracja agenta przechowywana jest w rejestrze systemowym
+(\ep{HKLM/SOFTWARE/Atende/DLPAgent}) i nadpisywana
+konfiguracją centralną pobieraną z serwera. Najważniejsze parametry:
+
+\begingroup\footnotesize
+\begin{longtable}{M{4cm} M{3cm} M{8cm}}
+\toprule
+\rowcolor{tablehead!15}
+\textbf{Parametr} & \textbf{Domyślnie} & \textbf{Znaczenie} \\
+\midrule
+\endhead
+\ep{Host} & \ep{https://<adres>/dlp-srv/} & Bazowy adres URL serwera backendowego. \\
+\ep{Enabled} & \ep{1} & Flaga globalnego włączenia monitoringu. \\
+\ep{TimeInterval} & 30 s & Okres cyklu synchronizacji logów i odświeżania konfiguracji. \\
+\ep{MaxFileSize} & 5 MB & Maksymalny rozmiar pliku kwalifikującego się do wysyłki. \\
+\ep{SendFiles} & \ep{0} & Flaga włączenia wysyłki skopiowanych plików (nie tylko logów). \\
+\ep{ResendKnownFileInterval} & \ep{0} & Odstęp, po którym już wysłany plik może zostać wysłany ponownie. \\
+\ep{Extensions} & lista rozszerzeń dokumentów biurowych & Rozszerzenia plików objęte monitoringiem. \\
+\ep{Processes} & lista procesów systemowych i narzędziowych & Procesy wykluczone/uwzględnione w monitoringu (tryb wg \ep{ExcludeIncludeProcessesMode}). \\
+\bottomrule
+\caption{Kluczowe parametry konfiguracyjne DLP Agenta.}
+\end{longtable}
+\endgroup
+
+\subhead{DLP Backend Server}
+
+Konfiguracja podzielona jest na plik wspólny (\ep{application.yml}) oraz pliki właściwe dla
+profilu (\ep{application-collector.yml}, \ep{application-aggregator.yml}), wybieranego
+parametrem \ep{spring.profiles.active}.
+
+\begin{itemize}[leftmargin=1.6em]
+  \item \textbf{Wspólne}: klucz szyfrowania konfiguracji (\ep{encrypt.key}), ustawienia CORS,
+        konfiguracja szablonu i nadawcy e-maila resetu hasła, konfiguracja SMTP (SendGrid),
+        parametry uruchamiania silnika parsującego (\ep{python.*}: interpreter, katalog
+        skryptów, limit czasu, częstotliwość harmonogramu).
+  \item \textbf{Profil \ep{collector}}: port główny \ep{8080} i port wewnętrzny \ep{8081}
+        (z prefiksem \ep{/internal/}), ścieżka pliku domyślnej konfiguracji urządzenia
+        (\ep{config.json}), magazyn zaufania SSL do komunikacji z serwerem \emph{aggregator},
+        token klienta (\ep{dlp.customer.token}), ustawienia powiadamiania \emph{aggregator}a
+        (\ep{dlp.dataAggregator.*}), limit rozmiaru przesyłanych plików (32~MB), parametry
+        połączenia z bazą MySQL, ścieżki przechowywania plików i wtyczek reguł, parametry JWT
+        (sekret, czas ważności tokenu dostępowego i odświeżającego).
+  \item \textbf{Profil \ep{aggregator}}: port \ep{8085} z włączonym SSL (magazyn kluczy
+        PKCS\#12), niższy limit rozmiaru przesyłanych plików (2~MB), osobna baza danych, własny
+        sekret JWT i nazwa usługi.
+\end{itemize}
+
+\subhead{DLP Parser}
+
+Konfiguracja realizowana jest przez plik \ep{.env} (zmienne środowiskowe), odczytywany przy
+starcie każdego skryptu:
+
+\begin{itemize}[leftmargin=1.6em]
+  \item \ep{SERVER\_HOST}, \ep{INTERNAL\_HOST} -- adresy API serwera backendowego (odpowiednio
+        publicznego i wewnętrznego).
+  \item \ep{PARSERS\_PATH} -- katalog z plikami definicji parserów JSON.
+  \item \ep{STORAGE\_DIR}, \ep{TMP\_DIR}, \ep{RESULTS\_DIR}, \ep{OCR} -- konfiguracja
+        katalogów roboczych i włączenia OCR.
+  \item \ep{AUTOMATE\_CHECKED\_FOLDERS}, \ep{PARSERS\_OUTPUT\_PATH}, \ep{PARSERS\_TEMPLATE\_PATH}
+        -- konfiguracja generatora definicji parserów.
+  \item \ep{INDEXER\_EXTENSIONS}, \ep{INDEXER\_SERVER\_URL}, \ep{INDEXER\_DB\_FILE} --
+        konfiguracja skryptu indeksującego.
+  \item \ep{SPRING\_MAIL\_HOST/PORT/USERNAME/PASSWORD}, \ep{SENDER\_EMAIL}, \ep{RECEIVER\_EMAIL}
+        -- konfiguracja SMTP powiadomień o alertach krytycznych.
+  \item \ep{LOG\_FILE\_PATH} -- ścieżka pliku logu (rotacja co 5~MB, 3 kopie zapasowe).
+\end{itemize}
+
+% % =========================================================================
+% \subsubsection*{3.10. Znane ograniczenia i dług techniczny}
+% % =========================================================================
+
+% Na potrzeby rzetelności dokumentacji odnotowano poniższe elementy będące w toku rozwoju lub
+% wymagające uwagi zespołu utrzymaniowego:
+
+% \begin{itemize}[leftmargin=1.6em]
+%   \item \textbf{DLP Agent}: korelacja pojedynczych zdarzeń plikowych w spójne, wysokopoziomowe
+%         akcje użytkownika (kopiuj/wklej/archiwizacja) nie jest jeszcze zaimplementowana
+%         (\ep{FileServiceMonitor.HandleUserFileAccess}); mechanizm anonimizacji ścieżek plików
+%         (\ep{Anonymizer}) istnieje w kodzie, lecz nie jest aktywnie wykorzystywany -- do serwera
+%         trafia pełna, nieanonimizowana ścieżka pliku; wersja monitora schowka dla .NET~8
+%         (\ep{DLPClipboardMonitor\_net80}) nie jest jeszcze zintegrowana z głównym instalatorem.
+%   \item \textbf{DLP Backend Server}: metoda aktualizacji logów akcji przez API wewnętrzne
+%         (\ep{/internal/actionLog/update}) jest obecnie zakomentowana w kodzie; kolekcja testowa
+%         Postman nie obejmuje wszystkich endpointów zaimplementowanych w kodzie (m.in. zarządzania
+%         regułami) i nie powinna być traktowana jako w pełni aktualne źródło prawdy o API.
+%   \item \textbf{DLP Parser}: silnik reguł sygnalizowany jest jako niestabilny przy jednoczesnym
+%         wczytaniu więcej niż jednej definicji parsera (komentarz w \ep{parser\_core.py});
+%         rejestr filtrów (\ep{FILTER\_REGISTRY}) nie obejmuje wszystkich zaimplementowanych klas
+%         filtrów (\ep{LowerCase}, \ep{RemoveDiactrics} nie są obecnie dostępne z poziomu
+%         definicji JSON); katalog \ep{db/} z listami nazwisk nie jest jeszcze podpięty pod żaden
+%         filtr/wtyczkę; plik \ep{README.md} odwołuje się do nieistniejącego skryptu
+%         \ep{parse\_action\_logs.py} i wymaga aktualizacji; \ep{Dockerfile} zawiera
+%         nieprawidłowe polecenie uruchomieniowe (odwołanie do nieistniejącego modułu
+%         \ep{scripts.generate}) i efektywnie służy jedynie jako środowisko developerskie.
+% \end{itemize}

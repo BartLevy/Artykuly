@@ -1,0 +1,841 @@
+% !TeX program = pdflatex
+
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.8em}
+
+\usepackage[a4paper,margin=2.5cm,headheight=15pt]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{svg}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black,
+    pdftitle={Raport},
+    pdfauthor={Zespół projektowy}
+}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% --- Tabele i listy ---
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\setlist{itemsep=0.2em, topsep=0.4em}
+
+% --- Ustawienia tytułów rozdziałów ---
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries}
+  {\chaptername\ \thechapter}
+  {20pt}
+  {\Huge}
+\titlespacing*{\chapter}{0pt}{-10pt}{30pt}
+
+% --- Dane raportu do uzupełnienia ---
+\newcommand{\ReportTitle}{Raport}
+\newcommand{\ProjectName}{Opracowanie innowacyjnego systemu IT wykorzystującego mechanizmy sztucznej inteligencji do automatycznej identyfikacji i retencji danych wrażliwych zawartych w dokumentach, z~uwzględnieniem kontekstu ich przetwarzania}
+% \newcommand{\ProjectNumber}{Numer projektu: FENG.01.01-IP.01-0065/23}
+\newcommand{\ProjectNumber}{FENG.01.01-IP.01-0065/23}
+\newcommand{\ReportDate}{\today}
+% \newcommand{\LogoFile}{logo.png}
+\newcommand{\EUFooterBannerFile}{banner_logotypow_ue.png}
+
+\begin{document}
+
+% =========================================================
+% Strona tytułowa
+% =========================================================
+\begin{titlepage}
+    \thispagestyle{empty}
+
+    \begin{flushleft}
+        \includesvg[width=4cm]{logo}
+    \end{flushleft}
+
+    \vspace{2.5cm}
+
+    \begin{center}
+        {\Huge\bfseries \ReportTitle\par}
+        \vspace{1.2cm}
+        {\Large\bfseries \ProjectName\par}
+        \vspace{0.8cm}
+        {\large \ProjectNumber\par}
+        \vspace{1.5cm}
+        {\large Data opracowania: \ReportDate\par}
+    \end{center}
+
+    \vfill
+
+    \begin{center}
+        \includegraphics[width=\textwidth]{footer.png}
+    \end{center}
+\end{titlepage}
+
+% =========================================================
+% Spis treści od drugiej strony
+% =========================================================
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+
+\pagenumbering{arabic}
+
+% =========================================================
+% Treść raportu
+% =========================================================
+\chapter{Streszczenie zarządcze}
+\section{Cel raportu}
+[Placeholder: krótki opis celu raportu oraz zakresu dokumentu.]
+
+\section{Najważniejsze wyniki}
+[Placeholder: syntetyczne podsumowanie głównych rezultatów fazy badawczej i rozwojowej.]
+
+\section{Wnioski i rekomendacje}
+[Placeholder: najważniejsze wnioski projektowe, rekomendacje wdrożeniowe i dalsze kroki.]
+
+\chapter{Informacje o projekcie}
+\section{Tło i uzasadnienie realizacji projektu}
+[Placeholder: opis problemu, potrzeby rynkowej, naukowej lub technologicznej oraz kontekst projektu.]
+
+\section{Cele projektu}
+[Placeholder: cele główne i szczegółowe projektu.]
+
+\section{Zakres rzeczowy projektu}
+[Placeholder: opis zakresu merytorycznego, granic projektu oraz kluczowych produktów prac.]
+
+\section{Metodyka prowadzenia prac}
+[Placeholder: opis podejścia badawczo-rozwojowego, kryteriów oceny wyników, narzędzi i metod.]
+
+
+
+
+\chapter{Faza badawcza}
+
+
+\section{B1. Opracowanie architektury rozwiązania }
+\subsection{Cel zadania}
+[Placeholder: cel zadania B1.]
+\subsection{Przebieg prac}
+[Placeholder: opis wykonanych analiz, źródeł danych, warsztatów, przeglądów literatury lub badań wstępnych.]
+\subsection{Rezultaty}
+[Placeholder: wyniki zadania B1, w tym wymagania, założenia i ograniczenia.]
+\subsection{Wnioski}
+[Placeholder: wnioski z zadania B1 oraz wpływ na kolejne zadania.]
+
+\subsection{=========== z docx ============}
+
+Nazwa zadania: Opracowanie architektury rozwiązania - B1
+
+Data rozpoczęcia: 02.01.2024
+
+Data zakończenia: 30.04.2024
+
+Opis wykonanych prac:
+
+Zgodnie z założeniami, zaprojektowana została architektura systemu uwzględniająca następujące komponenty:
+
+\begin{itemize}
+    \item Warstwa danych;
+    \item Warstwa logiki biznesowej;
+    \item Komponent uczenia maszynowego;
+    \item Warstwa interfejsów użytkownika;
+    \item Komponenty pomocnicze.
+\end{itemize}
+
+Wszystkie komponenty zostały umieszczone na diagramie architektury statycznej.
+
+Zaprojektowany model danych uwzględnia niezbędne encje w systemie.
+
+Wyspecyfikowano procesy pod kątem przetwarzania danych wrażliwych.
+
+Architektura oparta jest o podejście mikroserwisowe, w rozproszonym środowisku.
+
+Przeprowadzono indywidualne wywiady pogłębione z dwoma klientami czego efektem są raporty z tego procesu.
+
+Dla tych samych klientów została wykonana analiza danych zastanych. Niestety z uwagi na zakres danych wrażliwych, musieliśmy pracować na szablonach dokumentów.
+
+Zaplanowano architekturę infrastruktury środowisk.
+
+Zaprojektowano podejście do stworzenia modelu uczenia, zbioru danych treningowych, a także zakresu prac zespołu ekspertów dla modelu nadzorowanego.
+
+Opracowano sposób wygenerowania danych treningowych na podstawie mniejszego zakresu danych uzyskanych na etapie badania Desk Research.
+
+Opracowano stworzenie narzędzia typu generator dokumentów oraz klasyfikatora do oznaczania etykiet w dokumentach.
+
+Zadanie zakończone sukcesem - została utworzona dokumentacja architektury oraz diagram architektury statycznej. Wykonano także niezbędne badania desk research oraz IDI.
+
+Nazwa kamienia: Architektura systemu klasyfikacji danych wrażliwych,
+
+Opis: 
+
+Gotowa dokumentacja architektury – sztuk 1. Diagram architektury statycznej – 1 diagram, co najmniej 5 komponentów. Raport z badania IDI dla co najmniej 2 klientów. Raport z badania Desk Research dla co najmniej 2 klientów.,  
+
+Sposób weryfikacji: 
+
+Architektura musi być spójna a diagram architektury statycznej zrozumiały dla zespołu programistycznego. Celem weryfikacji tego kamienia milowego zostaną przeprowadzone warsztaty projektowe zespołu programistów z zespołem analitycznym. Raport z tych warsztatów pozwoli stworzyć listę rozbieżności i jeżeli będzie ona niepusta, poprawić architekturę.
+
+Opis osiągnięcia:
+
+W ramach realizacji kamienia milowego opracowano kompletną dokumentację architektury systemu, obejmującą:
+
+Diagram architektury statycznej zawierający 5 kluczowych komponentów systemu (1 szt.)
+
+Dokumentacja architektury (1 szt)
+
+Raport z badania IDI dla 2 klientów
+
+Raport Desk Research dla 2 klientów
+
+
+
+\section{B2. Opracowanie i porównanie aktualnej sytuacji prawnej w zakresie danych wrażliwych w EU i US}
+\subsection{Cel zadania}
+[Placeholder: cel zadania B2.]
+\subsection{Przebieg prac}
+[Placeholder: opis analizy stanu techniki, benchmarków, wariantów technologicznych i koncepcji.]
+\subsection{Rezultaty}
+[Placeholder: zestawienie rozważanych koncepcji oraz kryteria wyboru.]
+\subsection{Wnioski}
+[Placeholder: wybrany kierunek badawczy i uzasadnienie.]
+
+\subsection{=========== z docx ============}
+
+Nazwa zadania: Opracowanie i porównanie aktualnej sytuacji prawnej w zakresie danych wrażliwych w EU i US - B2
+
+Data rozpoczęcia: 02.01.2024
+
+Data zakończenia: 30.04.2024
+
+Poddana analizie została sytuacja prawna sektora telekomunikacyjnego, finansowego oraz energetycznego.
+
+Prawo w Stanach Zjednoczonych okazało się bardzo zróżnicowane w różnych stanach. Z tego powodu skupiliśmy się na stworzeniu docelowych macierzy na rynku europejskim z naciskiem na legislację polską.
+
+Powstały rozbudowane macierze klasyfikacji dokumentów razem z niezbędnymi wskaźnikami:
+
+\begin{itemize}
+    \item Forma prawna wyrażania woli;
+    \item Sposób komunikacji danych;
+    \item Okresy retencji;
+    \item Zakres danych wrażliwych;
+    \item Procedury reagowania na incydenty;
+    \item Specyficzne prawa konsumenta.
+\end{itemize}
+
+Zadanie zakończone sukcesem.
+
+Nazwa kamienia: Macierz klasyfikująca akty prawne
+
+Opis: 
+
+Macierz dla wskazanych wskaźników: 
+
+\begin{itemize}
+    \item Forma prawna wyrażania woli,
+    \item Sposób komunikacji danych,
+    \item Okresy retencji,
+    \item Zakres danych wrażliwych,
+    \item Procedury reagowania na incydenty,
+    \item Specyficzne prawa konsumenta, posiadająca co najmniej 3 klasy dokumentów dla każdego wskaźnika.
+\end{itemize}
+
+Sposób weryfikacji: 
+
+Macierz musi posiadać minimalne liczby klas. Zespół analityków potwierdzi to na podstawie przygotowanej dokumentacji.
+
+Opis osiągnięcia:
+
+W ramach realizacji kamienia milowego opracowano kompletną macierze dla pięciu obszarów, klasyfikująca 470 typów dokumentów z podziałem na następujące wskaźniki: 
+
+\begin{itemize}
+    \item Forma prawna wyrażania woli;
+    \item Sposób komunikacji danych;
+    \item Okresy retencji;
+    \item Zakres danych wrażliwych;
+    \item Procedury reagowania na incydenty;
+    \item Specyficzne prawa konsumenta.
+\end{itemize}
+
+
+
+\section{B3. Opracowanie klasyfikacji danych wrażliwych}
+\subsection{Cel zadania}
+[Placeholder: cel zadania B3.]
+\subsection{Przebieg prac}
+[Placeholder: opis eksperymentów, symulacji, modeli lub testów laboratoryjnych.]
+\subsection{Rezultaty}
+[Placeholder: potwierdzone i odrzucone hipotezy, parametry graniczne, wyniki pomiarów.]
+\subsection{Wnioski}
+[Placeholder: interpretacja wyników oraz konsekwencje dla architektury rozwiązania.]
+
+\subsection{=========== z docx ============}
+
+Nazwa zadania: Opracowanie klasyfikacji danych wrażliwych - B3
+
+Data rozpoczęcia: 01.05.2024
+
+Data zakończenia: 30.09.2024
+
+Celem zadania było stworzenie zbioru etykiet typów dokumentów oraz danych wrażliwych. Dzięki macierzy z zadania B2 mogliśmy określić etykiety w liczbie przekraczającej założone 20.
+
+W tym zadaniu stworzyliśmy autorskie narzędzie do klasyfikowania kontekstowego dokumentów.  Dokumenty z zadania B1, to jest te pochodzące z desk research oraz inne z analiz wybranych rynków, zostały poddane procesowi ręcznej klasyfikacji z wykorzystaniem tego narzędzia.
+
+Efektem tych prac jest lista gotowych mapowań typu NER, które następnie posłużą w kolejnym zadaniu.
+
+Nazwa kamienia: Klasyfikacja danych wrażliwych,
+
+Opis: 
+
+ Zbiór etykiet dla kategorii dokumentów (co najmniej 20 etykiet) 
+ 
+ Zbiór etykiet danych wrażliwych (co najmniej 20 etykiet) Wykonana klasyfikacja dla dokumentów z zadania B1.
+
+Sposób weryfikacji:
+
+Biznesowa ocena jakości zbioru etykiet. Zbiory muszą spełniać wymaganie ilościowe skwantyfikowane w sekcji parametry jak też nieść odpowiednią wartość biznesową. Zespół analityków dokona powyżej oceny poprzez konsultacje z wybranym klientem.
+
+Opis osiągnięcia:
+
+W ramach realizacji kamienia milowego „Klasyfikacja danych wrażliwych” zrealizowano następujące cele:
+
+\begin{itemize}
+    \item Stworzono zbiór etykiet dla kategorii dokumentów -- liczba etykiet przekroczyła wymagane 20 (łącznie 22), co zostało osiągnięte dzięki analizie macierzy z zadania B2.
+    \item Opracowano zbiór etykiet danych wrażliwych -- również przekraczający minimalny próg 20 etykiet (łącznie 33), zgodnie z założeniami projektowymi.
+    \item Przeprowadzono klasyfikację dokumentów z zadania B1 -- dokumenty pochodzące z desk research oraz analiz wybranych rynków zostały poddane ręcznej klasyfikacji przy użyciu autorskiego narzędzia do klasyfikacji kontekstowej.
+    \item Opracowano gotowe mapowania typu NER (Named Entity Recognition), które stanowią podstawę do dalszych prac w kolejnych zadaniach projektowych.
+\end{itemize}
+
+Weryfikacja osiągnięcia kamienia milowego została przeprowadzona zgodnie z przyjętym sposobem:
+
+Biznesowa ocena jakości zbioru etykiet 
+
+\begin{itemize}
+    \item Zbiory etykiet zostały poddane ocenie przez zespół analityków, przy udziale wybranego klienta.
+    \item Potwierdzono spełnienie wymagań liczbowych (co najmniej 20 etykiet dla każdej kategorii).
+    \item W konsultacji z klientem oceniono przydatność i trafność zaproponowanych etykiet oraz ich zgodność z potrzebami biznesowymi.
+\end{itemize}
+
+Zbiory etykiet zostały zaakceptowane – zarówno pod względem ilościowym, jak i jakościowym.
+
+
+\section{B4. Opracowanie algorytmów klasyfikujących dane wrażliwe w dokumentach}
+\subsection{Cel zadania}
+[Placeholder: cel zadania B4.]
+\subsection{Przebieg prac}
+[Placeholder: opis projektowania architektury, komponentów, algorytmów, procesów lub technologii.]
+\subsection{Rezultaty}
+[Placeholder: specyfikacja rozwiązania, modele, schematy, dokumentacja projektowa.]
+\subsection{Wnioski}
+[Placeholder: gotowość do przejścia do fazy rozwojowej.]
+
+\subsection{=========== z docx ============}
+
+Nazwa zadania: Opracowanie algorytmów klasyfikujących dane wrażliwe w dokumentach - B4
+
+Data rozpoczęcia: 01.10.2024
+
+Data zakończenia: 28.02.2025
+
+Zadania zostało zrealizowane z sukcesem.
+
+W ramach zadania wykonywane było:
+
+1.	B4.1 Opracowanie DPR modelu:
+
+\begin{itemize}
+    \item Konfiguracja środowiska pod trening modelu.
+    
+    \item Włączenie logowania bibliotek pozwalającego na tuningowanie środowiska w celach badawczych. Pracami tymi zajmował się inżynier systemowy.
+    
+    \item Wykorzystany został model typu transformatorowego QA oparty na cross-encoderze: \texttt{radlab/polish-qa-v2}.
+\end{itemize}
+
+Danymi wejściowymi były konteksty z dokumentów pozyskanych w ramach badania desk research, sklasyfikowane w zadaniu B3. Za pomocą technik generatywnych zostały spreparowane dodatkowe zbiory dokumentów. W ramach prac badawczych zweryfikowaliśmy wpływ na wyznaczane wartości F1 i Acc. Generowanie miało pozytywny wpływ na wskaźniki ponieważ model radził sobie bardzo dobrze z wygenerowanymi plikami. Wpływ ten jednak nie jest na tyle duży aby uznać wyniki za nieadekwatne.
+
+Programiści przy wsparciu programistów ML opracowali Readera czyli oprogramowanie do wydobywania odpowiednich danych z dokumentów.
+
+Wyniki ACC oraz F1: 0.85 oraz 0.92
+
+
+2.	B4.2 Opracowanie modelu typu LLM
+
+\begin{itemize}
+    \item Sprawdzaliśmy modele GPT-4o mini oraz PLLuM 70B.
+    
+    \item Zdecydowaliśmy się wykorzystać do porównania modele GPT-4o mini oraz PLLuM 70B.
+    
+    \item Opracowaliśmy prompty na podstawie wiedzy z Desk Research z zadania B2. Po opracowaniu promptów programiści ML uruchomili testy badawcze typu few-shot.
+\end{itemize}
+
+Na podstawie danych wynikowych z treningu modeli w ramach podzadań B4.1 i B4.2 wyznaczane zostały wartości, w jakich wyuczone modele potrafią poprawnie rozpoznawać istniejące zjawisko (pojawienie się w dokumencie konkretnej etykiety czyli danej wrażliwej w zadanym kontekście). Opracowany został raport porównawczy dla obu metod.
+
+Z raportu wynika, iż skuteczniejszą metodą był wariant 1. Odpowiednie ACC i F1score wynoszą dla gpt 4o mini 0,8380 oraz 0.8737, dla PLLuM 70b 0.49 oraz 0.54
+
+Nazwa kamienia: Opracowany model klasyfikacji danych wrażliwych
+
+Opis:  Raport podsumowujący metody badawcze wskazujący w sposób mierzalny, które podejście jest bardziej adekwatne z punktu widzenia implementacji systemu. Parametrami w układzie SI będą Acc i F1 – wymagane na poziomie wyższym niż 70\% dla co najmniej jednego z modeli.
+
+Sposób weryfikacji:
+
+Dane rankingowe porównujące wypracowane modele powinny wskazywać, który będzie można wykorzystać w implementacji. Wskazane Acc i F1 powinno wynosić powyżej 70\% przynajmniej dla jednego z modeli. Mniejsze wartości mogą być porównywalne z losowymi. Liczby Acc i F1 będą pochodzić z przeprowadzonych badań trenujących modele. Weryfikacja będzie polegała na matematycznym porównaniu powyższych wartości.
+
+Opis osiągnięcia:
+
+W ramach realizacji kamienia milowego „Opracowany model klasyfikacji danych wrażliwych” przeprowadzono kompleksowe prace badawczo-rozwojowe obejmujące:
+
+Opracowanie modelu DPR (Dense Passage Retrieval): Skonfigurowano środowisko treningowe oraz wdrożono logowanie bibliotek umożliwiające precyzyjny tuning parametrów w celach badawczych.
+
+\begin{itemize}
+    \item Zastosowano model typu transformatorowego, QA oparty na cross encoderze (radlab/polish-qa-v2).
+    \item Wykorzystano konteksty dokumentów z desk research oraz dodatkowo wygenerowane zbiory dokumentów, co pozytywnie wpłynęło na wskaźniki jakości.
+    \item Opracowano narzędzie typu Reader do ekstrakcji danych z dokumentów.
+    \item Uzyskane wyniki: Accuracy (ACC): 0{,}85, F1-score: 0{,}92.
+\end{itemize}
+
+Przetestowano modele GPT 4o mini oraz PLLuM 70B.
+    
+\begin{itemize}
+    \item Opracowano dedykowane prompty na podstawie wiedzy z Desk Research.
+    \item Przeprowadzono testy badawcze typu „free shots”.
+\end{itemize}
+
+Wyniki dla modeli:  
+
+\begin{itemize}
+    \item ACC -- 0{,}8380, F1 -- 0{,}8737
+    \item ACC -- 0{,}49, F1 -- 0{,}54
+\end{itemize}
+
+Przebieg weryfikacji kamienia milowego:
+
+\begin{itemize}
+    \item Przeprowadzono matematyczne porównanie wskaźników ACC oraz F1-score dla wszystkich wytrenowanych modeli.
+    \item Zweryfikowano, że co najmniej jeden z modeli spełnia wymagania jakościowe (ACC i F1 powyżej 70\%).
+    \item Opracowano raport porównawczy, który jednoznacznie wskazał na wyższość podejścia DPR oraz modelu GPT 4o mini względem PLLuM 70B.
+\end{itemize}
+
+Wyniki:
+
+\begin{itemize}
+    \item Modele DPR oraz GPT 4o mini uzyskały wyniki wyraźnie przekraczające wymagany próg 70\% dla obu wskaźników, co potwierdza ich przydatność do wdrożenia w systemie.
+    \item Model PLLuM 70B nie spełnił wymagań jakościowych i nie jest rekomendowany do implementacji.
+\end{itemize}
+
+Nie zaistniała konieczność wdrażania działań korygujących, gdyż uzyskane wyniki były satysfakcjonujące.
+
+Na podstawie przeprowadzonych badań i analiz potwierdzono, że: Opracowane modele spełniają wymagania jakościowe określone w opisie kamienia milowego.
+
+Kamień milowy został osiągnięty zgodnie z opisanym sposobem weryfikacji.
+
+
+\section{B5. Opracowanie algorytmów rozpoznających okresy retencji dla dokumentów}
+\subsection{Cel zadania}
+[Placeholder: cel zadania B5.]
+\subsection{Przebieg prac}
+[Placeholder: opis prac podsumowujących, konsolidacji wyników i oceny ryzyk.]
+\subsection{Rezultaty}
+[Placeholder: komplet rezultatów fazy badawczej, rekomendacje i kryteria wejścia do fazy R.]
+\subsection{Wnioski}
+[Placeholder: finalne wnioski z fazy badawczej.]
+
+\subsection{=========== z docx ============}
+
+Nazwa zadania: Opracowanie algorytmów rozpoznających okresy retencji dla dokumentów - B5
+Data rozpoczęcia: 01.02.2025
+Data zakończenia: 30.06.2025
+
+W ramach zadania wykonywane zostało:
+1.	Opracowanie modelu transformatorowego
+\begin{itemize}
+    \item Konfiguracja środowiska: Ukończono konfigurację środowiska treningowego, wykorzystując środowisko z zadania B4 z drobnymi zmianami, aby lepiej obsługiwało zadanie rozpoznawania dat.
+    
+    \item Dostosowanie modelu: Przeprowadzono analizę istniejącego modelu transformatorowego i zaimplementowano modyfikacje architektury, m.in. zmianę warstw wyjściowych oraz dostosowanie tokenizacji pod daty.
+    
+    \item Dane wejściowe: Wykorzystano dokumenty pozyskane w ramach zadania B4.
+    
+    \item Reader: Zespół programistów ML ukończył opracowanie oprogramowania Reader, umożliwiającego wydajne wydobywanie dat z dokumentów.
+    
+    \item Walidacja wpływu generowania dokumentów: Przeprowadzono testy wpływu generowania dodatkowych dokumentów na jakość metryk F1 oraz accuracy~(Acc).
+\end{itemize}
+
+Wyniki testów na modelu:
+
+\begin{verbatim}
+eval_exact_match            =     96.875
+eval_f1                     =     99.5536
+eval_model_preparation_time =      0.0037
+eval_runtime                = 0:00:00.46
+eval_samples                =         32
+eval_samples_per_second     =     68.919
+eval_steps_per_second       =      8.615
+\end{verbatim}
+
+Czyli accuracy~(Acc) = 96{,}87\%, a F1-score = 99{,}55\%.
+
+2.	Opracowanie modelu typu LLM
+\begin{itemize}
+    \item Wybór modeli: Zastosowano modele PLLuM, Llama 3.3 70B oraz gpt-4o-mini, analogicznie jak w zadaniu B4.
+    
+    \item Opracowanie promptów: Na podstawie wyników Desk Research z zadania B2 opracowano zestaw promptów dedykowanych rozpoznawaniu okresów retencji i dat.
+    
+    \item Trening i dotrenowanie: Zespół ML przeprowadził testy typu few-shot wybranych modeli LLM na przygotowanych danych.
+    
+    \item Porównanie modeli: Wykonane zostały testy porównawcze modeli. Llama 70B osiągnęła następujące wyniki:
+    \begin{itemize}
+        \item Accuracy: 85{,}71\%;
+        \item F1-score: 94{,}90\%.
+    \end{itemize}
+\end{itemize}
+
+W ramach zadania B5 zrealizowane zostały wszystkie zaplanowane etapy, ze szczególnym naciskiem na optymalizację modeli pod kątem rozpoznawania dat w dokumentach. Z raportu wynika, iż skuteczniejszą metodą był wariant 1.
+Zadanie B5 zostało zakończone.
+
+Nazwa kamienia: Opracowany model rozpoznający daty retencji z dokumentów.
+
+Opis: 
+
+Raport podsumowujący metody badawcze wskazujący w sposób mierzalny, które podejście jest bardziej adekwatne z punktu widzenia implementacji systemu. Parametrami w układzie SI będą F1 i Acc - wymagane na poziomie wyższym niż 70\% dla co najmniej jednego z modeli. 
+
+Sposób weryfikacji:
+
+Dane rankingowe porównujące wypracowane modele powinny wskazywać, który model będzie można wykorzystać w implementacji. Wskazane Acc i F1 powinno wynosić powyżej 70\% przynajmniej dla jednego z modeli. Mniejsze wartości mogą być porównywalne z losowymi. Liczby Acc i F1 będą pochodzić z przeprowadzonych badań trenujących modele. Weryfikacja będzie polegała na matematycznym porównaniu powyższych wartości.
+
+Opis osiągnięcia:
+
+W ramach realizacji kamienia milowego „Opracowany model rozpoznający daty retencji z dokumentów” przeprowadzono pełny cykl prac badawczo-rozwojowych, obejmujący:
+\begin{itemize}
+    \item Opracowanie modelu transformatorowego:
+    \item Ukończono konfigurację środowiska treningowego, dostosowując je do wymagań zadania rozpoznawania dat.
+    \item Przeprowadzono analizę i modyfikację architektury modelu, w tym zmianę warstw wyjściowych oraz dostosowanie tokenizacji do specyfiki dat.
+    \item Wykorzystano dokumenty pozyskane w ramach zadania B4 jako dane wejściowe.
+    \item Zespół ML opracował narzędzie Reader, umożliwiające wydajne wydobywanie dat z dokumentów.
+    \item Zweryfikowano wpływ generowania dodatkowych dokumentów na jakość metryk F1 i accuracy.
+\end{itemize}
+
+Wyniki testów modelu transformatorowego:
+
+\begin{itemize}
+    \item Accuracy (ACC): 96{,}87\%
+    \item F1-score: 99{,}55\%
+    \item Opracowanie modelu typu LLM:
+    \item Przetestowano modele PLLuM, Llama 3.3 70B oraz GPT-4o-mini.
+    \item Opracowano dedykowane prompty na podstawie wyników Desk Research.
+    \item Przeprowadzono trening i testy typu few-shot na przygotowanych danych.
+    \item Wyniki testów dla Llama 3.3 70B:
+    \item Accuracy (ACC): 85{,}71; F1-score: 94{,}90\%
+\end{itemize}
+
+Przebieg weryfikacji kamienia milowego
+
+\begin{itemize}
+    \item Przeprowadzono matematyczne porównanie uzyskanych wskaźników ACC oraz F1-score dla wszystkich wytrenowanych modeli.
+    \item Zweryfikowano, że co najmniej jeden z modeli osiągnął wyniki powyżej wymaganego progu 70\% dla obu metryk.
+\end{itemize}
+
+Na podstawie przeprowadzonych badań i analiz potwierdzono, że:
+
+\begin{itemize}
+    \item Opracowane modele spełniają wymagania jakościowe określone w opisie kamienia milowego.
+    \item Model transformatorowy jest rekomendowany do wdrożenia ze względu na najwyższą skuteczność (ACC i F1 powyżej 96\%).
+\end{itemize}
+
+Kamień milowy został osiągnięty zgodnie z opisanym sposobem weryfikacji.
+
+
+
+
+
+\chapter{Faza rozwojowa}
+
+
+\section{R1. Opracowanie wersji prototypowej przetwarzającej wskazane pliki dokumentów}
+\subsection{Cel zadania}
+[Placeholder: cel zadania R1.]
+\subsection{Przebieg prac}
+[Placeholder: opis implementacji, integracji komponentów, przygotowania środowiska lub stanowiska testowego.]
+\subsection{Rezultaty}
+[Placeholder: opis prototypu, jego funkcjonalności i stopnia kompletności.]
+\subsection{Wnioski}
+[Placeholder: wnioski z realizacji zadania R1.]
+
+\subsection{=========== z docx ============}
+
+Nazwa zadania: Opracowanie wersji prototypowej przetwarzającej wskazane pliki dokumentów - R1
+
+Data rozpoczęcia: 01.07.2025
+
+Data zakończenia: 31.12.2025
+
+Zadania jest realizowane zgodnie z harmonogramem oraz zapisami z pola „Zadania planowane”
+
+Zrealizowano wszystkie kluczowe zadania przewidziane dla kamienia milowego R1. Przeprowadzono ostateczną rundę testów automatycznych i ręcznych, które definitywnie potwierdziły efektywność modeli w zakresie rozpoznawania etykiet danych wrażliwych z minimalnym współczynnikiem false-negative. Testy objęły trzy główne obszary: wydobywanie etykiet, poprawność anonimizacji oraz rozpoznawanie okresów retencji.
+
+Szczegółowy opis prac
+
+\begin{itemize}
+    \item Architektura i API: Prototyp operuje na dokumentach PDF, przyjmując zarówno pojedyncze pliki, jak i kolekcje dokumentów wskazywane przez ścieżki oraz przesyłane przez działające API z wykorzystaniem kodowania base64. Architektura API została zaprojektowana według wzorca mikroserwisowego i zaimplementowana w technologiach Java oraz Python. Implementacja uwzględnia flagowanie przetwarzania pod kątem zużycia energii.
+    
+    \item Środowisko produkcyjne/testowe: Zespół inżynierów systemowych skonfigurował środowisko testowe oparte na środowiskach wirtualnych, wykorzystujące dedykowany serwer z kartą graficzną NVIDIA H100, dostosowany do wydajnego uruchamiania modeli wykorzystywanych w tym zadaniu. API do serwera H100 jest w pełni skonfigurowane i działa.
+    
+    \item Testy na danych syntetycznych oraz rzeczywistych: Rozpoczęto testy prototypu na prawdziwych danych opracowywanych w ramach zadania R3 oraz danych rzeczywistych, co jest kluczowym krokiem w weryfikacji funkcjonalności i wydajności systemu w warunkach zbliżonych do docelowych. Prace nad prototypem odbywają się sekwencyjnie, zgodnie z wynikami bieżących testów i eksperymentów.
+    
+    \item Ekspert ds. bezpieczeństwa informatycznego analizuje i weryfikuje zgodność API z wymogami OWASP, zapewniając bezpieczeństwo przetwarzanych danych.
+    
+    \item Kontroler jakości, przy wsparciu zespołu prawnego, weryfikuje zdefiniowany zakres etykiet danych wrażliwych, które system ma wykrywać i anonimizować, poprzez walidację przygotowanych zestawów testowych.
+    
+    \item Analitycy przygotowują odpowiednią dokumentację techniczną opisującą funkcjonalności i sposoby ich weryfikacji.
+\end{itemize}
+
+Zakończono również serię testów na sztucznie generowanych plikach, co pozwoliło finalnie zweryfikować stabilność modeli i potwierdzić niski poziom false-positive. Prototyp wykazał wysoką niezawodność działania w warunkach zbliżonych do produkcyjnych.
+
+Usługa została wdrożona i uruchomiona na serwerze wyposażonym w kartę GPU NVIDIA H100, co zapewnia wymaganą moc obliczeniową do wydajnego przetwarzania danych. Przeprowadzono rundę optymalizacji wydajności i stabilności API, uzyskując pożądane parametry czasów odpowiedzi oraz przepustowości przy obciążeniu testowym.
+ 
+W ramach kontroli bezpieczeństwa wykonano audyt API zgodnie z wymogami OWASP, weryfikując m.in. podatności z listy OWASP Top 10. Wszystkie zidentyfikowane uwagi zostały zaadresowane, a API uzyskało potwierdzenie zgodności wymagane do bezpiecznego przetwarzania danych osobowych i wrażliwych.
+
+
+\section{R2. Opracowanie wersji prototypowej wizualizacji rozpoznanych danych w dokumentach}
+\subsection{Cel zadania}
+[Placeholder: cel zadania R2.]
+\subsection{Przebieg prac}
+[Placeholder: opis scenariuszy testowych, optymalizacji, poprawek i iteracji.]
+\subsection{Rezultaty}
+[Placeholder: wyniki testów, wskaźniki jakościowe i ilościowe, porównanie z kryteriami sukcesu.]
+\subsection{Wnioski}
+[Placeholder: ocena dojrzałości rozwiązania oraz lista usprawnień.]
+
+\subsection{=========== z docx ============}
+
+Nazwa zadania: Opracowanie wersji prototypowej wizualizacji rozpoznanych danych w dokumentach - R2
+
+Data rozpoczęcia: 02.01.2026
+
+Data zakończenia: 30.06.2026
+
+Zadanie jest realizowane zgodnie z harmonogramem.
+
+Moduł umożliwi użytkownikom wybór plików do analizy, prezentację miejsc występowania danych wrażliwych oraz dat istotnych dla okresów retencji, a także zapewni interaktywne narzędzia do przeglądania, filtrowania i anonimizacji takich danych.
+
+W ramach pracy opracowane zostało:
+
+\begin{itemize}
+    \item Zaimplementowany został interfejs wizualizatora dokumentów w oparciu o architekturę mikroserwisową, zgodnie z wnioskami z zadań B1 oraz R1, w formie aplikacji webowej.
+    
+    \item System obsługuje pojedyncze pliki PDF, wprowadzane indywidualnie przez użytkownika.
+    
+    \item System umożliwia prezentację kontekstowych informacji o wykrytych danych w formie listy danych, z możliwością filtrowania po wybranych kategoriach.
+    
+    \item System umożliwia wyszukiwanie w dokumentach wskazanych danych wrażliwych, np. numeru PESEL.
+    
+    \item System umożliwia anonimizację danych w dokumentach z możliwością wyboru algorytmu, takiego jak tokenizacja, haszowanie lub szyfrowanie, oraz podgląd dokumentu zanonimizowanego. Jeżeli w katalogu dostępny jest dokument oryginalny, możliwa będzie także prezentacja danych ukrytych.
+    
+    \item System umożliwia rozpoznawanie i oznaczanie istotnych dat oraz okresów retencji z wizualnym podsumowaniem statystycznym dokumentu, obejmującym m.in. liczbę wykrytych kategorii, jurysdykcje oraz okresy przechowywania.
+\end{itemize}
+
+
+\section{R3. Testy prototypu systemu klasyfikującego dane w warunkach laboratoryjnych}
+\subsection{Cel zadania}
+[Placeholder: cel zadania R3.]
+\subsection{Przebieg prac}
+[Placeholder: opis działań wdrożeniowych, przygotowania dokumentacji, analiz kosztowych i organizacyjnych.]
+\subsection{Rezultaty}
+[Placeholder: plan wdrożenia, wymagania operacyjne, dokumentacja użytkowa lub techniczna.]
+\subsection{Wnioski}
+[Placeholder: gotowość wdrożeniowa, ryzyka i rekomendowane działania końcowe.]
+
+\subsection{=========== z docx ============}
+
+Nazwa zadania: Testy prototypu systemu klasyfikującego dane w warunkach laboratoryjnych - R3
+
+Data rozpoczęcia: 01.07.2025
+
+Data zakończenia: 30.06.2026
+
+W ramach zadania opracowywane są scenariusze testowe (zgodnie z dokumentacją przygotowaną w części badawczej, korygowaną na bieżąco podczas postępu prac implementacyjnych). Testy wykonywane są na plikach opracowanych w zadaniu B1, sztucznie generowanych danych, które nie zawierają danych wrażliwych – co umożliwi weryfikację zjawiska false-positive, czyli wykrywania danych wrażliwych tam, gdzie ich nie ma.
+
+Testy dzielą się na dwie kategorie: automatyczne i ręczne.
+
+\begin{enumerate}
+    \item Testy Automatyczne
+
+    \begin{itemize}
+        \item Tworzone są skrypty automatyzujące procesy testowe, które odwołują się bezpośrednio do zaimplementowanego i działającego API na serwerze H100. Pliki testowe są umieszczane w dedykowanych katalogach. Skrypty automatycznie uruchamiają klasyfikację danych poprzez API (wykorzystujące moc obliczeniową H100).
+        
+        \item Skrypty porównują wyniki zwrócone przez API z przygotowanymi wzorcami i oczekiwanymi wynikami.
+    \end{itemize}
+
+    \item Testy manualne
+
+    \begin{itemize}
+        \item Testy wykonywane są na podstawie szczegółowych scenariuszy obejmujących kluczowe funkcjonalności implementowane w modułach przetwarzania danych. Obejmują one weryfikację złożonych przypadków użycia API dla weryfikacji danych wyjściowych. Do ich przeprowadzenia wykorzystywane są sztucznie wygenerowane pliki testowe oraz zestawy danych z zadania B1, w tym do symulacji przypadków krytycznych i granicznych oraz specjalnie przygotowane dokumenty rzeczywiste.
+    \end{itemize}
+\end{enumerate}
+
+Testy modeli API są realizowane automatycznie na podstawie dokumentacji API. W ramach testów API prototypowego systemu wykorzystano testowe REST API, obejmujące zarówno testy funkcjonalne, jak i jakościowe. 
+
+Aktualnie przygotowane testy to:
+
+\begin{itemize}
+    \item Testy poprawności endpointów REST: dla każdego endpointu wykonano żądania CRUD (Create, Read, Update, Delete) w celu sprawdzenia czy odpowiedzi mają prawidłowy status HTTP (np. 200 OK, 201 Created, 400 Bad Request) oraz czy dane są poprawnie przetwarzane i zwracane.
+    
+    \item Testy autoryzacji i uwierzytelniania: sprawdzono, czy dostęp do chronionych zasobów wymaga poprawnego tokena lub klucza API oraz czy nieautoryzowane żądania są odrzucane z odpowiednim kodem 401 Unauthorized lub 403 Forbidden.
+    
+    \item Testy walidacji danych wejściowych: wysłano do API zarówno poprawne, jak i niepoprawne dane (np. błędne formaty JSON, brak wymaganych pól), aby zweryfikować odpowiednią reakcję systemu i komunikaty błędów.
+    
+    \item Testy wydajnościowe i przeciążeniowe: symulowano duże obciążenie zapytań do API, aby ocenić stabilność systemu, czas odpowiedzi oraz możliwość obsługi batchowego przetwarzania plików.
+\end{itemize}
+
+Testy interfejsu użytkownika:
+
+\begin{itemize}
+    \item Zostały przygotowane test zapewniające zgodność z interfejsu WCAG 2.1, zapewniające dostępność do systemu dla osób z ograniczeniami.
+\end{itemize}
+
+
+
+
+
+\chapter{Rezultaty projektu}
+\section{Produkty i rezultaty materialne}
+[Placeholder: lista produktów, prototypów, demonstratorów, dokumentacji i innych rezultatów materialnych.]
+
+\section{Rezultaty niematerialne}
+[Placeholder: know-how, modele, algorytmy, procedury, wyniki badań, potencjalne zgłoszenia IP.]
+
+\section{Stopień osiągnięcia wskaźników}
+[Placeholder: tabela wskaźników projektu, wartości planowane, osiągnięte i komentarze.]
+
+\begin{table}[h]
+    \centering
+    \caption{Zestawienie wskaźników projektu}
+    \begin{tabular}{p{0.38\textwidth} p{0.18\textwidth} p{0.18\textwidth} p{0.18\textwidth}}
+        \toprule
+        Wskaźnik & Wartość planowana & Wartość osiągnięta & Komentarz \\
+        \midrule
+        \textit{Nazwa wskaźnika} & -- & -- & -- \\
+        \textit{Nazwa wskaźnika} & -- & -- & -- \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\chapter{Zarządzanie projektem}
+\section{Harmonogram realizacji}
+[Placeholder: opis harmonogramu, kamieni milowych i odchyleń od planu.]
+
+\section{Zespół projektowy i podział odpowiedzialności}
+[Placeholder: role, odpowiedzialności i zaangażowanie członków zespołu.]
+
+\section{Ryzyka i działania zaradcze}
+[Placeholder: identyfikacja ryzyk, ocena wpływu i prawdopodobieństwa, działania mitygujące.]
+
+\begin{longtable}{p{0.30\textwidth} p{0.15\textwidth} p{0.15\textwidth} p{0.30\textwidth}}
+    \caption{Rejestr ryzyk projektowych} \\
+    \toprule
+    Ryzyko & Prawdopodobieństwo & Wpływ & Działanie zaradcze \\
+    \midrule
+    \endfirsthead
+    \toprule
+    Ryzyko & Prawdopodobieństwo & Wpływ & Działanie zaradcze \\
+    \midrule
+    \endhead
+    \textit{Opis ryzyka} & niskie/średnie/wysokie & niskie/średnie/wysokie & \textit{Opis działania} \\
+    \textit{Opis ryzyka} & niskie/średnie/wysokie & niskie/średnie/wysokie & \textit{Opis działania} \\
+    \bottomrule
+\end{longtable}
+
+\chapter{Wnioski końcowe}
+\section{Ocena realizacji celów}
+[Placeholder: ocena, w jakim stopniu cele projektu zostały osiągnięte.]
+
+\section{Potencjał dalszego rozwoju}
+[Placeholder: możliwe kierunki dalszych prac badawczych, rozwojowych lub wdrożeniowych.]
+
+\section{Rekomendacje}
+[Placeholder: rekomendacje dla zespołu, interesariuszy, partnerów lub jednostki wdrażającej.]
+
+% \appendix
+% \chapter{Załączniki}
+% \section{Dokumentacja techniczna}
+% [Placeholder: odniesienia do dokumentacji technicznej, schematów, kodu, modeli lub plików źródłowych.]
+
+% \section{Wyniki szczegółowe badań i testów}
+% [Placeholder: tabele wyników, raporty z pomiarów, scenariusze testowe.]
+
+% \section{Słownik pojęć i skrótów}
+% \begin{description}
+%     \item[B+R] Badania i rozwój.
+%     \item[TRL] Technology Readiness Level; poziom gotowości technologicznej.
+%     \item[Placeholder] Miejsce do uzupełnienia treścią właściwą.
+% \end{description}
+
+
+% \cleardoublepage
+\addcontentsline{toc}{chapter}{Bibliografia}
+\bibliographystyle{plain}
+\bibliography{references}
+
+
+\appendix
+
+\chapter*{Załączniki}
+
+\section*{Załącznik 1 -- Tytuł załącznika}
+Placeholder treści załącznika.
+
+\section*{Załącznik 2 -- Tytuł załącznika}
+Placeholder treści załącznika.
+
+
+\chapter*{Autorzy opracowania}
+\addcontentsline{toc}{chapter}{Autorzy opracowania}
+
+\begin{itemize}
+    \item dr inż. Bartosz Lewandowski -- rola / zakres odpowiedzialności
+    \item mgr Michał Legumina -- rola / zakres odpowiedzialności
+    \item prof. dr hab. Grzegorz Wójcik -- rola / zakres odpowiedzialności
+    \item dr Łukasz Kwaśniewicz -- rola / zakres odpowiedzialności
+    \item dr. hab. inż. Michał Podpora, prof. UO -- rola / zakres odpowiedzialności
+\end{itemize}
+
+% \cleardoublepage
+\chapter*{Wersjonowanie dokumentu}
+\addcontentsline{toc}{chapter}{Wersjonowanie dokumentu}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|p{1.7cm}|p{2.0cm}|p{6.2cm}|p{4.1cm}|}
+    \hline
+    \textbf{Wersja} & \textbf{Data} & \textbf{Opis zmian} & \textbf{Autor} \\
+    \hline
+    0.1 -- 0.5 & 2023, 2024 & Raporty cząstkowe na bazie sprawozdań zespołu projektowego & Michał Legumina \\
+    \hline
+    0.6 -- 0.9 & 2024, 2025 & Raporty cząstkowe na bazie sprawozdań zespołu projektowego  & Bartosz Lewandowski \\
+    \hline
+    1.0 & 2026-05-20 & Utworzenie dokumentu raportu końcowego na bazie raportów cząstkowych & Michał Podpora \\
+    \hline
+    % 1.0 & RRRR-MM-DD & Wersja końcowa dokumentu & Imię i nazwisko \\
+    % \hline
+\end{tabular}
+\end{center}
+
+
+\end{document}

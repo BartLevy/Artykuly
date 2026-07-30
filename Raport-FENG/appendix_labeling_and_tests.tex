@@ -1,0 +1,136 @@
+\subsection*{Moduł 4: Etykietowanie}
+\addcontentsline{toc}{subsection}{Moduł 4: Etykietowanie}
+
+Moduł Etykietowanie nie udostępnia własnego API -- jest narzędziem wewnętrznym zespołu analitycznego, wspierającym przygotowanie danych treningowych dla pozostałych modułów systemu (w szczególności modeli klasyfikujących wykorzystywanych w module Anonymizer oraz w module DLP). Obejmuje narzędzie do kontekstowego, ręcznego klasyfikowania dokumentów oraz zarządzania zbiorami etykiet (kategorii dokumentów i typów danych wrażliwych), a także przygotowywania mapowań typu NER (Named Entity Recognition) łączących typy danych, kontekst ich występowania oraz przypisane etykiety. Zbiory te (22 etykiety kategorii dokumentów, 33 etykiety danych wrażliwych -- zadanie B3) stanowią materiał wejściowy dla modeli klasyfikujących i ekstrahujących dane wrażliwe wykorzystywanych w pozostałych modułach.
+
+\subsection*{Wyniki testów prototypu systemu (zadania R1--R3)}
+\addcontentsline{toc}{subsection}{Wyniki testów prototypu systemu (zadania R1--R3)}
+
+Poniższy rozdział przedstawia zakres funkcjonalny oraz wyniki testów prototypu, zaprezentowane podczas spotkania statusowego projektu FENG w dniu 07.04.2026. W odróżnieniu od modułów opisanych powyżej, zweryfikowanych bezpośrednio w kodzie źródłowym, poniższe informacje pochodzą z dokumentacji API (Swagger/OpenAPI) oraz zrzutów ekranu wyników testów zaprezentowanych na spotkaniu. Odzwierciedlają one stan prac prototypu integrującego moduły IQText i Anonymizer, rozwijanego w ramach zadań R1--R3 (architektura mikroserwisowa API, Java + Python), obsługującego zarówno pojedyncze pliki PDF, jak i kolekcje przekazywane w postaci base64.
+
+\subsubsection*{Środowisko uruchomieniowe (R1)}
+
+Prototyp uruchomiono na serwerze wyposażonym w GPU \textbf{NVIDIA H100 NVL} (95\,321 MB pamięci globalnej, 16\,896 rdzeni CUDA, sterownik/CUDA w wersji 13.2), co potwierdzono narzędziami diagnostycznymi \texttt{deviceQuery} (CUDA Runtime API) oraz \texttt{nvidia-smi}. Środowisko zostało oznaczone jako skonfigurowane i działające zarówno w wariancie produkcyjnym, jak i testowym.
+
+\subsubsection*{API zarządzania dokumentami -- moduł \texttt{dm} (R1)}
+
+Zaprezentowane API udostępnia funkcjonalność zarządzania dokumentami z rozróżnieniem ról \texttt{admin} i \texttt{client}, udokumentowaną w standardzie OpenAPI/Swagger. Uwierzytelnianie oparte jest o tokeny (nagłówki \texttt{X-Token}/\texttt{Authorization}), z obsługą logowania, drugiego składnika uwierzytelnienia (2FA), logowania SSO oraz zarządzania czasem trwania sesji (rozpoczęcie, przedłużenie, zakończenie).
+
+\begingroup
+\small
+\begin{longtable}{p{0.14\textwidth} p{0.34\textwidth} p{0.44\textwidth}}
+\caption{Wybrane endpointy API zarządzania dokumentami (moduł \texttt{dm})} \\
+\toprule
+\rowcolor{tablehead!15}
+Rola & Endpoint & Funkcja \\
+\midrule
+\endfirsthead
+\toprule
+\rowcolor{tablehead!15}
+Rola & Endpoint & Funkcja \\
+\midrule
+\endhead
+client & \texttt{/dm/client/\allowbreak upload-pending-file} & przesłanie pliku dokumentu oczekującego na przetworzenie (m.in. \texttt{guid}, \texttt{sha256}, \texttt{iban}, \texttt{type}: private/public/protected, \texttt{s3\_bucket}/\texttt{s3\_key} lub \texttt{base64\_content}) \\
+client & \texttt{/dm/client/\allowbreak download-file} & pobranie pliku (publicznego lub prywatnego, z kontrolą właściciela) \\
+client & \texttt{/dm/client/\allowbreak documents} & lista dokumentów użytkownika (z rozróżnieniem dostępu publicznego/prywatnego) \\
+client & \texttt{/dm/client/\allowbreak request-confirm-document} & zgłoszenie żądania potwierdzenia dokumentu \\
+client & \texttt{/dm/client/\allowbreak confirm-document} & potwierdzenie dokumentu (przejście między stanami dokumentu) \\
+client & \texttt{/dm/client/\allowbreak sessions/*} & logowanie, potwierdzenie 2FA, logowanie SSO, przedłużenie/zamknięcie sesji, wylogowanie \\
+admin & \texttt{get-users} / \texttt{get-user-\allowbreak details} & lista i szczegóły użytkowników systemu \\
+admin & \texttt{list-documents} / \texttt{set-\allowbreak archive} & listowanie dokumentów z filtrowaniem (właściciel, kategoria, IBAN, archiwum, stronicowanie) oraz archiwizacja \\
+admin & \texttt{list-groups} / \texttt{save-\allowbreak group} / \texttt{delete-group} & zarządzanie grupami odbiorców \\
+admin & \texttt{list-recipients-\allowbreak in-group} / \texttt{add-\allowbreak recipient-to-group} / \texttt{remove-\allowbreak recipient-from-group} & zarządzanie odbiorcami w ramach grup \\
+admin & \texttt{list-suggested-\allowbreak categories} & lista sugerowanych kategorii dokumentów \\
+admin & \texttt{list-notifications} / \texttt{save-\allowbreak notification} / \texttt{delete-\allowbreak notification} & zarządzanie powiadomieniami \\
+\bottomrule
+\end{longtable}
+\endgroup
+
+Warstwa przechowywania danych oparta jest o bazę PostgreSQL oraz obiektowy magazyn plików S3 (moduły \texttt{db/postesql.py} i \texttt{s3/s3\_io.py} ujawnione w wynikach testów, zob. podrozdział „Testy prototypu (R3)”).
+
+\subsubsection*{Wizualizator dokumentów i panel anonimizacji (R2)}
+
+Zaimplementowano interfejs wizualizatora dokumentów (aplikacja webowa oparta o architekturę mikroserwisową), obsługujący na obecnym etapie pojedyncze pliki PDF. Interfejs prezentuje wynik analizy AI w układzie dwukolumnowym, analogicznym do opisanego w podrozdziale 1.1: kolumna tylko do odczytu (\emph{Analiza AI}) oraz kolumna edytowalna (\emph{Edytowana analiza AI}), z polami takimi jak Obszar Danych, Okres Obowiązywania oraz Kontekst/Opis -- fragment źródłowego tekstu dokumentu, na podstawie którego dokonano ekstrakcji danego pola.
+
+Interfejs zawiera również panel anonimizacji, stanowiący rozwinięcie funkcjonalności opisanej w podrozdziałach 2.1 i 2.2:
+\begin{itemize}
+    \item lista wykrytych danych wrażliwych z możliwością filtrowania po kategoriach oraz wyszukiwania konkretnych wartości w dokumencie (np. numer PESEL);
+    \item wybór metody ukrycia danych z poziomu interfejsu: tokenizacja, haszowanie lub szyfrowanie (AES);
+    \item tabela \emph{Znajdź / Wygenerowany token}, wstępnie wypełniana kandydatami do anonimizacji zasugerowanymi automatycznie przez model AI, z możliwością ręcznego dodania przez użytkownika kolejnych fragmentów do ukrycia;
+    \item podgląd zanonimizowanego dokumentu PDF (wielostronicowego) z wygenerowanymi tokenami wstawionymi w miejsce oryginalnych wartości.
+\end{itemize}
+
+W toku realizacji zadania R2 prowadzone są dodatkowo prace nad: obsługą batchową plików PDF (przetwarzanie całych katalogów oraz kolekcji przekazywanych przez API w formacie base64) oraz mechanizmami adnotacji dokumentu (ramki, etykiety, komentarze i popupy, zróżnicowane kolorystycznie w zależności od kategorii danych).
+
+\subsubsection*{Testy prototypu (R3)}
+
+Testy prototypu w warunkach laboratoryjnych obejmują pięć obszarów: poprawność endpointów REST (operacje CRUD, kody odpowiedzi HTTP), autoryzację/uwierzytelnianie (poprawność obsługi tokenów, kody 401/403), walidację danych wejściowych (struktura JSON, pola wymagane), wydajność i zachowanie pod obciążeniem (przetwarzanie wsadowe, stabilność) oraz dostępność interfejsu zgodnie ze standardem WCAG 2.1. Testy są wykonywane zarówno ręcznie (kolekcje Postman), jak i automatycznie (framework \texttt{pytest}).
+
+Przykładowy przebieg testów funkcjonalnych modułu \texttt{client\_router} (15 przypadków testowych) zakończył się powodzeniem wszystkich testów, z następującym pokryciem kodu:
+
+\begingroup
+\small
+\begin{longtable}{p{0.52\textwidth} p{0.11\textwidth} p{0.16\textwidth} p{0.10\textwidth}}
+\caption{Wynik testów automatycznych \texttt{test\_client\_router.py} wraz z pokryciem kodu} \\
+\toprule
+\rowcolor{tablehead!15}
+Moduł / grupa testów & Instr. & Nieprzetest. & Pokrycie \\
+\midrule
+\endfirsthead
+\toprule
+\rowcolor{tablehead!15}
+Moduł / grupa testów & Instr. & Nieprzetest. & Pokrycie \\
+\midrule
+\endhead
+\texttt{routers/client\_router.py} (upload, download, list documents, confirm document, sessions -- 15 testów, wszystkie PASSED) & 98 & 14 & 86\% \\
+\texttt{document/document\_helper.py} & 87 & 21 & 76\% \\
+\texttt{auth/auth\_helper.py} & 42 & 42 & 0\% \\
+\texttt{db/postesql.py} & 61 & 61 & 0\% \\
+\texttt{http\_helper/http\_download.py} & 29 & 29 & 0\% \\
+\texttt{s3/s3\_io.py} & 34 & 34 & 0\% \\
+\midrule
+\textbf{Razem} & 351 & 201 & 43\% \\
+\bottomrule
+\end{longtable}
+\endgroup
+
+Testy wydajnościowe (12 przypadków, framework \texttt{pytest-benchmark}) potwierdziły dotrzymanie zdefiniowanych progów czasu odpowiedzi dla kluczowych endpointów:
+
+\begingroup
+\small
+\begin{longtable}{p{0.42\textwidth} p{0.17\textwidth} p{0.17\textwidth} p{0.13\textwidth}}
+\caption{Wyniki testów progowych czasu odpowiedzi (\texttt{test\_client\_router\_perf.py})} \\
+\toprule
+\rowcolor{tablehead!15}
+Endpoint & Średni czas & Limit & Status \\
+\midrule
+\endfirsthead
+\toprule
+\rowcolor{tablehead!15}
+Endpoint & Średni czas & Limit & Status \\
+\midrule
+\endhead
+POST \texttt{/dm/client/\allowbreak upload-pending-file} & 78,3 ms & 500 ms & OK \\
+POST \texttt{/dm/client/\allowbreak download-file} & 28,6 ms & 300 ms & OK \\
+POST \texttt{/dm/client/\allowbreak documents} & 33,1 ms & 300 ms & OK \\
+POST \texttt{/dm/client/\allowbreak request-confirm-document} & 89,4 ms & 500 ms & OK \\
+POST \texttt{/dm/client/\allowbreak confirm-document} & 84,7 ms & 500 ms & OK \\
+POST \texttt{/dm/client/\allowbreak sessions/start} & 124,6 ms & 800 ms & OK \\
+POST \texttt{/dm/client/\allowbreak sessions/extend} & 61,8 ms & 500 ms & OK \\
+POST \texttt{/dm/client/\allowbreak sessions/close} & 57,3 ms & 500 ms & OK \\
+POST \texttt{/dm/client/\allowbreak sessions/start} (20 sesji równoległych) & 847,1 ms & 2000 ms & OK \\
+\bottomrule
+\end{longtable}
+\endgroup
+
+Wszystkie zdefiniowane progi czasowe zostały dotrzymane (\emph{All thresholds passed}). Dodatkowo przygotowano zestaw testów zgodności interfejsu ze standardem dostępności WCAG 2.1, zapewniających dostępność systemu dla osób z ograniczeniami.
+
+\subsubsection*{Wyniki kamienia milowego zadania R1}
+
+Zadanie R1 zakończono działającym prototypem API uruchomionym na serwerze NVIDIA H100, przetestowanym na danych syntetycznych i rzeczywistych, z potwierdzonym niskim wskaźnikiem false-negative i false-positive. Uzyskane wskaźniki jakościowe:
+
+\begin{itemize}
+    \item rozpoznawanie etykiet danych wrażliwych -- 61\% etykiet z zadania B3;
+    \item anonimizacja dokumentów -- 100\% etykiet możliwych do wydobycia poddanych anonimizacji (tokenizacja, haszowanie, szyfrowanie);
+    \item rozpoznawanie okresów retencji -- 62\% etykiet z zadania B5.
+\end{itemize}
