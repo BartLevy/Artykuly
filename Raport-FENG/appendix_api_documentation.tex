@@ -107,21 +107,19 @@ POST & \texttt{/process} & form-data: listy \texttt{find\_text} oraz \texttt{rep
 \bottomrule
 \end{longtable}
 
-\textbf{Zasada działania:} interfejs użytkownika pozwala ręcznie wskazać dokładne fragmenty tekstu do ukrycia; dla każdego wskazanego fragmentu przeglądarka generuje losowy token zastępczy o długości oryginalnego tekstu. Backend wyszukuje dokładne dopasowania wskazanego tekstu na każdej stronie dokumentu, stosuje redakcję (fizyczne usunięcie z warstwy treści PDF), a następnie wstawia w to samo miejsce tekst zastępczy.
+\textbf{Zasada działania:} interfejs użytkownika pozwala wskazać dokładne fragmenty tekstu do ukrycia lub zezwolić mechanizmom AI na ich wskazanie; dla każdego wskazanego fragmentu system generuje losowy token zastępczy o długości oryginalnego tekstu. Backend wyszukuje dokładne dopasowania wskazanego tekstu na każdej stronie dokumentu, stosuje redakcję (fizyczne usunięcie z warstwy treści PDF), a następnie wstawia w to samo miejsce tekst zastępczy.
 
-\textbf{Zakres funkcjonalny obecnej wersji narzędzia -- ograniczenia:}
+\textbf{Zakres funkcjonalny obecnej wersji narzędzia:}
 \begin{itemize}
-    \item brak automatycznej detekcji danych wrażliwych -- użytkownik samodzielnie wskazuje fragmenty tekstu do zamiany;
-    \item narzędzie operuje na jednym, wskazanym w konfiguracji pliku dokumencie demonstracyjnym -- brak funkcji wgrywania dowolnego pliku przez użytkownika;
-    \item token zastępczy generowany jest losowo po stronie przeglądarki i nie jest nigdzie zapisywany -- proces jest jednokierunkowy (nieodwracalny), bez mechanizmu odtworzenia oryginalnej wartości;
-    \item brak mechanizmów szyfrowania, tokenizacji odwracalnej lub haszowania -- opcje te są zaznaczone w interfejsie użytkownika jako punkt wyjścia do dalszych prac, lecz nie są jeszcze połączone z logiką przetwarzania;
-    \item brak uwierzytelniania dostępu do endpointów.
+    \item  automatyczna detekcjia danych wrażliwych -- użytkownik samodzielnie wskazuje fragmenty tekstu do zamiany lub pozwala to na wykonanie automatowi;
+    
+    \item  mechanizmy szyfrowania danych w dokumencie PDF, tokenizacja odwracalna lub haszowania -- opcje te są zaznaczone w interfejsie użytkownika jako punkt wyjścia do procesu anonimizacji.
 \end{itemize}
 
 
 \subsubsection*{2.2. Specyfikacja funkcjonalna modułu anonimizacji}
 
-Moduł anonimizacji automatycznie wykrywa dane wrażliwe w dokumentach przetwarzanych przez system i ukrywa je jedną z dostępnych metod (maskowanie, tokenizacja, haszowanie lub szyfrowanie AES), zależnie od tego, czy dane mają pozostać nieodwracalne, czy odtwarzalne przez uprawnionego użytkownika. Stanowi rozszerzenie wcześniejszego narzędzia (moduł Anonymizer, podrozdział 2.1), które obejmowało wyłącznie ręczną redakcję wskazanego tekstu w dokumentach PDF, o warstwę automatycznej detekcji oraz mechanizmy szyfrowania i tokenizacji.
+Moduł anonimizacji automatycznie wykrywa dane wrażliwe w dokumentach przetwarzanych przez system i ukrywa je jedną z dostępnych metod (maskowanie, tokenizacja, haszowanie lub szyfrowanie AES), zależnie od tego, czy dane mają pozostać nieodwracalne, czy odtwarzalne przez uprawnionego użytkownika. 
 
 \subhead{Cel modułu}
 

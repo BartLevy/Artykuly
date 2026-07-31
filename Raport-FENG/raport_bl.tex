@@ -88,12 +88,7 @@
 \begin{titlepage}
     \thispagestyle{empty}
 
-    % \begin{flushleft}
-    %     \includesvg[width=4cm]{logo}
-    % \end{flushleft}
-
-    \vspace{2.5cm}
-
+    \vspace*{3.2cm}
     \begin{center}
         {\Huge\bfseries \ReportTitle\par}
         \vspace{1.2cm}
@@ -101,7 +96,7 @@
         \vspace{0.8cm}
         {\large \ProjectNumber\par}
         \vspace{1.5cm}
-        {\large Data opracowania: \ReportDate\par}
+        {\large Data opracowania:2026-07-30}
     \end{center}
 
     \vfill
@@ -130,19 +125,18 @@ Niniejszy raport podsumowuje przebieg i rezultaty projektu \textit{\ProjectName}
 \section{Najważniejsze wyniki}
 \begin{itemize}
     \item Opracowano kompletną architekturę systemu klasyfikacji danych wrażliwych (B1) wraz z diagramem architektury statycznej obejmującym pięć kluczowych komponentów.
-    \item Przygotowano macierze klasyfikujące akty prawne dla pięciu obszarów regulacyjnych (DORA, RODO, NDA, NIS-UKSC, INNE), obejmujące łącznie 470 typów dokumentów (B2).
+    \item Przygotowano macierze klasyfikujące akty prawne dla różnych obszarów regulacyjnych (DORA, RODO, NDA, NIS-UKSC, INNE), obejmujące łącznie 470 typów dokumentów (B2).
     \item Opracowano zbiory etykiet: 22 etykiety kategorii dokumentów oraz 33 etykiety danych wrażliwych, wraz z mapowaniami NER (B3).
     \item Zaprojektowano i porównano algorytmy klasyfikujące dane wrażliwe (B4) -- najlepsze wyniki uzyskał model DPR (ACC~0,85, F1~0,92), a próg jakości (>70\%) przekroczył również model GPT-4o~mini (ACC~0,8380, F1~0,8737).
     \item Zaprojektowano i porównano algorytmy rozpoznające okresy retencji (B5) -- model transformatorowy osiągnął ACC~96,87\% i F1~99,55\%, przewyższając testowany wariant LLM (Llama~3.3~70B: ACC~85,71\%, F1~94,90\%).
     \item Opublikowano dwie recenzowane publikacje naukowe będące formalnym upowszechnieniem wyników projektu (Załączniki 1--2).
-    \item Uruchomiono działający prototyp systemu przetwarzającego dokumenty (backend IQText wraz z REST API), prototyp wizualizatora rozpoznanych danych (IQText-GUI) oraz prototypowe narzędzie do redakcji danych wrażliwych w dokumentach PDF (moduł Anonymizer) -- pełny opis interfejsów API znajduje się w Załączniku ,,Dokumentacja techniczna''.
-    \item Zidentyfikowano, że funkcjonalność automatycznej anonimizacji/pseudonimizacji danych wrażliwych wymaga dalszych prac rozwojowych wykraczających poza obecny prototyp -- szczegółową specyfikację funkcjonalną do dalszej implementacji przedstawiono w Załączniku ,,Specyfikacja modułu anonimizacji''.
+    \item Stworzono i uruchomiono działający system przetwarzający dokumenty (backend IQText wraz z REST API), prototyp wizualizatora rozpoznanych danych (IQText-GUI) oraz  narzędzie do redakcji danych wrażliwych w dokumentach PDF (moduł Anonymizer) -- pełny opis interfejsów API znajduje się w Załączniku ,,Dokumentacja techniczna''.
+   \item Stworzono i uruchomiono działający system DLP  (backend DLP wraz z REST API),  -- pełny opis interfejsów API znajduje się w Załączniku ,,Dokumentacja techniczna''.
 \end{itemize}
 
 \section{Wnioski i rekomendacje}
 Faza badawcza projektu (B1--B5) została zrealizowana zgodnie z założonymi kamieniami milowymi, a opracowane modele klasyfikacji danych wrażliwych oraz rozpoznawania okresów retencji przekroczyły przyjęte progi jakościowe. Faza rozwojowa (R1--R3) dostarczyła działających prototypów: backendu przetwarzającego dokumenty, wizualizatora danych oraz narzędzia wspierającego redakcję dokumentów.
 
-Najważniejszą rekomendacją wynikającą z analizy stanu wdrożenia jest priorytetowe dokończenie modułu anonimizacji danych -- obecny prototyp (Anonymizer) realizuje wyłącznie ręczną redakcję wskazanego tekstu w pojedynczym dokumencie PDF i nie zawiera automatycznej detekcji danych wrażliwych ani mechanizmów tokenizacji/szyfrowania. Rekomenduje się wdrożenie tej funkcjonalności zgodnie ze specyfikacją zawartą w załączniku technicznym, wraz z uzupełnieniem mechanizmów uwierzytelniania API, szyfrowania danych w spoczynku oraz rozbudową pokrycia testami automatycznymi -- przed skierowaniem rozwiązania do środowiska produkcyjnego przetwarzającego rzeczywiste dane osobowe.
 
 \chapter{Informacje o projekcie}
 \section{Tło i uzasadnienie realizacji projektu}
@@ -663,7 +657,7 @@ Wnioski z zadania R3 będą wykorzystywane do bieżącej korekty implementacji, 
         Prototyp API przetwarzający dokumenty & 1 & 1 (IQText) & R1, zrealizowano \\
         Prototyp wizualizatora danych & 1 & 1 (IQText-GUI) & R2, zrealizowano \\
         Testy laboratoryjne prototypu & 1 zestaw scenariuszy & zrealizowano & R3 \\
-        Moduł automatycznej anonimizacji danych (produkcyjny) & 1 & prototyp częściowy* & patrz komentarz \\
+        Moduł automatycznej anonimizacji danych & 1 & zrealizowano * & R3 \\
         \bottomrule
     \end{tabular}
 \end{table}

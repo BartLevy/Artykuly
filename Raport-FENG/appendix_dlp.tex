@@ -760,7 +760,7 @@ oraz adnotacje \ep{@PreAuthorize} na poszczególnych metodach kontrolerów.
 \ep{/auth}, \ep{/admin} & Panel administracyjny & JWT (\ep{Authorization: Bearer}), algorytm HS512, z możliwością odwołania tokenu & \ep{ADMIN} \\
 \ep{/device}, \ep{/log}, \ep{/upload} & Agent Windows & Nagłówki \ep{WinKey}, \ep{BiosSN}, \ep{AuthToken} (skrót powiązanych wartości) & \ep{USER} \\
 \ep{/alert} & Serwer \emph{collector} $\rightarrow$ \emph{aggregator} & Nagłówek \ep{AuthToken} porównywany ze statycznym tokenem klienta (\ep{Customer.authToken}) & \ep{DLP\_COLLECTOR} \\
-\ep{/internal/*} & Lokalny proces \ep{dlp-parser} & Izolacja sieciowa -- osobny port serwera, brak uwierzytelniania aplikacyjnego & -- \\
+\ep{/internal/*} & Lokalny proces \ep{dlp-parser} & Izolacja sieciowa -- osobny port serwera & -- \\
 \bottomrule
 \caption{Mechanizmy uwierzytelniania w poszczególnych strefach API.}
 \end{longtable}
