@@ -1,0 +1,6 @@
+Highlights
+- Acoustic similarity of stimuli quantified as distance between 16-D feature vectors
+- Descriptors: spectral centroid, F0, peak-to-average ratio and 13 MFCCs
+- Closest stimulus pair (d = 0.736) was correctly identified in only 20.5% of trials
+- Distance and response accuracy were not monotonically related across pairs
+- Distance matrices can flag overly similar stimuli before auditory testing

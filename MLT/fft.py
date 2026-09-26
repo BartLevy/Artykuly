@@ -159,14 +159,19 @@ def draw_chart(data, report):
     plt.figure(figsize=(10, 10))
     plt.scatter(X_pca[:, 0], X_pca[:, 1])
 
-    offsets = [(10, 10), (-10, 20), (10, -20), (-10, -10), 
-               (15, 5), (-15, 5), (15, -5), (-15, -5)]
+    # Przesunięcia etykiet w punktach: domyślnie nad punktem, ręcznie tam, gdzie punkty leżą blisko siebie
+    label_offsets = {
+        "chicken": (-38, 10), "wild_boar": (38, -14), "hawk": (0, -16),
+        "frog2": (-30, 12), "monkey": (30, -14),
+        "frog": (-28, 0), "tawny_owl": (0, -16),
+        "tundra_swan": (-22, 12), "donkey": (22, -14),
+    }
     for i, name in enumerate(names):
-        offset = offsets[i % len(offsets)]  # Cykl przez offsety
-        #plt.text(X_pca[i, 0] + offset[0]/500, X_pca[i, 1] + offset[1]/500, name, fontsize=6)
+        offset = label_offsets.get(name, (0, 12))
         plt.annotate(name, (X_pca[i, 0], X_pca[i, 1]), 
                     xytext=offset, textcoords='offset points', 
-                    fontsize=9, ha='center', fontweight='bold',
+                    fontsize=9, ha='center', va='center', fontweight='bold',
+                    arrowprops=dict(arrowstyle='-', color='gray', lw=0.6) if name in label_offsets else None,
                     bbox=dict(boxstyle="round,pad=0.1", facecolor="palegreen" if name in original else "skyblue", alpha=0.8,
                              edgecolor='black' if name in original else 'gray', linewidth=1.5 if name in original else 0.5))
         
@@ -185,7 +190,7 @@ def draw_chart(data, report):
                             index=['Centroid', 'F0', 'PAR'] + [f'MFCC_{i}' for i in range(1, 14)])
     # print(loadings)
     
-    plt.title("PCA 2D – znormalizowane wektory audio")
+    #plt.title("PCA 2D – Normalized Audio Vectors")
     plt.xlabel("PC1")
     plt.ylabel("PC2")
     plt.grid(True)
@@ -206,7 +211,7 @@ def draw_chart(data, report):
     plt.xticks(range(len(names)), names, rotation=45)
     plt.yticks(range(len(names)), names)
 
-    plt.title("Macierz odległości euklidesowych (po normalizacji)")
+    #plt.title("Macierz odległości euklidesowych (po normalizacji)")
 
     # (opcjonalnie) numery w komórkach
     for i in range(len(names)):
@@ -277,7 +282,9 @@ Pliki audio zostały zapisane w trybie mono. Łącznie zebrano {len(mp3_files)} 
         #print(mp3)
         #calculate_spectral_centroid(mp3)
         if ("backg" not in mp3 and "beep" not in mp3):
-            data.append( analyze_audio_features(mp3, report=report) )
+            features = analyze_audio_features(mp3, report=report)
+            if features is not None:
+                data.append(features)
     return data
         
 
@@ -355,7 +362,7 @@ def draw_2(df):
         plt.tight_layout()
         plt.grid(axis='y', linestyle=':', alpha=0.7)
 
-        plt.savefig(f"images/chart-{x}.jpeg")
+        plt.savefig(f"images/chart-{x}.jpeg", dpi=300, pil_kwargs={"quality": 95})
         plt.close()
 
     # Wyświetlenie tabeli wynikowej
@@ -374,7 +381,8 @@ def draw_2(df):
     
     #temp_numeric_cols = stats.select_dtypes(include='number').columns
     #stats[temp_numeric_cols] = stats[temp_numeric_cols].astype(float).round(3)    
-    stats = stats.round(3).applymap(lambda x: f"{x:.3f}")
+    #stats = stats.round(3).applymap(lambda x: f"{x:.3f}")
+    stats = stats.round(3).map(lambda x: f"{x:.3f}")
     stats = stats.reset_index()
     stats.columns.values[0] = 'name'    
     #print(stats.to_latex(caption="Obliczone statystyki", label="tab:stats", position="ht"))        
@@ -387,7 +395,7 @@ def draw_2(df):
     
     stats_norm.columns = [ 'avg (norm)', 'median (norm)', 'std dev (norm)']        
     #stats_norm[temp_numeric_cols] = stats_norm[temp_numeric_cols].astype(float).round(3)    
-    stats_norm = stats_norm.round(3).applymap(lambda x: f"{x:.3f}")
+    stats_norm = stats_norm.round(3).map(lambda x: f"{x:.3f}")
     stats_norm = stats_norm.reset_index()
     stats_norm.columns.values[0] = 'name'    
     #print(stats_norm)
@@ -419,8 +427,9 @@ def draw_2(df):
     # Rysowanie mapy ciepła (Heatmap)
     plt.figure(figsize=(8, 6))
     sns.heatmap(corr_matrix, annot=True, cmap='RdBu_r', center=0, fmt=".2f")
-    plt.title('Korelacja między PAR, Centroid, MFCC_1 a F0')
-    plt.savefig("images/correl-matrix.jpeg")
+    #plt.title('Correlation between PAR, Centroid, MFCC_1, and F0')
+    #plt.title('Korelacja między PAR, Centroid, MFCC_1 a F0')
+    plt.savefig("images/correl-matrix.jpeg", dpi=300, pil_kwargs={"quality": 95})
     plt.close()
 
     print("Macierz korelacji:")
@@ -460,7 +469,7 @@ def mfc_std_dev_radar(stats):
 
     # Zapis i wyświetlanie
     plt.tight_layout()
-    plt.savefig("images/mfcc_std_dev_radar.jpeg", dpi=300)
+    plt.savefig("images/mfcc_std_dev_radar.jpeg", dpi=300, pil_kwargs={"quality": 95})
     plt.show()
     plt.close(fig)
 
@@ -540,7 +549,7 @@ output_dir = "out"  # Directory containing MP3 files
 
 report = InfiReports()
 
-#save_features("tmp.json", process_local(report))
+save_features("tmp.json", process_local(report))
 
 data = load_features("tmp.json")
 df = pd.DataFrame(data).round(3)
