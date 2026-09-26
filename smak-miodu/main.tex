@@ -12,6 +12,8 @@
 \usepackage{enumitem}
 \usepackage{placeins}
 \usepackage{lmodern}
+\usepackage{longtable}
+\usepackage{multirow}
 % wymagane pakiety w preambule:
 
 
@@ -30,7 +32,7 @@
 \author[3]{Katarzyna Banach \small{(ORCID:0000-0003-2580-7954)}}
 
 \affil[1]{Department of Clinical Engineering, Academy of Silesia in Katowice}
-\affil[2]{Wydział Nauk o Pszczółkach, Uniwersytet Morski w Gdyni}
+\affil[2]{Wydział Nauk o Zarządzaniu, Uniwersytet Morski w Gdyni}
 \affil[3]{Instytut Nauk o Zarządzaniu i Jakości, Uniwersytet Warmińsko-Mazurski w Olsztynie}
 
 % Autor korespondencyjny - definicja przypisu
@@ -231,7 +233,11 @@ wrażenia, a rozbieżność między nimi nie musi oznaczać różnicy w próbce.
 wymaga zatem uprzedniej harmonizacji: wspólnych wzorców odniesienia, skal o zewnętrznym
 zakotwiczeniu (gLMS / magnitude matching) oraz badań pierścieniowych (\emph{ring tests})
 dokumentujących odtwarzalność między ośrodkami.
- 
+
+Zagadnienie to nie pozostaje wyłącznie teoretyczne: w części empirycznej niniejszej
+pracy (rozdz.~\ref{sub:interlab_dyskusja}) przedstawiono bezpośredni, ilościowy
+przykład takiej rozbieżności międzylaboratoryjnej dla tych samych partii miodu.
+
 \section{Podsumowanie}
  
 Zebrane przesłanki uzasadniają wniosek w wersji ostrożnej, a nie skrajnej. Subiektywność
@@ -280,7 +286,11 @@ Cele szczegółowe obejmują:
 
 \subsection{Charakterystyka badanych próbek miodu}
 
-Badaniom poddano siedem próbek miodu pochodzących z polskich oraz chińskich pasiek, pozyskanych w 2025 roku.
+Badaniom poddano siedem próbek miodu pochodzących z polskich oraz chińskich pasiek.
+Dokumentacja fizykochemiczna, pyłkowa i organoleptyczna leżąca u podstaw pierwotnej
+kwalifikacji każdej partii pochodzi z różnych terminów w okresie od lutego 2024 do
+marca 2026 roku; w skrajnym przypadku wyprzedza to termin panelu konsumenckiego
+(maj/czerwiec 2026) o ponad dwa lata (p. Ograniczenia badania, rozdz.~\ref{sub:ograniczenia}).
 Wszystkie próbki zostały przebadane w certyfikowanych laboratoriach; uzyskane wyniki spełniały
 wymagania w zakresie analizy pyłkowej (zgodność z deklaracją producenta), zawartości antybiotyków,
 profilowania metodą NMR, przewodności elektrycznej oraz składu cukrów.
@@ -368,6 +378,29 @@ Spośród siedmiu próbek następujące zostały odrzucone przez certyfikowane l
   \item \textit{P7:} próbka nie spełnia wymagań pod względem cech organoleptycznych: opisany smak jako „bardzo słodki, landrynkowy, nietypowy dla miodu".  
 \end{enumerate}
 \hl{P6 i P7 maja obcietą dokumentacje, do walidacji czy zostały faktycznie odrzucone.}
+
+\subsection{Druga, niezależna runda badań: porównanie międzylaboratoryjne}
+\label{sub:interlab_metody}
+
+Niezależnie od pierwotnej certyfikacji poprzedzającej ślepy test panelowy, te same
+siedem partii miodu (P1--P7) poddano w sierpniu 2026 roku (10--17.08.2026) drugiej,
+odrębnej turze badań laboratoryjnych, zleconej równolegle czterem certyfikowanym
+laboratoriom (Quality Services International GmbH, Eurofins Food Integrity Control
+Services GmbH, Intertek Food Services GmbH oraz Instytutowi Ogrodnictwa -- PIB, Zakładowi
+Pszczelnictwa w Puławach). Trzy z nich działają pod akredytacją ISO/IEC~17025 dla co
+najmniej części wykonywanych oznaczeń; czwarte, ograniczone wyłącznie do oceny
+organoleptycznej metodą PN-88/A-77626, takiej akredytacji nie zgłasza. Każde
+laboratorium oceniało próbki niezależnie od pozostałych, jednak -- w odróżnieniu od
+panelu konsumenckiego opisanego w rozdziale~\ref{sub:dobor_panelu} -- próbki nie były
+kodowane w sposób ślepy względem tożsamości handlowej: każde laboratorium otrzymało je
+jako zwykłe zlecenie komercyjne. Zakres badań różnił się między laboratoriami: trzy z
+nich wykonały ocenę organoleptyczną, oznaczenie przewodności elektrycznej oraz -- w
+różnym zakresie -- analizę pyłkową i mikrobiologiczną; czwarte ograniczyło się wyłącznie
+do oceny organoleptycznej. Wyniki wykorzystano tu wyłącznie do oceny powtarzalności
+międzylaboratoryjnej ocen tej samej cechy dla tej samej partii; nie służą one do
+weryfikacji autentyczności miodu ani do podważania merytorycznej zasadności
+któregokolwiek z uzyskanych werdyktów.
+
 \subsection{Dobór i struktura panelu oceniającego}
 \label{sub:dobor_panelu}
 
@@ -540,7 +573,109 @@ metoda ślepej degustacji dobrze ograniczyła wpływ marki czy pochodzenia na oc
 Wyniki mówią jedynie, że miejsce oceny smaku jest po stronie rozwoju i opisu
 produktu, a nie po stronie decyzji urzędowych.
 
+\subsection{Powtarzalność ocen organoleptycznych między niezależnymi laboratoriami: dowód empiryczny}
+\label{sub:interlab_dyskusja}
+
+Powyższy wniosek, że ocena smaku nie nadaje się na samodzielne kryterium
+administracyjne, można zweryfikować bezpośrednio, bez odwoływania się wyłącznie do
+analogii z oceną win \cite{hodgson2009concordance}. W sierpniu 2026 roku, już po
+zakończeniu pierwotnej certyfikacji, te same siedem partii miodu (P1--P7) przesłano
+niezależnie do czterech kolejnych certyfikowanych laboratoriów w celu ponownej oceny
+organoleptycznej (rozdz.~\ref{sub:interlab_metody}). Wynik jest zbieżny z głównym
+ustaleniem tej pracy: zgodność między laboratoriami okazała się wysoka wyłącznie dla
+próbek skrajnych, a niska dla próbek granicznych -- dokładnie tam, gdzie kryterium
+administracyjne najbardziej potrzebuje rzetelności (tabela~\ref{tab:interlab}).
+
+Dla dwóch spośród czterech partii pierwotnie niedopuszczonych do obrotu z powodu
+smaku lub zapachu (P6, P7) wszystkie trzy laboratoria wykonujące pełną ocenę
+organoleptyczną niezależnie potwierdziły w drugiej turze cechy nietypowe dla miodu
+naturalnego -- w tym przypadku ocena okazała się w pełni odtwarzalna. Dla pozostałych
+dwóch pierwotnie niedopuszczonych partii (P2, P4) obraz jest odwrotny: dla P2 tylko
+jedno z trzech laboratoriów potwierdziło zastrzeżenia do zapachu lub smaku, a dla P4
+żadne z nich nie sformułowało takiego zastrzeżenia -- wszystkie sklasyfikowały próbkę
+jako zgodną z dyrektywą 2001/110/WE. Symetrycznie, spośród trzech partii pierwotnie
+dopuszczonych do obrotu, jedna (P1) została w drugiej turze samodzielnie
+zakwestionowana przez jedno z laboratoriów wyłącznie na podstawie zapachu i smaku
+(,,niezgodne z profilem pyłkowym, zalecane dalsze badania''), a inna (P5) uzyskała od
+czwartego laboratorium opis zapachu jednoznacznie wskazujący na fermentację. Tylko
+jedna partia (P3) uzyskała jednomyślną, pozytywną ocenę wszystkich czterech
+laboratoriów.
+
+Krótko mówiąc: na siedem partii miodu, laboratoria wykonujące pełną ocenę
+organoleptyczną zgodziły się ze sobą w pełni w trzech przypadkach, a w pozostałych
+czterech przynajmniej jedno laboratorium doszło do wniosku przeciwnego niż pozostałe --
+niezależnie od tego, czy pierwotny werdykt brzmiał ,,dopuszczony'', czy ,,niedopuszczony''.
+Nie jest to dowód na błąd konkretnego laboratorium ani wadę konkretnej partii miodu;
+jest to dowód na to, że sama cecha (typowość zapachu i smaku) nie jest, w praktyce
+komercyjnej kontroli jakości, mierzona w sposób powtarzalny między ośrodkami -- dokładnie
+tak, jak przewiduje literatura psychometryczna cytowana w rozdziale~2
+\cite{bartoshuk2003labeled,hodgson2009concordance,sipos2021panel}.
+
+Rozbieżność nie ograniczała się do cech organoleptycznych. Przewodność elektryczna --
+parametr fizykochemiczny, mierzony przyrządowo i uznawany za jeden z bardziej
+obiektywnych wskaźników jakości miodu -- wykazała dla pięciu z siedmiu partii pełną
+zgodność między trzema laboratoriami wykonującymi to oznaczenie (rozbieżność
+$\leq$0,03~mS/cm, mieszcząca się w deklarowanej niepewności pomiaru rzędu 5\%). Dla
+pozostałych dwóch partii (P6, P7) jedno z trzech laboratoriów podało wynik różniący
+się od pozostałych dwóch niemal dziesięciokrotnie (0,76--0,84~mS/cm wobec
+0,07--0,11~mS/cm), przy czym pozostałe dwa laboratoria pozostawały ze sobą w bardzo
+dobrej zgodności. Rozbieżność tej skali nie mieści się w żadnej deklarowanej
+niepewności pomiaru i nie ma charakteru systematycznego -- nie występuje dla
+pozostałych pięciu partii -- co wskazuje na pojedynczy błąd pomiarowy lub redakcyjny w
+jednym z trzech sprawozdań, a nie na rzeczywistą różnicę metod. Zjawisko to sygnalizuje
+ograniczoną wartość poznawczą pojedynczego sprawozdania laboratoryjnego bez
+niezależnej weryfikacji nawet dla parametrów uznawanych za w pełni obiektywne --
+silniejszy argument za ostrożnością wobec pojedynczych ocen jakościowych niż
+jakikolwiek argument czysto teoretyczny. Dodatkowo, czwarte laboratorium, wykonujące
+ocenę organoleptyczną metodą nieakredytowaną, zwróciło dla wszystkich siedmiu partii
+bez wyjątku wynik ,,cechy niejednoznaczne'', niezależnie od pierwotnego statusu partii i
+niezależnie od werdyktów pozostałych trzech laboratoriów -- co sugeruje, że sam werdykt
+zależy w istotnym stopniu od wyboru metody i laboratorium w sposób strukturalny, a nie
+wyłącznie od losowej zmienności percepcji poszczególnych oceniających. Dosłowne,
+zanonimizowane opisy zapachu i smaku zgłoszone przez wszystkie cztery laboratoria dla
+każdej z siedmiu partii zestawiono w Załączniku~A (tabela~\ref{tab:interlab_opisy}).
+
+\begin{table}[h!]
+\centering
+\caption{Zgodność ocen organoleptycznych i przewodności elektrycznej między
+laboratoriami dla tych samych partii miodu (druga, niezależna tura badań).}
+\label{tab:interlab}
+\footnotesize
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Symbol & Status w I turze & Zastrzeżenia do zapachu/smaku & Przewodność elektr. \\
+ &  & (liczba laboratoriów\textsuperscript{a}) & [mS/cm], zakres \\
+\midrule
+P1 & dopuszczony      & 1/3\textsuperscript{b} & 0,13--0,14 \\
+P2 & niedopuszczony   & 1/3                     & 0,12--0,12 \\
+P3 & dopuszczony      & 0/3                     & 0,24--0,27 \\
+P4 & niedopuszczony   & 0/3                     & 0,19--0,19 \\
+P5 & dopuszczony      & 0/3\textsuperscript{b}  & 0,31--0,34 \\
+P6 & niedopuszczony   & 3/3                     & 0,08--0,84\textsuperscript{c} \\
+P7 & niedopuszczony   & 3/3                     & 0,07--0,76\textsuperscript{c} \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+{\footnotesize
+\begin{flushleft}
+\textsuperscript{a} Trzy laboratoria wykonały pełną ocenę organoleptyczną i
+fizykochemiczną. Czwarte, posługujące się nieakredytowaną metodą organoleptyczną
+(PN-88/A-77626), zwróciło wynik ,,cechy niejednoznaczne'' dla wszystkich siedmiu partii
+bez wyjątku, niezależnie od ich statusu i werdyktów pozostałych laboratoriów, i nie
+zostało ujęte w tej kolumnie.\\
+\textsuperscript{b} Dodatkowo czwarte laboratorium zgłosiło niezależnie zapach
+wskazujący na możliwą fermentację.\\
+\textsuperscript{c} Rozbieżność wynika z pojedynczego, znacząco odstającego wyniku
+jednego z trzech laboratoriów; pozostałe dwa pozostają w bardzo dobrej wzajemnej
+zgodności (zob. tekst).
+\end{flushleft}
+}
+\end{table}
+\FloatBarrier
+
 \subsection{Ograniczenia badania}
+\label{sub:ograniczenia}
 
 Najważniejszym ograniczeniem jest mała liczba partii miodu. Nawet przy dużej
 liczbie osób oceniających to właśnie liczba partii decyduje o~sile wniosków
@@ -562,11 +697,100 @@ Brakuje również formalnej miary zgodności międzyoceniającej dla typowości 
 powtarzalność tej cechy jako klasy pomiaru.
 %% TODO: wstawić Krippendorff alpha / Fleiss kappa dla typowości (n=525 ocen)
 %% oraz ICC dla skali ogólnej akceptacji (1-5) — kluczowy argument o klasie pomiaru.
+
+Po piąte, dokumentacja fizykochemiczna, pyłkowa i organoleptyczna leżąca u podstaw
+pierwotnej kwalifikacji partii nie pochodzi z jednego terminu: sprawozdania rozciągają
+się na okres od lutego 2024 do marca 2026 roku, czyli w skrajnym przypadku ponad dwa
+lata przed panelem konsumenckim (maj/czerwiec 2026). W tym czasie właściwości miodu
+zależne od przechowywania (stopień krystalizacji, zawartość HMF) mogły ulec zmianie,
+co osłabia założenie, że panel oceniał dokładnie tę samą, niezmienioną próbkę, którą
+pierwotnie zbadano i zakwalifikowano.
+
+Po szóste, druga tura badań międzylaboratoryjnych (rozdz.~\ref{sub:interlab_dyskusja})
+nie była przeprowadzona w warunkach formalnego testu pierścieniowego (\emph{ring
+test}): próbki nie były kodowane w sposób ślepy względem tożsamości handlowej,
+laboratoria nie dysponowały wspólnym materiałem odniesienia, a badania wykonano w
+innym terminie niż pierwotną certyfikację i panel konsumencki, co mogło dodatkowo
+wpływać na cechy zależne od czasu przechowywania. Różnice w werdyktach między
+laboratoriami należy zatem traktować jako dowód z praktyki komercyjnej kontroli
+jakości, a nie jako wynik w pełni kontrolowanego eksperymentu psychometrycznego.
+
 Trzeba też pamiętać, że praca ocenia smak jako \emph{narzędzie do podejmowania
 decyzji}, a nie chemiczną autentyczność badanych miodów to dwie osobne sprawy.
 
 
 % koniec sekcji dyskusja
+
+\clearpage
+\section*{Załącznik A: dosłowne oceny organoleptyczne z drugiej tury badań}
+\label{app:interlab_raw}
+
+Poniższa tabela zestawia dosłowne, przetłumaczone opisy zapachu i smaku zgłoszone przez
+cztery niezależne laboratoria dla tych samych siedmiu partii miodu w drugiej,
+niezależnej turze badań (sierpień 2026, rozdz.~\ref{sub:interlab_metody}), będące
+podstawą zbiorczej tabeli~\ref{tab:interlab} i dyskusji w
+rozdziale~\ref{sub:interlab_dyskusja}.
+
+\begin{longtable}{@{}p{1.8cm}cp{5.3cm}p{5.3cm}@{}}
+\caption{Dosłowne, zanonimizowane opisy zapachu i smaku zgłoszone przez cztery
+niezależne laboratoria dla tych samych partii miodu (druga tura badań, sierpień 2026).
+Numeracja laboratoriów (1--4) jest umowna i spójna w obrębie tabeli, ale nie ujawnia
+tożsamości laboratorium.}
+\label{tab:interlab_opisy}\\
+\toprule
+Symbol (status I tura) & Lab. & Zapach & Smak \\
+\midrule
+\endfirsthead
+\multicolumn{4}{c}{\tablename\ \thetable{} (ciąg dalszy)}\\
+\toprule
+Symbol (status I tura) & Lab. & Zapach & Smak \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+\multirow{4}{1.8cm}{P1\\(dopuszczony)}
+ & 1 & nietypowy dla miodu & nietypowy dla miodu \\
+ & 2 & przypominający mocz zwierzęcy, lekko typowy dla pożytku & słodki, kwiatowy, łagodny, lekko typowy dla pożytku \\
+ & 3 & typowy dla miodu & słodki, owocowy \\
+ & 4 & słaby, lekko kwaśny, charakterystyczny dla oznak fermentacji & słodki, łagodny \\
+\midrule
+\multirow{4}{1.8cm}{P2\\(niedopuszczony)}
+ & 1 & nietypowy dla miodu & nietypowy dla miodu \\
+ & 2 & przypominający mocz zwierzęcy, lekko typowy dla pożytku & słodki, kwiatowy, łagodny, lekko metaliczny, lekko typowy dla pożytku \\
+ & 3 & lekko typowy dla pożytku & słodki, owocowy, lekko typowy dla pożytku \\
+ & 4 & nienaturalny, lekko kwiatowy & bardzo słodki, szczypiący \\
+\midrule
+\multirow{4}{1.8cm}{P3\\(dopuszczony)}
+ & 1 & typowy dla pożytku & typowy dla pożytku \\
+ & 2 & lekko typowy dla pożytku & słodki, kwiatowy, ziołowy, lekko typowy dla pożytku \\
+ & 3 & typowy dla miodu & słodki, kwiatowy, owocowy, ziołowy \\
+ & 4 & silny, podobny do wosku pszczelego & słodki, nieco ostry \\
+\midrule
+\multirow{4}{1.8cm}{P4\\(niedopuszczony)}
+ & 1 & słabo typowy dla pożytku & słabo typowy dla pożytku \\
+ & 2 & lekko typowy dla miodu & słodki, owocowy, medyczny (apteczny), lekko metaliczny, lekko typowy dla miodu \\
+ & 3 & lekko typowy dla pożytku & słodki, owocowy, miętowy, lekko typowy dla pożytku \\
+ & 4 & słabo wyczuwalny, kwiatów rzepaku & słodki \\
+\midrule
+\multirow{4}{1.8cm}{P5\\(dopuszczony)}
+ & 1 & słabo typowy dla pożytku & słabo typowy dla pożytku \\
+ & 2 & lekko typowy dla pożytku & słodki, kwiatowy, medyczny (apteczny), lekko gorzki, miętowy, lekko typowy dla pożytku \\
+ & 3 & typowy dla miodu & słodki, owocowy, miętowy \\
+ & 4 & wyraźny, charakterystyczny dla oznak fermentacji & słodki, łagodny \\
+\midrule
+\multirow{4}{1.8cm}{P6\\(niedopuszczony)}
+ & 1 & nietypowy dla miodu & nietypowy dla miodu \\
+ & 2 & brak & słodki, bez wyraźnego aromatu kwiatowego, nietypowy dla miodu \\
+ & 3 & nietypowy dla miodu & słodki, owocowy, słodowy, nietypowy dla miodu \\
+ & 4 & silny, charakterystyczny dla oznak fermentacji & słodki, przypominający palony karmel \\
+\midrule
+\multirow{4}{1.8cm}{P7\\(niedopuszczony)}
+ & 1 & nietypowy dla miodu & nietypowy dla miodu \\
+ & 2 & nietypowy dla miodu & słodki, bez wyraźnego aromatu kwiatowego, lekko metaliczny, nietypowy dla miodu \\
+ & 3 & nietypowy dla miodu & słodki, owocowy, słodowy, nietypowy dla miodu \\
+ & 4 & silny, landrynkowy & bardzo słodki, nieco szczypiący \\
+\end{longtable}
 
 \bibliographystyle{plain}
 \bibliography{bibliografia} % plik .bib z literaturą
