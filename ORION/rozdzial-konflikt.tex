@@ -64,7 +64,7 @@ Rozwiązania prawne regulujące zakres transferu danych osobowych między Unią 
 
 \subsection{Umowa Safe Harbour (2000–2015)}
 
-Podstawowym instrumentem regulującym transfer danych osobowych między UE a USA była decyzja Komisji 2000/520/WE, powszechnie znana jako \textit{Umowa Safe Harbour}. Przyjęta 26 lipca 2000 roku ustawa ustanowiła mechanizm autocertyfikacji, w ramach którego amerykańskie firmy mogły dobrowolnie zobowiązać się do przestrzegania siedmiu zasad ochrony danych: powiadomienia, wyboru, dalszego przekazywania, bezpieczeństwa, integralności danych, dostępu i~egzekwowania. Po dokonaniu autocertyfikacji uzyskiwały prawo do otrzymywania danych osobowych z państw członkowskich UE bez dalszego uzasadnienia prawnego~\autocite{EuropeanCommission2000SafeHarbour}.
+Podstawowym instrumentem regulującym transfer danych osobowych między UE a USA była decyzja Komisji 2000/520/WE, powszechnie znana jako \textit{Umowa Safe Harbour}. Przyjęta 26 lipca 2000 roku decyzja ustanowiła mechanizm autocertyfikacji, w ramach którego amerykańskie firmy mogły dobrowolnie zobowiązać się do przestrzegania siedmiu zasad ochrony danych: powiadomienia, wyboru, dalszego przekazywania, bezpieczeństwa, integralności danych, dostępu i~egzekwowania. Po dokonaniu autocertyfikacji uzyskiwały prawo do otrzymywania danych osobowych z państw członkowskich UE bez dalszego uzasadnienia prawnego~\autocite{EuropeanCommission2000SafeHarbour}.
 
 Mechanizm działał na podstawie oświadczeń składanych w Departamencie Handlu USA, a ramy dostępu do danych opierały się wyłącznie na dobrej wierze organizacji uczestniczących i~teoretycznej możliwości egzekwowania zasad przez Federalną Komisję Handlu USA. W szczytowym okresie ponad 4500 amerykańskich firm, w tym Facebook, Google, Microsoft i~Amazon, działało na podstawie certyfikatu Safe Harbour, który stanowił podstawę prawną dla zdecydowanej większości komercyjnych przepływów danych między UE a USA.\autocite{EuropeanCommission2000SafeHarbour}.
 
@@ -86,7 +86,7 @@ W odpowiedzi na wyrok w sprawie Schrems I, Komisja Europejska i~Departament Hand
 
 Schrems natychmiast zakwestionował Tarczę Prywatności, argumentując, że nie rozwiązała ona fundamentalnych braków strukturalnych zidentyfikowanych w sprawie Schrems I. 16 lipca 2020 r. TSUE potwierdził tę ocenę w sprawie C-311/18, \textit{Data Protection Commissioner przeciwko Facebook Ireland Limited i~Maximillian Schrems}, zwanej dalej \textit{Schrems~II}~\autocite{CJEU2020SchremsII}. Sąd unieważnił Tarczę Prywatności z zasadniczo tych samych powodów, co Safe Harbor: amerykańskie prawo dotyczące nadzoru (w szczególności art. 702 ustawy o nadzorze nad wywiadem zagranicznym (FISA)) oraz rozporządzenie wykonawcze 12333, nadal zezwalały na masowe gromadzenie danych obywateli UE bez odpowiednich ograniczeń, niezależnego nadzoru lub skutecznych mechanizmów dochodzenia roszczeń.
 
-Sprawa Schrems~II miała jednak szersze znaczenie niż samo unieważnienie Tarczy Prywatności. Trybunał wydał również niezwykle istotne wytyczne dotyczące standardowych klauzul umownych (SCC), orzekając, że eksporterzy i~importerzy danych powołujący się na standardowe klauzule umowne są zobowiązani do oceny, w każdym indywidualnym przypadku, czy prawo kraju przeznaczenia zapewnia odpowiednią ochronę w praktyce, a nie tylko w teorii. Ten obowiązek, Ocena Skutków Przenoszenia (TIA), stał się nowym, obowiązkowym elementem zgodności dla każdej organizacji przekazującej dane osobowe poza EOG i~jest on również istotnym aspektem w modelu ORION.
+Sprawa Schrems~II miała jednak szersze znaczenie niż samo unieważnienie Tarczy Prywatności. Trybunał wydał również niezwykle istotne wytyczne dotyczące standardowych klauzul umownych (SCC), orzekając, że eksporterzy i~importerzy danych powołujący się na standardowe klauzule umowne są zobowiązani do oceny, w każdym indywidualnym przypadku, czy prawo kraju przeznaczenia zapewnia odpowiednią ochronę w praktyce, a nie tylko w teorii. Ten obowiązek, Ocena Skutków Transferu (TIA), stał się nowym, obowiązkowym elementem zgodności dla organizacji przekazujących dane osobowe poza EOG na podstawie standardowych klauzul umownych lub innych zabezpieczeń z~art.~46 RODO; nie dotyczy transferów opartych na decyzji stwierdzającej odpowiedni stopień ochrony. Jest on również istotnym aspektem w modelu ORION.
 
 \subsection{Ramy ochrony prywatności danych (2023–obecnie)}
 
@@ -111,7 +111,7 @@ się inicjatywy: \textit{EU Data Act}, \textit{EUCS} oraz \textit{Cloud and AI D
 \textit{Rozporządzenie Parlamentu Europejskiego i~Rady (UE) 2023/2854}, powszechnie znane jako \textit{EU Data Act}, zostało opublikowane w~Dzienniku Urzędowym UE 22~grudnia 2023~r.\ i~stało się w~pełni stosowane od 12~września 2025~r.~\autocite{dataact2023}. Regulacja wprowadza dwa mechanizmy bezpośrednio adresujące ryzyko jurysdykcyjne:
 
 \begin{enumerate}[label=(\roman*)]
-    \item Po pierwsze, art.~31 Data Act nakłada na dostawców usług przetwarzania danych obowiązek wdrożenia środków technicznych i~organizacyjnych uniemożliwiających
+    \item Po pierwsze, art.~32 Data Act\todo[inline]{Zweryfikować podstawę: numer artykułu Data Act dotyczącego dostępu rządowego państw trzecich do danych nieosobowych (wcześniej wskazany art.~31).} nakłada na dostawców usług przetwarzania danych obowiązek wdrożenia środków technicznych i~organizacyjnych uniemożliwiających
     organom państw spoza Europejskiego Obszaru Gospodarczego dostęp do danych  przechowywanych w~UE bez ważnej podstawy w~prawie międzynarodowym lub
     w~umowie między UE a~danym państwem trzecim~\autocite{dataact2023}. Przepis ten nie uchyla obowiązków dostawcy wynikających bezpośrednio z~prawa
     państwa jego inkorporacji (takich jak CLOUD Act), lecz nakłada na dostawcę
@@ -344,9 +344,11 @@ podlegające dyrektywie NIS2 i~rozporządzeniu DORA:
   infrastrukturą dostawcy chmury eliminują techniczną możliwość
   odszyfrowania przez Google lub AWS.
 
-  \item \textit{BYOK dla baz danych} (\textit{Bring Your Own Key}), niezależne szyfrowanie danych
+  \item \textit{HYOK dla baz danych} (\textit{Hold Your Own Key}), niezależne szyfrowanie danych
   w bazie (np. TDE \textit{Transparent Data Encryption}) z kluczem
-  zarządzanym przez klienta, poza środowiskiem chmurowym.
+  zarządzanym przez klienta i~przechowywanym poza środowiskiem chmurowym;
+  w~modelu BYOK (\textit{Bring Your Own Key}) klucz dostarczony przez klienta
+  jest przechowywany w~KMS dostawcy, co nie eliminuje jego dostępu technicznego.
 
   \item \textit{Wyłączenie telemetrii Windows} na poziomie GPO
   (\texttt{Security level}) oraz zablokowanie ruchu do endpointów

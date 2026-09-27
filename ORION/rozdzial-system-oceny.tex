@@ -57,7 +57,7 @@ Istniejące metodologie obejmują zarządzanie bezpieczeństwem, zarządzanie ry
 & \textbf{Tak} \\
 \midrule
 
-\textbf{Wieloperspektywiczne przypisanie pytań}\newline(prawna / biznesowa / techniczna) 
+\textbf{Wieloperspektywiczne przypisanie pytań}\newline(zgodności / użytkownika / techniczna) 
 & Nie 
 & Nie 
 & Częściowe\newline(tylko macierz RACI) 
@@ -145,7 +145,7 @@ Istniejące metodologie obejmują zarządzanie bezpieczeństwem, zarządzanie ry
 & \textbf{Tak} \\
 \midrule
 
-\textbf{Klasyfikacja ryzyka wg pochodzenia geograficznego}\newline(EOG / USA / pozostałe) 
+\textbf{Klasyfikacja ryzyka wg pochodzenia geograficznego}\newline(EOG / państwa trzecie) 
 & Nie 
 & Nie 
 & Nie 
@@ -183,7 +183,7 @@ Audyty przeprowadzane według istniejących metodyk często kończą się certyf
 
 \section{Postulaty i~cele ORION}
 
-Metodologia ORION (\textit{Ocena Ryzyka Nadzorowanych Systemów Informatycznych}) nie ma na celu zastępowania metodologii audytowania zgodnych z ISO czy NIST. Wypełnia istotną lukę
+Metodologia ORION (\textit{Ocena Ryzyka Informatycznego Organizacji Nadzorowanych}) nie ma na celu zastępowania metodologii audytowania zgodnych z ISO czy NIST. Wypełnia istotną lukę
 w analizie wdrożeń systemów informatycznych z punktu widzenia zgodności z regulacjami. Jest to system oparty na dowodach, ponieważ, jak wykazują badania przytoczone w rozdziale
 poświęconym walidacji odpowiedzi, organizacje nagminnie deklarują zgodność, której nie są w stanie udokumentować, a ta funkcja jest kluczowa.
 
@@ -194,7 +194,7 @@ ORION wprowadza cztery kluczowe innowacje metodyczne względem istniejących fra
 
 Pierwszą z nich jest zasada wieloperspektywiczności. ORION przyjmuje, że każdy element składowy infrastruktury ICT (system informatyczny, dostawca, wymóg, etc), jest rozumiany odmiennie przez prawnika, menedżera biznesowego, architekta oprogramowania czy administratora infrastruktury. Odmienność ta nie jest wadą, którą należy eliminować, jest naturalną cechą wynikającą z różnych wyzwań i~zadań na poszczególnych stanowiskach, którą metodyka musi uwzględniać. Perspektywa nie jest wyłącznie kategorią opisową, determinuje, kto w organizacji jest właściwą osobą do udzielenia odpowiedzi na konkretne pytanie audytowe, co eliminuje jeden z fundamentalnych błędów istniejącej praktyki: odpowiadanie na pytania prawne przez inżynierów i~na pytania techniczne przez prawników.
 
-Drugą innowacją jest ocena oparta na dowodach. Każda odpowiedź na pytanie audytowe podlega weryfikacji przez pryzmat dostarczonego dowodu materialnego. Metodyka rozróżnia trzy poziomy jakości dowodu: brak dowodu, deklarację pisemną oraz dowód potwierdzony materialnie: log systemowy, certyfikat, wynik testu penetracyjnego, protokół z próby odtworzenia systemu.  Dodatkowo, dowód pisemny jest traktowany w zależności od jego sporządzenia, inaczej system bierze pod uwagę oświadczenie pisemne czytelnie podpisane, inaczej oświadczenie pisemne będące wynikiem anonimowego dokumentu. Brak dowodu nie zmienia odpowiedzi twierdzącej na przeczącą, lecz obniża jej efektywną wartość w modelu scoringowym w sposób kontrolowany i~konfigurowalny. Mechanizm ten precyzyjnie odzwierciedla rzeczywistość audytu: organizacja może  stosować właściwe praktyki bez ich pełnej dokumentacji, ale twierdzenie bez weryfikacji ma mniejszą wartość poznawczą niż twierdzenie udokumentowane. Jednoczenie konieczność przygotowania dowodu, co więcej, osobistego podpisania się pod dowodem, skutkuje wysoką rzetelnością odpowiedzi. Jest to bezpośrednia odpowiedź na compliance theater.
+Drugą innowacją jest ocena oparta na dowodach. Każda odpowiedź na pytanie audytowe podlega weryfikacji przez pryzmat dostarczonego dowodu materialnego. Metodyka rozróżnia cztery poziomy jakości dowodu (tabela~\ref{tab:dowody}): brak dowodu, dowód słaby (dokument anonimowy lub ogólny), dowód średni (oświadczenie podpisane, dokument wskazujący na system) oraz dowód silny, potwierdzony materialnie: log systemowy, wynik testu penetracyjnego, protokół z próby odtworzenia systemu.  Dodatkowo, dowód pisemny jest traktowany w zależności od jego sporządzenia, inaczej system bierze pod uwagę oświadczenie pisemne czytelnie podpisane, inaczej oświadczenie pisemne będące wynikiem anonimowego dokumentu. Brak dowodu nie zmienia odpowiedzi twierdzącej na przeczącą, lecz obniża jej efektywną wartość w modelu scoringowym w sposób kontrolowany i~konfigurowalny. Mechanizm ten precyzyjnie odzwierciedla rzeczywistość audytu: organizacja może  stosować właściwe praktyki bez ich pełnej dokumentacji, ale twierdzenie bez weryfikacji ma mniejszą wartość poznawczą niż twierdzenie udokumentowane. Jednoczenie konieczność przygotowania dowodu, co więcej, osobistego podpisania się pod dowodem, skutkuje wysoką rzetelnością odpowiedzi. Jest to bezpośrednia odpowiedź na compliance theater.
 
 Trzecią innowacją jest grafowe modelowanie łańcucha ICT z propagacją ryzyka. Audyt w ORION nie jest przeprowadzany wyłącznie dla podmiotu nadzorowanego traktowanego jako niepodzielna całość, obejmuje wszystkich dostawców i~poddostawców ICT, reprezentowanych jako wierzchołki skierowanego grafu zależności. Mechanizm systematycznego przejścia grafu zapewnia pełną identyfikację podmiotów w łańcuchu dostaw, które w tradycyjnych audytach pozostają poza polem widzenia. Algorytm propagacji ryzyka umożliwia z kolei obliczenie skumulowanego wpływu niezgodności na poziomie poddostawcy na ryzyko całego podmiotu nadzorowanego ,co odpowiada na pytanie, które organizacje zadają coraz częściej: czy mój dostawca jest bezpieczny, a jeśli nie, jak bardzo to mnie dotyczy?
 
@@ -217,13 +217,14 @@ plan ciągłości działania czy exit plan, mają charakter obowiązkowy, a któ
 
 Klasyfikacja podmiotu jest przeprowadzana metodą walidacji krzyżowej, gdzie zagadnienie analizowane jest niezależnie w perspektywie
 zgodności, perspektywie użytkownika oraz perspektywie technicznej, a wynik jest ustalany na podstawie konsensusu odpowiedzi.
-Wynikiem klasyfikacji jest przypisanie podmiotu do jednej z czterech kategorii regulacyjnych: \texttt{FINANSOWY} (podmioty objęte rozporządzeniem DORA), \texttt{KLUCZOWY} (podmioty kluczowe w rozumieniu dyrektywy NIS2 i~ustawy KSC), \texttt{WAŻNY} (podmioty ważne w rozumieniu NIS2 i~KSC) lub \texttt{POZOSTAŁE} (podmioty podlegające wyłącznie wymogom ogólnym, w~szczególności RODO). Kategoria determinuje zakres obowiązkowych elementów audytu oraz wartość mnożnika regulacyjnego $w_{reg}$, których szczegółową charakterystykę przedstawia tabela~\ref{tab:klasyfikacja-regulacyjna}.
+Wynikiem klasyfikacji jest przypisanie podmiotu do jednej z czterech kategorii regulacyjnych: \texttt{FINANSOWY} (podmioty objęte rozporządzeniem DORA), \texttt{KLUCZOWY} (podmioty kluczowe w rozumieniu dyrektywy NIS2 i~ustawy KSC), \texttt{WAŻNY} (podmioty ważne w rozumieniu NIS2 i~KSC) lub \texttt{POZOSTAŁE} (podmioty podlegające wyłącznie wymogom ogólnym, w~szczególności RODO). Kategoria determinuje zakres obowiązkowych elementów audytu (tabela~\ref{tab:klasyfikacja-regulacyjna}) oraz zbiór aktów prawnych stosowanych do podmiotu: DORA i~RODO dla podmiotu finansowego, NIS2 i~RODO dla podmiotów kluczowych i~ważnych, wyłącznie RODO dla pozostałych (równanie~\eqref{eq:akty-klasy}). Od tego zbioru i~zakresu regulacyjnego pytania zależą efektywna obligatoryjność i~waga pytania $\omega(q_j, k)$ (równanie~\eqref{eq:omega}) oraz to, czy pytanie jest blokujące (równanie~\eqref{eq:kappa-eff}). Ten sam kwestionariusz daje więc 25 pytań blokujących dla podmiotu finansowego, 17 dla podmiotów kluczowych i~ważnych oraz 5 dla pozostałych.
 % ============================================================
 \section{Mechanizm walidacji jakości dowodów i~odpowiedzi}
 
 \subsection{Struktura pytań}
+\label{sec:struktura-pytan}
 
-Pytania stawiane w audycie mają z definicji wartość binarną. Oznacza to, że ankietowany moze odpowiedzieć na pytanie tylko i~wyłącznie \texttt{TAK} lub \texttt{NIE}. Każdemu pytaniu przypisana jest \texttt{ODPOWIEDŹ OCZEKIWANA},
+Pytania stawiane w audycie mają z definicji wartość binarną. Oznacza to, że ankietowany moze odpowiedzieć na pytanie tylko i~wyłącznie \texttt{TAK} lub \texttt{NIE}. Jedynym dopuszczalnym wyjątkiem jest odpowiedź \texttt{N/D} (nie dotyczy), która nie wyraża stanu wiedzy respondenta, lecz stwierdza, że wymaganie nie ma zastosowania do ocenianego obiektu; wymaga ona uzasadnienia i~akceptacji audytora (sekcja~\ref{sec:zasady-pytan}). Każdemu pytaniu przypisana jest \texttt{ODPOWIEDŹ OCZEKIWANA},
 rozumiana jako wartość wskazująca na stan zgodności z wymaganiem zgodne z semantyką treści pytania.
 
 Działanie wartości oczekiwanej idealnie zilustruje przykład dwóch pytań:
@@ -234,7 +235,7 @@ Oraz pytanie drugie:
 \begin{center}
   Czy dwa plus dwa różne od czterech?
 \end{center}
-W przypadku pierwszym odpowiedzią oczekiwaną jest \texttt{TAK}, w przypadku drugim  \texttt{NIE}. Współczynnik wagowy przypisywany jest wyłącznie wtedy, gdy odpowiedź jest zgodna z \texttt{ODPOWIEDZIĄ OCZEKIWANĄ}.
+W przypadku pierwszym odpowiedzią oczekiwaną jest \texttt{TAK}, w przypadku drugim  \texttt{NIE}. Przykład pokazuje, że o~interpretacji odpowiedzi decyduje polaryzacja pytania. Aby uniknąć tej niejednoznaczności, wszystkie pytania kwestionariusza szczegółowego formułuje się tak, aby odpowiedź oczekiwana brzmiała \texttt{TAK} (zasada jednolitej polaryzacji, sekcja~\ref{sec:zasady-pytan}). Odpowiedzi zgodnej z~odpowiedzią oczekiwaną przypisuje się wartość $a_{ij} = 1$, a pozostałym $a_{ij} = 0$ (równanie~\eqref{eq:veff}).
 
 Zrezygnowano z opcji \texttt{NIE WIEM / BRAK DANYCH}. W sytuacji braku znajomości odpowiedzi oczekuje się, że ankietowany podejmie wysiłek uzyskania informacji. Brak pewności w odpowiedzi powinien
 być rozstrzygany na niekorzyść audytu i~wynika to z konieczności ochrony organizacji.
@@ -246,7 +247,7 @@ W kontekście audytu bezpieczeństwa informatycznego brak wiedzy o stanie system
 widzenia ochrony~\autocite{Waters2021DontKnow}. Przyjęcie zasady rozstrzygania wątpliwości na niekorzyść audytu odpowiada powszechnie stosowanej w zarządzaniu ryzykiem zasadzie, zgodnie z którą niepewność nie redukuje ryzyka, lecz je potęguje.
 
 Dodatkowo, wprowadzona została opcja \texttt{flagi blokującej} $\text{FLAG}_{block}(\mathcal{S}) = \texttt{TRUE}$
- do pytań, których niespełnienie (odpowiedź inna niż \texttt{OCZEKIWANA}) oznacza przypisanie wartości zerowej dla całej sekcji. Są to pytania kluczowe, które muszą być bezwględnie spełnione.
+ dla pytań kluczowych, które muszą być bezwzględnie spełnione. Niespełnienie pytania blokującego, tj.\ odpowiedź \texttt{NIE} perspektywy zgodności albo wynik pytania poniżej progu $\theta_{block}$, oznacza przypisanie wartości zerowej całej sekcji (równanie~\eqref{eq:flag-block-sekcja}). To, czy pytanie jest blokujące dla danego podmiotu, zależy od jego klasy regulacyjnej (równanie~\eqref{eq:kappa-eff}).
 
 
 \subsection{Model dowodowy}
@@ -266,7 +267,7 @@ podpisania dowodu jest zatem nie tylko formalny, lecz pełni funkcję mechanizmu
 
 Walidacja odpowiedzi jest kluczowa, do prawidłowego przeprowadzenia procesu audytowania. Wskazują na to wyniki badań, które wskazują, że awersja do kłamstwa pojawia się głównie przy obowiązkowym raportowaniu \autocite{friesen2013designing}.
 
-Osoby wypełniające dane ograniczają kłamstwo w wypełnianych ankietach, gdy są zobligowane do złożenia oświadczenia imiennego, potwierdzającego zgodne z prawdą wypełnienie ankiety. Badania wskazują, że współczynnik nieprawdziwych odpowiedzi wynosi \textit{g = 0.24}\autocite{peer2023commitment}. Współczynnik \textit{g} (zwany \textit{Hedges' g}) to standaryzowana miara wielkości efektu,  wyraża jak duża jest różnica między grupami w jednostkach odchylenia standardowego.
+Osoby wypełniające dane ograniczają kłamstwo w wypełnianych ankietach, gdy są zobligowane do złożenia oświadczenia imiennego, potwierdzającego zgodne z prawdą wypełnienie ankiety. Badania wskazują, że efekt takiego zobowiązania, mierzony wielkością efektu, wynosi \textit{g = 0,24}\autocite{peer2023commitment}. Współczynnik \textit{g} (zwany \textit{Hedges' g}) to standaryzowana miara wielkości efektu,  wyraża jak duża jest różnica między grupami w jednostkach odchylenia standardowego.
 
 
 \subsection{Skala jakości dowodów}
@@ -282,7 +283,11 @@ oznaczane symbolem $d \in \{0;\ 0{,}4;\ 0{,}7;\ 1{,}0\}$.
 \toprule
 \textbf{Poziom} & \textbf{Symbol $d$} & \textbf{Definicja} & \textbf{Przykłady} \\
 \midrule
-\endhead % Koniec nagłówka dla pierwszej strony
+\endfirsthead
+\toprule
+\textbf{Poziom} & \textbf{Symbol $d$} & \textbf{Definicja} & \textbf{Przykłady} \\
+\midrule
+\endhead
 
 Brak dowodu & $d = 0$
 & Odpowiedź udzielona wyłącznie ustnie lub pisemnie
@@ -341,13 +346,17 @@ Konsekwencje praktyczne wzoru~\eqref{eq:veff}
 są następujące:
 \begin{enumerate}[label=(\roman*)]
   \item odpowiedź TAK bez dowodu ($a=1$, $d=0$)
-  daje $V_{eff} = 0$ jest traktowana identycznie jak odpowiedź NIE,
+  daje $V_{eff} = 0$ i~jest traktowana identycznie jak odpowiedź NIE,
+  także przy ustalaniu konsensusu (definicja~\ref{sec:konsensus}),
   \item odpowiedź TAK z dowodem silnym ($a=1$, $d=1{,}0$)
   daje $V_{eff} = 1{,}0$  pełna wartość,
   \item odpowiedź NIE z dowodem silnym ($a=0$, $d=1{,}0$) daje $V_{eff} = 0$ wskazuje na niezgodność między odpowiedzią, a dowodem.
 \end{enumerate}
 
 Mechanizm ten precyzyjnie odzwierciedla cel audytu: nie interesuje nas, co organizacja mówi, że robi, interesuje nas, co jest w stanie udowodnić.
+
+\paragraph{Dowód perspektywy użytkownika.}
+Perspektywa użytkownika z~natury opisuje obserwacje z~codziennej pracy i~zwykle nie dysponuje dowodem materialnym. Aby jej odpowiedzi nie były z~definicji zerowane, użytkownik składa odpowiedzi w~formie imiennego, podpisanego i~datowanego oświadczenia. Zgodnie z~tabelą~\ref{tab:dowody} odpowiada to dowodowi średniemu, $d = 0{,}7$. Mechanizm ten wykorzystuje efekt opisany w~sekcji walidacji odpowiedzi: osoby podpisujące oświadczenie imiennie rzadziej podają nieprawdę. Odpowiedź użytkownika udzielona wyłącznie ustnie, bez podpisanego oświadczenia, ma $d = 0$. Perspektywy zgodności i~techniczna są oceniane według rzeczywiście przedstawionych dowodów.
 
 
 
@@ -364,7 +373,10 @@ Niech $Q$ będzie zagadnieniem audytowym zadanym
 perspektywom ze zbioru $\Pi_Q \subseteq \Pi$,
 gdzie $|\Pi_Q| \geq 2$. Każda perspektywa
 $\pi_i \in \Pi_Q$ udziela odpowiedzi
-$a_i \in \{0, 1\}$ (NIE / TAK). Wynik
+$a_i \in \{0, 1\}$ (NIE / TAK). W~kwestionariuszu szczegółowym,
+gdzie odpowiedzi są opatrzone dowodem, $a_i$ oznacza odpowiedź efektywną
+$a_i \cdot \mathbb{1}[d_i > 0]$: odpowiedź \texttt{TAK} bez żadnego dowodu
+liczy się jak \texttt{NIE}. Wynik
 cross-validation zagadnienia $Q$ definiuje się jako:
 
 \begin{equation}
@@ -374,46 +386,55 @@ cross-validation zagadnienia $Q$ definiuje się jako:
     > \left|\{i : a_i = 0\}\right| \\
 0 & \text{jeśli } \left|\{i : a_i = 0\}\right|
     > \left|\{i : a_i = 1\}\right| \\
-\varnothing & \text{jeśli remis lub brak odpowiedzi}
+\varnothing & \text{jeśli remis}
 \end{cases}
 \label{eq:cv}
 \end{equation}
 
-Gdy $\text{CV}(Q) = \varnothing$, zagadnienie jest
-oznaczane flagą \textsc{Rozbieżność} i~nie może
-zostać zatwierdzone bez interwencji audytora.
-W takim przypadku efektywna wartość zagadnienia
-jest penalizowana:
+Gdy $\text{CV}(Q) = \varnothing$ (remis, możliwy przy dwóch
+perspektywach), zagadnienie jest oznaczane flagą
+\textsc{Rozbieżność} i~nie może zostać zatwierdzone bez
+interwencji audytora. Flagą \textsc{Rozbieżność} oznaczane jest
+również każde zagadnienie, w~którym odpowiedzi perspektyw nie są
+jednomyślne.
+
+Wynik pytania audytowego $q_j$ jest wyznaczany na podstawie
+konsensusu, z~karą za brak jednomyślności:
 
 \begin{equation}
-V_{eff}(Q) = \min_{i}(a_i) \cdot \beta_{cv}
+S(q_j) =
+\begin{cases}
+\bar{d}^{+}_j & \text{jeśli } a_i = 1 \text{ dla wszystkich } \pi_i \in \Pi_{q_j}, \\
+\beta_{cv} \cdot \bar{d}^{+}_j & \text{jeśli } \text{CV}(q_j) = 1 \text{ bez jednomyślności}, \\
+0 & \text{jeśli } \text{CV}(q_j) \in \{0, \varnothing\},
+\end{cases}
 \label{eq:veff-rozbiez}
 \end{equation}
 
-\noindent gdzie $\beta_{cv} \in [0,1]$ jest
+\noindent gdzie
+\[
+\bar{d}^{+}_j =
+\frac{\sum_{\pi_i \in \Pi_{q_j} : a_{ij} = 1} V_{eff}(q_j, \pi_i) \cdot w_{\pi_i}}
+     {\sum_{\pi_i \in \Pi_{q_j} : a_{ij} = 1} w_{\pi_i}}
+\]
+jest ważoną średnią efektywnych wartości odpowiedzi
+(równanie~\eqref{eq:veff}) perspektyw, które odpowiedziały \texttt{TAK},
+czyli średnią jakością ich dowodów, $w_{\pi_i}$ jest wagą perspektywy
+(w~rdzeniu metodycznym $w_{\pi_i} = 1$),
+a $\beta_{cv} \in [0,1]$ jest
 konfigurowalnym współczynnikiem kary za brak
-konsensusu (wartość domyślna: $\beta_{cv} = 0{,}5$).
+jednomyślności (wartość domyślna: $\beta_{cv} = 0{,}5$).
 
 \end{definition}
-Innymi słowy: brak zgody między perspektywami
-jest traktowany jako połowicznie negatywna odpowiedź,
-nawet jeśli jeden z aktorów odpowiedział twierdząco.
-
-Gdy konsensus jest osiągnięty i~wszystkie perspektywy
-dostarczyły dowody najwyższej jakości, efektywna wartość
-jest dodatkowo premiowana:
-
-\begin{equation}
-V_{eff}(Q) = \text{CV}(Q) \cdot
-\Bigl(1 + \gamma \cdot
-\mathbb{1}\bigl[\forall\, i~: d_i = d_{max}\bigr]\Bigr)
-\label{eq:veff-premia}
-\end{equation}
-
-\noindent gdzie $\gamma = 0{,}1$ jest premią za
-pełny konsensus z kompletem dowodów najwyższej jakości,
-a $d_{max}$ jest najwyższym poziomem dowodu
-w skali opisanej w sekcji~\ref{sec:dowody}.
+Innymi słowy: odpowiedź twierdząca większości perspektyw przy sprzeciwie
+choćby jednej z~nich jest traktowana jako połowicznie pozytywna,
+a przewaga odpowiedzi przeczących daje wynik zerowy, nawet jeśli
+jeden z~aktorów odpowiedział twierdząco. Przy trzech perspektywach
+i~dowodach najwyższej jakości wynik wynosi $1{,}0$ (jednomyślne \texttt{TAK}),
+$0{,}5$ (dwa \texttt{TAK}) albo $0$ (co najmniej dwa \texttt{NIE}).
+Wynik pytania mieści się zawsze w~przedziale $[0, 1]$. Metodologia
+nie przewiduje dodatkowej premii za pełny konsensus: jednomyślne
+\texttt{TAK} z~dowodami najwyższej jakości osiąga już wartość maksymalną.
 
 \subsection{Interpretacja rozbieżności}
 \label{sec:interpretacja-rozbiez}
@@ -439,22 +460,22 @@ i ich standardową interpretację w ORION.
 Zgodność: TAK\newline Użytkownik: NIE\newline Techniczna: NIE
 & Wymóg zdefiniowany w przepisach, lecz nieimplementowany
 & Compliance theater: organizacja deklaruje zgodność formalną
-  bez rzeczywistego wdrożenia. Flaga P1. \\
+  bez rzeczywistego wdrożenia. $S(q_j) = 0$; dla pytania obowiązkowego priorytet P1 (tabela~\ref{tab:priorytety}). \\
 \midrule
 Zgodność: NIE\newline Użytkownik: TAK\newline Techniczna: TAK
 & Praktyka wdrożona bez formalnej podstawy prawnej
 & Brak świadomości regulacyjnej. Ryzyko braku dokumentacji
-  wymaganej przez regulatora. Rekomendacja formalizacji. \\
+  wymaganej przez regulatora. Rekomendacja formalizacji. $S(q_j) = \beta_{cv} \cdot \bar{d}^{+}_j$; w~pytaniu blokującym odpowiedź \texttt{NIE} perspektywy zgodności aktywuje blokadę sekcji. \\
 \midrule
 Zgodność: TAK\newline Użytkownik: TAK\newline Techniczna: NIE
 & Wymaganie znane, polityka istnieje, wdrożenie niezrealizowane
 & Luka techniczna. Wymóg zdefiniowany lecz nieimplementowany
-  na poziomie systemów. Flaga P2. \\
+  na poziomie systemów. $S(q_j) = \beta_{cv} \cdot \bar{d}^{+}_j$; dla pytania obowiązkowego priorytet co najmniej P2, a P1, gdy $S(q_j) < 0{,}3$ (tabela~\ref{tab:priorytety}). \\
 \midrule
 Zgodność: NIE\newline Użytkownik: NIE\newline Techniczna: TAK
 & System techniczny bez świadomości biznesowej i~prawnej
 & Shadow IT lub wdrożenie bez akceptacji zarządczej.
-  Wymaga formalnej inwentaryzacji i~decyzji. \\
+  Wymaga formalnej inwentaryzacji i~decyzji. $S(q_j) = 0$. \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -532,8 +553,9 @@ Każdy obiekt posiada właściwości, czyli pola przyjmujące definiowane przez 
 \texttt{PODMIOT} 
 \newline Właściwości: nazwa
 & Korzeń grafu ICT ($v_0$); audytowana organizacja jako całość. 
-  Nie jest bezpośrednio oceniany pytaniami szczegółowymi, 
-  jego wynik wynika z agregacji wszystkich pozostałych obiektów.
+  Oceniany sekcjami pytań na poziomie organizacji (np.\ \texttt{ORGANIZACJA}); 
+  jego wynik końcowy łączy wynik organizacyjny z~agregacją wyników pozostałych obiektów
+  (równanie~\eqref{eq:Spodmiot-final}).
 & Bank, szpital, operator infrastruktury krytycznej \\
 
 \midrule
@@ -547,8 +569,8 @@ Każdy obiekt posiada właściwości, czyli pola przyjmujące definiowane przez 
 \texttt{DOSTAWCA} 
 \newline Właściwości: nazwa, kraj pochodzenia, poddostawca
 & Zewnętrzny podmiot prawny świadczący usługi ICT na rzecz 
-  organizacji na podstawie umowy; odkryty na pierwszym 
-  poziomie grafu.
+  organizacji na podstawie umowy; bezpośredni dostawca 
+  systemu informatycznego (głębokość~2 grafu).
 & Dostawca ERP, operator chmury publicznej, 
   firma hostingowa, integrator systemów \\
 \midrule
@@ -556,8 +578,9 @@ Każdy obiekt posiada właściwości, czyli pola przyjmujące definiowane przez 
 \newline Właściwości: nazwa, kraj pochodzenia
 & Zewnętrzny podmiot prawny świadczący usługi ICT 
   na rzecz dostawcy lub innego poddostawcy; 
-  odkryty przez mechanizm triggera TIA lub deklarację 
-  dostawcy wyższego poziomu.
+  zidentyfikowany w~toku obowiązkowej identyfikacji poddostawców 
+  na podstawie deklaracji dostawcy wyższego poziomu, 
+  zweryfikowanej przez audytora.
 & Google LLC jako operator infrastruktury dostawcy ERP, 
   Cloudflare jako CDN aplikacji webowej, 
   firma zarządzająca kluczami kryptograficznymi \\
@@ -582,7 +605,7 @@ danego obiektu wpływa na wynik całego podmiotu.
 
 Atrybuty obiektów są ustalane w fazie wstępnej audytu za pomocą pomocniczej ankiety, 
 przed wygenerowaniem kwestionariusza szczegółowego. 
-Widoczność systemu i~jego krytyczność, jest wyznaczana przez mechanizm  cross-validation z udziałem co najmniej dwóch perspektyw.
+Dostępność systemu i~jego krytyczność są wyznaczane przez mechanizm cross-validation z~udziałem trzech perspektyw: krytyczność według reguły większości, a dostępność według zasady ostrożności (wystarcza jedna odpowiedź twierdząca).
 
 
 \begin{definition}[Poziom dostępności systemu]
@@ -591,9 +614,10 @@ Poziom dostępności obiektu $v$ jest wartością ze zbioru:
 \textit{dostępność}(v) \in 
 \{\texttt{PRYWATNY},\ \texttt{PUBLICZNY}\}
 \]
-wyznaczaną przez mechanizm cross-validation na podstawie 
-odpowiedzi co najmniej dwóch z trzech perspektyw rdzeniowych: 
-\texttt{ZGODNOŚCI}, \texttt{UŻYTKOWNIKA} i~\texttt{TECHNICZNEJ}. 
+wyznaczaną na podstawie odpowiedzi trzech perspektyw rdzeniowych: 
+\texttt{ZGODNOŚCI}, \texttt{UŻYTKOWNIKA} i~\texttt{TECHNICZNEJ}, 
+zgodnie z~zasadą ostrożności: do uznania kryterium za spełnione 
+wystarcza jedna odpowiedź twierdząca. 
 \end{definition}
 
 
@@ -605,21 +629,21 @@ odpowiedzi co najmniej dwóch z trzech perspektyw rdzeniowych:
 \renewcommand{\arraystretch}{1.5}
 \begin{tabular}{p{2.8cm}p{1.5cm}p{4.5cm}p{4cm}}
 \toprule
-\textbf{Poziom} & \textbf{$w_{krit}$}
+\textbf{Poziom} & \textbf{$w_{dost}$}
 & \textbf{Kryteria klasyfikacji}
 & \textbf{Przykład} \\
 \midrule
 \texttt{PRYWATNY} & $1{,}0$ 
-& System informatyczny działający na infrastrukturze 
-  własnej organizacji lub zarządzanej wyłącznie przez nią; 
-  bez bezpośredniego dostępu z sieci publicznej.
+& System dostępny wyłącznie z~sieci wewnętrznej organizacji 
+  i~wyłącznie dla jej użytkowników; bez dostępu z~sieci 
+  publicznej i~bez użytkowników ani integracji zewnętrznych.
 & System kadrowo-płacowy on-premise, baza danych pacjentów, 
   wewnętrzny portal intranetowy \\
 \midrule
-\texttt{PUBLICZNY} & $2{,}5$ 
-& System informatyczny dostępny z sieci publicznej lub 
-  świadczący usługi na rzecz podmiotów zewnętrznych; 
-  obejmuje systemy SaaS, API i~aplikacje webowe.
+\texttt{PUBLICZNY} & $1{,}8$ 
+& System dostępny z~sieci publicznej, posiadający 
+  użytkowników lub integracje zewnętrzne albo publiczny 
+  adres (kryteria D1--D4).
 & Portal klienta banku, system e-rejestracji, API płatności \\
 
 \bottomrule
@@ -691,14 +715,14 @@ podmiotu~\eqref{eq:Spodmiot_rozszerzone}.
 \end{tabular}
 \end{table}
 
-Klasyfikacja krytyczności jest przeprowadzana przez sześć kryteriów (K1--K6) zadawanych wszystkim trzem perspektywom. Wynik końcowy wyznaczany jest progowo: suma wszystkich odpowiedzi twierdzących ze wszystkich perspektyw i~wszystkich kryteriów jest normalizowana do skali klasyfikacyjnej zgodnie z~ankietą przedstawioną w~sekcji~\ref{sec:krok23}.
+Opisy w~kolumnie ,,Kryteria klasyfikacji'' mają charakter poglądowy i~charakteryzują typowy system danej klasy. Klasa jest wyznaczana wyłącznie ankietą K1--K6. Klasyfikacja krytyczności jest przeprowadzana przez sześć kryteriów (K1--K6) zadawanych wszystkim trzem perspektywom. Wynik końcowy wyznaczany jest progowo: każde kryterium przyjmuje wartość \texttt{TAK}, gdy odpowiedziały tak co najmniej dwie perspektywy, a o~klasie decyduje liczba kryteriów o~wartości \texttt{TAK} (od 0 do 6) zgodnie z~ankietą przedstawioną w~sekcji~\ref{sec:krok23}.
 
 \subsection{Atrybut: klasyfikacja utrzymania w chmurze}
 \label{sec:klasyfikacja-chmura}
-Lokalizacja miejsca utrzymania usługi ma kluczowy wpływ na warunki jej świadczenia. Oprogramowanie działające \textit{on-premise}, czyli w siedzibie organizacji, nie jest narażone na ryzyko przesyłu danych do zewnętrznych dostawców. Istotna jest również prawna jurysdykcja podmiotu, który hostuje dane. Fakt przechowywania danych w chmurze będzie implikować konieczność dokładnego audytu łańcucha dostawców i~wykonania oceny skutków transferu (\textit{TIA}), wymaganej przez RODO w sytuacji, gdy dane przesyłane są z Europejskiego Obszaru Gospodarczego (\textit{EOG}) do tzw. "państwa trzeciego" (np. USA, Indie, Chiny).
+Lokalizacja miejsca utrzymania usługi ma kluczowy wpływ na warunki jej świadczenia. Oprogramowanie działające \textit{on-premise}, czyli w siedzibie organizacji, nie jest narażone na ryzyko przechowywania danych u zewnętrznych dostawców, może jednak podlegać ryzyku dostępu z~państwa trzeciego, jeśli wsparcie techniczne jest świadczone spoza EOG lub dostawca systemu pochodzi z~państwa trzeciego. Istotna jest również prawna jurysdykcja podmiotu, który hostuje dane. Przechowywanie danych w chmurze wymaga dokładnego audytu łańcucha dostawców, a w~przypadku lokalizacji, jurysdykcji lub wsparcia spoza Europejskiego Obszaru Gospodarczego (\textit{EOG}) także oceny skutków transferu (\textit{TIA}); warunek ten ($\mathcal{C}_{TIA}$) może być spełniony także dla systemu \texttt{ON\_PREMISE}.
 
 \subsubsection*{Klasyfikacja utrzymania  w chmurze}
-Metodologia ORION definiuje dwa typy lokalizacji danych, a ich atrybut wpływa na aktywacje sekcji pytań dotyczących rozwiązań chmurowych oraz transferu danych.
+Metodologia ORION definiuje trzy klasy utrzymania systemu, a ich atrybut wpływa na aktywację sekcji pytań dotyczących rozwiązań chmurowych oraz transferu danych.
 
 
 \begin{table}[H]
@@ -710,7 +734,7 @@ Metodologia ORION definiuje dwa typy lokalizacji danych, a ich atrybut wpływa n
 \toprule
 \textbf{Typ utrzymania} & \textbf{Opis}\\
 \midrule
-\texttt{CHMURA\_K3} & Dane przechowywane są poza organizacją u zewnętrznego podmiotu (SaaS, IaaS/PaaS, model hybrydowy, hosting, kolokacja), którego lokalizacja lub jurysdykcja nie gwarantuje przechowywania danych w EOG. Obejmuje dostawców podlegających prawu państw trzecich, np. Amazon Web Services, Google Cloud, Microsoft Azure.\\
+\texttt{CHMURA\_K3} & Dane przechowywane są poza organizacją u zewnętrznego podmiotu (SaaS, IaaS/PaaS, model hybrydowy, hosting, kolokacja), którego lokalizacja, jurysdykcja lub wsparcie techniczne nie gwarantuje pozostania danych w EOG, albo którego dostawca pochodzi z~państwa trzeciego. Obejmuje dostawców podlegających prawu państw trzecich, np. Amazon Web Services, Google Cloud, Microsoft Azure.\\
 \midrule
 \texttt{CHMURA\_EOG} & Dane przechowywane są poza organizacją u zewnętrznego podmiotu (SaaS, IaaS/PaaS, model hybrydowy, hosting, kolokacja), którego lokalizacja i~jurysdykcja gwarantuje przechowywanie danych wyłącznie w EOG, np. NASK SA, Exea Data Center, Beyond.pl, OVH (region PL/EU).\\
 \midrule
@@ -722,12 +746,12 @@ Metodologia ORION definiuje dwa typy lokalizacji danych, a ich atrybut wpływa n
 \subsection{Atrybut: klasyfikacja atrybutu typów przetwarzanych danych}
 \label{sec:klasyfikacja-danych}
 
-Dotychczasowe modele oceny ryzyka ICT nie uwzględniają charakter  przetwarzanych danych jako samodzielny wymiar ryzyka z formalnym  przełożeniem na wynik scoringowy. W metodologii ORION charakter danych jest traktowany jako atrybut pierwszorzędny, który wpływa bezpośrednio  na wagę artefaktu w agregacji końcowej. Logika jest prosta: naruszenie bezpieczeństwa systemu przetwarzającego tajemnicę lekarską lub dane finansowe klientów pociąga za sobą nieporównywalnie poważniejsze  skutki prawne, finansowe i~społeczne niż naruszenie systemu  obsługującego wyłącznie dane wewnętrzne organizacji.
+Dotychczasowe modele oceny ryzyka ICT nie uwzględniają charakter  przetwarzanych danych jako samodzielny wymiar ryzyka z formalnym  przełożeniem na wynik scoringowy. W metodologii ORION charakter danych jest traktowany jako atrybut pierwszorzędny, który wpływa bezpośrednio  na wagę obiektu w agregacji końcowej. Logika jest prosta: naruszenie bezpieczeństwa systemu przetwarzającego tajemnicę lekarską lub dane finansowe klientów pociąga za sobą nieporównywalnie poważniejsze  skutki prawne, finansowe i~społeczne niż naruszenie systemu  obsługującego wyłącznie dane wewnętrzne organizacji.
 
 \subsubsection{Klasyfikacja typów danych}
 
 Metodologia ORION wyróżnia cztery typy przetwarzanych danych, uporządkowane  rosnąco według wrażliwości prawnej i~społecznej. Każdemu typowi  przypisany jest mnożnik wagowy $w_{data}$, który modyfikuje 
-wpływ artefaktu na wynik podmiotu zgodnie 
+wpływ obiektu na wynik podmiotu zgodnie 
 z równaniem~\eqref{eq:Spodmiot_rozszerzone}.
 
 \begin{table}[H]
@@ -745,7 +769,7 @@ z równaniem~\eqref{eq:Spodmiot_rozszerzone}.
 & Dane konfiguracyjne, logi techniczne bez PII \\
 \midrule
 \texttt{OSOBOWE} & $T_1$ & $1{,}3$ 
-& RODO Art.~4 ust.~1 
+& RODO art.~4 pkt~1 
 & Imię, adres, adres e-mail, numer IP \\
 \midrule
 \texttt{WRAŻLIWE} & $T_2$ & $1{,}6$ 
@@ -768,6 +792,8 @@ Atrybut ten określa kraj pochodzenia podmiotu w celu jednoznacznego ustalenia j
 Wartość tego atrybutu ma kluczowe znaczenie dla logiki warunkowego uruchamiania sekcji pytań podczas procesu audytowego. W przypadku zidentyfikowania podmiotu pochodzącego z kraju spoza EOG, system automatycznie rozszerza zakres audytu o dodatkowe wymagania. Wynika to z podwyższonego ryzyka operacyjnego i~prawnego (np. w obszarze transferu danych lub łańcucha dostaw). W konsekwencji na organizację audytującą nakładany jest obowiązek przeprowadzenia pogłębionej weryfikacji, obejmującej m.in. szczegółowe badanie mechanizmów zabezpieczeń, umów transferowych oraz analizę wpływu na ryzyko (np. TIA).
 
 
+Obok kraju siedziby ustalany jest kraj podmiotu dominującego, czyli podmiotu sprawującego kontrolę kapitałową nad dostawcą lub poddostawcą ($\textit{kontrola}(d)$). Spółka z~siedzibą w~EOG kontrolowana przez podmiot z~państwa trzeciego może podlegać prawu tego państwa w~zakresie dostępu do danych (np.\ US CLOUD Act), dlatego oba atrybuty są uwzględniane w~warunku triggera TIA (równanie~\eqref{eq:ctia}).
+
 \begin{table}[H]
 \centering % Opcjonalnie: wyśrodkowanie tabeli na stronie
 \caption{Dopuszczalne wartości pochodzenia przedsiębiorstw }
@@ -786,7 +812,7 @@ Wartość tego atrybutu ma kluczowe znaczenie dla logiki warunkowego uruchamiani
 
 \section{Plan ciągłości dzialania}
 
-Plan ciągłości działania jest procedurą wymaganą od podmiotów kluczowych zarówno na gruncie ustawy o KSC\autocite{uksc2026}, jak i~rozporządzenia DORA\autocite{dora2022}.
+Plan ciągłości działania jest procedurą wymaganą od podmiotów kluczowych i~ważnych na gruncie ustawy o KSC\autocite{uksc2026} oraz od podmiotów finansowych na gruncie rozporządzenia DORA\autocite{dora2022}.
 
 \begin{definition}[Plan ciągłości działania (BCP)]
 Zbiór udokumentowanych procedur, które określają działania, jakie podmiot musi podjąć w celu odzyskania zdolności do wykonywania operacji oraz zapewnienia ciągłości procesów krytycznych na akceptowalnym poziomie po wystąpieniu incydentu zakłócającego.
@@ -810,20 +836,20 @@ W metodologii ORION, plan ciągłości działania jest wymagany dla podmiotów o
 
 \begin{table}[H]
 \centering
-\caption{Mnożniki wagowe BCP wg typu organizacji}
+\caption{Obowiązkowość BCP wg typu organizacji}
 \label{tab:bcp-wagi}
 \renewcommand{\arraystretch}{1.4}
-\begin{tabular}{p{4.5cm}p{1.5cm}p{2.5cm}p{4.5cm}}
+\begin{tabular}{p{4.5cm}p{4.5cm}}
 \toprule
-\textbf{Typ organizacji} & \textbf{Symbol} & \textbf{$w_{reg}$} & Obowiązkowe\\
+\textbf{Typ organizacji} & \textbf{Obowiązkowe}\\
 \midrule
-\texttt{FINANSOWY} & $D_0$ & $1{,}0$   & tak\\
+\texttt{FINANSOWY} & tak\\
 \midrule
-\texttt{KLUCZOWY} & $D_1$ & $1{,}0$   & tak\\
+\texttt{KLUCZOWY} & tak\\
 \midrule
-\texttt{WAŻNY} & $D_2$ & $1{,}0$   & tak\\
+\texttt{WAŻNY} & tak\\
 \midrule
-\texttt{POZOSTAŁE} & $D_3$ & $0{,}5$ & nie \\
+\texttt{POZOSTAŁE} & nie \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -842,28 +868,28 @@ Według definicji DORA, plan musi wskazywać rzeczywistego dostawcę zastępczeg
 
 Dostawca ICT jest zobowiązany do świadczenia usług przez określony czas po wypowiedzeniu umowy, tak aby organizacja przeprowadziła migrację danych. Co istotne, wsparcie to nie może mieć charakteru pasywnego, dostawca ma obowiązek aktywnej pomocy technicznej przy przenoszeniu procesów, danych i~konfiguracji do nowego środowiska. Tego rodzaju zobowiązania muszą być precyzyjnie zapisane w umowie, z określonymi terminami i~zakresem odpowiedzialności.
 
-Exit plan traci swoją wartość, jeśli nie jest regularnie weryfikowany. DORA wymaga przeprowadzania testów planu co najmniej raz w roku lub każdorazowo po istotnych zmianach w architekturze systemu (Art. 28 ust. 4\autocite{dora2022}), również ustawa KSC (Art. 8\autocite{uksc2026}) wymaga opracowania exit planu.  Całość procesu musi być zaplanowana tak, aby klient instytucji w ogóle nie odczuł zmiany dostawcy.
+Exit plan traci swoją wartość, jeśli nie jest regularnie weryfikowany. DORA wymaga, aby plany wyjścia były kompleksowe, udokumentowane, wystarczająco przetestowane i~poddawane okresowym przeglądom (art.~28 ust.~8\autocite{dora2022}). Całość procesu musi być zaplanowana tak, aby klient instytucji w ogóle nie odczuł zmiany dostawcy.
 
-Ważna jest forma przygotowania dokumentacji. DORA, w art 28 ust. 4\autocite{dora2022} wymaga oddzielnego dokumentu, natomiast KSC wymaga realizuje cele exit planu poprzez klauzule umowne z dostawcą.
+Ważna jest forma przygotowania dokumentacji. DORA, w art.~28 ust.~8\autocite{dora2022}, wymaga odrębnie udokumentowanego planu wyjścia. W~odniesieniu do podmiotów kluczowych ustawa o~KSC\autocite{uksc2026} realizuje cele exit planu przede wszystkim poprzez wymagania dotyczące bezpieczeństwa łańcucha dostaw i~postanowienia umowne z~dostawcą.\todo[inline]{Zweryfikować podstawę: czy znowelizowana ustawa o~KSC nakłada na podmioty kluczowe obowiązek odrębnego exit planu (dotychczas powoływany art.~8).}
 
-W metodologii ORION, exit plan jest wymagany dla podmiotów określonych w KSC oraz DORA. Podobnie jak plan ciągłości działania,  brak lub nieprawidłowo zdefiniowany exit plan, gdy jest obowiązkowy, wskazuje binarnie na uchybienia w działaniu organizacji.
+W metodologii ORION sekcja exit plan jest aktywowana dla podmiotów \texttt{FINANSOWY} i~\texttt{KLUCZOWY} w~odniesieniu do systemów krytycznych i~ważnych (tabela~\ref{tab:sekcje-aktywacja}). Dla podmiotu \texttt{KLUCZOWY} pytania sekcji, mające zakres wyłącznie DORA, nie są obowiązkowe ani blokujące, dopóki nie zostanie wskazana ich podstawa w~ustawie o~KSC (równanie~\eqref{eq:tau-eff}). Podobnie jak plan ciągłości działania,  brak lub nieprawidłowo zdefiniowany exit plan, gdy jest obowiązkowy, wskazuje binarnie na uchybienia w działaniu organizacji.
 
 \begin{table}[H]
 \centering
-\caption{Mnożniki wagowe exit plan wg typu organizacji}
+\caption{Obowiązkowość exit planu wg typu organizacji}
 \label{tab:exitplan-wagi}
 \renewcommand{\arraystretch}{1.4}
-\begin{tabular}{p{4.5cm}p{1.5cm}p{2.5cm}p{4.5cm}}
+\begin{tabular}{p{4.5cm}p{4.5cm}}
 \toprule
-\textbf{Typ organizacji} & \textbf{Symbol} & \textbf{$w_{reg}$} & Obowiązkowe\\
+\textbf{Typ organizacji} & \textbf{Obowiązkowe}\\
 \midrule
-\texttt{FINANSOWY} & $D_0$ & $1{,}0$   & tak\\
+\texttt{FINANSOWY} & tak\\
 \midrule
-\texttt{KLUCZOWY} & $D_1$ & $1{,}0$   & tak\\
+\texttt{KLUCZOWY} & sekcja aktywna; pytania zalecane (do weryfikacji KSC)\\
 \midrule
-\texttt{WAŻNY} & $D_2$ & $1{,}0$   & nie\\
+\texttt{WAŻNY} & nie\\
 \midrule
-\texttt{POZOSTAŁE} & $D_3$ & $0{,}5$ & nie \\
+\texttt{POZOSTAŁE} & nie \\
 \bottomrule
 
 \end{tabular}
