@@ -96,7 +96,7 @@ done
 grep -q '|c|' "$OUT/manuscript.tex" && warn "a table uses vertical rules; the guide asks to avoid them"
 while IFS= read -r l; do warn "incomplete author list in bibliography.bib:$l"; done < <(grep -n 'and others' "$OUT/bibliography.bib" || true)
 
-todo=$(grep -l 'TODO' "$OUT"/*.tex "$OUT"/*.txt 2>/dev/null | xargs -r -n1 basename | tr '\n' ' ')
+todo=$( { grep -l 'TODO' "$OUT"/*.tex "$OUT"/*.txt 2>/dev/null || true; } | xargs -r -n1 basename | tr '\n' ' ')
 [[ -z "$todo" ]] || warn "unresolved [TODO] markers in: $todo"
 
 # --- archive of the source files --------------------------------------------------------------

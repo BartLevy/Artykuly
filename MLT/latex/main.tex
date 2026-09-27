@@ -50,7 +50,7 @@
 
     Praca przedstawia opracowanie i~walidację obiektywnej, numerycznej miary podobieństwa bodźców akustycznych. Głównym celem badań było stworzenie metryki opartej na wektorowej reprezentacji cech dźwięku, która pozwoli na ilościową ocenę ryzyka błędnej identyfikacji, złożonych z~pojedyńczych dzwięków próbek wynikającej z~ich bliskości akustycznej, a~nie z~deficytów poznawczych słuchaczy.
 
-    Materiał badawczy stanowiło 24 nagrań odgłosów zwierząt, które opisano za pomocą 16 wymiarowych wektorów cech, obejmujących centroid widmowy, częstotliwość podstawową, współczynnik Peak-to-Average Ratio oraz 13 współczynników cepstralnych w~skali melowej. W~celu ujednolicenia wpływu poszczególnych parametrów zastosowano normalizację metodą Min-Max, a~relacje między próbkami poddano analizie z~wykorzystaniem odległości euklidesowej oraz metody głównych składowych.
+    Materiał badawczy stanowiło 24 nagrań odgłosów zwierząt, które opisano za pomocą 16 wymiarowych wektorów cech, obejmujących centroid widmowy, częstotliwość podstawową, współczynnik Peak-to-Average Ratio oraz 13 współczynników cepstralnych w~skali melowej. W~celu ujednolicenia wpływu poszczególnych parametrów zastosowano normalizację metodą min-max, a~relacje między próbkami poddano analizie z~wykorzystaniem odległości euklidesowej oraz metody głównych składowych.
 
 
     Zidentyfikowano kluczowe parametry różnicujące barwę dźwięku oraz wykazano brak silnej korelacji między centroidem widmowym a~częstotliwością podstawową ($r = 0{,}26$), co potwierdza unikalność informacji niesionej przez poszczególne deskryptory. Porównanie z~wynikami badań klinicznych wykazało wstępną zgodność opracowanej metryki z~empiryczną trudnością percepcyjną: para bodźców o~najniższym dystansie euklidesowym ($d = 0{,}736$) była identyfikowana poprawnie jedynie w~$20{,}5\%$ przypadków, podczas gdy pary bardziej odległe osiągały od $44{,}4\%$ do $92{,}9\%$ poprawnych odpowiedzi, przy czym zależność ta nie miała charakteru monotonicznego. Opracowana metodologia stanowi fundament do tworzenia powtarzalnych zestawów bodźców o~kontrolowanym stopniu trudności w~testach percepcji słuchowej.
@@ -193,7 +193,7 @@ Wektory cech plików audio porównano za pomocą miary odległości euklidesowej
 
 \subsection{Część A: Analiza statystyczna wektorów cech akustycznych}
 
-Na podstawie przeprowadzonej analizy, opisanej w~Sekcji~\ref{section:mat_met}, uzyskano wyniki, które wskazały występowanie istotnych różnic w~analizowanych parametrach. Wyniki przed normalizacją i~po normalizacji metodą Min-Max dla wszystkich 24 próbek włączonych do analizy:
+Na podstawie przeprowadzonej analizy, opisanej w~Sekcji~\ref{section:mat_met}, uzyskano wyniki, które wskazały występowanie istotnych różnic w~analizowanych parametrach. Wyniki przed normalizacją i~po normalizacji metodą min-max dla wszystkich 24 próbek włączonych do analizy:
 
 \begin{table}[h]
 \centering
@@ -225,7 +225,7 @@ MFCC\_13 & -14.581 & 12.754 & 0.037 & 0.247 & 6.284 & 0.535 & 0.542 & 0.230 \\
 \end{table}
 
 
-Wyniki znormalizowane metodą Min-Max wskazują, że średnie wartości mieszczą się 
+Wyniki znormalizowane metodą min-max wskazują, że średnie wartości mieszczą się 
 w~przedziale $0{,}32$--$0{,}62$, a~dla 11 z~16 cech -- między $0{,}4$ a~$0{,}6$; oznacza to, że dane są zbalansowane; nie ma sytuacji, 
 w~której większość próbek ma skrajnie niskie (blisko $0$) lub skrajnie wysokie 
 (blisko $1$) wartości.

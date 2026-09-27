@@ -31,11 +31,11 @@
 % Optimization of Stimulus Sets in Auditory Perception Tests via Vector-Based Signal Similarity Analysis
 \usepackage{authblk}
 \author[1,*]{Bartosz Lewandowski \small{(ORCID:0009-0004-1158-0693)}}
-\author[2]{Maciej J. Wróbel \small{(ORCID:0000-0003-1865-2122)}}
-\author[3]{Ewaryst Tkacz \small{(ORCID:0000-0003-2580-7954)}}
+\author[2]{Ewaryst Tkacz \small{(ORCID:0000-0003-2580-7954)}}
+\author[3]{Maciej J. Wróbel \small{(ORCID:0000-0003-1865-2122)}}
 
-\affil[1,3]{Department of Clinical Engineering, Academy of Silesia in Katowice}
-\affil[2]{Department of Otolaryngology and Oncological Laryngology Collegium Medicum NCU}
+\affil[1,2]{Department of Clinical Engineering, Academy of Silesia in Katowice}
+\affil[3]{Department of Otolaryngology and Oncological Laryngology Collegium Medicum NCU}
 
 % Corresponding author - footnote definition
 \affil[*]{Corresponding author: Bartosz Lewandowski, Ph.D., bartosz.lewandowski@akademiaslaska.pl}
@@ -50,7 +50,7 @@
 
     This paper presents the development and validation of an objective, numerical measure of similarity between acoustic stimuli. The main aim of the study was to construct a metric based on a vector representation of sound features that would enable a quantitative assessment of the risk that samples composed of individual sounds are misidentified because of their acoustic proximity rather than because of listeners' cognitive deficits.
 
-    The study material comprised 24 recordings of animal vocalizations, each described by a 16-dimensional feature vector comprising the spectral centroid, the fundamental frequency, the peak-to-average ratio, and 13 mel-frequency cepstral coefficients. Min-max normalization was applied to equalize the contribution of individual parameters, and the relationships between samples were analyzed using the Euclidean distance and principal component analysis.
+    The study material comprised 24 recordings of animal vocalizations, each described by a 16-dimensional feature vector comprising the spectral centroid, the fundamental frequency, the peak-to-average ratio, and 13 mel-frequency cepstral coefficients. Min--max normalization was applied to equalize the contribution of individual parameters, and the relationships between samples were analyzed using the Euclidean distance and principal component analysis.
 
 
     The key parameters differentiating sound timbre were identified, and no strong correlation was found between the spectral centroid and the fundamental frequency ($r = 0.26$), confirming that the individual descriptors carry non-redundant information. Comparison with the results of clinical testing showed preliminary agreement between the proposed metric and empirical perceptual difficulty: the stimulus pair with the smallest Euclidean distance ($d = 0.736$) was correctly identified in only $20.5\%$ of cases, whereas the more distant pairs reached $44.4$--$92.9\%$ correct responses, although the relationship was not monotonic. The proposed methodology provides a foundation for constructing reproducible stimulus sets with a controlled level of difficulty for auditory perception tests.
@@ -86,11 +86,11 @@ The present study addresses the selection of physical features of acoustic stimu
 \section{Materials and methods}
 \label{section:mat_met}
 
-The main premise of the analysis was to develop a specific measure for complex auditory stimuli that would allow a mathematical assessment of how similar individual signals (auditory stimuli) are to one another. In other words, the aim of the study was (Part A) to develop an acoustic similarity metric based on distances between normalized acoustic feature vectors of sound samples, and subsequently (Part B) to verify the resulting metric against the results of clinical experiments on the perception of complex auditory stimuli.
+The primary aim of the study was to develop a quantitative measure of similarity between complex auditory stimuli. Specifically, Part A involved constructing an acoustic similarity metric based on distances between normalized acoustic feature vectors of sound samples, while Part B evaluated the resulting metric against findings from clinical experiments on the perception of complex auditory stimuli.
 
 The study material consisted of sound samples representing the vocalizations of common animals, prepared as MP3 files (MPEG-1 Audio Layer III). All 24 files have a sampling rate of 44.1~kHz. Three of them (\textit{cat.mp3}, \textit{gorilla.mp3}, and \textit{hawk.mp3}) were resampled to 44.1~kHz from originals sampled at 11.025~kHz (\textit{cat.mp3}, \textit{gorilla.mp3}) and 22.05~kHz (\textit{hawk.mp3}); their effective bandwidth is therefore limited to approximately 5~kHz and 11~kHz, respectively. Three recordings from the MLT set (\textit{elephant.mp3}, \textit{frog.mp3}, and \textit{horse.mp3}) were originally stored in AAC format and were converted to MP3. Twenty-one recordings were stereo and 3 (\textit{cat.mp3}, \textit{gorilla.mp3}, and \textit{hawk.mp3}) were mono. Features were extracted at the native sampling rate of each file after downmixing to a single (mono) channel. The recordings varied in duration from 3.2~s (\textit{hawk.mp3}) to 162.3~s (\textit{duck.mp3}), with a mean of 32.9~s and a median of 9.1~s; the total size of the set was approximately 13.7~MB.
 
-In total, 24 sound files representing different animal species were prepared. The first part comprised 10 recordings used as stimulus material in the MLT study conducted by Madhavan et al.~\cite{MadhavanWrobel2024MLT}: chicken.mp3, cow.mp3, dog.mp3, donkey.mp3, elephant.mp3, frog.mp3, horse.mp3, lion.mp3, monkey.mp3, and sheep.mp3. As the original stimulus set of that study, these recordings are hereafter referred to as the \textit{MLT set}. They were supplemented with 14 animal recordings selected at random from the BBC Sound Effects library~\cite{bbcrewind_soundeffects}: blackbird.mp3, chaffinch.mp3, great\_tit.mp3, tundra\_swan.mp3, wolf1.mp3, cat.mp3, duck.mp3, frog2.mp3, gorilla.mp3, hawk.mp3, owl.mp3, tawny\_owl.mp3, wild\_boar.mp3, and wolf2.mp3. Together, the 24 recordings form the \textit{extended set}.
+In total, 24 sound files representing different animal species were prepared. The first part comprised 10 recordings used as stimulus material in the MLT study conducted by Madhavan et al.~\cite{MadhavanWrobel2024MLT}: chicken.mp3, cow.mp3, dog.mp3, donkey.mp3, elephant.mp3, frog.mp3, horse.mp3, lion.mp3, monkey.mp3, and sheep.mp3. As the original stimulus set of that study, these recordings are hereafter referred to as the MLT set. They were supplemented with 14 animal recordings selected at random from the BBC Sound Effects library~\cite{bbcrewind_soundeffects}: blackbird.mp3, chaffinch.mp3, great\_tit.mp3, tundra\_swan.mp3, wolf1.mp3, cat.mp3, duck.mp3, frog2.mp3, gorilla.mp3, hawk.mp3, owl.mp3, tawny\_owl.mp3, wild\_boar.mp3, and wolf2.mp3. Together, the 24 recordings form the extended set.
 
 The feature set was chosen according to the principle of a parsimonious yet complementary description of the signal, so as to cover three relatively independent perceptual--acoustic domains while keeping each dimension interpretable. Timbre was described by the spectral centroid (the best-established correlate of perceived timbral ``brightness''~\cite{Grey1977Timbre,Lakatos2000Timbre,saitis2020brightness}) and by a set of 13 MFCCs, which provide a standard, compact description of the shape of the spectral envelope~\cite{Peeters2011TimbreToolbox,Siedenburg2017TimbreSimilarity,DeCamargo2017ProtaxSound}; their number follows common convention and the default configuration of the \textit{librosa} library~\cite{mcfee2015librosa}. Pitch was represented by the fundamental frequency (F0), whose independence from timbre is supported by its weak correlation with the spectral centroid ($r = 0.26$). Temporal dynamics were captured by the peak-to-average ratio (PAR), which makes it possible to distinguish signals of similar pitch and timbre but different impulsive character. This choice was further supported by practical considerations: the unambiguous interpretation of each feature (important when the metric is used to audit stimulus material), a small vector dimension appropriate to the size of the dataset (24~recordings), the availability of all descriptors in standard open-source extraction tools, and consistency with the representation used by Madhavan et al.~\cite{MadhavanWrobel2024MLT}, whose work the present study extends. A deliberately simple and interpretable baseline representation was therefore adopted, serving as a reference point for richer feature sets.
 % (cf. Discussion).
@@ -193,7 +193,7 @@ The feature vectors of the audio files were compared using the Euclidean distanc
 
 \subsection{Part A: Statistical analysis of acoustic feature vectors}
 
-The analysis described in Section~\ref{section:mat_met} revealed substantial differences in the analyzed parameters. The results before and after min-max normalization for all 24 samples included in the analysis are summarized below:
+The analysis revealed substantial differences in the analyzed parameters. The results before and after min--max normalization for all 24 samples included in the analysis are summarized below:
 
 \begin{table}[h]
 \centering
@@ -221,17 +221,17 @@ MFCC\_13 & -14.581 & 12.754 & 0.037 & 0.247 & 6.284 & 0.535 & 0.542 & 0.230 \\
 
 \bottomrule
 \end{tabular}
-\caption{Overall characteristics of the sound set for all 24 samples included in the analysis (raw and min-max normalized values).}
+\caption{Overall characteristics of the sound set for all 24 samples included in the analysis (raw and min--max normalized values).}
 \end{table}
 
 
-The min-max normalized results show that the mean values lie in the range $0.32$--$0.62$, and between $0.4$ and $0.6$ for 11 of the 16 features, which means that the data are balanced: there is no feature for which most samples take extremely low (close to $0$) or extremely high (close to $1$) values.
+The min--max normalized results show that the mean values lie in the range $0.32$--$0.62$, and between $0.4$ and $0.6$ for 11 of the 16 features, which means that the data are balanced: there is no feature for which most samples take extremely low (close to $0$) or extremely high (close to $1$) values.
 
 
 \subsubsection{Spectral centroid}
 
 The spectral centroid ranged from $5257.504$~Hz (\textit{tawny\_owl.mp3}) to $1282.841$~Hz (\textit{cat.mp3}). The mean and median for the analyzed group were $3007.300$~Hz and $2971.778$~Hz, respectively, with a standard deviation of $1152.948$~Hz. Most samples are concentrated in the lower brightness range, as confirmed by the normalized median ($\text{med} = 0.425$). The sample \textit{tawny\_owl.mp3} ($c = 5257.504$~Hz) raises the mean centroid value and stands apart from the rest of the set.
-The next highest value in the set (\textit{blackbird.mp3}, $c = 4619.491$~Hz) is $638.013$~Hz lower. This is the largest gap between consecutive centroid values in the whole set (all other gaps between adjacent values are below $365$~Hz), which sets this recording apart as a case of particularly high spectral brightness. The distribution of centroid values for all analyzed samples is shown in Fig.~\ref{fig:centroid}.
+The next highest value in the set (\textit{blackbird.mp3}, $c = 4619.491$~Hz) is $638.013$~Hz lower. This is the largest gap between consecutive centroid values in the extended set (all other gaps between adjacent values are below $365$~Hz), which sets this recording apart as a case of particularly high spectral brightness. The distribution of centroid values for all analyzed samples is shown in Fig.~\ref{fig:centroid}.
 
 \begin{figure}[H]
     \centering
@@ -242,7 +242,7 @@ The next highest value in the set (\textit{blackbird.mp3}, $c = 4619.491$~Hz) is
 
 \subsubsection{Fundamental frequency (F0)}
 
-The highest values, $2419.417$~Hz and $2240.552$~Hz, were observed for \textit{hawk.mp3} and \textit{blackbird.mp3}, respectively, and the lowest, $437.437$~Hz and $456.731$~Hz, for \textit{lion.mp3} and \textit{tawny\_owl.mp3}; the mean and median for the whole group were $1077.390$~Hz and $973.540$~Hz, respectively.\\
+The highest values, $2419.417$~Hz and $2240.552$~Hz, were observed for \textit{hawk.mp3} and \textit{blackbird.mp3}, respectively, and the lowest, $437.437$~Hz and $456.731$~Hz, for \textit{lion.mp3} and \textit{tawny\_owl.mp3}; the mean and median for the extended group were $1077.390$~Hz and $973.540$~Hz, respectively.\\
 For the normalized data, F0 has a mean of $0.323$, indicating that most samples lie in the lower part of the pitch range relative to the highest value observed. At the same time, the low standard deviation ($\text{std} = 0.267$) indicates that the samples are fairly similar to one another in terms of pitch.
 The mean ($0.323$) is higher than the median ($0.270$), which means that a few high-pitched sounds in the set raise the mean, while the F0 of most samples is low. The range ($0.0$--$1.0$) indicates that the data span the full scale. The fundamental frequency values of the individual samples are shown in Fig.~\ref{fig:freq}.
 
@@ -257,7 +257,7 @@ The mean ($0.323$) is higher than the median ($0.270$), which means that a few h
 
 \subsubsection{PAR (peak-to-average ratio)}
 PAR ranged from $27.325$~dB (for the file with the highest dynamics, \textit{duck.mp3}) to $10.051$~dB (\textit{dog.mp3}); the mean and median for the analyzed group were $18.180$~dB and $18.047$~dB, respectively, with a standard deviation of $3.748$~dB.
-For the normalized data, PAR, whose mean ($\text{avg} = 0.471$) lies almost at the midpoint of the scale, shows the greatest stability among the physical features examined, as reflected in its relatively low standard deviation ($\text{std} = 0.217$). The median ($0.463$) is very close to the mean, suggesting a balanced distribution of the crest factor across the whole set of 24 samples, without extreme anomalies. Although some files dominate the upper part of the scale, most of the data are clustered around the midpoint, which means that the recordings have a similar structure of dynamics and signal saturation. The distribution of PAR values for the analyzed files is shown in Fig.~\ref{fig:par}.
+For the normalized data, PAR, whose mean ($\text{avg} = 0.471$) lies almost at the midpoint of the scale, shows the greatest stability among the physical features examined, as reflected in its relatively low standard deviation ($\text{std} = 0.217$). The median ($0.463$) is very close to the mean, suggesting a balanced distribution of the crest factor across the extended set of 24 samples, without extreme anomalies. Although some files dominate the upper part of the scale, most of the data are clustered around the midpoint, which means that the recordings have a similar structure of dynamics and signal saturation. The distribution of PAR values for the analyzed files is shown in Fig.~\ref{fig:par}.
 
 
 \vspace{1em}
@@ -287,7 +287,7 @@ Normalization allowed all 13 coefficients to be compared directly and showed tha
 \end{figure}
 
 
-A comparison of the mean and median showed close agreement for all 13 coefficients; the differences are minimal and usually do not exceed $0.05$ (e.g., for MFCC\_10, $\text{avg} = 0.529$ vs.\ $\text{median} = 0.516$). This indicates a symmetric distribution of timbral features across the whole dataset. It can therefore be inferred that the recordings were made under similar acoustic conditions or with equipment of similar frequency response, which rules out extreme statistical anomalies in the psychoacoustic domain.
+A comparison of the mean and median showed close agreement for all 13 coefficients; the differences are minimal and usually do not exceed $0.05$ (e.g., for MFCC\_10, $\text{avg} = 0.529$ vs.\ $\text{median} = 0.516$). This indicates a symmetric distribution of timbral features across the extended dataset. It can therefore be inferred that the recordings were made under similar acoustic conditions or with equipment of similar frequency response, which rules out extreme statistical anomalies in the psychoacoustic domain.
 
 Correlation analysis was used as a test of feature redundancy: if two variables are strongly correlated, then in a metric based on the Euclidean distance they may in practice duplicate information about a sound sample and amplify one dimension of difference at the expense of another. Low correlation means that the features describe different aspects of the signal and that their joint use improves the discrimination of acoustic similarity (e.g., the independence of the centroid from F0 means that timbre/brightness does not follow directly from pitch).
 
@@ -304,7 +304,12 @@ Three non-MFCC descriptors, namely the spectral centroid, F0, and PAR, supplemen
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{images/correl-matrix.jpeg}
-    \caption{Correlation matrix.}
+    \caption{Correlation matrix for six selected acoustic descriptors: spectral
+centroid, F0, PAR, MFCC\_1, MFCC\_2, and MFCC\_9. Each cell represents
+the correlation between a pair of descriptors across the analyzed sound
+samples. The displayed subset is used to examine relationships among
+features; the PCA was performed separately using the full 16-dimensional
+feature vector.}
     \label{fig:matrix}
 \end{figure}
 
@@ -394,7 +399,7 @@ The literature on audio retrieval and similarity modeling indicates that the eff
 %, instead of assuming an equal contribution of each dimension.
 The present model should therefore be regarded as a deliberately simple and interpretable baseline metric, serving as a reference point for more complex solutions.
 
-The most practical application of the presented procedure is the possibility of pre-standardizing sound material. In tests designed to assess cognitive, memory, or perceptual integration processes, stimuli should be selected so that unintended acoustic proximity does not become the dominant source of difficulty. Computing a distance matrix for the entire set makes it possible to identify particularly close pairs, control the distribution of difficulty, and build alternative sets with a similar acoustic profile. This is potentially useful not only for assessing the subitizing effect but also for other audiological procedures and auditory perception experiments. At the same time, the present study is exploratory. The number of stimuli is small, and the behavioral validation covers only four pairs. On this basis, reliable thresholds classifying sounds as ``similar,'' ``intermediate,'' or ``different'' cannot be established. Future studies will require the validation of a larger number of pairs, the analysis of trials involving more than two simultaneous stimuli, and a direct comparison of the acoustic measure with both explicit similarity judgments and task performance in the MLT study. Such an approach would make it possible to separate three levels: the physical similarity of the signals, consciously reported perceptual similarity, and the actual effect of similarity on task performance. In this context, the proposed method should not be presented as a universal way of deciding whether two sounds are ``the same'' or ``different.'' Rather, its value lies in providing an objective, reproducible, and easily auditable index of acoustic proximity that can be used as an additional variable in the design and interpretation of auditory tests. This perspective links signal analysis with psychophysics and clinical application, moving from the question of which features a sound contains to the question of the extent to which stimulus properties can co-determine listener behavior.
+The most practical application of the presented procedure is the possibility of pre-standardizing sound material. In tests designed to assess cognitive, memory, or perceptual integration processes, stimuli should be selected so that unintended acoustic proximity does not become the dominant source of difficulty. Computing a distance matrix for the entire set makes it possible to identify particularly close pairs, control the distribution of difficulty, and build alternative sets with a similar acoustic profile. This is potentially useful not only for assessing the subitizing effect but also for other audiological procedures and auditory perception experiments. At the same time, the present study is exploratory. The number of stimuli is small, and the behavioral validation covers only four pairs. On this basis, reliable thresholds classifying sounds as ``similar,'' ``intermediate,'' or ``different'' cannot be established. Future studies will require the validation of a larger number of pairs, the analysis of trials involving more than two simultaneous stimuli, and a direct comparison of the acoustic measure with both explicit similarity judgments and task performance in the MLT study\cite{MadhavanWrobel2024MLT}. Such an approach would make it possible to separate three levels: the physical similarity of the signals, consciously reported perceptual similarity, and the actual effect of similarity on task performance. In this context, the proposed method should not be presented as a universal way of deciding whether two sounds are ``the same'' or ``different.'' Rather, its value lies in providing an objective, reproducible, and easily auditable index of acoustic proximity that can be used as an additional variable in the design and interpretation of auditory tests. This perspective links signal analysis with psychophysics and clinical application, moving from the question of which features a sound contains to the question of the extent to which stimulus properties can co-determine listener behavior.
 
 In summary, previous research clearly shows that the quantitative comparison of sounds using multidimensional representations and distance measures rests on well-established methodological foundations. The novelty of the proposed approach therefore lies not in the signal analysis tools themselves but in their application to the control of stimulus material and to the interpretation of perceptual task performance. The fact that the pair with the smallest acoustic distance was identified correctly least often suggests that a multi-feature metric can help identify stimuli that carry an additional risk of interference. At the same time, the lack of a monotonic relationship among the remaining pairs and the small number of available comparisons indicate that this relationship requires further prospective validation. Seen in this light, the presented procedure is not a final model of sound perception but a practical and transparent tool for addressing a fundamental question: how can two sounds be compared in a way that is relevant to listener behavior?
 
@@ -421,7 +426,7 @@ In summary, previous research clearly shows that the quantitative comparison of 
 \section{Acoustic feature vectors}
 
 
-Acoustic feature vectors used in the article, before min-max normalization.
+Acoustic feature vectors used in the article, before min--max normalization.
 
 \begin{tabular}{|c|c|c|c|}\hline
 Name & F0 & PAR & Centroid \\\multicolumn{4}{|c|}{MFCC } \\ \hline
