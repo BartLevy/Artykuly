@@ -194,7 +194,7 @@ ORION wprowadza cztery kluczowe innowacje metodyczne względem istniejących fra
 
 Pierwszą z nich jest zasada wieloperspektywiczności. ORION przyjmuje, że każdy element składowy infrastruktury ICT (system informatyczny, dostawca, wymóg, etc), jest rozumiany odmiennie przez prawnika, menedżera biznesowego, architekta oprogramowania czy administratora infrastruktury. Odmienność ta nie jest wadą, którą należy eliminować, jest naturalną cechą wynikającą z różnych wyzwań i~zadań na poszczególnych stanowiskach, którą metodyka musi uwzględniać. Perspektywa nie jest wyłącznie kategorią opisową, determinuje, kto w organizacji jest właściwą osobą do udzielenia odpowiedzi na konkretne pytanie audytowe, co eliminuje jeden z fundamentalnych błędów istniejącej praktyki: odpowiadanie na pytania prawne przez inżynierów i~na pytania techniczne przez prawników.
 
-Drugą innowacją jest ocena oparta na dowodach. Każda odpowiedź na pytanie audytowe podlega weryfikacji przez pryzmat dostarczonego dowodu materialnego. Metodyka rozróżnia cztery poziomy jakości dowodu (tabela~\ref{tab:dowody}): brak dowodu, dowód słaby (dokument anonimowy lub ogólny), dowód średni (oświadczenie podpisane, dokument wskazujący na system) oraz dowód silny, potwierdzony materialnie: log systemowy, wynik testu penetracyjnego, protokół z próby odtworzenia systemu.  Dodatkowo, dowód pisemny jest traktowany w zależności od jego sporządzenia, inaczej system bierze pod uwagę oświadczenie pisemne czytelnie podpisane, inaczej oświadczenie pisemne będące wynikiem anonimowego dokumentu. Brak dowodu nie zmienia odpowiedzi twierdzącej na przeczącą, lecz obniża jej efektywną wartość w modelu scoringowym w sposób kontrolowany i~konfigurowalny. Mechanizm ten precyzyjnie odzwierciedla rzeczywistość audytu: organizacja może  stosować właściwe praktyki bez ich pełnej dokumentacji, ale twierdzenie bez weryfikacji ma mniejszą wartość poznawczą niż twierdzenie udokumentowane. Jednoczenie konieczność przygotowania dowodu, co więcej, osobistego podpisania się pod dowodem, skutkuje wysoką rzetelnością odpowiedzi. Jest to bezpośrednia odpowiedź na compliance theater.
+Drugą innowacją jest ocena oparta na dowodach. Każda odpowiedź na pytanie audytowe podlega weryfikacji przez pryzmat dostarczonego dowodu materialnego. Metodyka rozróżnia cztery poziomy jakości dowodu (tabela~\ref{tab:dowody}): brak dowodu, dowód słaby (dokument anonimowy lub ogólny), dowód średni (oświadczenie podpisane, dokument wskazujący na system) oraz dowód silny, potwierdzony materialnie: log systemowy, wynik testu penetracyjnego, protokół z próby odtworzenia systemu.  Dodatkowo, dowód pisemny jest traktowany w zależności od jego sporządzenia, inaczej system bierze pod uwagę oświadczenie pisemne czytelnie podpisane, inaczej oświadczenie pisemne będące wynikiem anonimowego dokumentu. Odpowiedź twierdząca bez żadnego dowodu jest traktowana jak przecząca, a dowód słabszy niż silny obniża efektywną wartość odpowiedzi w modelu scoringowym w sposób kontrolowany i~konfigurowalny. Mechanizm ten precyzyjnie odzwierciedla rzeczywistość audytu: organizacja może  stosować właściwe praktyki bez ich pełnej dokumentacji, ale twierdzenie bez weryfikacji ma mniejszą wartość poznawczą niż twierdzenie udokumentowane. Jednoczenie konieczność przygotowania dowodu, co więcej, osobistego podpisania się pod dowodem, skutkuje wysoką rzetelnością odpowiedzi. Jest to bezpośrednia odpowiedź na compliance theater.
 
 Trzecią innowacją jest grafowe modelowanie łańcucha ICT z propagacją ryzyka. Audyt w ORION nie jest przeprowadzany wyłącznie dla podmiotu nadzorowanego traktowanego jako niepodzielna całość, obejmuje wszystkich dostawców i~poddostawców ICT, reprezentowanych jako wierzchołki skierowanego grafu zależności. Mechanizm systematycznego przejścia grafu zapewnia pełną identyfikację podmiotów w łańcuchu dostaw, które w tradycyjnych audytach pozostają poza polem widzenia. Algorytm propagacji ryzyka umożliwia z kolei obliczenie skumulowanego wpływu niezgodności na poziomie poddostawcy na ryzyko całego podmiotu nadzorowanego ,co odpowiada na pytanie, które organizacje zadają coraz częściej: czy mój dostawca jest bezpieczny, a jeśli nie, jak bardzo to mnie dotyczy?
 
@@ -254,8 +254,7 @@ Dodatkowo, wprowadzona została opcja \texttt{flagi blokującej} $\text{FLAG}_{b
 \label{sec:dowody}
 
 
-Każda odpowiedź na pytanie audytowe w ORION musi być opatrzona dowodem. Dowód nie zmienia wartości
-odpowiedzi z \texttt{TAK} na \texttt{NIE} ani odwrotnie, lecz modyfikuje wagę odpowiedzi w modelu scoringowym.
+Każda odpowiedź twierdząca na pytanie audytowe w ORION powinna być opatrzona dowodem. Dowód nie zamienia odpowiedzi \texttt{NIE} na \texttt{TAK}; odpowiedź \texttt{TAK} bez żadnego dowodu liczy się jak \texttt{NIE}, a jakość dowodu modyfikuje wagę odpowiedzi twierdzącej w modelu scoringowym (sekcja~\ref{sec:wplyw-dowodu}).
 Logika ta odzwierciedla cel audytu,  organizacja może faktycznie stosować właściwe praktyki bez ich pełnej i~faktycznej dokumentacji istnieje ryzyko, że dowód jest wadliwiwy.
 
 Równie istotny jest aspekt behawioralny: badania z zakresu psychologii decyzji wskazują, że osoby podpisujące oświadczenia własnym imieniem i~nazwiskiem
@@ -356,7 +355,7 @@ są następujące:
 Mechanizm ten precyzyjnie odzwierciedla cel audytu: nie interesuje nas, co organizacja mówi, że robi, interesuje nas, co jest w stanie udowodnić.
 
 \paragraph{Dowód perspektywy użytkownika.}
-Perspektywa użytkownika z~natury opisuje obserwacje z~codziennej pracy i~zwykle nie dysponuje dowodem materialnym. Aby jej odpowiedzi nie były z~definicji zerowane, użytkownik składa odpowiedzi w~formie imiennego, podpisanego i~datowanego oświadczenia. Zgodnie z~tabelą~\ref{tab:dowody} odpowiada to dowodowi średniemu, $d = 0{,}7$. Mechanizm ten wykorzystuje efekt opisany w~sekcji walidacji odpowiedzi: osoby podpisujące oświadczenie imiennie rzadziej podają nieprawdę. Odpowiedź użytkownika udzielona wyłącznie ustnie, bez podpisanego oświadczenia, ma $d = 0$. Perspektywy zgodności i~techniczna są oceniane według rzeczywiście przedstawionych dowodów.
+Perspektywa użytkownika z~natury opisuje obserwacje z~codziennej pracy i~zwykle nie dysponuje dowodem materialnym. Aby jej odpowiedzi nie były z~definicji zerowane, użytkownik składa odpowiedzi w~formie imiennego, podpisanego i~datowanego oświadczenia. Zgodnie z~tabelą~\ref{tab:dowody} odpowiada to dowodowi średniemu, $d = 0{,}7$; oświadczenie podpisane z~poświadczeniem tożsamości (np.\ podpisem kwalifikowanym) jest dowodem silnym, $d = 1{,}0$. Mechanizm ten wykorzystuje efekt opisany w~sekcji walidacji odpowiedzi: osoby podpisujące oświadczenie imiennie rzadziej podają nieprawdę. Odpowiedź użytkownika udzielona wyłącznie ustnie, bez podpisanego oświadczenia, ma $d = 0$. Perspektywy zgodności i~techniczna są oceniane według rzeczywiście przedstawionych dowodów.
 
 
 
@@ -430,11 +429,16 @@ Innymi słowy: odpowiedź twierdząca większości perspektyw przy sprzeciwie
 choćby jednej z~nich jest traktowana jako połowicznie pozytywna,
 a przewaga odpowiedzi przeczących daje wynik zerowy, nawet jeśli
 jeden z~aktorów odpowiedział twierdząco. Przy trzech perspektywach
-i~dowodach najwyższej jakości wynik wynosi $1{,}0$ (jednomyślne \texttt{TAK}),
+i~dowodach silnych wszystkich perspektyw wynik wynosi $1{,}0$ (jednomyślne \texttt{TAK}),
 $0{,}5$ (dwa \texttt{TAK}) albo $0$ (co najmniej dwa \texttt{NIE}).
+W~typowym przypadku, gdy zgodność i~technika przedstawiają dowody silne, a~użytkownik
+podpisane oświadczenie imienne ($d = 0{,}7$), jednomyślne \texttt{TAK} daje $0{,}9$,
+dwa \texttt{TAK} zgodności i~techniki przy \texttt{NIE} użytkownika dają $0{,}5$,
+a dwa \texttt{TAK} z~udziałem użytkownika przy \texttt{NIE} jednej z~pozostałych perspektyw
+dają $0{,}5 \cdot (1{,}0 + 0{,}7)/2 = 0{,}425$.
 Wynik pytania mieści się zawsze w~przedziale $[0, 1]$. Metodologia
 nie przewiduje dodatkowej premii za pełny konsensus: jednomyślne
-\texttt{TAK} z~dowodami najwyższej jakości osiąga już wartość maksymalną.
+\texttt{TAK} z~dowodami silnymi wszystkich perspektyw osiąga już wartość maksymalną.
 
 \subsection{Interpretacja rozbieżności}
 \label{sec:interpretacja-rozbiez}
@@ -470,7 +474,7 @@ Zgodność: NIE\newline Użytkownik: TAK\newline Techniczna: TAK
 Zgodność: TAK\newline Użytkownik: TAK\newline Techniczna: NIE
 & Wymaganie znane, polityka istnieje, wdrożenie niezrealizowane
 & Luka techniczna. Wymóg zdefiniowany lecz nieimplementowany
-  na poziomie systemów. $S(q_j) = \beta_{cv} \cdot \bar{d}^{+}_j$; dla pytania obowiązkowego priorytet co najmniej P2, a P1, gdy $S(q_j) < 0{,}3$ (tabela~\ref{tab:priorytety}). \\
+  na poziomie systemów. $S(q_j) = \beta_{cv} \cdot \bar{d}^{+}_j$ (przy oświadczeniu użytkownika $0{,}425$); dla pytania obowiązkowego priorytet co najmniej P2, a P1, gdy $S(q_j) < 0{,}3$ (tabela~\ref{tab:priorytety}). W~pytaniu blokującym wynik poniżej $\theta_{block} = 0{,}5$ aktywuje blokadę sekcji. \\
 \midrule
 Zgodność: NIE\newline Użytkownik: NIE\newline Techniczna: TAK
 & System techniczny bez świadomości biznesowej i~prawnej
@@ -567,7 +571,7 @@ Każdy obiekt posiada właściwości, czyli pola przyjmujące definiowane przez 
 \midrule
 
 \texttt{DOSTAWCA} 
-\newline Właściwości: nazwa, kraj pochodzenia, poddostawca
+\newline Właściwości: nazwa, kraj pochodzenia, kraj kontroli kapitałowej, poddostawcy
 & Zewnętrzny podmiot prawny świadczący usługi ICT na rzecz 
   organizacji na podstawie umowy; bezpośredni dostawca 
   systemu informatycznego (głębokość~2 grafu).
@@ -575,7 +579,7 @@ Każdy obiekt posiada właściwości, czyli pola przyjmujące definiowane przez 
   firma hostingowa, integrator systemów \\
 \midrule
 \texttt{PODDOSTAWCA}
-\newline Właściwości: nazwa, kraj pochodzenia
+\newline Właściwości: nazwa, kraj pochodzenia, kraj kontroli kapitałowej, poddostawcy
 & Zewnętrzny podmiot prawny świadczący usługi ICT 
   na rzecz dostawcy lub innego poddostawcy; 
   zidentyfikowany w~toku obowiązkowej identyfikacji poddostawców 
@@ -734,7 +738,7 @@ Metodologia ORION definiuje trzy klasy utrzymania systemu, a ich atrybut wpływa
 \toprule
 \textbf{Typ utrzymania} & \textbf{Opis}\\
 \midrule
-\texttt{CHMURA\_K3} & Dane przechowywane są poza organizacją u zewnętrznego podmiotu (SaaS, IaaS/PaaS, model hybrydowy, hosting, kolokacja), którego lokalizacja, jurysdykcja lub wsparcie techniczne nie gwarantuje pozostania danych w EOG, albo którego dostawca pochodzi z~państwa trzeciego. Obejmuje dostawców podlegających prawu państw trzecich, np. Amazon Web Services, Google Cloud, Microsoft Azure.\\
+\texttt{CHMURA\_K3} & Dane przechowywane są poza organizacją u zewnętrznego podmiotu (SaaS, IaaS/PaaS, model hybrydowy, hosting, kolokacja), którego lokalizacja, jurysdykcja lub wsparcie techniczne nie gwarantuje pozostania danych w EOG, albo w~którego łańcuchu dostaw występuje dostawca lub poddostawca z~siedzibą w~państwie trzecim lub kontrolowany kapitałowo z~państwa trzeciego. Obejmuje dostawców podlegających prawu państw trzecich, np. Amazon Web Services, Google Cloud, Microsoft Azure.\\
 \midrule
 \texttt{CHMURA\_EOG} & Dane przechowywane są poza organizacją u zewnętrznego podmiotu (SaaS, IaaS/PaaS, model hybrydowy, hosting, kolokacja), którego lokalizacja i~jurysdykcja gwarantuje przechowywanie danych wyłącznie w EOG, np. NASK SA, Exea Data Center, Beyond.pl, OVH (region PL/EU).\\
 \midrule
@@ -856,7 +860,7 @@ W metodologii ORION, plan ciągłości działania jest wymagany dla podmiotów o
 
 \section{Plan wyjścia z usługi (Exit plan)}
 
-Plan wyjścia z usługi (ang. \textit{Exit plan})) to obowiązkowy element zarządzania dostawcami IT w banku, wymagany przez rozporządzenie DORA oraz ustawę KSC.
+Plan wyjścia z usługi (ang. \textit{Exit plan})) to obowiązkowy element zarządzania dostawcami IT w banku, wymagany przez rozporządzenie DORA (art.~28 ust.~8\autocite{dora2022}); w~odniesieniu do podmiotów kluczowych podstawa w~ustawie o~KSC wymaga weryfikacji (zob.\ niżej).
 
 \begin{definition}[Exit plan]
 Strategia wyjścia z usługi pozwalająca organizacji wyłączyć system, zakończyć współpracę z dotychczasowym dostawcą oraz ponownie uruchomić usługę u innego dostawcy przy zachowaniu ciągłości działania lub minimalizacji przestoju.
@@ -864,7 +868,7 @@ Strategia wyjścia z usługi pozwalająca organizacji wyłączyć system, zakoń
 
 Plan wyjścia stanowi pisemnie udokumentowaną procedurę umożliwiającą organizacji zakończenie współpracy z dostawcą ICT i~przeniesienie usług do alternatywnego środowiska, bez przestoju operacyjnego i~bez utraty danych. Definicja ma zagwarantować ciągłości działania, czyli zapewnić minimalny czas niedostępności usługi dla jej użytkowników. Równie istotna jest ochrona przed zjawiskiem \textit{vendor lock-in}, czyli uzależnienia od jednego dostawcy
 
-Według definicji DORA, plan musi wskazywać rzeczywistego dostawcę zastępczego lub opisywać scenariusz powrotu do infrastruktury własnej. Co istotne, umowa z dostawcą musi zawierać klauzulę zobowiązującą go do udostępnienia wszystkich danych w formacie umożliwiającym ich import do innego systemu
+Zgodnie z~art.~28 ust.~8 DORA podmiot finansowy określa rozwiązania alternatywne i~opracowuje plany przejściowe, umożliwiające bezpieczne i~integralne przekazanie usług oraz danych dostawcy alternatywnemu lub ponowne włączenie ich do struktury wewnętrznej. Co istotne, umowa z dostawcą musi zawierać klauzulę zobowiązującą go do udostępnienia wszystkich danych w formacie umożliwiającym ich import do innego systemu
 
 Dostawca ICT jest zobowiązany do świadczenia usług przez określony czas po wypowiedzeniu umowy, tak aby organizacja przeprowadziła migrację danych. Co istotne, wsparcie to nie może mieć charakteru pasywnego, dostawca ma obowiązek aktywnej pomocy technicznej przy przenoszeniu procesów, danych i~konfiguracji do nowego środowiska. Tego rodzaju zobowiązania muszą być precyzyjnie zapisane w umowie, z określonymi terminami i~zakresem odpowiedzialności.
 
@@ -872,7 +876,7 @@ Exit plan traci swoją wartość, jeśli nie jest regularnie weryfikowany. DORA 
 
 Ważna jest forma przygotowania dokumentacji. DORA, w art.~28 ust.~8\autocite{dora2022}, wymaga odrębnie udokumentowanego planu wyjścia. W~odniesieniu do podmiotów kluczowych ustawa o~KSC\autocite{uksc2026} realizuje cele exit planu przede wszystkim poprzez wymagania dotyczące bezpieczeństwa łańcucha dostaw i~postanowienia umowne z~dostawcą.\todo[inline]{Zweryfikować podstawę: czy znowelizowana ustawa o~KSC nakłada na podmioty kluczowe obowiązek odrębnego exit planu (dotychczas powoływany art.~8).}
 
-W metodologii ORION sekcja exit plan jest aktywowana dla podmiotów \texttt{FINANSOWY} i~\texttt{KLUCZOWY} w~odniesieniu do systemów krytycznych i~ważnych (tabela~\ref{tab:sekcje-aktywacja}). Dla podmiotu \texttt{KLUCZOWY} pytania sekcji, mające zakres wyłącznie DORA, nie są obowiązkowe ani blokujące, dopóki nie zostanie wskazana ich podstawa w~ustawie o~KSC (równanie~\eqref{eq:tau-eff}). Podobnie jak plan ciągłości działania,  brak lub nieprawidłowo zdefiniowany exit plan, gdy jest obowiązkowy, wskazuje binarnie na uchybienia w działaniu organizacji.
+W metodologii ORION sekcja exit plan jest aktywowana dla podmiotów \texttt{FINANSOWY} i~\texttt{KLUCZOWY} w~odniesieniu do systemów krytycznych i~ważnych obsługiwanych przez co najmniej jednego dostawcę zewnętrznego (tabela~\ref{tab:sekcje-aktywacja}); system utrzymywany wyłącznie siłami własnymi nie ma usługi, z~której można by wyjść. Dla podmiotu \texttt{KLUCZOWY} pytania sekcji, mające zakres wyłącznie DORA, nie są obowiązkowe ani blokujące, dopóki nie zostanie wskazana ich podstawa w~ustawie o~KSC (równanie~\eqref{eq:tau-eff}). Podobnie jak plan ciągłości działania,  brak lub nieprawidłowo zdefiniowany exit plan, gdy jest obowiązkowy, wskazuje binarnie na uchybienia w działaniu organizacji.
 
 \begin{table}[H]
 \centering

@@ -519,7 +519,7 @@ oznacza, że dostawca lub poddostawca $w$ ma siedzibę poza EOG albo jest kontro
   \;\vee\; \exists\, w \in R(v) : \textit{obcy}(w), \\
 \textit{wsparcie systemu}(v) \neq \texttt{EOG} &\iff L6 = \texttt{NIE}.
 \end{align*}
-Pochodzenie i~kontrola kapitałowa każdego ogniwa łańcucha przenoszą się więc na obsługiwany system: system utrzymywany przez dostawcę z~EOG, który korzysta z~poddostawcy spoza EOG lub jest kontrolowany z~państwa trzeciego, spełnia warunek $\mathcal{C}_{TIA}$, nawet jeśli dane są przechowywane w~EOG. Ponieważ poddostawcy są identyfikowani w~fazie trzeciej, warunek $\mathcal{C}_{TIA}$ jest wyznaczany ponownie po każdym rozszerzeniu grafu. Dla systemu \texttt{ON\_PREMISE} kryteria L4 i~L5 nie są zadawane, a lokalizacją danych jest siedziba organizacji; warunek $\mathcal{C}_{TIA}$ może zostać spełniony przez kryterium L6 lub przez pochodzenie dostawcy. Dla systemów chmurowych zachodzi $\textit{utrzymanie\_chmura}(v) = \texttt{CHMURA\_K3} \iff \mathcal{C}_{TIA}(v) = \texttt{TRUE}$, a klasa \texttt{CHMURA\_K3} jest szczególnym przypadkiem spełnienia warunku $\mathcal{C}_{TIA}$.
+Pochodzenie i~kontrola kapitałowa każdego ogniwa łańcucha przenoszą się więc na obsługiwany system: system utrzymywany przez dostawcę z~EOG, który korzysta z~poddostawcy spoza EOG lub jest kontrolowany z~państwa trzeciego, spełnia warunek $\mathcal{C}_{TIA}$, nawet jeśli dane są przechowywane w~EOG. Ponieważ poddostawcy są identyfikowani w~fazie trzeciej, warunek $\mathcal{C}_{TIA}$ jest wyznaczany ponownie po każdym rozszerzeniu grafu. Dla systemu \texttt{ON\_PREMISE} kryteria L4 i~L5 nie są zadawane, a lokalizacją danych jest siedziba organizacji; warunek $\mathcal{C}_{TIA}$ może zostać spełniony przez kryterium L6 lub przez pochodzenie albo kontrolę kapitałową dowolnego ogniwa łańcucha $R(v)$. Dla systemów chmurowych zachodzi $\textit{utrzymanie\_chmura}(v) = \texttt{CHMURA\_K3} \iff \mathcal{C}_{TIA}(v) = \texttt{TRUE}$, a klasa \texttt{CHMURA\_K3} jest szczególnym przypadkiem spełnienia warunku $\mathcal{C}_{TIA}$.
 
 % ====================================
 \subsection{Ankieta klasyfikacji typu danych}
@@ -659,7 +659,7 @@ Zestaw aktywnych sekcji pytań dla obiektu $v$ jest wyznaczany przez funkcję:
         Dla podmiotu-korzenia $v_0$ wektor $\mathcal{A}(v_0)$ obejmuje klasę
         regulacyjną $k(v_0)$ oraz atrybuty zagregowane z~grafu ICT
         (np.\ istnienie systemu przetwarzającego dane osobowe
-        lub dostawcy obsługującego co najmniej $n_{KV}^{*}$ systemów).
+        lub dostawcy albo poddostawcy, od którego zależy co najmniej $n_{KV}^{*} = 3$ systemów; równanie~\eqref{eq:koncentracja-aktywacja}).
 \end{itemize}
 
 Pierwszy składnik sumy pokrywa sekcje aktywowane wyłącznie przez \emph{typ} obiektu i~jest niezależny od jego atrybutów. Drugi składnik pokrywa sekcje aktywowane warunkowo: przez \emph{atrybuty} obiektu, w~połączeniu z~jego typem lub klasą regulacyjną podmiotu. Oba zbiory mogą być rozłączne lub przecinać się, przy czym wynikowy zbiór aktywnych sekcji $\mathcal{S}(v)$ jest ich sumą teoriomnogościową.
@@ -723,17 +723,17 @@ Pytania w tej sekcji służą do oceny, czy organizacja prawidłowo zarządza pr
 
 \subsection{Sekcja bezpieczeństwo techniczne}
 \noindent Aktywacja: \textit{sekcja aktywna jednorazowo dla całego audytowanego podmiotu.}\\
-Pytania w tej sekcji służą do oceny skuteczności technicznych środków ochrony systemów i~infrastruktury ICT organizacji przed zagrożeniami cybernetycznymi. Sprawdzane jest, czy organizacja określiła zakres monitorowania bezpieczeństwa (z~udokumentowanymi wyłączeniami i~środkami kompensującymi), wdrożyła mechanizmy ciągłego monitorowania i~wykrywania anomalii, własne lub w~formie usługi zewnętrznej, oraz czy przeprowadza regularne testy bezpieczeństwa i~testy penetracyjne z udokumentowanymi wynikami i~planem naprawy zidentyfikowanych podatności. Ocenie podlega stosowanie zasady minimalnych uprawnień (ang. \textit{least privilege}) w~dostępie do systemów krytycznych, z~kwartalnym przeglądem uprawnień i~automatycznym alertowaniem przy próbach eskalacji, a także proces dezaktywacji kont przy odejściu pracownika, segmentacja sieci ograniczająca boczne przemieszczanie się atakującego, zarządzanie certyfikatami TLS, szkolenia pracowników oraz bezpieczeństwo poczty elektronicznej. Uprawnienia kont serwisowych aplikacji dostawców są oceniane odrębnie dla każdego systemu w~sekcji \texttt{APLIKACJA}. Pytania blokujące obejmują brak stosowania zasady minimalnych uprawnień oraz brak segmentacji sieci.
+Pytania w tej sekcji służą do oceny skuteczności technicznych środków ochrony systemów i~infrastruktury ICT organizacji przed zagrożeniami cybernetycznymi. Sprawdzane jest, czy organizacja określiła zakres monitorowania bezpieczeństwa (z~udokumentowanymi wyłączeniami i~środkami kompensującymi), wdrożyła mechanizmy ciągłego monitorowania i~wykrywania anomalii, własne lub w~formie usługi zewnętrznej, oraz czy przeprowadza regularne testy bezpieczeństwa i~testy penetracyjne z udokumentowanymi wynikami i~planem naprawy zidentyfikowanych podatności. Ocenie podlega stosowanie zasady minimalnych uprawnień (ang. \textit{least privilege}) w~dostępie do systemów krytycznych, z~określoną częstotliwością przeglądu uprawnień, przy czym od strony technicznej weryfikowane jest, czy przegląd odbywa się co najmniej raz na kwartał i~jest odnotowany w~narzędziu zarządzania dostępem, a także proces dezaktywacji kont przy odejściu pracownika, segmentacja sieci ograniczająca boczne przemieszczanie się atakującego, zarządzanie certyfikatami TLS, szkolenia pracowników oraz bezpieczeństwo poczty elektronicznej. Uprawnienia kont serwisowych aplikacji dostawców są oceniane odrębnie dla każdego systemu w~sekcji \texttt{APLIKACJA}. Pytania blokujące obejmują brak stosowania zasady minimalnych uprawnień oraz brak segmentacji sieci.
 \generujKryteria{pytania.csv}{BEZPIECZENSTWO_TECH}
 
 \subsection{Sekcja bezpieczeństwo fizyczne}
 \noindent Aktywacja: \textit{sekcja aktywna jednorazowo dla całego audytowanego podmiotu.}\\
-Pytania w tej sekcji służą do oceny środków ochrony fizycznej stosowanych w obiektach, w których zlokalizowana jest infrastruktura ICT organizacji. Sprawdzane jest, czy dostęp do stref krytycznych (serwerowni i~pomieszczeń technicznych) jest kontrolowany przez elektroniczne systemy uwierzytelnienia (karty dostępu, biometria) z automatycznym logowaniem każdego wejścia, eliminującym możliwość nieautoryzowanego wejścia bez śladu w rejestrze. Ocenie podlega podział obiektu na strefy bezpieczeństwa o różnych poziomach dostępu, monitoring wizyjny CCTV z retencją nagrań zgodną z RODO, redundancja zasilania testowana pod rzeczywistym obciążeniem (UPS i~agregat prądotwórczy) oraz procedury dotyczące urządzeń przenośnych: szyfrowanie całego dysku, rejestr wynoszenia i~zdalna możliwość wyczyszczenia. Weryfikowane jest ponadto, czy nośniki danych przy utylizacji są niszczone fizycznie lub nadpisywane skuteczną metodą, czy goście i~serwisanci zewnętrzni przebywają na terenie obiektu wyłącznie w~towarzystwie pracownika oraz czy wdrożono środki ochrony przed kradzieżą i~sabotażem (alarmy, zamknięte szafy rack, kontrola portów USB). Pytania blokujące obejmują brak zatwierdzonej polityki bezpieczeństwa fizycznego centrów danych oraz brak formalnej polityki kontroli dostępu fizycznego do obiektów przetwarzających dane.
+Pytania w tej sekcji służą do oceny środków ochrony fizycznej stosowanych w obiektach, w których zlokalizowana jest infrastruktura ICT organizacji. Sprawdzane jest, czy organizacja posiada zatwierdzoną politykę bezpieczeństwa fizycznego centrów danych, obejmującą także ochronę przed zagrożeniami środowiskowymi, oraz politykę kontroli dostępu fizycznego, a od strony technicznej, czy każde wejście do pomieszczeń przetwarzających dane jest rejestrowane elektronicznie (karta, biometria), bez możliwości wejścia wyłącznie na klucz mechaniczny. Ocenie podlega podział obiektu na strefy bezpieczeństwa o~różnych poziomach dostępu, w~tym poruszanie się gości i~serwisantów zewnętrznych wyłącznie w~towarzystwie pracownika, określony w~polityce zakres monitoringu wizyjnego CCTV stref krytycznych (z~udokumentowanymi wyjątkami i~środkami kompensującymi), redundancja zasilania z~UPS i~agregatem testowanymi pod obciążeniem oraz procedura wynoszenia urządzeń z~rejestrem wydanych urządzeń i~wymuszonym szyfrowaniem całego dysku. Weryfikowane jest ponadto, czy istnieje procedura bezpiecznego niszczenia nośników danych, a dyski są niszczone fizycznie lub nadpisywane skuteczną metodą, oraz czy wdrożono udokumentowane środki ochrony przed kradzieżą i~sabotażem (np.\ system alarmowy, zamykane szafy rack, kontrola portów USB). Pytania blokujące obejmują brak zatwierdzonej polityki bezpieczeństwa fizycznego centrów danych oraz brak formalnej polityki kontroli dostępu fizycznego do obiektów przetwarzających dane.
 \generujKryteria{pytania.csv}{BEZPIECZENSTWO_FIZYCZNE}
 
 \subsection{Sekcja system informatyczny}
 \noindent Aktywacja: \textit{aktywacja warunkowa, gdy typ obiektu} = \texttt{SYSTEM\_INFORMATYCZNY}\\
-Pytania w tej sekcji służą do oceny bezpieczeństwa i~zgodności konkretnego systemu informatycznego rozpatrywanego jako samodzielna jednostka. Zakres oceny jest stosowany odrębnie dla każdego audytowanego systemu, co pozwala zidentyfikować różnice w poziomach zabezpieczeń między poszczególnymi aplikacjami w portfelu ICT organizacji. Sprawdzane jest, czy system figuruje w oficjalnym rejestrze zasobów ICT z przypisaną klasyfikacją krytyczności i~właścicielem, czy wymusza uwierzytelnianie wieloskładnikowe (MFA) dla wszystkich kont, czy stosuje aktualny protokół szyfrowania komunikacji TLS 1.2 lub nowszy, a logi aplikacji, w~tym ślad zmian danych, są przechowywane przez co najmniej 12 miesięcy w~repozytorium chronionym przed modyfikacją i~dostępne na potrzeby wyjaśnienia operacji. Ocenie podlegają również polityka haseł wymuszana technicznie przez system, zarządzanie podatnościami z udokumentowanymi terminami naprawy, ograniczenie uprawnień kont serwisowych aplikacji dostawcy do niezbędnego minimum, kontrola zdalnego dostępu dostawcy (logowanie, ograniczenie czasowe, akceptacja każdej sesji) oraz, jako kryterium o szczególnym znaczeniu dla ciągłości działania, kopie zapasowe przechowywane w izolowanej, geograficznie odrębnej lokalizacji, z empirycznie weryfikowanymi wskaźnikami RTO i~RPO. Pytania blokujące obejmują brak wpisu w rejestrze CMDB, brak MFA oraz brak backupu.
+Pytania w tej sekcji służą do oceny bezpieczeństwa i~zgodności konkretnego systemu informatycznego rozpatrywanego jako samodzielna jednostka. Zakres oceny jest stosowany odrębnie dla każdego audytowanego systemu, co pozwala zidentyfikować różnice w poziomach zabezpieczeń między poszczególnymi aplikacjami w portfelu ICT organizacji. Sprawdzane jest, czy system figuruje w oficjalnym rejestrze zasobów ICT z przypisaną klasyfikacją krytyczności i~właścicielem, czy polityka wymaga uwierzytelniania wieloskładnikowego (MFA) dla wszystkich kont systemu, a MFA jest wymuszane technicznie bez możliwości pominięcia, czy standard bezpieczeństwa wymaga szyfrowania komunikacji protokołem TLS 1.2 lub nowszym oraz czy polityka rejestrowania zdarzeń określa zakres, okres przechowywania i~ochronę logów aplikacji, w~tym śladu zmian danych, przechowywanych technicznie przez co najmniej 12 miesięcy w~repozytorium chronionym przed modyfikacją. Ocenie podlegają również polityka haseł wymuszana technicznie, zarządzanie podatnościami z~udokumentowanymi terminami naprawy, zasada minimalnych uprawnień dla kont i~integracji aplikacji dostawcy wraz z~okresowym przeglądem, warunki zdalnego dostępu dostawcy (akceptacja sesji, rejestrowanie, ograniczenie czasowe) oraz, jako kryterium o~szczególnym znaczeniu dla ciągłości działania, polityka kopii zapasowych określająca geograficznie odrębną lokalizację, retencję i~regularne testy odtwarzania, przy kopiach technicznie odizolowanych od środowiska produkcyjnego i~chronionych przed modyfikacją lub usunięciem. Pytania blokujące obejmują brak wpisu w rejestrze CMDB, brak MFA oraz brak backupu.
 \generujKryteria{pytania.csv}{APLIKACJA}
 
 \subsection{Sekcja usługi w chmurze}
@@ -742,10 +742,10 @@ Pytania w tej sekcji służą do oceny zgodności wynikającej ze specyfiki prze
 \generujKryteria{pytania.csv}{CHMURA}
 
 \subsection{Sekcja Transfer Impact Assessment (TIA)}
-\noindent Aktywacja: \textit{aktywacja warunkowa, gdy} $\mathcal{C}_{TIA}(v) = \texttt{TRUE}$ \textit{(równanie~\eqref{eq:ctia}), niezależnie od typu przetwarzanych danych; obejmuje systemy \texttt{CHMURA\_K3}, systemy wspierane spoza EOG lub obsługiwane przez dostawcę spoza EOG oraz dostawców i~poddostawców spoza EOG}\\
+\noindent Aktywacja: \textit{aktywacja warunkowa, gdy} $\mathcal{C}_{TIA}(v) = \texttt{TRUE}$ \textit{(równanie~\eqref{eq:ctia}), niezależnie od typu przetwarzanych danych; obejmuje systemy \texttt{CHMURA\_K3}, systemy wspierane spoza EOG, systemy, w~których łańcuchu dostaw występuje dostawca lub poddostawca spoza EOG albo kontrolowany z~państwa trzeciego, oraz tych dostawców i~poddostawców}\\
 Pytania w tej sekcji służą do oceny ryzyka związanego z~dostępem do danych i~ich przekazywaniem poza Europejski Obszar Gospodarczy (EOG). Sekcja jest aktywowana niezależnie od tego, czy system przetwarza dane osobowe: jurysdykcja państwa trzeciego zagraża również danym nieosobowym objętym ochroną, takim jak tajemnica przedsiębiorstwa, tajemnica bankowa czy inne informacje poufne, których ochrona nie wynika z~RODO. Część pytań sekcji (TIA w~rozumieniu RODO, umowa powierzenia DPA) dotyczy wyłącznie danych osobowych; dla systemu, który ich nie przetwarza ($D(v) \cap \{W, O\} = \emptyset$), pytania te mogą zostać oznaczone jako \texttt{N/D} na zasadach opisanych w~sekcji~\ref{sec:zasady-pytan}, czyli z~uzasadnieniem, akceptacją audytora i~dowodem co najmniej średniej jakości. Pozostałe pytania, dotyczące koncentracji jurysdykcyjnej i~ryzyka dostępu eksterytorialnego, są oceniane zawsze.
 
-W odniesieniu do danych osobowych obowiązek przeprowadzenia TIA wynika z wyroku Trybunału Sprawiedliwości UE w sprawie Schrems II z 2020 r., który stwierdził nieważność decyzji Komisji w~sprawie Tarczy Prywatności (Privacy Shield) i~nałożył na eksporterów danych obowiązek indywidualnej weryfikacji, czy prawo i~praktyka państwa docelowego nie podważają skuteczności ochrony gwarantowanej przez Standardowe Klauzule Umowne (SCC). Sprawdzane jest, czy dla każdego transferu przeprowadzono TIA uwzględniające ustawodawstwo krajowe państwa odbiorcy (w tym ryzyko eksterytorialnego dostępu wynikające z amerykańskiego CLOUD Act i~FISA 702) a także czy transfer jest obsługiwany jako komplet trzech dokumentów: aktualnej umowy DPA zgodnej z art. 28 RODO, klauzul SCC z 2021 r. oraz dokumentacji TIA. Weryfikowane jest ponadto, czy organizacja posiada pisemne oświadczenie dostawcy o nieprzekazywaniu danych poza EOG, obejmujące backupy, logi i~metadane, oraz czy oświadczenie to jest technicznie weryfikowalne. Ocenie podlega ponadto ryzyko koncentracji przetwarzania w~jednej jurysdykcji poza EOG oraz ryzyko dostępu eksterytorialnego wynikające z~prawa państwa dostawcy. Kryteriami blokującymi są brak TIA oraz brak ważnej umowy DPA. Bez nich transfer danych osobowych nie spełnia wymogów rozdziału~V i~art.~28 RODO.
+W odniesieniu do danych osobowych obowiązek przeprowadzenia TIA wynika z wyroku Trybunału Sprawiedliwości UE w sprawie Schrems II z 2020 r., który stwierdził nieważność decyzji Komisji w~sprawie Tarczy Prywatności (Privacy Shield) i~nałożył na eksporterów danych obowiązek indywidualnej weryfikacji, czy prawo i~praktyka państwa docelowego nie podważają skuteczności ochrony gwarantowanej przez Standardowe Klauzule Umowne (SCC). Sprawdzane jest, czy dla każdego transferu przeprowadzono TIA uwzględniające ustawodawstwo krajowe państwa odbiorcy (w tym ryzyko eksterytorialnego dostępu wynikające z amerykańskiego CLOUD Act i~FISA 702) a także czy transfer jest obsługiwany jako komplet trzech dokumentów: aktualnej umowy DPA zgodnej z art. 28 RODO, klauzul SCC z 2021 r. oraz dokumentacji TIA. Weryfikowane jest ponadto, czy organizacja posiada od dostawcy pisemny wykaz wszystkich lokalizacji przetwarzania danych, obejmujący kopie zapasowe, logi i~metadane, w~którym każda lokalizacja poza EOG jest objęta TIA, oraz czy technicznie weryfikuje, że dane nie są przetwarzane poza lokalizacjami z~wykazu. Ocenie podlega ponadto ryzyko koncentracji przetwarzania w~jednej jurysdykcji poza EOG oraz ryzyko dostępu eksterytorialnego wynikające z~prawa państwa dostawcy. Kryteriami blokującymi są brak TIA oraz brak ważnej umowy DPA. Bez nich transfer danych osobowych nie spełnia wymogów rozdziału~V i~art.~28 RODO.
 
 \paragraph{Identyfikacja poddostawców i~trigger TIA}\mbox{}\\
 \label{sec:trigger-tia}
@@ -762,7 +762,7 @@ i jako potwierdzenie wskazuje na regulamin usługi amerykańskiego dostawcy chmu
 do przechowywanych na nim danych bez wiedzy i~zgody europejskiego podmiotu danych, a okoliczność ta powinna być objęta procedurą Transfer
 Impact Assessment (TIA), jednak w praktyce audytowej jest nagminnie pomijana.
 
-ORION rozwiązuje ten problem dwoma powiązanymi mechanizmami. Pierwszy to obowiązkowa identyfikacja poddostawców, stosowana do każdego dostawcy niezależnie od jego jurysdykcji. Drugi to trigger TIA, który dla podmiotów związanych z~jurysdykcją spoza EOG dodaje sekcję \texttt{TIA}. Warunek triggera jest wyznaczany z~pytań ankiety chmury (sekcja~\ref{sec:ankieta-chmura}) dotyczących kraju pochodzenia podmiotu hostującego, lokalizacji przechowywania danych i~wsparcia technicznego oraz z~kraju pochodzenia dostawców.
+ORION rozwiązuje ten problem dwoma powiązanymi mechanizmami. Pierwszy to obowiązkowa identyfikacja poddostawców, stosowana do każdego dostawcy niezależnie od jego jurysdykcji. Drugi to trigger TIA, który dla podmiotów związanych z~jurysdykcją spoza EOG dodaje sekcję \texttt{TIA}. Warunek triggera jest wyznaczany z~kryteriów L4--L6 ankiety chmury (sekcja~\ref{sec:ankieta-chmura}), dotyczących pochodzenia podmiotu hostującego, lokalizacji przechowywania danych i~wsparcia technicznego, oraz z~kraju pochodzenia i~kontroli kapitałowej wszystkich dostawców i~poddostawców w~łańcuchu obiektu.
 
 \begin{definition}[Identyfikacja poddostawców]
 Dla każdego wierzchołka typu \texttt{DOSTAWCA} lub \texttt{PODDOSTAWCA}
@@ -780,9 +780,8 @@ wynikiem identyfikacji i~wymaga udokumentowania, a nie założeniem.
 \begin{definition}[Trigger TIA]
 Trigger TIA jest mechanizmem aktywowanym, gdy obiekt $v$ spełnia co najmniej
 jeden warunek ze zbioru $\mathcal{C}_{TIA}$. Po aktywacji do kwestionariusza
-obiektu $v$ dodawana jest sekcja \texttt{TIA}, a identyfikacja poddostawców
-obiektu $v$ obejmuje dodatkowo weryfikację, czy któryś z~nich nie podlega
-jurysdykcji państwa trzeciego.
+obiektu $v$ dodawana jest sekcja \texttt{TIA}. Ponieważ warunek zależy od łańcucha $R(v)$,
+jest on wyznaczany ponownie po każdym rozszerzeniu grafu w~toku identyfikacji poddostawców.
 \end{definition}
 
 Zbiór warunków aktywujących trigger TIA:
@@ -798,7 +797,7 @@ Zbiór warunków aktywujących trigger TIA:
 \end{multline}
 
 
-\noindent Dla obiektu typu \texttt{SYSTEM\_INFORMATYCZNY} składniki warunku są wyznaczane z~kryteriów L4--L6 ankiety chmury oraz z~kraju pochodzenia jego dostawców (sekcja~\ref{sec:ankieta-chmura}). Dla obiektu typu \texttt{DOSTAWCA} lub \texttt{PODDOSTAWCA} warunek zależy od jego własnego kraju pochodzenia i~kontroli kapitałowej oraz od jego dalszego łańcucha: $\mathcal{C}_{TIA}(d) = \textit{obcy}(d) \vee \exists\, w \in R(d) : \textit{obcy}(w)$. Dostawca spoza EOG, kontrolowany z~państwa trzeciego lub korzystający z~takiego poddostawcy otrzymuje więc sekcję \texttt{TIA} sam, a jego status aktywuje ją również dla każdego obsługiwanego przez niego systemu.
+\noindent Dla obiektu typu \texttt{SYSTEM\_INFORMATYCZNY} składniki warunku są wyznaczane z~kryteriów L4--L6 ankiety chmury oraz z~pochodzenia i~kontroli kapitałowej podmiotów z~jego łańcucha $R(v)$ (sekcja~\ref{sec:ankieta-chmura}). Dla obiektu typu \texttt{DOSTAWCA} lub \texttt{PODDOSTAWCA} warunek zależy od jego własnego kraju pochodzenia i~kontroli kapitałowej oraz od jego dalszego łańcucha: $\mathcal{C}_{TIA}(d) = \textit{obcy}(d) \vee \exists\, w \in R(d) : \textit{obcy}(w)$. Dostawca spoza EOG, kontrolowany z~państwa trzeciego lub korzystający z~takiego poddostawcy otrzymuje więc sekcję \texttt{TIA} sam, a jego status aktywuje ją również dla każdego obsługiwanego przez niego systemu.
 
 Gdy $\mathcal{C}_{TIA}(v) = \texttt{TRUE}$,
 do kwestionariusza obiektu $v$ dodawana jest sekcja \texttt{TIA}, zawierająca pytania dotyczące ryzyk przekazania danych poza EOG.
@@ -822,21 +821,21 @@ Flaga $\text{FLAG}_{TIA}(v)$ jest więc szczególnym przypadkiem flagi $\text{FL
 
 \subsection{Sekcja dostawcy ICT}
 \noindent Aktywacja: \textit{aktywacja warunkowa, gdy typ obiektu} $\in \{\texttt{DOSTAWCA}, \texttt{PODDOSTAWCA}\}$\\
-Pytania w tej sekcji służą do oceny zarządzania ryzykiem stron trzecich w odniesieniu do konkretnego dostawcy ICT, który jest obiektem audytu. Jeżeli dostawca obsługuje kilka systemów podmiotu, odpowiedź \texttt{TAK} oznacza, że wymaganie jest spełnione dla każdego z~nich (zasada wspólnego obiektu, sekcja~\ref{sec:zasady-pytan}). Sprawdzane jest, czy przed zawarciem umowy przeprowadzono due diligence obejmujące weryfikację certyfikatów bezpieczeństwa, lokalizacji przetwarzania danych, listy sub-procesorów oraz wyników testów penetracyjnych środowiska dostawcy, a także czy udokumentowano analizę skutków awarii lub niedostępności dostawcy dla funkcji organizacji. Ocenie podlega kompletność wymogów umownych: prawo do audytu dostawcy, w~tym audytu na miejscu, którego nie można zastąpić wyłącznie raportem dostawcy; dostęp organizacji do logów bezpieczeństwa prowadzonych przez dostawcę; mierzalne wskaźniki SLA z~sankcjami za ich niedotrzymanie; obowiązek powiadamiania o~istotnych zmianach (np.\ zmianie sub-procesora lub lokalizacji danych); klauzula exit gwarantująca pełny eksport danych w~otwartym formacie i~wsparcie przejściowe oraz klauzula odpowiedzialności i~regresu umożliwiająca dochodzenie zwrotu kar regulacyjnych nałożonych z~winy dostawcy. Pytania blokujące obejmują brak due diligence, brak prawa do audytu, brak mierzalnych SLA oraz brak klauzul exit; dla podmiotów \texttt{KLUCZOWY} i~\texttt{WAŻNY} blokujące pozostaje wyłącznie due diligence, gdyż pozostałe trzy pytania mają zakres wyłącznie DORA (równanie~\eqref{eq:tau-eff}). W~przypadku poddostawcy organizacja nie ma z~nim bezpośredniej umowy, dlatego pytania o~postanowienia umowne dotyczą postanowień umowy dostawcy z~poddostawcą, przeniesionych na poddostawcę na podstawie umowy z~dostawcą bezpośrednim, oraz dokumentacji przekazanej przez dostawcę bezpośredniego.
+Pytania w tej sekcji służą do oceny zarządzania ryzykiem stron trzecich w odniesieniu do konkretnego dostawcy ICT, który jest obiektem audytu. Jeżeli dostawca obsługuje kilka systemów podmiotu, odpowiedź \texttt{TAK} oznacza, że wymaganie jest spełnione dla każdego z~nich (zasada wspólnego obiektu, sekcja~\ref{sec:zasady-pytan}). Sprawdzane jest, czy przed zawarciem umowy przeprowadzono udokumentowane due diligence i~ocenę ryzyka dostawcy, uzupełnione techniczną weryfikacją jego zabezpieczeń (np.\ skan zewnętrzny, przegląd konfiguracji, wyniki testów penetracyjnych środowiska dostawcy), a także czy udokumentowano analizę skutków awarii lub niedostępności dostawcy dla funkcji organizacji. Ocenie podlega kompletność wymogów umownych: prawo do audytu dostawcy, w~tym audytu na miejscu, którego nie można zastąpić wyłącznie raportem dostawcy; dostęp organizacji do logów bezpieczeństwa prowadzonych przez dostawcę; mierzalne i~egzekwowalne wskaźniki SLA (dostępność, RTO, RPO), technicznie monitorowane przez organizację; obowiązek powiadamiania o~istotnych zmianach (np.\ zmianie sub-procesora lub lokalizacji danych); klauzula exit gwarantująca pełny eksport danych w~otwartym formacie i~wsparcie przejściowe oraz klauzula odpowiedzialności i~regresu umożliwiająca dochodzenie zwrotu kar regulacyjnych nałożonych z~winy dostawcy. Pytania blokujące obejmują brak due diligence, brak prawa do audytu, brak mierzalnych SLA oraz brak klauzul exit; dla podmiotów \texttt{KLUCZOWY} i~\texttt{WAŻNY} blokujące pozostaje wyłącznie due diligence, gdyż pozostałe trzy pytania mają zakres wyłącznie DORA (równanie~\eqref{eq:tau-eff}). W~przypadku poddostawcy organizacja nie ma z~nim bezpośredniej umowy, dlatego pytania o~postanowienia umowne dotyczą postanowień umowy dostawcy z~poddostawcą, przeniesionych na poddostawcę na podstawie umowy z~dostawcą bezpośrednim, oraz dokumentacji przekazanej przez dostawcę bezpośredniego.
 \generujKryteria{pytania.csv}{DOSTAWCY}
 
 \subsection{Sekcja exit plan}
 \noindent Aktywacja: \textit{aktywacja warunkowa, gdy typ obiektu} = \texttt{SYSTEM\_INFORMATYCZNY} \textbf{ORAZ} $\textit{krytyczność}(v) \in \{\texttt{KRYTYCZNY}, \texttt{WAŻNY}\}$ \textbf{ORAZ} \textit{system jest obsługiwany przez co najmniej jednego dostawcę} ($\exists\, d : (v, d) \in E_{svc}$) \textbf{ORAZ} \textit{klasyfikacja podmiotu} $\in \{\texttt{FINANSOWY}, \texttt{KLUCZOWY}\}$\\
-Warunek krytyczności odpowiada zakresowi art.~28 ust.~8 rozporządzenia DORA, który wymaga strategii wyjścia w~odniesieniu do usług ICT wspierających krytyczne lub istotne funkcje. Pytania w tej sekcji służą do oceny gotowości organizacji do zakończenia współpracy z dostawcą ICT w sposób kontrolowany, bez utraty danych i~bez zakłócenia ciągłości działania obsługiwanych funkcji krytycznych. Exit plan jest traktowany jako dokument żywy, zatwierdzony przez zarząd i~aktualizowany przy każdej istotnej zmianie systemu lub dostawcy, zawierający konkretne kroki techniczne migracji, a nie jedynie deklaratywny opis intencji. Sprawdzane jest, czy możliwy jest pełny eksport danych w otwartym formacie niezależnym od narzędzi własnościowych dostawcy oraz czy eksport był faktycznie przetestowany poza środowiskiem dostawcy. Ocenie podlega empirycznie zmierzony czas pełnej migracji (RTE), zidentyfikowanie alternatywnego dostawcy zdolnego do przejęcia funkcji oraz posiadanie procedury weryfikacji bezpiecznego i~certyfikowanego usunięcia wszystkich danych z infrastruktury dostawcy po zakończeniu współpracy. Pytaniem blokującym jest brak formalnego, zatwierdzonego exit planu.
+Warunek krytyczności odpowiada zakresowi art.~28 ust.~8 rozporządzenia DORA, który wymaga strategii wyjścia w~odniesieniu do usług ICT wspierających krytyczne lub istotne funkcje. Pytania w tej sekcji służą do oceny gotowości organizacji do zakończenia współpracy z dostawcą ICT w sposób kontrolowany, bez utraty danych i~bez zakłócenia ciągłości działania obsługiwanych funkcji krytycznych. Exit plan jest traktowany jako dokument żywy, zatwierdzony przez zarząd i~aktualizowany przy każdej istotnej zmianie systemu lub dostawcy, zawierający konkretne kroki techniczne migracji, a nie jedynie deklaratywny opis intencji. Sprawdzane jest, czy exit plan gwarantuje pełny eksport danych w~otwartym formacie niezależnym od narzędzi własnościowych dostawcy oraz czy procedura eksportu została przetestowana, a jej czas i~kompletność udokumentowano. Ocenie podlega udokumentowany i~zweryfikowany w~teście czas pełnej migracji (RTE) wraz z~kosztami wyjścia, zidentyfikowanie alternatywnego dostawcy zdolnego do przejęcia funkcji, procedura weryfikacji bezpiecznego usunięcia wszystkich danych z~infrastruktury dostawcy po migracji oraz testowanie exit planu co najmniej raz w~roku z~rzeczywistą próbą eksportu i~importu danych do środowiska zastępczego. Pytaniem blokującym jest brak formalnego, zatwierdzonego exit planu.
 \generujKryteria{pytania.csv}{EXIT_PLAN}
 
 \subsection{Sekcja plan ciągłości działania (BCP)}
 \noindent Aktywacja: \textit{aktywacja warunkowa, gdy typ obiektu} = \texttt{SYSTEM\_INFORMATYCZNY} \textbf{ORAZ} $\textit{krytyczność}(v) \in \{\texttt{KRYTYCZNY}, \texttt{WAŻNY}\}$ \textbf{ORAZ} \textit{klasyfikacja podmiotu} $\in \{\texttt{FINANSOWY}, \texttt{KLUCZOWY}, \texttt{WAŻNY}\}$\\
-Pytania w tej sekcji służą do oceny zdolności organizacji do utrzymania lub sprawnego odtworzenia funkcji krytycznych w przypadku poważnego incydentu ICT, awarii dostawcy lub katastrofy. Sprawdzane jest, czy organizacja posiada formalne, zatwierdzone przez zarząd plany BCP i~DRP zawierające konkretne kroki techniczne i~sekwencje przełączeń oraz czy każdy system krytyczny ma zdefiniowane i~technicznie weryfikowalne wskaźniki RTO i~RPO. Ocenie podlega zakres scenariuszy ujętych w planach: czy obejmują ransomware, utratę centrum danych, niedostępność dostawcy chmury i~awarię kaskadową w łańcuchu dostaw, a dla każdego scenariusza zdefiniowano odrębną ścieżkę odtwarzania. Pytaniem blokującym jest brak formalnych, zatwierdzonych planów BCP i~DRP.
+Pytania w tej sekcji służą do oceny zdolności organizacji do utrzymania lub sprawnego odtworzenia funkcji krytycznych w przypadku poważnego incydentu ICT, awarii dostawcy lub katastrofy. Sprawdzane jest, czy formalny, zatwierdzony przez zarząd plan BCP/DRP obejmuje dany system i~wspieraną przez niego funkcję oraz czy zawiera dla systemu konkretne instrukcje wykonawcze (kroki techniczne, sekwencje przełączeń). Ocenie podlega zakres scenariuszy ujętych w~planie (np.\ ransomware, utrata centrum danych, niedostępność dostawcy) z~odrębną ścieżką odtwarzania dla każdego z~nich, scenariusz awarii kaskadowej w~łańcuchu dostaw, test planu w~ciągu ostatnich 12 miesięcy z~rzeczywistym przełączeniem na środowisko zapasowe i~pomiarem osiągniętego RTO/RPO oraz plan komunikacji kryzysowej obejmujący użytkowników systemu. Pytaniem blokującym jest brak formalnych, zatwierdzonych planów BCP i~DRP.
 \generujKryteria{pytania.csv}{PLAN_CIAGLOSCI_DZIALANIA}
 
 \subsection{Sekcja koncentracja ryzyka}
-\noindent Aktywacja: \textit{sekcja aktywna jednorazowo dla całego audytowanego podmiotu, gdy co najmniej jeden dostawca obsługuje} $\geq n_{KV}^{*} = 3$ \textit{systemy podmiotu (równanie~\eqref{eq:koncentracja-aktywacja})}\\
+\noindent Aktywacja: \textit{sekcja aktywna jednorazowo dla całego audytowanego podmiotu, gdy od co najmniej jednego dostawcy lub poddostawcy zależy, bezpośrednio lub pośrednio,} $\geq n_{KV}^{*} = 3$ \textit{systemy podmiotu (równanie~\eqref{eq:koncentracja-aktywacja})}\\
 Pytania w tej sekcji są sformułowane na poziomie organizacji i~służą do oceny narażenia organizacji na ryzyko nadmiernego uzależnienia od ograniczonej liczby zewnętrznych dostawców ICT, grup powiązanych dostawców lub lokalizacji geograficznych, co może skutkować systemowym zakłóceniem funkcji krytycznych w przypadku pojedynczej awarii lub incydentu. Ryzyko koncentracji jest oceniane w czterech wymiarach: podmiotowym: uzależnienie od jednego dostawcy lub grupy kapitałowej; geograficznym: koncentracja przetwarzania w jednej lokalizacji lub jurysdykcji prawnej; technologicznym:  vendor lock-in wynikający z zastrzeżonych formatów danych lub interfejsów API uniemożliwiających migrację; oraz systemowym:  wspólna infrastruktura bazowa leżąca u podstaw pozornie niezależnych dostawców warstwy aplikacyjnej. Pytania blokujące obejmują brak mapowania funkcji krytycznych do dostawców, brak oceny ryzyka koncentracji u jednego dostawcy oraz brak oceny koncentracji u grupy powiązanych dostawców; mają one zakres wyłącznie DORA, więc są blokujące tylko dla podmiotu \texttt{FINANSOWY}.
 \generujKryteria{pytania.csv}{KONCENTRACJA_RYZYKA}
 
@@ -862,7 +861,7 @@ Dane poufne: osobowe, wrażliwe oraz tajemnice przedsiębiorstwa & \texttt{PODMI
   (co najmniej jeden system z~kategorią \texttt{WRAŻLIWE} lub \texttt{OSOBOWE}) \\
 \midrule
 Koncentracja ryzyka & \texttt{PODMIOT} &
-  $\exists\, v \in V_{DOST} : |\{u \in V_{SYS} : (u,v) \in E_{svc}\}| \geq n_{KV}^{*}$ \\
+  $\exists\, w : |\{u \in V_{SYS} : w \in R(u)\}| \geq n_{KV}^{*}$ (dostawca lub poddostawca) \\
 \midrule
 System informatyczny & \texttt{SYSTEM\_INFORMATYCZNY} & zawsze (składnik $\mathcal{S}_{\texttt{SYSTEM\_INFORMATYCZNY}}$) \\
 \midrule
@@ -922,7 +921,7 @@ którym zadano pytanie $q_j$ i~które udzieliły odpowiedzi
 średnią efektywnych wartości odpowiedzi $V_{eff}(q_j, \pi_i)$
 (równanie~\eqref{eq:veff}) perspektyw, które odpowiedziały \texttt{TAK},
 a $\beta_{cv} = 0{,}5$ jest współczynnikiem kary za brak jednomyślności
-(równanie~\eqref{eq:veff-rozbiez}). Przy ustalaniu większości odpowiedź \texttt{TAK} bez żadnego dowodu ($d_{ij} = 0$) liczy się jak \texttt{NIE} (definicja~\ref{sec:konsensus}). Perspektywa użytkownika składa odpowiedzi jako podpisane oświadczenie imienne, co odpowiada dowodowi średniemu $d = 0{,}7$; perspektywy zgodności i~techniczna są oceniane według przedstawionych dowodów. Przy dowodach silnych po stronie zgodności i~techniki jednomyślne \texttt{TAK} daje więc $\bar{d}^{+}_j = (1 + 1 + 0{,}7)/3 = 0{,}9$, a dwie odpowiedzi \texttt{TAK} tych perspektyw przy \texttt{NIE} użytkownika dają $0{,}5 \cdot 1{,}0 = 0{,}5$. Wynik pytania zawsze mieści się w~przedziale $[0, 1]$.
+(równanie~\eqref{eq:veff-rozbiez}). Przy ustalaniu większości odpowiedź \texttt{TAK} bez żadnego dowodu ($d_{ij} = 0$) liczy się jak \texttt{NIE} (definicja~\ref{sec:konsensus}). Perspektywa użytkownika składa odpowiedzi jako podpisane oświadczenie imienne, co odpowiada dowodowi średniemu $d = 0{,}7$ (albo silnemu $d = 1{,}0$ przy podpisie z~poświadczeniem tożsamości); perspektywy zgodności i~techniczna są oceniane według przedstawionych dowodów. Przy dowodach silnych po stronie zgodności i~techniki jednomyślne \texttt{TAK} daje więc $\bar{d}^{+}_j = (1 + 1 + 0{,}7)/3 = 0{,}9$, a dwie odpowiedzi \texttt{TAK} tych perspektyw przy \texttt{NIE} użytkownika dają $0{,}5 \cdot 1{,}0 = 0{,}5$. Wynik pytania zawsze mieści się w~przedziale $[0, 1]$.
 W~rdzeniu metodycznym wszystkie perspektywy mają równą wagę
 $w_{\pi_i} = 1$. Wagi perspektyw mogą być
 różnicowane w rozszerzeniach domenowych,
@@ -988,15 +987,16 @@ jest progiem blokady, a $\kappa_{eff}(q_j, k)$ jest efektywnym statusem
 blokującym pytania, określonym niżej wraz z~wagą $\omega$.
 Warunek jest spójny z~modelem dowodowym
 $V_{eff} = a_{ij} \cdot d_{ij}$ (równanie~\eqref{eq:veff}).
-Jednomyślne odpowiedzi \texttt{TAK} poparte wyłącznie dowodami słabymi
-($d = 0{,}4$) dają $S(q_j) = 0{,}4 < \theta_{block}$ i~aktywują blokadę.
-Jednomyślne odpowiedzi \texttt{TAK} z~dowodami co najmniej średnimi
-($d \geq 0{,}7$) blokady nie aktywują.
-Odpowiedź \texttt{TAK} perspektywy zgodności przy dwóch odpowiedziach
-\texttt{NIE} daje $S(q_j) = 0$ i~aktywuje blokadę.
-Dwie odpowiedzi \texttt{TAK} z~dowodem silnym, w~tym perspektywy zgodności,
-przy jednej odpowiedzi \texttt{NIE} dają $S(q_j) = 0{,}5$ i~blokady nie aktywują;
-przy dowodach średnich ($d = 0{,}7$) wynik $0{,}35$ blokadę aktywuje.
+Przy podpisanym oświadczeniu użytkownika ($d = 0{,}7$) typowe przypadki są następujące:
+\begin{itemize}
+  \item jednomyślne \texttt{TAK} z~dowodami silnymi zgodności i~techniki daje $S(q_j) = 0{,}9$; blokada nie jest aktywna;
+  \item jednomyślne \texttt{TAK} z~dowodami słabymi ($d = 0{,}4$) zgodności i~techniki daje $S(q_j) = (0{,}4 + 0{,}4 + 0{,}7)/3 = 0{,}5$, czyli wartość równą progowi; blokada nie jest aktywna, ale nie ma już marginesu;
+  \item \texttt{TAK} zgodności i~techniki z~dowodami silnymi przy \texttt{NIE} użytkownika daje $S(q_j) = 0{,}5$; blokada nie jest aktywna;
+  \item \texttt{TAK} zgodności i~użytkownika przy \texttt{NIE} perspektywy technicznej daje $S(q_j) = 0{,}5 \cdot (1{,}0 + 0{,}7)/2 = 0{,}425 < \theta_{block}$; blokada jest aktywna;
+  \item \texttt{TAK} perspektywy zgodności przy dwóch odpowiedziach \texttt{NIE} daje $S(q_j) = 0$; blokada jest aktywna;
+  \item \texttt{NIE} perspektywy zgodności zawsze aktywuje blokadę, niezależnie od wyniku pytania.
+\end{itemize}
+W~pytaniu blokującym każda rozbieżność, w~której wymaganie nie zostało potwierdzone przez perspektywę zgodności lub techniczną, aktywuje więc blokadę sekcji. Brak potwierdzenia wyłącznie przez użytkownika jej nie aktywuje, o~ile obie pozostałe perspektywy przedstawiły dowody silne.
 
 \noindent Jeśli $\text{FLAG}_{block}(\mathcal{S}_k) = \texttt{TRUE}$,
 wynik sekcji wynosi zero niezależnie od pozostałych odpowiedzi:
@@ -1358,27 +1358,36 @@ Jej pytania dotyczą organizacji jako całości (mapowania funkcji
 krytycznych do dostawców, ocen koncentracji, progów i~planów redukcji),
 dlatego jest ona zadawana jednorazowo dla $v_0$, a nie dla
 poszczególnych dostawców. Jest aktywowana \textbf{wyłącznie} wtedy,
-gdy co najmniej jeden dostawca obsługuje co najmniej $n_{KV}^{*}$
-systemów podmiotu (warunek~(ii) z definicji powyżej):
+gdy od co najmniej jednego dostawcy lub poddostawcy zależy, bezpośrednio
+lub pośrednio, co najmniej $n_{KV}^{*}$ systemów podmiotu:
 
 \begin{equation}
 \Phi_{\texttt{KONCENTRACJA\_RYZYKA}}(v_0) = \texttt{TRUE}
 \iff
-\exists\, v \in V_{DOST} :
-\bigl|\{u \in V_{SYS} : (u,v) \in E_{svc}\}\bigr|
+\exists\, w :
+\bigl|\{u \in V_{SYS} : w \in R(u)\}\bigr|
 \geq n_{KV}^{*}
 \label{eq:koncentracja-aktywacja}
 \end{equation}
 
+\noindent gdzie $R(u)$ jest zbiorem dostawców i~poddostawców osiągalnych
+w~grafie ICT z~systemu $u$ (sekcja~\ref{sec:ankieta-chmura}). Warunek obejmuje
+więc zarówno dostawcę bezpośrednio obsługującego wiele systemów (warunek~(ii)
+definicji dostawcy kluczowego), jak i~wspólną infrastrukturę bazową: np.\ trzy
+systemy dostarczane przez trzech różnych dostawców SaaS, którzy korzystają
+z~tego samego dostawcy chmury jako poddostawcy. Definicja dostawcy kluczowego
+pozostaje natomiast relacją bezpośrednią ($E_{svc}$), ponieważ karta dostawcy
+kluczowego jest adresowana do zarządu jako ocena kontrahenta organizacji.
+
 \noindent Uzasadnienie tego rozróżnienia jest
 następujące: ryzyko koncentracji w rozumieniu
 art.~29 DORA materializuje się przez uzależnienie
-od jednego dostawcy obsługującego wiele systemów
-jednocześnie. Dostawca obsługujący jeden system
+wielu systemów jednocześnie od jednego podmiotu, obsługującego je bezpośrednio
+albo jako wspólny poddostawca kilku dostawców. Dostawca obsługujący jeden system
 krytyczny jest kluczowy z uwagi na wagę tego systemu,
 lecz nie generuje ryzyka koncentracji w sensie
-regulacyjnym. Jeżeli w~grafie nie ma dostawcy spełniającego
-warunek~(ii), sekcja \texttt{KONCENTRACJA\_RYZYKA} nie jest aktywowana.
+regulacyjnym. Jeżeli w~grafie nie ma dostawcy ani poddostawcy, od którego
+zależy co najmniej $n_{KV}^{*}$ systemów, sekcja \texttt{KONCENTRACJA\_RYZYKA} nie jest aktywowana.
 
 Wynik sekcji \texttt{KONCENTRACJA\_RYZYKA} wchodzi do wyniku organizacyjnego $S_{total}(v_0)$ zgodnie
 z równaniem~\eqref{eq:wynik-obiektu}.
@@ -1407,8 +1416,8 @@ wyłącznie wtedy, gdy sekcja jest aktywna dla danego obiektu
 
 Tabela~\ref{tab:macierz-zgodnosci} odpowiada przykładowemu grafowi
 z~sekcji~\ref{sec:przykladowy-graf} dla podmiotu klasy \texttt{KLUCZOWY}.
-Sekcja \texttt{KONCENTRACJA\_RYZYKA} jest nieaktywna, ponieważ żaden
-dostawca nie obsługuje trzech systemów. Sekcje \texttt{PLAN\_CIAGLOSCI\_DZIALANIA} i~\texttt{EXIT\_PLAN}
+Sekcja \texttt{KONCENTRACJA\_RYZYKA} jest nieaktywna, ponieważ od żadnego
+dostawcy ani poddostawcy nie zależą, bezpośrednio lub pośrednio, trzy systemy ($d_1$ obsługuje dwa, a $d_2$, $p_1$ i~$p_2$ po jednym). Sekcje \texttt{PLAN\_CIAGLOSCI\_DZIALANIA} i~\texttt{EXIT\_PLAN}
 nie dotyczą systemu $v_3$ o~krytyczności \texttt{STANDARDOWY}.
 
 \begin{table}[H]
@@ -1543,7 +1552,7 @@ Poniższy przykład ilustruje strukturę grafu ICT dla przykładowego podmiotu. 
     \item $v_3$ - portal kliencki SaaS, klasyfikacja STANDARDOWY, chmura kraju trzeciego (USA), wynik $S_{total} = 0{,}48$ ($[\times!!]$~NIEZGODNY, \texttt{FLAG\_TIA} aktywna).
 \end{enumerate}
 
-Wynik organizacyjny podmiotu wynosi $S_{total}(v_0) = 0{,}78$ ($[\sim]$~CZĘŚCIOWO ZGODNY). Systemy $v_1$ i~$v_2$ obsługiwane są przez dostawcę $d_1$ (firma z EOG świadcząca utrzymanie i~wsparcie systemu $v_1$, działającego w~centrum danych podmiotu, oraz hosting systemu $v_2$ na własnej infrastrukturze w~EOG, $S_{total} = 0{,}72$, $[\sim]$~CZĘŚCIOWO ZGODNY); identyfikacja poddostawców $d_1$ udokumentowała ich brak. System $v_3$ obsługiwany jest przez dostawcę $d_2$ (firma z USA, $S_{total} = 0{,}31$, $[\times!!]$~-- \texttt{FLAG\_TIA} aktywna). Dostawca $d_1$ obsługuje tylko dwa systemy podmiotu, więc nie spełnia warunku~(ii) definicji~\ref{def:dostawca-kluczowy} i~nie aktywuje sekcji \texttt{KONCENTRACJA\_RYZYKA}. Obsługuje jednak system $v_1$ o~krytyczności \texttt{KRYTYCZNY}, więc na mocy warunku~(i) \textbf{jest dostawcą kluczowym}, co oznaczono etykietą \texttt{[KV]} na krawędziach $v_1 \to d_1$ i~$v_2 \to d_1$. Dostawca $d_2$ obsługuje jeden system o~krytyczności \texttt{STANDARDOWY} i~nie jest dostawcą kluczowym. Identyfikacja poddostawców $d_2$ ujawnia poddostawcę $p_1$ -- sieć CDN zlokalizowaną w USA, dla której również spełniony jest warunek $\mathcal{C}_{TIA}$ ($S_{total} = 0{,}20$, $[\times!]$~KRYTYCZNIE NIEZGODNY). Identyfikacja poddostawców $p_1$ ujawnia z~kolei jego poddostawcę $p_2$ (podmiot zarejestrowany poza EOG), którego audyt jest w~toku; do czasu jego zakończenia $p_2$ nie wchodzi do sumy~\eqref{eq:Spodmiot_rozszerzone}.
+Wynik organizacyjny podmiotu wynosi $S_{total}(v_0) = 0{,}78$ ($[\sim]$~CZĘŚCIOWO ZGODNY). Systemy $v_1$ i~$v_2$ obsługiwane są przez dostawcę $d_1$ (firma z EOG świadcząca utrzymanie i~wsparcie systemu $v_1$, działającego w~centrum danych podmiotu, oraz hosting systemu $v_2$ na własnej infrastrukturze w~EOG, $S_{total} = 0{,}72$, $[\sim]$~CZĘŚCIOWO ZGODNY); identyfikacja poddostawców $d_1$ udokumentowała ich brak. System $v_3$ obsługiwany jest przez dostawcę $d_2$ (firma z USA, $S_{total} = 0{,}31$, $[\times!!]$~-- \texttt{FLAG\_TIA} aktywna). Dostawca $d_1$ obsługuje tylko dwa systemy podmiotu, więc nie spełnia warunku~(ii) definicji~\ref{def:dostawca-kluczowy}. Żaden podmiot w~grafie nie należy do łańcucha $R(u)$ trzech systemów ($d_1$ występuje w~łańcuchach $v_1$ i~$v_2$, a $d_2$, $p_1$ i~$p_2$ wyłącznie w~łańcuchu $v_3$), dlatego warunek~\eqref{eq:koncentracja-aktywacja} nie jest spełniony i~sekcja \texttt{KONCENTRACJA\_RYZYKA} nie jest aktywowana. Obsługuje jednak system $v_1$ o~krytyczności \texttt{KRYTYCZNY}, więc na mocy warunku~(i) \textbf{jest dostawcą kluczowym}, co oznaczono etykietą \texttt{[KV]} na krawędziach $v_1 \to d_1$ i~$v_2 \to d_1$. Dostawca $d_2$ obsługuje jeden system o~krytyczności \texttt{STANDARDOWY} i~nie jest dostawcą kluczowym. Identyfikacja poddostawców $d_2$ ujawnia poddostawcę $p_1$ -- sieć CDN zlokalizowaną w USA, dla której również spełniony jest warunek $\mathcal{C}_{TIA}$ ($S_{total} = 0{,}20$, $[\times!]$~KRYTYCZNIE NIEZGODNY). Identyfikacja poddostawców $p_1$ ujawnia z~kolei jego poddostawcę $p_2$ (podmiot zarejestrowany poza EOG), którego audyt jest w~toku; do czasu jego zakończenia $p_2$ nie wchodzi do sumy~\eqref{eq:Spodmiot_rozszerzone}.
 
 \begin{figure}[htbp]
   \centering
