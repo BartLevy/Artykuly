@@ -1,0 +1,25 @@
+\begin{table}[htbp]
+\centering
+\caption{Sensitivity analyses: odds ratio for correctness per doubling of the attempt number.}
+\label{tab:sensitivity}
+\small
+\begin{tabular}{p{8cm}rr}
+\toprule
+Analysis & Responses & OR [95\% CI] \\
+\midrule
+Fixed effects for employee and item (main model) & 60,680 & 1.38 [1.32, 1.45] \\
+Balanced cohort (sequences with $\geq$5 attempts, attempts 1--5) & 24,920 & 1.36 [1.27, 1.46] \\
+Attempts truncated at 10 & 59,877 & 1.38 [1.32, 1.44] \\
+Sequences of length 3--4 only & 14,218 & 1.30 [1.21, 1.40] \\
+Sequences of length 5--7 only & 18,154 & 1.35 [1.26, 1.45] \\
+Sequences of length $\geq$8 only & 16,884 & 1.40 [1.31, 1.50] \\
+Employees with $\geq$50 responses & 60,256 & 1.38 [1.32, 1.45] \\
+Adjusted for employee tenure & 60,680 & 1.50 [1.42, 1.59] \\
+GEE, exchangeable correlation within employee (population-averaged) & 61,310 & 1.29 [1.23, 1.34] \\
+Crossed random intercepts for employee and item (Laplace) & 61,310 & 1.37 [1.34, 1.41] \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+\parbox{\linewidth}{\footnotesize Variance of the random intercepts (logit scale): employee SD = 0.69, item SD = 1.13; latent-scale ICC: employee = 0.09, item = 0.25; Nakagawa $R^2$: marginal = 0.021, conditional = 0.36. Sequence-length strata address pattern-mixture (attrition) bias in the learning curve.}
+\end{table}

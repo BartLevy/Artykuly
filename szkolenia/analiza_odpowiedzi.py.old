@@ -1,0 +1,212 @@
+#!/usr/bin/env python3
+"""Analiza odpowiedzi z data.csv. Wymaga: pip install pandas numpy."""
+
+import argparse
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+KOLUMNY = ["id", "room_Code", "question_id", "answer_id", "user_symbol", "create_time", "correct"]
+
+
+def wczytaj_dane(sciezka):
+    dane = pd.read_csv(sciezka, dtype=str, keep_default_na=False, encoding="utf-8-sig")
+    brak = set(KOLUMNY) - set(dane.columns)
+    if brak:
+        raise ValueError(f"Brak kolumn: {', '.join(sorted(brak))}")
+    dane = dane[KOLUMNY].copy()
+    dane["create_time"] = pd.to_datetime(dane["create_time"], errors="coerce")
+    dane["correct"] = pd.to_numeric(dane["correct"], errors="coerce")
+    for kolumna in ("id", "question_id", "answer_id"):
+        dane[kolumna] = pd.to_numeric(dane[kolumna], errors="coerce")
+    poprawne = (
+        dane["create_time"].notna()
+        & dane["correct"].isin([0, 1])
+        & dane[["id", "question_id", "answer_id"]].notna().all(axis=1)
+        & dane["room_Code"].ne("")
+        & dane["user_symbol"].ne("")
+    )
+    bledne = dane.loc[~poprawne].copy()
+    dane = dane.loc[poprawne].copy()
+    dane[["id", "question_id", "answer_id"]] = dane[["id", "question_id", "answer_id"]].astype("int64")
+    dane["correct"] = dane["correct"].astype("int8")
+    dane = dane.sort_values(["create_time", "id"], kind="stable").reset_index(drop=True)
+    return dane, bledne
+
+
+def dodaj_metryki(tabela):
+    tabela = tabela.copy()
+    tabela["bledy"] = tabela["odpowiedzi"] - tabela["poprawne"]
+    tabela["procent_bledow"] = (100 * tabela["bledy"] / tabela["odpowiedzi"]).round(2)
+    return tabela
+
+
+def zestawienie(dane, kolumny):
+    wynik = dane.groupby(kolumny, dropna=False).agg(
+        odpowiedzi=("correct", "size"), poprawne=("correct", "sum"),
+        uzytkownicy=("user_symbol", "nunique"),
+        pierwsza_odpowiedz=("create_time", "min"),
+        ostatnia_odpowiedz=("create_time", "max"),
+    ).reset_index()
+    return dodaj_metryki(wynik).sort_values("odpowiedzi", ascending=False)
+
+
+def analiza_pytan(dane, minimum):
+    """Porównuje wcześniejszą i późniejszą połowę prób KAŻDEGO pytania."""
+    wyniki = []
+    for pytanie, grupa in dane.groupby("question_id", sort=True):
+        grupa = grupa.sort_values(["create_time", "id"], kind="stable")
+        n = len(grupa)
+        polowa = n // 2
+        wiersz = {
+            "question_id": pytanie, "odpowiedzi": n,
+            "uzytkownicy": grupa["user_symbol"].nunique(),
+            "pokoje": grupa["room_Code"].nunique(),
+            "pierwsza_odpowiedz": grupa["create_time"].iloc[0],
+            "ostatnia_odpowiedz": grupa["create_time"].iloc[-1],
+            "bledy_razem": int((grupa["correct"] == 0).sum()),
+            "procent_bledow_razem": round(100 * (grupa["correct"] == 0).mean(), 2),
+            "liczba_w_pierwszej_polowie": polowa,
+            "liczba_w_drugiej_polowie": n - polowa,
+            "procent_bledow_pierwsza_polowa": np.nan,
+            "procent_bledow_druga_polowa": np.nan,
+            "zmiana_punktow_procentowych": np.nan,
+            "trend": "za_malo_danych",
+        }
+        if n >= minimum:
+            pierwsza = 100 * (grupa["correct"].iloc[:polowa] == 0).mean()
+            druga = 100 * (grupa["correct"].iloc[polowa:] == 0).mean()
+            zmiana = druga - pierwsza
+            wiersz.update({
+                "procent_bledow_pierwsza_polowa": round(pierwsza, 2),
+                "procent_bledow_druga_polowa": round(druga, 2),
+                "zmiana_punktow_procentowych": round(zmiana, 2),
+                "trend": "mniej_bledow" if zmiana < 0 else "wiecej_bledow" if zmiana > 0 else "bez_zmian",
+            })
+        wyniki.append(wiersz)
+    return pd.DataFrame(wyniki)
+
+
+def analiza_powtorek(dane):
+    """Osobna analiza nauki tej samej osoby przy tym samym pytaniu."""
+    proby = dane.copy()
+    proby["numer_proby"] = proby.groupby(["user_symbol", "question_id"]).cumcount() + 1
+    proby["grupa_proby"] = proby["numer_proby"].clip(upper=5).astype(str)
+    proby.loc[proby["numer_proby"] >= 5, "grupa_proby"] = "5+"
+    return zestawienie(proby, ["grupa_proby"]), proby
+
+
+def analiza_par(dane):
+    """Pierwsza i druga próba tych samych par (osoba, pytanie)."""
+    proby = dane.copy()
+    proby["numer_proby"] = proby.groupby(["user_symbol", "question_id"]).cumcount() + 1
+    para = proby.loc[proby["numer_proby"].isin([1, 2])].pivot(
+        index=["user_symbol", "question_id"], columns="numer_proby", values="correct"
+    ).dropna()
+    if para.empty:
+        return {"pary": 0, "pierwsza_bledy_proc": np.nan, "druga_bledy_proc": np.nan,
+                "poprawa_0_do_1": 0, "pogorszenie_1_do_0": 0}
+    return {
+        "pary": len(para),
+        "pierwsza_bledy_proc": round(100 * (para[1] == 0).mean(), 2),
+        "druga_bledy_proc": round(100 * (para[2] == 0).mean(), 2),
+        "poprawa_0_do_1": int(((para[1] == 0) & (para[2] == 1)).sum()),
+        "pogorszenie_1_do_0": int(((para[1] == 1) & (para[2] == 0)).sum()),
+    }
+
+
+def zapisz_raport(dane, bledne, pytania, proby, pary, katalog, minimum):
+    powtorzone_id = int(dane["id"].duplicated().sum())
+    kwalifikowane = pytania.loc[pytania["trend"] != "za_malo_danych"]
+    pierwsza_suma = 0
+    druga_suma = 0
+    pierwsza_n = 0
+    druga_n = 0
+    for pytanie in kwalifikowane["question_id"]:
+        grupa = dane.loc[dane["question_id"] == pytanie, "correct"]
+        polowa = len(grupa) // 2
+        pierwsza_suma += int((grupa.iloc[:polowa] == 0).sum())
+        druga_suma += int((grupa.iloc[polowa:] == 0).sum())
+        pierwsza_n += polowa
+        druga_n += len(grupa) - polowa
+    linie = [
+        "RAPORT ANALIZY ODPOWIEDZI", "",
+        f"Wiersze poprawne: {len(dane)}; odrzucone (brak/niepoprawna wartość): {len(bledne)}",
+        f"Zakres czasu: {dane['create_time'].min()} — {dane['create_time'].max()}",
+        f"Unikalne pytania: {dane['question_id'].nunique()}; odpowiedzi (answer_id): {dane['answer_id'].nunique()}",
+        f"Unikalni użytkownicy: {dane['user_symbol'].nunique()}; pokoje: {dane['room_Code'].nunique()}",
+        f"Powtórzone identyfikatory id: {powtorzone_id} (nie usuwano)",
+        f"Poprawne: {int(dane['correct'].sum())}; błędne: {int((dane['correct'] == 0).sum())}",
+        f"Odsetek błędów: {100 * (dane['correct'] == 0).mean():.2f}%", "",
+        "TREND W OBRĘBIE PYTANIA", 
+        f"Próg analizy: co najmniej {minimum} odpowiedzi na pytanie; podział chronologiczny na dwie połowy.",
+        f"Pytania z wystarczającymi danymi: {len(kwalifikowane)} z {len(pytania)}",
+        f"Mniej błędów: {(kwalifikowane['trend'] == 'mniej_bledow').sum()}; "
+        f"więcej: {(kwalifikowane['trend'] == 'wiecej_bledow').sum()}; "
+        f"bez zmian: {(kwalifikowane['trend'] == 'bez_zmian').sum()}",
+    ]
+    if pierwsza_n and druga_n:
+        linie += [
+            f"Łącznie w kwalifikowanych pytaniach: pierwsza połowa {100 * pierwsza_suma / pierwsza_n:.2f}% błędów "
+            f"({pierwsza_n} odpowiedzi), druga {100 * druga_suma / druga_n:.2f}% ({druga_n} odpowiedzi).",
+            "Uwaga: to porównanie prób każdego pytania, niekoniecznie tych samych osób.",
+        ]
+    linie += ["", "POWTÓRKI TEJ SAMEJ OSOBY I PYTANIA",
+              f"Pary z co najmniej dwiema próbami: {pary['pary']}"]
+    if pary["pary"]:
+        linie += [
+            f"Błędy w 1. próbie: {pary['pierwsza_bledy_proc']:.2f}%; w 2. próbie: {pary['druga_bledy_proc']:.2f}%",
+            f"Poprawa (0→1): {pary['poprawa_0_do_1']}; pogorszenie (1→0): {pary['pogorszenie_1_do_0']}",
+        ]
+    linie += ["", "UWAGI", "Zmiana odsetka = druga połowa minus pierwsza (punkty procentowe); wartość ujemna oznacza mniej błędów.",
+              "Zmiany nie dowodzą uczenia się ani istotności statystycznej; użytkownicy i skład odpowiedzi mogą się zmieniać.",
+              "Daty traktowane są jako czas lokalny bez informacji o strefie; wiersze z nieprawidłowymi danymi są odrzucane.",
+              "Pliki CSV w tym katalogu zawierają szczegółowe zestawienia."]
+    (katalog / "raport.txt").write_text("\n".join(linie) + "\n", encoding="utf-8")
+    print("\n".join(linie))
+
+
+def wykonaj(sciezka, katalog, minimum):
+    dane, bledne = wczytaj_dane(sciezka)
+    if dane.empty:
+        raise ValueError("Brak poprawnych wierszy do analizy.")
+    katalog.mkdir(parents=True, exist_ok=True)
+    if not bledne.empty:
+        bledne.to_csv(katalog / "odrzucone_wiersze.csv", index=True, index_label="numer_wiersza_0")
+    dane["miesiac"] = dane["create_time"].dt.to_period("M").astype(str)
+    dane["dzien"] = dane["create_time"].dt.date.astype(str)
+    dane["godzina"] = dane["create_time"].dt.hour
+    raporty = {
+        "pytania.csv": zestawienie(dane, ["question_id"]),
+        "uzytkownicy.csv": zestawienie(dane, ["user_symbol"]),
+        "pokoje.csv": zestawienie(dane, ["room_Code"]),
+        "odpowiedzi_na_pytania.csv": zestawienie(dane, ["question_id", "answer_id"]),
+        "miesiace.csv": zestawienie(dane, ["miesiac"]).sort_values("miesiac"),
+        "dni.csv": zestawienie(dane, ["dzien"]).sort_values("dzien"),
+        "godziny_doby.csv": zestawienie(dane, ["godzina"]).sort_values("godzina"),
+        "pytania_w_miesiacach.csv": zestawienie(dane, ["question_id", "miesiac"]).sort_values(["question_id", "miesiac"]),
+    }
+    trendy = analiza_pytan(dane, minimum)
+    raporty["trendy_pytan.csv"] = trendy
+    powtorki, _ = analiza_powtorek(dane)
+    raporty["powtorki.csv"] = powtorki
+    for nazwa, tabela in raporty.items():
+        tabela.to_csv(katalog / nazwa, index=False, encoding="utf-8-sig")
+    zapisz_raport(dane, bledne, trendy, powtorki, analiza_par(dane), katalog, minimum)
+    print(f"\nZapisano wyniki w: {katalog.resolve()}")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Statystyki i trendy odpowiedzi w pliku CSV")
+    parser.add_argument("plik", nargs="?", default="data.csv", help="Plik wejściowy (domyślnie data.csv)")
+    parser.add_argument("--wyniki", default="wyniki_analizy", help="Katalog wynikowy")
+    parser.add_argument("--minimum", type=int, default=20, help="Minimalna liczba odpowiedzi na pytanie dla trendu")
+    args = parser.parse_args()
+    if args.minimum < 2:
+        parser.error("--minimum musi wynosić co najmniej 2")
+    wykonaj(Path(args.plik), Path(args.wyniki), args.minimum)
+
+
+if __name__ == "__main__":
+    main()

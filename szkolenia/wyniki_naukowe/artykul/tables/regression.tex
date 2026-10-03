@@ -1,0 +1,24 @@
+\begin{table*}[htbp]
+\centering
+\caption{Logistic regression of response correctness: odds ratios [95\% CI].}
+\label{tab:regression}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{llll}
+\toprule
+Predictor & Model 1 & Model 2 & Model 3 \\
+\midrule
+Attempt number (per doubling) & 1.38 [1.32, 1.45] & 1.33 [1.24, 1.42] &  \\
+Previous attempt correct &  & 3.85 [3.49, 4.26] &  \\
+Days since previous attempt (per doubling) &  & 0.88 [0.86, 0.90] &  \\
+Employee tenure (per year) &  & 0.87 [0.77, 1.00] & 0.88 [0.76, 1.01] \\
+\midrule
+Sample & All attempts & Attempts $\geq$2 & First attempts \\
+Responses & 60,680 & 44,499 & 15,333 \\
+Employees / items & 163 / 164 & 146 / 163 & 162 / 161 \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+\parbox{\linewidth}{\footnotesize All models include fixed effects for employee and item; standard errors are clustered by employee. Employees or items with no variation in correctness are dropped by the conditional likelihood (Model 1: 630 responses). Model 3 tests whether accuracy on newly encountered items improves with time in the programme.}
+\end{table*}

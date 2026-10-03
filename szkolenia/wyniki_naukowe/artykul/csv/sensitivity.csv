@@ -1,0 +1,11 @@
+key,analysis,short,OR,lo,hi,n
+main,Fixed effects for employee and item (main model),Main model (fixed effects),1.3810737375506732,1.3186931507193942,1.4464052289280869,60680
+cohort,"Balanced cohort (sequences with $\geq$5 attempts, attempts 1--5)",Balanced cohort (≥5 attempts),1.3638966519698241,1.2740937558767056,1.4600291922586808,24920
+trunc,Attempts truncated at 10,Attempts ≤10,1.3786466736566476,1.3170632175380468,1.4431096590317114,59877
+len3,Sequences of length 3--4 only,Sequence length 3–4,1.3004405273607877,1.209740461820556,1.3979408134017226,14218
+len5,Sequences of length 5--7 only,Sequence length 5–7,1.3536266654137117,1.2616625796221506,1.452294122781856,18154
+len8,Sequences of length $\geq$8 only,Sequence length ≥8,1.4001576203340156,1.3080181110857143,1.4987876277585772,16884
+active,Employees with $\geq$50 responses,Employees with ≥50 responses,1.3823180958355556,1.3197367862667457,1.4478669822333983,60256
+tenure,Adjusted for employee tenure,Adjusted for tenure,1.502307645888601,1.4156743835131966,1.5942424961412829,60680
+gee,"GEE, exchangeable correlation within employee (population-averaged)",GEE (population-averaged),1.285954099005469,1.2326029479750407,1.3416144651168345,61310
+mixed,Crossed random intercepts for employee and item (Laplace),Mixed model (crossed random intercepts),1.3736843836011485,1.3364603868520475,1.4119451682323365,61310

@@ -1,0 +1,26 @@
+\begin{table*}[htbp]
+\centering
+\caption{Accuracy by attempt number within employee--item sequences.}
+\label{tab:learning_curve}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{lrrrlrrl}
+\toprule
+Attempt & $n$ & Employees & \% & 95\% CI & $n$ (cohort) & \% (cohort) & 95\% CI (cohort) \\
+\midrule
+1 & 15,907 & 187 & 82.6 & [81.2, 84.0] & 5,205 & 81.9 & [79.8, 83.8] \\
+2 & 12,504 & 160 & 85.8 & [84.2, 87.3] & 5,205 & 85.9 & [83.9, 87.7] \\
+3 & 9,625 & 149 & 87.4 & [85.9, 88.9] & 5,205 & 87.3 & [85.4, 89.0] \\
+4 & 7,163 & 141 & 88.4 & [86.8, 89.9] & 5,205 & 88.4 & [86.6, 90.0] \\
+5 & 5,205 & 129 & 89.1 & [87.4, 90.7] & 5,205 & 89.1 & [87.3, 90.7] \\
+6 & 3,702 & 106 & 89.5 & [87.6, 91.3] &  &  &  \\
+7 & 2,642 & 90 & 89.9 & [88.0, 91.6] &  &  &  \\
+8 & 1,845 & 81 & 89.8 & [87.9, 91.5] &  &  &  \\
+9 & 1,186 & 70 & 91.1 & [89.0, 93.0] &  &  &  \\
+10+ & 1,531 & 57 & 91.8 & [88.5, 94.4] &  &  &  \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+\parbox{\linewidth}{\footnotesize Cohort: sequences with $\geq$5 attempts, which keeps the set of sequences constant across attempts 1--5 and removes survivorship bias. 95\% confidence intervals from a cluster bootstrap resampling employees (2,000 replicates).}
+\end{table*}

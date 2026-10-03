@@ -1,0 +1,42 @@
+RAPORT: ODPOWIEDZI I UCZENIE SIĘ (ANALIZA EKSPLORACYJNA)
+
+Rekordy prawidłowe: 61310; odrzucone: 0
+Wykluczone pokoje: mnk-tst (212 rekordów)
+Zakres: 2023-04-24 10:31:02 — 2026-06-08 14:39:42
+Pytania: 166; użytkownicy: 187; pokoje: 9
+Błędy: 8216 / 61310 (13.40%)
+Powtórzone ID: 0 (nie usuwano)
+
+TREND PYTAŃ
+Próg: 20 odpowiedzi na pytanie; kwalifikowane pytania: 166.
+Spadek nachylenia: 89; wzrost: 75.
+Ważone udziałem odpowiedzi błędy w części 1: 16.49%; w części 10: 13.27%.
+
+POWTARZAJĄCY: TA SAMA OSOBA, TO SAMO PYTANIE, MINIMUM 3 PRÓBY
+Pary: 9625; osoby: 149; udział osób wśród wszystkich: 79.68%.
+Pary 1→3: poprawa 1075, pogorszenie 625, bez zmian 7925.
+Osoby (odsetek poprawnych na własnych powtarzanych pytaniach): poprawa 102, pogorszenie 20, bez zmian 27.
+Odsetek poprawnych w 1. próbie par: 82.74%; w 3. próbie: 87.42%.
+Eksploracyjny test znaków NA POZIOMIE OSÓB (bez remisów): poprawa 102/122; dwustronne p=1.9642e-14; 95% CI udziału poprawiających się wśród osób ze zmianą: [0.758, 0.897].
+Mediana odstępu między 1. a ostatnią próbą pary: 275.85 dnia.
+
+WYNIKI DO ARTYKUŁU (szczegóły: artykul/tables, artykul/macros.tex)
+Krzywa uczenia: próba 1 82.6% [81.2, 84.0] → próba 10+ 91.8% [88.5, 94.4]; kohorta ≥5 prób: 81.9% → 89.1%.
+Harmonogram: kolejna próba po poprawnej 73.9%, po błędnej 74.7% (harmonogram nieadaptacyjny → brak selekcji wg wyniku).
+Model 1 (FE osoba+pytanie): OR na podwojenie liczby prób 1.38 [1.32, 1.45]; zakres w analizach wrażliwości 1.29--1.50.
+Model 2: poprzednia poprawna OR 3.85 [3.49, 4.26]; odstęp (×2) OR 0.88 [0.86, 0.90]; staż OR 0.87 [0.77, 1.00].
+Model 3 (pierwsze próby): staż OR 0.88 [0.76, 1.01].
+ICC (skala latentna): pytania 0.25, osoby 0.09.
+Przejścia: poprawna→poprawna 92.6%, błędna→poprawna 58.5%; ten sam dystraktor przy powtórzonym błędzie 71.6% (losowo 47.1%).
+Osoby: średnia zmiana 3.8 pp [2.4, 5.2]; Wilcoxon p <0.001; r_rb 0.72.
+Pytania: poprawa 44 / pogorszenie 1 z 164 (FDR); niska dyskryminacja (r<0.20): 71.
+
+OGRANICZENIA I DEFINICJE
+10 części ma podobną liczbę odpowiedzi w każdym pytaniu; nie są to równe okresy kalendarzowe.
+Za poprawę osoby uznano wzrost odsetka poprawnych między próbą 1 i 3 w jej własnych pytaniach min3.
+Użytkownik z jedną poprawą i jednym pogorszeniem jest klasyfikowany jako bez zmiany netto.
+Próg min3 selekcjonuje aktywnych; wyniki nie opisują automatycznie wszystkich użytkowników.
+Test znaków liczy jedną obserwację na osobę, lecz samoselekcja i zależności społeczne nadal mogą zniekształcać wnioski.
+Nie interpretuj wyników jako dowodu przyczynowego; brak grupy kontrolnej, możliwe efekty pamięci pytania (rozpoznawanie), czasu i zmiany składu użytkowników.
+Daty są bez strefy czasowej; przy remisach czasu kolejność wyznacza id. Nie usunięto zduplikowanych ID.
+Dystraktory: znane są tylko opcje wybrane choć raz; opcje nigdy niewybrane nie są widoczne w danych.

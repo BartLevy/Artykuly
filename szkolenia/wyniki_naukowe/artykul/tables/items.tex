@@ -1,0 +1,23 @@
+\begin{table}[htbp]
+\centering
+\caption{Item analysis (classical test theory).}
+\label{tab:items}
+\small
+\begin{tabular}{p{8.5cm}r}
+\toprule
+Measure & Value \\
+\midrule
+Items analysed & 166 \\
+Difficulty (first-attempt \% correct), median [IQR] & 85.7 [75.3, 94.5] \\
+Items with $<$50\% / 50--90\% / $>$90\% correct & 4 / 102 / 60 \\
+Discrimination (item--rest $r$), median [IQR], items with $n\geq$30 & 0.22 [0.14, 0.32] ($k$ = 161) \\
+Items with $r<0.20$ / $0.20$--$0.29$ / $\geq0.30$ & 71 / 42 / 48 \\
+Share of errors on the most frequent distractor, median [IQR] & 71.8 [58.4, 84.3] \\
+Observed distractors chosen by $<$5\% of responses (non-functioning) & 193 of 349 (55.3\%) \\
+Items improving / worsening with repetition (FDR $q<0.05$) & 44 / 1 (of 164 testable) \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+\parbox{\linewidth}{\footnotesize Difficulty and discrimination computed on first attempts; item--rest correlation uses each employee's accuracy on the remaining items (employees with $\geq$10 first attempts). Trend: per-item logistic regression of correctness on log$_2$(attempt) with employee-clustered SE, Benjamini--Hochberg correction. Distractors never chosen are not observable in the log and are not counted.}
+\end{table}

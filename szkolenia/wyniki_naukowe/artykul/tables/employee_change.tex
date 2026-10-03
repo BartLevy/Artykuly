@@ -1,0 +1,26 @@
+\begin{table}[htbp]
+\centering
+\caption{Change in accuracy between the first and third attempt at the same items.}
+\label{tab:employee_change}
+\small
+\begin{tabular}{lr}
+\toprule
+Measure & Value \\
+\midrule
+Employees with $\geq$1 sequence of $\geq$3 attempts & 149 \\
+Improved / worsened / unchanged & 102 / 20 / 27 \\
+Mean change, pp [95\% CI] & 3.8 [2.4, 5.2] \\
+Median change, pp & 3.7 \\
+Sign test, proportion improving [95\% CI]; $p$ & 0.84 [0.76, 0.90]; $<$0.001 \\
+Wilcoxon signed-rank $W$; $p$; rank-biserial $r$ & 1,055; $<$0.001; 0.72 \\
+\midrule
+Sequences (employee--item) with $\geq$3 attempts & 9,625 \\
+Correct at attempt 1 / attempt 3 (\%) & 82.7 / 87.4 \\
+Incorrect$\to$correct / correct$\to$incorrect & 1,075 / 625 \\
+McNemar $\chi^2$; $p$ (ignores clustering) & 118.6; $<$0.001 \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+\parbox{\linewidth}{\footnotesize Employee-level change: difference in the proportion of correct answers between attempt 3 and attempt 1 across the employee's own sequences with $\geq$3 attempts; ties excluded from the sign and Wilcoxon tests. pp, percentage points.}
+\end{table}

@@ -1,0 +1,227 @@
+#!/usr/bin/env python3
+"""Analiza odpowiedzi: 10 kolejnych części na pytanie i powtórki użytkowników."""
+
+import argparse
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+KOLUMNY = ["id", "room_Code", "question_id", "answer_id", "user_symbol", "create_time", "correct"]
+
+
+def wczytaj_dane(plik):
+    dane = pd.read_csv(plik, dtype=str, keep_default_na=False, encoding="utf-8-sig")
+    brak = set(KOLUMNY) - set(dane.columns)
+    if brak:
+        raise ValueError(f"Brak kolumn: {', '.join(sorted(brak))}")
+    dane = dane[KOLUMNY].copy()
+    for kolumna in ("id", "question_id", "answer_id", "correct"):
+        dane[kolumna] = pd.to_numeric(dane[kolumna], errors="coerce")
+    dane["create_time"] = pd.to_datetime(dane["create_time"], errors="coerce")
+    poprawne = (
+        dane[["id", "question_id", "answer_id", "correct", "create_time"]].notna().all(axis=1)
+        & dane["correct"].isin([0, 1])
+        & dane["room_Code"].ne("")
+        & dane["user_symbol"].ne("")
+    )
+    odrzucone = dane.loc[~poprawne].copy()
+    dane = dane.loc[poprawne].copy()
+    for kolumna in ("id", "question_id", "answer_id", "correct"):
+        dane[kolumna] = dane[kolumna].astype("int64")
+    dane = dane.sort_values(["create_time", "id"], kind="stable").reset_index(drop=True)
+    dane["blad"] = 1 - dane["correct"]
+    return dane, odrzucone
+
+
+def statystyki(dane, grupy):
+    wynik = dane.groupby(grupy, as_index=False).agg(
+        odpowiedzi=("correct", "size"), poprawne=("correct", "sum"),
+        bledne=("blad", "sum"), uzytkownicy=("user_symbol", "nunique"),
+        pierwsza_data=("create_time", "min"), ostatnia_data=("create_time", "max"),
+    )
+    wynik["bledne_proc"] = (100 * wynik["bledne"] / wynik["odpowiedzi"]).round(2)
+    return wynik
+
+
+def analiza_dziesieciu_czesci(dane, minimum):
+    """Dzieli chronologiczne odpowiedzi KAŻDEGO pytania na 10 równolicznych części."""
+    kwalifikowane = dane.groupby("question_id")["id"].transform("size") >= minimum
+    proby = dane.loc[kwalifikowane].copy()
+    if proby.empty:
+        return pd.DataFrame(), pd.DataFrame()
+    proby["kolejnosc"] = proby.groupby("question_id").cumcount()
+    proby["ile_na_pytanie"] = proby.groupby("question_id")["id"].transform("size")
+    proby["czesc"] = (proby["kolejnosc"] * 10 // proby["ile_na_pytanie"] + 1).astype(int)
+    czesci = statystyki(proby, ["question_id", "czesc"])
+    czesci = czesci.sort_values(["question_id", "czesc"])
+    trendy = []
+    for pytanie, grupa in czesci.groupby("question_id", sort=True):
+        grupa = grupa.sort_values("czesc")
+        x = grupa["czesc"].to_numpy(dtype=float)
+        y = grupa["bledne_proc"].to_numpy(dtype=float)
+        nachylenie = float(np.polyfit(x, y, 1)[0])
+        pierwsza = float(y[0])
+        ostatnia = float(y[-1])
+        trendy.append({
+            "question_id": pytanie,
+            "odpowiedzi": int(grupa["odpowiedzi"].sum()),
+            "uzytkownicy": int(proby.loc[proby["question_id"] == pytanie, "user_symbol"].nunique()),
+            "bledne_proc_razem": round(100 * grupa["bledne"].sum() / grupa["odpowiedzi"].sum(), 2),
+            "bledne_proc_czesc_1": pierwsza,
+            "bledne_proc_czesc_10": ostatnia,
+            "zmiana_10_minus_1_pp": round(ostatnia - pierwsza, 2),
+            "nachylenie_pp_na_czesc": round(nachylenie, 3),
+            "kierunek_trendu": "spadek_bledow" if nachylenie < 0 else "wzrost_bledow" if nachylenie > 0 else "bez_zmian",
+        })
+    return czesci, pd.DataFrame(trendy)
+
+
+def analiza_powtarzajacych(dane):
+    """Bada wyłącznie pary (użytkownik, pytanie) z co najmniej 3 próbami."""
+    pary = ["user_symbol", "question_id"]
+    liczebnosci = dane.groupby(pary)["id"].transform("size")
+    proby = dane.loc[liczebnosci >= 3].copy()
+    if proby.empty:
+        return pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
+    proby["numer_proby"] = proby.groupby(pary).cumcount() + 1
+    proby["etap"] = proby["numer_proby"].clip(upper=10)
+    proby["etap"] = proby["etap"].astype(str)
+    proby.loc[proby["numer_proby"] >= 10, "etap"] = "10+"
+    etapy = statystyki(proby, ["etap"])
+    pary_wyniki = []
+    for (symbol, pytanie), grupa in proby.groupby(pary, sort=True):
+        poprawne = grupa["correct"].to_numpy()
+        pary_wyniki.append({
+            "user_symbol": symbol, "question_id": pytanie,
+            "liczba_prob": len(grupa),
+            "pierwsza_data": grupa["create_time"].iloc[0],
+            "ostatnia_data": grupa["create_time"].iloc[-1],
+            "blad_proba_1": int(1 - poprawne[0]),
+            "blad_proba_2": int(1 - poprawne[1]),
+            "blad_proba_3": int(1 - poprawne[2]),
+            "blad_ostatnia_proba": int(1 - poprawne[-1]),
+            "bledne_proc_wszystkie": round(100 * (1 - poprawne).mean(), 2),
+            "zmiana_3_minus_1": int(poprawne[0] - poprawne[2]),
+        })
+    pary_tabela = pd.DataFrame(pary_wyniki)
+    uzytkownicy = pary_tabela.groupby("user_symbol", as_index=False).agg(
+        pytania_z_min_3_probami=("question_id", "size"),
+        proby_na_tych_pytaniach=("liczba_prob", "sum"),
+        bledy_w_pierwszych_probach=("blad_proba_1", "sum"),
+        bledy_w_trzecich_probach=("blad_proba_3", "sum"),
+        poprawa_1_do_3=("zmiana_3_minus_1", lambda x: int((x < 0).sum())),
+        pogorszenie_1_do_3=("zmiana_3_minus_1", lambda x: int((x > 0).sum())),
+        bez_zmiany_1_do_3=("zmiana_3_minus_1", lambda x: int((x == 0).sum())),
+    )
+    n = uzytkownicy["pytania_z_min_3_probami"]
+    uzytkownicy["bledne_proc_proba_1"] = (100 * uzytkownicy["bledy_w_pierwszych_probach"] / n).round(2)
+    uzytkownicy["bledne_proc_proba_3"] = (100 * uzytkownicy["bledy_w_trzecich_probach"] / n).round(2)
+    pytania = pary_tabela.groupby("question_id", as_index=False).agg(
+        uzytkownicy_z_min_3_probami=("user_symbol", "nunique"),
+        bledy_w_pierwszych_probach=("blad_proba_1", "sum"),
+        bledy_w_trzecich_probach=("blad_proba_3", "sum"),
+        poprawa_1_do_3=("zmiana_3_minus_1", lambda x: int((x < 0).sum())),
+        pogorszenie_1_do_3=("zmiana_3_minus_1", lambda x: int((x > 0).sum())),
+    )
+    n = pytania["uzytkownicy_z_min_3_probami"]
+    pytania["bledne_proc_proba_1"] = (100 * pytania["bledy_w_pierwszych_probach"] / n).round(2)
+    pytania["bledne_proc_proba_3"] = (100 * pytania["bledy_w_trzecich_probach"] / n).round(2)
+    return etapy, pary_tabela, uzytkownicy, pytania
+
+
+def zapisz_raport(dane, odrzucone, czesci, trendy, etapy, pary, katalog, minimum):
+    wiersze = [
+        "ANALIZA ODPOWIEDZI", "",
+        f"Poprawne wiersze: {len(dane)}; odrzucone: {len(odrzucone)}",
+        f"Zakres dat: {dane['create_time'].min()} — {dane['create_time'].max()}",
+        f"Pytania: {dane['question_id'].nunique()}; odpowiedzi (answer_id): {dane['answer_id'].nunique()}",
+        f"Użytkownicy: {dane['user_symbol'].nunique()}; pokoje: {dane['room_Code'].nunique()}",
+        f"Powtórzone ID wśród poprawnych wierszy: {dane['id'].duplicated().sum()} (nie usuwano)",
+        f"Poprawne odpowiedzi: {int(dane['correct'].sum())}; błędne: {int(dane['blad'].sum())}",
+        f"Błędy ogółem: {100 * dane['blad'].mean():.2f}%", "",
+        "TREND PYTAŃ: 10 KOLEJNYCH CZĘŚCI", 
+        f"Próg: minimum {minimum} odpowiedzi na pytanie; pytania objęte analizą: {len(trendy)}.",
+    ]
+    if not trendy.empty:
+        spadki = (trendy["kierunek_trendu"] == "spadek_bledow").sum()
+        wzrosty = (trendy["kierunek_trendu"] == "wzrost_bledow").sum()
+        wiersze += [f"Nachylenie trendu: spadek błędów w {spadki} pytaniach; wzrost w {wzrosty} pytaniach."]
+        pierwsze = czesci.loc[czesci["czesc"] == 1]
+        ostatnie = czesci.loc[czesci["czesc"] == 10]
+        wiersze += [
+            f"Łącznie (pytania spełniające próg): część 1: {100 * pierwsze['bledne'].sum() / pierwsze['odpowiedzi'].sum():.2f}% błędów, "
+            f"część 10: {100 * ostatnie['bledne'].sum() / ostatnie['odpowiedzi'].sum():.2f}%.",
+            "Szczegóły każdego z 10 etapów: czesci_pytan.csv; trendy: trendy_pytan.csv.",
+        ]
+    wiersze += ["", "POWTÓRKI: MINIMUM 3 PRÓBY TEJ SAMEJ OSOBY NA TO SAMO PYTANIE",
+               f"Zakwalifikowane pary użytkownik–pytanie: {len(pary)}."]
+    if not pary.empty:
+        n = len(pary)
+        wiersze += [
+            f"Błędy w 1. próbie: {100 * pary['blad_proba_1'].sum() / n:.2f}%; "
+            f"w 2. próbie: {100 * pary['blad_proba_2'].sum() / n:.2f}%; "
+            f"w 3. próbie: {100 * pary['blad_proba_3'].sum() / n:.2f}%.",
+            f"Między 1. a 3. próbą: poprawa {(pary['zmiana_3_minus_1'] < 0).sum()}, "
+            f"pogorszenie {(pary['zmiana_3_minus_1'] > 0).sum()}, "
+            f"brak zmiany {(pary['zmiana_3_minus_1'] == 0).sum()} par.",
+            "Wyniki dla par, użytkowników i pytań: odpowiednio pary_min3.csv, uzytkownicy_min3.csv, pytania_min3.csv.",
+            "W pliku proby_min3.csv etap 10+ łączy dziesiątą i wszystkie późniejsze próby; "
+            "jego liczba odpowiedzi może być większa niż liczba par.",
+        ]
+    wiersze += ["", "INTERPRETACJA",
+              "Części 1–10 wyznacza kolejność odpowiedzi na dane pytanie, a nie równe okresy kalendarzowe.",
+              "Ujemne nachylenie oznacza ogólny spadek odsetka błędów przez 10 części; poszczególne części mogą się wahać.",
+              "Trend pytań obejmuje różnych użytkowników; analiza par min3 śledzi tę samą osobę i pytanie.",
+              "To statystyki opisowe, a nie test istotności ani dowód przyczynowy na uczenie się.",
+              "Daty są analizowane bez strefy czasowej. Błędne rekordy odrzucono i zapisano osobno."]
+    tekst = "\n".join(wiersze) + "\n"
+    (katalog / "raport.txt").write_text(tekst, encoding="utf-8")
+    print(tekst)
+
+
+def wykonaj(plik, katalog, minimum):
+    dane, odrzucone = wczytaj_dane(plik)
+    if dane.empty:
+        raise ValueError("Brak poprawnych wierszy.")
+    katalog.mkdir(parents=True, exist_ok=True)
+    if not odrzucone.empty:
+        odrzucone.to_csv(katalog / "odrzucone_wiersze.csv", index=True, index_label="indeks_w_pliku")
+    dane["miesiac"] = dane["create_time"].dt.to_period("M").astype(str)
+    dane["dzien"] = dane["create_time"].dt.strftime("%Y-%m-%d")
+    czesci, trendy = analiza_dziesieciu_czesci(dane, minimum)
+    etapy, pary, uzytkownicy_min3, pytania_min3 = analiza_powtarzajacych(dane)
+    raporty = {
+        "pytania.csv": statystyki(dane, ["question_id"]),
+        "uzytkownicy.csv": statystyki(dane, ["user_symbol"]),
+        "pokoje.csv": statystyki(dane, ["room_Code"]),
+        "odpowiedzi_na_pytania.csv": statystyki(dane, ["question_id", "answer_id"]),
+        "miesiace.csv": statystyki(dane, ["miesiac"]).sort_values("miesiac"),
+        "dni.csv": statystyki(dane, ["dzien"]).sort_values("dzien"),
+        "pytania_w_miesiacach.csv": statystyki(dane, ["question_id", "miesiac"]),
+        "czesci_pytan.csv": czesci,
+        "trendy_pytan.csv": trendy,
+        "proby_min3.csv": etapy,
+        "pary_min3.csv": pary,
+        "uzytkownicy_min3.csv": uzytkownicy_min3,
+        "pytania_min3.csv": pytania_min3,
+    }
+    for nazwa, tabela in raporty.items():
+        tabela.to_csv(katalog / nazwa, index=False, encoding="utf-8-sig")
+    zapisz_raport(dane, odrzucone, czesci, trendy, etapy, pary, katalog, minimum)
+    print(f"Wyniki zapisano w: {katalog.resolve()}")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Analiza odpowiedzi: 10 części na pytanie i użytkownicy z min. 3 próbami")
+    parser.add_argument("plik", nargs="?", default="data.csv")
+    parser.add_argument("--wyniki", default="wyniki_analizy")
+    parser.add_argument("--minimum", type=int, default=20, help="Minimalna liczba odpowiedzi na pytanie (minimum 10)")
+    args = parser.parse_args()
+    if args.minimum < 10:
+        parser.error("--minimum musi być >= 10, aby każda z 10 części była niepusta")
+    wykonaj(Path(args.plik), Path(args.wyniki), args.minimum)
+
+
+if __name__ == "__main__":
+    main()

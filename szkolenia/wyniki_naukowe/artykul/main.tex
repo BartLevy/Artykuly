@@ -1,0 +1,41 @@
+% Dokument do podglądu szkicu: pdflatex main && bibtex main && pdflatex main && pdflatex main
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs,graphicx,xcolor,amsmath}
+\usepackage[hidelinks]{hyperref}
+\usepackage{doi}
+% BIBLIOGRAPHY:
+\usepackage[numbers,sort&compress]{natbib}
+\bibliographystyle{plainnat}  
+
+\extrafloats{100}
+\newcommand{\fillin}[1]{\textcolor{red}{[#1]}}
+\input{macros.tex}
+
+% Optimization of Stimulus Sets in Auditory Perception Tests via Vector-Based Signal Similarity Analysis
+\usepackage{authblk}
+\author[1,*]{Bartosz Lewandowski \small{(ORCID:0009-0004-1158-0693)}}
+\author[2]{Ewaryst Tkacz \small{(ORCID:0000-0003-2580-7954)}}
+\author[3]{Monika Szerszeń \small{(ORCID:0000-0000-0000-0000)}}
+\author[4]{Maciej J. Wróbel \small{(ORCID:0000-0003-1865-2122)}}
+
+
+\affil[1,2]{Department of Clinical Engineering, Academy of Silesia in Katowice}
+\affil[3]{Powiślański Bank Spółdzieczy w Kwidzynie}
+\affil[4]{Department of Otolaryngology and Oncological Laryngology Collegium Medicum NCU}
+
+% Corresponding author - footnote definition
+\affil[*]{Corresponding author: Bartosz Lewandowski, Ph.D., bartosz.lewandowski@akademiaslaska.pl}     
+
+\title{\fillin{Title, e.g.\ Spaced retrieval practice in workplace training:
+evidence from three years of quiz logs}}
+
+\date{}
+\begin{document}
+\maketitle
+\input{draft.tex}
+
+\bibliography{references}
+\end{document}
