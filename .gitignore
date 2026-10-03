@@ -49,4 +49,4 @@
 
 ## PDF outputs
 # Comment out the line below if you WANT to track the final PDF in Git
-*.pdf
+#*.pdf
