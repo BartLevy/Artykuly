@@ -31,6 +31,13 @@ Podczas generowania i modyfikowania treści BEZWZGLĘDNIE przestrzegaj poniższy
 - Unikaj natrętnych słów kluczowych typowych dla modeli LLM (np. *"warto zauważyć"*, *"rewolucyjny"*, *"kluczowy"*, *"zagłębić się"*, *"holistyczny"*, *"kompleksowy"*, *"w dzisiejszym świecie"*).
 - Buduj zdania o zróżnicowanej długości i strukturze.
 
+## 5. Konsekwencja nazewnictwa
+- Jedną rzecz zawsze nazywaj tak samo, w całym dokumencie (tytuł, abstrakt, słowa kluczowe, sekcje, podpisy tabel i rysunków, szablon `apka/template.latex`).
+- Obowiązujący słownik nazw (stosuj z odmianą przez przypadki, wielka litera tylko na początku zdania lub nagłówka):
+  - **„ślepy panel konsumencki”** (ślepego panelu konsumenckiego, ślepym panelu konsumenckim). Nigdy: „panel konsumencki”, „ślepy panel” bez „konsumencki”, „ślepy test konsumencki”, „ślepy test”, „test konsumencki”.
+  - **„organoleptyczny”** (ocena organoleptyczna, analiza organoleptyczna, test organoleptyczny). Nigdy: „sensoryczny” (ocena sensoryczna, analiza sensoryczna). Wyjątek: angielskie tytuły w bibliografii pozostają bez zmian.
+- Po każdej edycji sprawdź grepem, czy w plikach `.tex` i w szablonie nie pozostały formy zakazane, również pisane wielką literą („Panel konsumencki”, „Sensoryczn…”).
+
 ## Dodatkowe rekomendacje do struktury artykułu:
 - Każdy akapit powinien zawierać myśli przewodnie podparte dowodami lub cytowaniami.
 - Twórz jasne logiczne przejścia między akapitami bez zbędnego lania wody.

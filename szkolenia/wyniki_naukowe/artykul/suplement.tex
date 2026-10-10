@@ -1,0 +1,191 @@
+% =============================================================================
+% Materiał uzupełniający (osobny dokument). Plik edytowany ręcznie -- skrypt go NIE nadpisuje.
+% Kompilacja: pdflatex suplement && bibtex suplement && pdflatex suplement && pdflatex suplement
+% Kompiluj PRZED main.tex: main.tex odczytuje numery tabel i rycin S1, S2... z suplement.aux.
+% =============================================================================
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs,graphicx,xcolor,amsmath}
+\usepackage[hidelinks]{hyperref}
+\usepackage{doi}
+\usepackage[numbers,sort&compress]{natbib}
+\bibliographystyle{plainnat}
+\extrafloats{100}
+\newcommand{\fillin}[1]{\textcolor{red}{[#1]}}
+\input{definicje.tex}
+
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+
+\title{Materiał uzupełniający\\[4pt]\large Powtarzane przypominanie w programie mikrouczenia w banku:
+przyrost poprawności, zapominanie i utrwalone błędy w trzyletnich logach odpowiedzi}
+\date{}
+
+\begin{document}
+\maketitle
+
+% -----------------------------------------------------------------------------
+\section{Uczestnicy i aktywność}
+Spośród \DemoN{} pracowników objętych analizą dane o wieku i płci były dostępne dla \DemoMatched{}
+(\DemoMatchedPct\%; tab.~\ref{tab:demografia}). Wśród osób o znanej płci kobiety stanowiły
+\DemoWomenPct\% ($n = \DemoWomen$), a mężczyźni \DemoMenPct\% ($n = \DemoMen$). Mediana wieku wynosiła
+\AgeMedian{} lat (IQR \AgeQOne--\AgeQThree; zakres \AgeMin--\AgeMax), a najliczniejszą grupę stanowiły
+osoby w wieku \AgeModalGroup{} lat (\AgeModalGroupPct\% osób o znanym wieku; rys.~\ref{fig:demografia}).
+Aktywność w kolejnych miesiącach przedstawiono na rys.~\ref{fig:aktywnosc}.
+% SPRAWDŹ: przedział modalny i proporcje płci po zmianie danych
+
+\begin{table}[htbp]
+\centering
+\caption{Charakterystyka demograficzna pracowników objętych analizą.}
+\label{tab:demografia}
+\small
+\tabelacsv{lr}{demografia}
+\uwagatabeli{Odsetki płci liczono wśród osób o znanej płci, a odsetki przedziałów wieku wśród osób
+o znanym wieku ($n = \DemoAgeN$). Brak danych dotyczy głównie pracowników nieobecnych w zestawieniu
+demograficznym (\DemoUnmatched). IQR: rozstęp międzykwartylowy; SD: odchylenie standardowe.}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{\FigDir rys_demografia}
+\caption{Pracownicy objęci analizą według wieku (przedziały 10-letnie) i płci. Liczby nad słupkami:
+łączna liczba pracowników w przedziale. Pominięto osoby bez danych o wieku ($n = \DemoAgeMissing$).}
+\label{fig:demografia}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{\FigDir rys_aktywnosc}
+\caption{Miesięczna liczba odpowiedzi (u góry) i aktywnych pracowników (u dołu) w okresie obserwacji.
+Okresy bez odpowiedzi odpowiadają zawieszeniom programu na czas przeglądu pytań.}
+\label{fig:aktywnosc}
+\end{figure}
+
+% -----------------------------------------------------------------------------
+\section{Krzywa uczenia i retencja: wartości liczbowe}
+Tabele~\ref{tab:krzywa_uczenia} i \ref{tab:retencja_wg_odstepu} zawierają wartości przedstawione na
+rycinach krzywej uczenia i zależności od odstępu w artykule.
+
+\begin{table}[htbp]
+\centering
+\caption{Odsetek poprawnych odpowiedzi według numeru próby w sekwencjach pracownik--pytanie.}
+\label{tab:krzywa_uczenia}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\tabelacsv{lrrrlrrl}{krzywa_uczenia}
+\uwagatabeli{Kohorta: sekwencje liczące $\geq$\CohortK{} prób, co utrzymuje stały zbiór sekwencji
+w próbach 1--\CohortK{} i eliminuje obciążenie przeżywalności. 95\% PU z bootstrapu klastrowego,
+w którym losowano pracowników (\BootReps{} replikacji).}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Odsetek poprawnych odpowiedzi według odstępu od poprzedniej próby tego samego pytania,
+dla odpowiedzi poprzednio poprawnych (po lewej) i błędnych (po prawej).}
+\label{tab:retencja_wg_odstepu}
+\small
+\tabelacsv{lrlrl}{retencja_wg_odstepu}
+\uwagatabeli{95\% PU z bootstrapu klastrowego, w którym losowano pracowników (\BootReps{} replikacji).}
+\end{table}
+
+% -----------------------------------------------------------------------------
+\section{Analizy wrażliwości}
+Specyfikacje opisano w podrozdziale ,,Modele statystyczne'' artykułu; wyniki zestawiono
+w tab.~\ref{tab:wrazliwosc}.
+
+\begin{table}[htbp]
+\centering
+\caption{Analizy wrażliwości: iloraz szans poprawnej odpowiedzi na podwojenie numeru próby (model M1).}
+\label{tab:wrazliwosc}
+\small
+\tabelacsv{p{8cm}rr}{wrazliwosc}
+\uwagatabeli{Odchylenia standardowe losowych wyrazów wolnych (skala logitowa): pracownik
+SD = \SDEmployee, pytanie SD = \SDItem; ICC w skali latentnej: pracownik = \ICCEmployee, pytanie =
+\ICCItem; $R^2$ Nakagawy: brzegowy = \RsqMarginal, warunkowy = \RsqConditional. Warstwy według
+długości sekwencji służą kontroli obciążenia typu \emph{pattern-mixture} (ubywania obserwacji)
+w krzywej uczenia.}
+\end{table}
+
+% -----------------------------------------------------------------------------
+\section{Zmiana poprawności na poziomie pracowników}
+\emph{Metoda.} Zmianę na poziomie pracownika zdefiniowano jako różnicę odsetka poprawnych odpowiedzi
+między próbą~3 a próbą~1, obliczoną na podstawie własnych sekwencji pracownika liczących co najmniej
+trzy próby. Zmianę testowano testem znaków i testem rangowanych znaków Wilcoxona, z korelacją
+rangowo-dwuseryjną jako miarą wielkości efektu.
+
+\emph{Wyniki.} Spośród \EmpN{} pracowników (\EmpSharePct\% wszystkich), którzy mieli co najmniej jedną
+sekwencję liczącą trzy lub więcej prób, \EmpImproved{} poprawiło wynik, \EmpWorsened{} go pogorszyło,
+a u \EmpUnchanged{} nie zmienił się on między pierwszą a trzecią próbą (test znaków: $p \SignP$; test
+Wilcoxona: $p \WilcoxonP$; korelacja rangowo-dwuseryjna $r = \RankBiserial$). Średnia zmiana wyniosła
+\EmpMeanChange{} punktu procentowego (95\% PU \EmpMeanChangeCI; rys.~\ref{fig:zmiana_pracownikow},
+tab.~\ref{tab:zmiana_pracownikow}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{\FigDir rys_zmiana_pracownikow}
+\caption{Rozkład zmiany odsetka poprawnych odpowiedzi na poziomie pracownika między próbą~3 a
+próbą~1 w jego własnych sekwencjach liczących co najmniej trzy próby ($n = \EmpN$ pracowników;
+przedziały o szerokości 5 punktów procentowych wyśrodkowane na zerze).}
+\label{fig:zmiana_pracownikow}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Zmiana odsetka poprawnych odpowiedzi między pierwszą a trzecią próbą tych samych pytań.}
+\label{tab:zmiana_pracownikow}
+\small
+\tabelacsv{lr}{zmiana_pracownikow}
+\uwagatabeli{Zmiana na poziomie pracownika: różnica odsetka poprawnych odpowiedzi między próbą~3
+a próbą~1 we własnych sekwencjach pracownika liczących $\geq$3 próby; remisy wykluczono z testu znaków
+i testu Wilcoxona; p.p.: punkty procentowe.}
+\end{table}
+
+% -----------------------------------------------------------------------------
+\section{Analiza pytań}
+\emph{Metoda.} Pytania opisano wskaźnikami klasycznej teorii testu. Trudność (odsetek poprawnych
+odpowiedzi) i dyskryminację (korelacja pytanie--reszta, tj.\ z poprawnością pracownika w pozostałych
+pytaniach) obliczono na pierwszych próbach. Funkcjonowanie dystraktorów oceniono na wszystkich
+odpowiedziach na pytanie; dystraktory wybierane w mniej niż 5\% odpowiedzi uznano za niefunkcjonalne
+\citep{tarrant2009,gierl2017}. Trendy poprawności w kolejnych próbach dla poszczególnych pytań
+testowano regresją logistyczną z błędami standardowymi klastrowanymi względem pracowników,
+kontrolując odsetek fałszywych odkryć (FDR) na poziomie \Alpha{} \citep{benjamini1995}.
+
+\emph{Wyniki.} Mediana trudności pytań wynosiła \ItemDifficultyMedian\% poprawnych odpowiedzi
+w pierwszej próbie: na \ItemsHard{} pytania poprawnie odpowiedziało mniej niż 50\% pracowników, na
+\ItemsModerate{} od 50\% do 90\%, a na \ItemsEasy{} ponad 90\% (tab.~\ref{tab:pytania}). Mediana
+korelacji pytanie--reszta wynosiła \ItemDiscMedian; \ItemsLowDisc{} z \ItemsDiscTested{} pytań miało
+korelację poniżej 0{,}20, natomiast w \ItemsGoodDisc{} osiągnęła ona co najmniej 0{,}30
+(rys.~\ref{fig:pytania}). Błędy koncentrowały się na jednym dystraktorze (mediana
+\TopDistractorMedian\% błędów w pytaniu), a \NNonFunctional{} z \NDistractors{} zaobserwowanych
+dystraktorów (\NonFunctionalPct\%) było niefunkcjonalnych. Poprawność istotnie rosła wraz z powtórkami
+w \ItemsImproving{} z \ItemsTestable{} testowalnych pytań, a malała w \ItemsWorsening{} (po korekcie
+FDR).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{\FigDir rys_analiza_pytan}
+\caption{Trudność pytania (odsetek poprawnych w pierwszej próbie) a dyskryminacja (korelacja
+pytanie--reszta). Trójkąty: pytania, w których poprawność istotnie rosła wraz z powtórkami
+(Benjamini--Hochberg, $q < \Alpha$). Linie kropkowane: $r = 0{,}20$ i 90\% poprawnych.}
+\label{fig:pytania}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Analiza pytań (klasyczna teoria testu).}
+\label{tab:pytania}
+\small
+\tabelacsv{p{8.5cm}r}{pytania}
+\uwagatabeli{Trudność i dyskryminację obliczono na pierwszych próbach, wskaźniki dystraktorów na
+wszystkich odpowiedziach; korelacja pytanie--reszta wykorzystuje poprawność pracownika w pozostałych
+pytaniach (pracownicy z $\geq$10 pierwszymi próbami). Trend: regresja logistyczna poprawności względem
+log$_2$(numeru próby) dla każdego pytania z błędami standardowymi klastrowanymi względem pracowników,
+korekta Benjaminiego--Hochberga. Dystraktory, których nigdy nie wybrano, nie są widoczne w logu i nie
+zostały uwzględnione.}
+\end{table}
+\bibliography{references}
+\end{document}

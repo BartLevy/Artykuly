@@ -8,4 +8,4 @@ len8,Wyłącznie sekwencje o długości $\geq$8,Długość sekwencji ≥8,1.4001
 active,Pracownicy z $\geq$50 odpowiedziami,Pracownicy z ≥50 odpowiedziami,1.3823180958355559,1.3197367862667457,1.4478669822333987,60256
 tenure,Z korektą o staż pracownika,Korekta o staż,1.502307645888601,1.4156743835131969,1.5942424961412827,60680
 gee,"GEE, korelacja wymienna w obrębie pracownika (efekt uśredniony populacyjnie)",GEE (uśredniony populacyjnie),1.2903724085892527,1.2365989663497898,1.346484186189626,60962
-mixed,Skrzyżowane losowe wyrazy wolne pracownika i pytania (aproksymacja Laplace'a),Model mieszany (efekty losowe),1.3739023074209813,1.3366780627434922,1.4121631849500378,60962
+mixed,Skrzyżowane losowe wyrazy wolne pracownika i pytania (aproksymacja Laplace'a),Model mieszany (efekty losowe),1.3739023086906366,1.3366780677464236,1.4121631822746066,60962

@@ -1,0 +1,8 @@
+Predyktor;Model 1;Model 2;Model 3
+Numer próby (na podwojenie);{1{,}38 [1{,}32; 1{,}45]};{1{,}33 [1{,}24; 1{,}42]};
+Poprzednia próba poprawna;;{3{,}85 [3{,}49; 4{,}26]};
+Dni od poprzedniej próby (na podwojenie);;{0{,}88 [0{,}86; 0{,}90]};
+Staż pracownika (na rok);;{0{,}87 [0{,}77; 1{,}00]};{0{,}88 [0{,}76; 1{,}01]}
+\midrule Dane;Wszystkie próby;Próby $\geq$2;Pierwsze próby
+Odpowiedzi;60\,680;44\,499;15\,333
+Pracownicy / pytania;163 / 164;146 / 163;162 / 161

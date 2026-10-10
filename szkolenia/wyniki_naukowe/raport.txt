@@ -31,6 +31,17 @@ Przejścia: poprawna→poprawna 92,6%, błędna→poprawna 58,5%; ten sam dystra
 Osoby: średnia zmiana 3,8 pp [2,4; 5,2]; Wilcoxon p < 0,001; r_rb 0,72.
 Pytania: poprawa 44 / pogorszenie 1 z 164 (FDR); niska dyskryminacja (r<0.20): 70.
 
+DEMOGRAFIA PRACOWNIKÓW OBJĘTYCH ANALIZĄ (people.csv, łączenie przez MD5 imie.nazwisko)
+Osoby w analizie: 187; z danymi demograficznymi: 151 (80.7%); bez dopasowania: 36.
+Płeć: kobiety 121 (80.1%), mężczyźni 30 (19.9%), brak danych 36.
+Wiek: mediana 47 [IQR 41–56], średnia 47.2 (SD 10.6), zakres 22–67; brak danych 37.
+Przedziały wieku (kobiety / mężczyźni / razem):
+  20–29 lat: 11 / 2 / 13
+  30–39 lat: 20 / 1 / 21
+  40–49 lat: 42 / 7 / 49
+  50–59 lat: 37 / 14 / 51
+  60–69 lat: 11 / 5 / 16
+
 OGRANICZENIA I DEFINICJE
 10 części ma podobną liczbę odpowiedzi w każdym pytaniu; nie są to równe okresy kalendarzowe.
 Za poprawę osoby uznano wzrost odsetka poprawnych między próbą 1 i 3 w jej własnych pytaniach min3.

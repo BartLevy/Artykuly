@@ -1,0 +1,11 @@
+Miara;Wartość
+Pracownicy z $\geq$1 sekwencją o $\geq$3 próbach;149
+Poprawa / pogorszenie / bez zmian;102 / 20 / 27
+Średnia zmiana, p.p. [95\% PU];{3{,}8 [2{,}4; 5{,}2]}
+Mediana zmiany, p.p.;3{,}7
+{Test znaków: odsetek z poprawą [95\% PU]; $p$};{0{,}84 [0{,}76; 0{,}90]; $<$0{,}001}
+{Test Wilcoxona $W$; $p$; korelacja rangowo-dwuseryjna $r$};{1052; $<$0{,}001; 0{,}72}
+\midrule Sekwencje (pracownik--pytanie) z $\geq$3 próbami;9563
+Poprawne w próbie 1 / próbie 3 (\%);82{,}6 / 87{,}3
+Błędna$\to$poprawna / poprawna$\to$błędna;1075 / 625
+{Test McNemara $\chi^2$; $p$ (bez uwzględnienia klastrów)};{118{,}6; $<$0{,}001}

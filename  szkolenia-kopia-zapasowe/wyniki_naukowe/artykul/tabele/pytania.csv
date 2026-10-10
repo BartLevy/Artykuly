@@ -1,0 +1,9 @@
+Miara;Wartość
+Analizowane pytania;164
+Trudność (\% poprawnych w pierwszej próbie), mediana [IQR];{85{,}3 [75{,}2; 94{,}2]}
+Pytania z $<$50\% / 50--90\% / $>$90\% poprawnych;4 / 102 / 58
+Dyskryminacja (korelacja pytanie--reszta $r$), mediana [IQR], pytania z $n\geq$30;{0{,}22 [0{,}14; 0{,}32] ($k$ = 161)}
+Pytania z $r<0{,}20$ / $0{,}20$--$0{,}29$ / $\geq0{,}30$;70 / 42 / 49
+Udział błędów przypadających na najczęstszy dystraktor (\%), mediana [IQR];{71{,}8 [58{,}4; 84{,}3]}
+Zaobserwowane dystraktory wybierane w $<$5\% odpowiedzi (niefunkcjonalne);193 z 349 (55{,}3\%)
+Pytania z poprawą / pogorszeniem przy powtórkach (FDR $q<0{,}05$);44 / 1 (z 164 testowalnych)

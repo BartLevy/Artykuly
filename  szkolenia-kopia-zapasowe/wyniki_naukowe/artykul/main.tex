@@ -1,0 +1,101 @@
+% Kompilacja: pdflatex main && bibtex main && pdflatex main && pdflatex main
+% Dane liczbowe (definicje.tex), tabele (tabele/*.csv) i rysunki (rysunki/) generuje
+% analiza_odpowiedzi_naukowa.py; tekst (main.tex, sekcja-*.tex) jest edytowany ręcznie.
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs,graphicx,xcolor,amsmath}
+\usepackage[hidelinks]{hyperref}
+\usepackage{doi}
+% BIBLIOGRAFIA:
+\usepackage[numbers,sort&compress]{natbib}
+\bibliographystyle{plainnat}
+
+\extrafloats{100}
+\newcommand{\fillin}[1]{\textcolor{red}{[#1]}}
+\input{definicje.tex}
+
+\usepackage{authblk}
+\renewcommand\Authand{ i }\renewcommand\Authands{ i }
+\author[1,*]{Bartosz Lewandowski \small{(ORCID:0009-0004-1158-0693)}}
+\author[2]{Monika Szerszeń \small{(ORCID: 0009-0009-6625-3979)}}
+\author[3]{Magdalena Dowgalec \small{(ORCID:0009-0005-4469-2832)}}
+\author[4]{Ewaryst Tkacz \small{(ORCID:0000-0003-2580-7954)}}
+\author[5]{Maciej J. Wróbel \small{(ORCID:0000-0003-1865-2122)}}
+
+\affil[1,4]{Department of Clinical Engineering, Academy of Silesia in Katowice}
+\affil[3]{Powiślański Bank Spółdzieczy w Kwidzynie}
+\affil[4]{Atende SA}
+\affil[5]{Department of Otolaryngology and Oncological Laryngology Collegium Medicum NCU}
+
+% Autor korespondencyjny
+\affil[*]{Autor korespondencyjny: dr Bartosz Lewandowski, bartosz.lewandowski@akademiaslaska.pl}
+
+\title{Przyrost wiedzy bez transferu: skuteczność mikrouczenia z powtórkami rozłożonymi
+w czasie w szkoleniach pracowniczych}
+
+\newcommand{\Women}{xx}
+
+
+\date{}
+\begin{document}
+\maketitle
+
+
+\begin{abstract}
+\noindent\textbf{Wprowadzenie.} Przypominanie rozłożone w czasie poprawia zapamiętywanie w warunkach
+laboratoryjnych i edukacyjnych, jednak wyniki wieloletnich programów szkoleń w miejscu pracy opisano
+w niewielu badaniach.
+\textbf{Metody.} Przeanalizowano \NResponses{} odpowiedzi udzielonych przez \NEmployees{} pracowników
+(wśród osób o znanych danych \DemoWomenPct\% kobiet, mediana wieku \AgeMedian{} lat)
+na \NItems{} pytań wielokrotnego wyboru w \NModules{} modułach programu mikrouczenia opartego na
+quizach (od \DateStart{} do \DateEnd). Każde pytanie było ponownie zadawane temu samemu pracownikowi
+w stałym, nieadaptacyjnym odstępie (mediana \GapMedian{} dni). Poprawność odpowiedzi modelowano
+regresją logistyczną z efektami stałymi pracownika i pytania; oszacowania opisowe podano
+z przedziałami ufności z bootstrapu klastrowego.
+\textbf{Wyniki.} Odsetek poprawnych odpowiedzi wzrósł z \AccAttOne\% w pierwszej próbie do
+\AccAttMax\% w próbie \AttMax{}. i kolejnych. Każde podwojenie liczby prób zwiększało szanse
+poprawnej odpowiedzi \ORMOneAttempt-krotnie (95\% PU \ORMOneAttemptCI; zakres w dziesięciu
+specyfikacjach analiz wrażliwości \ORRange). Dłuższy odstęp od poprzedniej próby wiązał się z niższą
+poprawnością (OR \ORMTwoGap{} na podwojenie odstępu). Powtarzane błędy koncentrowały się na tym samym
+dystraktorze (\SameDistractorPct\% wobec oczekiwanych \SameDistractorExpectedPop\%). Poprawność
+odpowiedzi na nowo napotkane pytania nie rosła wraz ze stażem (OR \ORMThreeTenure{} na rok). % SPRAWDŹ
+\textbf{Wnioski.} Powtarzanemu przypominaniu w ramach rutynowych szkoleń pracowniczych towarzyszyła
+poprawa ograniczona do powtarzanych pytań oraz zapominanie między powtórkami. Skuteczność programu
+mogłyby zwiększyć adaptacyjny harmonogram powtórek, informacja zwrotna odnosząca się do utrwalonych
+błędnych przekonań oraz modyfikacja pytań o niskiej dyskryminacji i dystraktorów niefunkcjonalnych.
+
+\medskip\noindent\textbf{Słowa kluczowe:} powtórki rozłożone w czasie; praktyka przypominania;
+mikrouczenie; szkolenia pracownicze; analityka uczenia się; analiza pytań testowych
+\end{abstract}
+
+\input{sekcja-wstep}
+\input{sekcja-metodologia}
+\input{sekcja-wyniki}
+\input{sekcja-dyskusja}
+
+\section*{Oświadczenia}
+
+% SPRAWDŹ: sposób kodowania danych pracowników oraz status zgody
+% komisji etycznej lub zwolnienia z obowiązku jej uzyskania.
+\noindent\textbf{Etyka.}
+W badaniu wykorzystano dane przekazane przez bank, w których pracownicy
+byli reprezentowani przez kody. Dane dotyczące wieku i płci raportowano
+wyłącznie w postaci zagregowanej.
+\fillin{Informacja o zgodzie właściwej komisji etycznej lub zwolnieniu
+z obowiązku jej uzyskania, jeśli jest wymagana.}\\
+\textbf{Dostępność danych.}
+Dane wykorzystane w badaniu stanowią własność klienta i nie są
+udostępniane publicznie.\\
+\textbf{Finansowanie.}
+Badanie nie otrzymało finansowania.\\
+\textbf{Konflikt interesów.}
+Autorzy deklarują brak konfliktu interesów.\\
+\textbf{Wykorzystanie narzędzi AI.}
+Narzędzia generatywnej sztucznej inteligencji wykorzystano do
+przygotowania opisu wyników analizy oraz tłumaczenia tekstu
+na język angielski.
+\bibliography{references}
+\end{document}

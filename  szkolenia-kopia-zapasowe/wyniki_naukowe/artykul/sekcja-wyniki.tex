@@ -1,0 +1,281 @@
+% =============================================================================
+% Wyniki. Plik edytowany ręcznie -- skrypt analiza_odpowiedzi_naukowa.py go NIE nadpisuje.
+% Liczby: definicje.tex; tabele: \tabelacsv{<kolumny>}{<plik>} wczytuje \TabDir<plik>.csv;
+% rysunki: \FigDir. Zdania interpretujące kierunek wyniku oznaczono komentarzem "% SPRAWDŹ" --
+% zweryfikuj je po ponownym uruchomieniu skryptu na nowych danych lub z innymi parametrami.
+% =============================================================================
+\section{Wyniki}
+
+\subsection{Próba i zaangażowanie}
+Zbiór danych obejmował \NResponses{} odpowiedzi \NEmployees{} pracowników na \NItems{} pytań
+w \NModules{} modułach, zebranych od \DateStart{} do \DateEnd{} (tab.~\ref{tab:zbior_danych}).
+Mediana liczby odpowiedzi na pracownika wynosiła \RespPerEmpMedian{} (IQR
+\RespPerEmpQOne--\RespPerEmpQThree), udzielonych na \ItemsPerEmpMedian{} różnych pytań w ciągu
+\ActiveDaysMedian{} dni aktywności; mediana czasu uczestnictwa w programie wynosiła
+\SpanMonthsMedian{} miesięcy, a \ActiveLastQuarterPct\% pracowników było aktywnych w ostatnich
+90 dniach obserwacji. Aktywność zmieniała się w czasie i występowały okresy bez odpowiedzi
+(rys.~\ref{fig:aktywnosc}); odpowiadają one zawieszeniom programu na czas przeglądu i aktualizacji
+pytań. Ogólny odsetek poprawnych odpowiedzi wynosił \AccOverall\%, a w pierwszych próbach \AccFirst\%.
+
+Spośród \DemoN{} pracowników objętych analizą dane o wieku i płci były dostępne dla \DemoMatched{}
+(\DemoMatchedPct\%; tab.~\ref{tab:demografia}). Wśród osób o znanej płci kobiety stanowiły
+\DemoWomenPct\% ($n = \DemoWomen$), a mężczyźni \DemoMenPct\% ($n = \DemoMen$). Mediana wieku wynosiła
+\AgeMedian{} lat (IQR \AgeQOne--\AgeQThree; zakres \AgeMin--\AgeMax), a najliczniejszą grupę stanowiły
+osoby w wieku \AgeModalGroup{} lat (\AgeModalGroupPct\% osób o znanym wieku; rys.~\ref{fig:demografia}).
+% SPRAWDŹ: przedział modalny i proporcje płci po zmianie danych
+
+Harmonogram powtórek nie zależał od wyniku poprzedniej próby: prawdopodobieństwo kolejnej próby
+wynosiło \ReaskAfterCorrect\% po odpowiedzi poprawnej i \ReaskAfterIncorrect\% po błędnej, natomiast mediana
+odstępu do kolejnej próby wynosiła odpowiednio \GapAfterCorrect{} i \GapAfterIncorrect{} dni. Kontynuacja
+sekwencji nie była więc selekcjonowana według wyników. % SPRAWDŹ
+
+\begin{table}[htbp]
+\centering
+\caption{Charakterystyka zbioru danych.}
+\label{tab:zbior_danych} 
+\small
+\tabelacsv{lr}{zbior_danych}
+\uwagatabeli{IQR: rozstęp międzykwartylowy. Sekwencja to seria prób jednego pracownika dotyczących
+jednego pytania. Wykluczone moduły testowe: \ExcludedModules{} (\NExcluded{} odpowiedzi). Wykluczone
+pytania z jedną zaobserwowaną opcją odpowiedzi: \NExcludedItems{} (\NExcludedItemResp{} odpowiedzi).}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Charakterystyka demograficzna pracowników objętych analizą.}
+\label{tab:demografia}
+\small
+\tabelacsv{lr}{demografia}
+\uwagatabeli{Odsetki płci liczono wśród osób o znanej płci, a odsetki przedziałów wieku wśród osób
+o znanym wieku ($n = \DemoAgeN$). Brak danych dotyczy głównie pracowników nieobecnych w zestawieniu
+demograficznym (\DemoUnmatched). IQR: rozstęp międzykwartylowy; SD: odchylenie standardowe.}
+\end{table}
+
+\begin{figure*}[tbp]
+\centering
+\includegraphics{\FigDir rys_aktywnosc}
+\caption{Miesięczna liczba odpowiedzi (u góry) i aktywnych pracowników (u dołu) w okresie obserwacji.}
+\label{fig:aktywnosc}
+\end{figure*}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics{\FigDir rys_demografia}
+\caption{Pracownicy objęci analizą według wieku (przedziały 10-letnie) i płci. Liczby nad słupkami:
+łączna liczba pracowników w przedziale. Pominięto osoby bez danych o wieku ($n = \DemoAgeMissing$).}
+\label{fig:demografia}
+\end{figure}
+
+\subsection{Uczenie się w kolejnych próbach (PB1)}
+Odsetek poprawnych odpowiedzi rósł wraz z numerem próby: z \AccAttOne\%
+\AccAttOneCI{} w pierwszej próbie do \AccAttMax\% \AccAttMaxCI{} w próbie \AttMax{}. i kolejnych
+(rys.~\ref{fig:krzywa_uczenia}, tab.~\ref{tab:krzywa_uczenia}). Wzrost był podobny w zbalansowanej
+kohorcie \CohortN{} sekwencji liczących co najmniej \CohortK{} prób (\CohortAccOne\% \CohortAccOneCI{}
+w próbie~1 wobec \CohortAccK\% \CohortAccKCI{} w próbie~\CohortK), nie wynika więc z selektywnej
+kontynuacji przez pracowników osiągających lepsze wyniki. Odsetek błędów był funkcją potęgową numeru
+próby (wykładnik \PowerLawB, $R^2 = \PowerLawRsq$), zgodnie z potęgowym prawem praktyki
+\citep{newell1981}.
+
+W modelu~1 każde podwojenie liczby prób wiązało się z \ORMOneAttempt-krotnie wyższymi szansami
+poprawnej odpowiedzi (95\% PU \ORMOneAttemptCI; tab.~\ref{tab:regresja}). Pytania odpowiadały za
+większą część wariancji niż pracownicy (ICC w skali latentnej \ICCItem{} wobec \ICCEmployee; brzegowy
+$R^2 = \RsqMarginal$, warunkowy $R^2 = \RsqConditional$).
+
+\begin{figure}[tbp]
+\centering
+\includegraphics{\FigDir rys_krzywa_uczenia}
+\caption{Odsetek poprawnych odpowiedzi według numeru próby w sekwencjach pracownik--pytanie. Koła:
+wszystkie sekwencje dostępne w danej próbie (ich liczba maleje wraz z numerem próby). Kwadraty:
+zbalansowana kohorta, tj.\ te same \CohortN{} sekwencje, które osiągnęły co najmniej \CohortK{} prób,
+obserwowane wyłącznie w próbach 1--\CohortK{}, dzięki czemu każdy punkt opiera się na identycznych
+sekwencjach. Słupki błędów: 95\% PU z bootstrapu klastrowego po pracownikach (\BootReps{} replikacji).
+Linia przerywana: dopasowanie funkcji potęgowej do odsetka błędów. Próby \MaxAttemptPooled{}.
+i dalsze połączono.}
+\label{fig:krzywa_uczenia}
+\end{figure}
+
+\begin{table*}[htbp]
+\centering
+\caption{Odsetek poprawnych odpowiedzi według numeru próby w sekwencjach pracownik--pytanie.}
+\label{tab:krzywa_uczenia}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\tabelacsv{lrrrlrrl}{krzywa_uczenia}
+\uwagatabeli{Kohorta: sekwencje liczące $\geq$\CohortK{} prób, co utrzymuje stały zbiór sekwencji
+w próbach 1--\CohortK{} i eliminuje obciążenie przeżywalności. 95\% PU z bootstrapu klastrowego,
+w którym losowano pracowników (\BootReps{} replikacji).}
+\end{table*}
+
+\begin{table*}[htbp]
+\centering
+\caption{Regresja logistyczna poprawności odpowiedzi: ilorazy szans [95\% PU].}
+\label{tab:regresja}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\tabelacsv{llll}{regresja}
+\uwagatabeli{Wszystkie modele zawierają efekty stałe pracownika i pytania; błędy standardowe
+klastrowane względem pracowników. Pracownicy i pytania bez zmienności poprawności są pomijani przez
+warunkową funkcję wiarygodności (model~1: \MOneDropped{} odpowiedzi). Model~3 weryfikuje, czy
+poprawność odpowiedzi na nowo napotkane pytania rośnie wraz z czasem uczestnictwa w programie.}
+\end{table*}
+
+\subsection{Wynik poprzedniej próby, odstęp i zapominanie (PB2)}
+Po uwzględnieniu numeru próby poprawna poprzednia odpowiedź wiązała się z wyższymi szansami poprawnej
+odpowiedzi (model~2: OR \ORMTwoPrev, 95\% PU \ORMTwoPrevCI), natomiast dłuższy odstęp od poprzedniej
+próby wiązał się z niższymi szansami (OR \ORMTwoGap{} na podwojenie odstępu, 95\% PU \ORMTwoGapCI; tab.~\ref{tab:regresja}).
+Wśród odpowiedzi poprzednio poprawnych odsetek poprawnych zmniejszał się z \RetShortCorrect\%, gdy
+pytanie powtórzono w ciągu 14 dni, do \RetLongCorrect\% po 240 dniach lub dłużej; odpowiedzi
+poprzednio błędne były korygowane odpowiednio w \RetShortIncorrect\% i \RetLongIncorrect\% przypadków
+(rys.~\ref{fig:odstep}, tab.~\ref{tab:retencja_wg_odstepu}). Wzorzec ten jest zgodny z zapominaniem
+między powtórkami \citep{cepeda2006,cepeda2008}. % SPRAWDŹ
+
+\begin{figure}[tbp]
+\centering
+\includegraphics{\FigDir rys_odstep}
+\caption{Odsetek poprawnych odpowiedzi według odstępu od poprzedniej próby tego samego pytania,
+osobno dla odpowiedzi poprzednio poprawnych (koła) i poprzednio błędnych (kwadraty). Słupki błędów:
+95\% PU z bootstrapu klastrowego po pracownikach.}
+\label{fig:odstep}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Odsetek poprawnych odpowiedzi według odstępu od poprzedniej próby tego samego pytania,
+dla odpowiedzi poprzednio poprawnych (po lewej) i błędnych (po prawej).}
+\label{tab:retencja_wg_odstepu}
+\small
+\tabelacsv{lrlrl}{retencja_wg_odstepu}
+\uwagatabeli{95\% PU z bootstrapu klastrowego, w którym losowano pracowników (\BootReps{} replikacji).}
+\end{table}
+
+\subsection{Przejścia i utrwalone błędy (PB3)}
+Spośród odpowiedzi poprzednio poprawnych \RetainPct\% \RetainCI{} było poprawnych również w kolejnej
+próbie (\ForgetPct\% zapomniano); spośród odpowiedzi poprzednio błędnych \RecoverPct\% \RecoverCI{}
+skorygowano, a \PersistPct\% pozostało błędnych (tab.~\ref{tab:przejscia}). Gdy błąd się powtarzał
+(\SameDistractorN{} przypadków), pracownicy wybierali ten sam dystraktor w \SameDistractorPct\%
+\SameDistractorCI{} przypadków, wobec \SameDistractorExpected\% oczekiwanych przy wyborze losowym
+i \SameDistractorExpectedPop\% oczekiwanych przy uwzględnieniu popularności poszczególnych
+dystraktorów, co wskazuje na trwałe błędne przekonania, a nie na zgadywanie. % SPRAWDŹ
+
+\begin{table}[htbp]
+\centering
+\caption{Przejścia między kolejnymi próbami tego samego pytania.}
+\label{tab:przejscia}
+\small
+\tabelacsv{lrrlr}{przejscia}
+\uwagatabeli{Po dwóch kolejnych błędach ten sam dystraktor wybrano w \SameDistractorPct\%
+\SameDistractorCI{} przypadków ($n = \SameDistractorN$); wartość oczekiwana przy losowym wyborze spośród
+zaobserwowanych dystraktorów wynosiła \SameDistractorExpected\%, a po uwzględnieniu ogólnej popularności
+każdego dystraktora w danym pytaniu wynosiła ona \SameDistractorExpectedPop\%. 95\% PU z bootstrapu klastrowego,
+w którym losowano pracowników (\BootReps{} replikacji).}
+\end{table}
+
+\subsection{Zmiana na poziomie pracowników}
+Spośród \EmpN{} pracowników (\EmpSharePct\% wszystkich), którzy mieli co najmniej jedną sekwencję
+liczącą trzy lub więcej prób, \EmpImproved{} poprawiło wynik, \EmpWorsened{} go pogorszyło, a u
+\EmpUnchanged{} nie zmienił się on między pierwszą a trzecią próbą (test znaków: $p \SignP$; test
+Wilcoxona: $p \WilcoxonP$; korelacja rangowo-dwuseryjna $r = \RankBiserial$). Średnia zmiana wyniosła
+\EmpMeanChange{} punktu procentowego (95\% PU \EmpMeanChangeCI; rys.~\ref{fig:zmiana_pracownikow},
+tab.~\ref{tab:zmiana_pracownikow}).
+
+\begin{figure}[tbp]
+\centering
+\includegraphics{\FigDir rys_zmiana_pracownikow}
+\caption{Rozkład zmiany odsetka poprawnych odpowiedzi na poziomie pracownika między próbą~3 a
+próbą~1 w jego własnych sekwencjach liczących co najmniej trzy próby ($n = \EmpN$ pracowników;
+przedziały o szerokości 5 punktów procentowych wyśrodkowane na zerze).}
+\label{fig:zmiana_pracownikow}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Zmiana odsetka poprawnych odpowiedzi między pierwszą a trzecią próbą tych samych pytań.}
+\label{tab:zmiana_pracownikow}
+\small
+\tabelacsv{lr}{zmiana_pracownikow}
+\uwagatabeli{Zmiana na poziomie pracownika: różnica odsetka poprawnych odpowiedzi między próbą~3
+a próbą~1 we własnych sekwencjach pracownika liczących $\geq$3 próby; remisy wykluczono z testu znaków
+i testu Wilcoxona; p.p.: punkty procentowe.}
+\end{table}
+
+\subsection{Przenoszenie na nowe pytania (PB4)}
+Odsetek poprawnych odpowiedzi przy pierwszym kontakcie z nowym pytaniem nie rósł wraz ze stażem
+(model~3: OR \ORMThreeTenure{} na rok, 95\% PU \ORMThreeTenureCI; tab.~\ref{tab:regresja}), a po
+uwzględnieniu numeru próby staż nie wiązał się dodatnio z poprawnością w próbach powtórnych
+(model~2: OR \ORMTwoTenure, 95\% PU \ORMTwoTenureCI). Korzyści wydają się więc specyficzne dla
+powtarzanych pytań. % SPRAWDŹ
+
+\subsection{Analiza pytań (PB5)}
+Mediana trudności pytań wynosiła \ItemDifficultyMedian\% poprawnych odpowiedzi w pierwszej próbie:
+na \ItemsHard{} pytania poprawnie odpowiedziało mniej niż 50\% pracowników, na \ItemsModerate{} od
+50\% do 90\%, a na \ItemsEasy{} ponad 90\% (tab.~\ref{tab:pytania}). Mediana korelacji pytanie--reszta
+wynosiła \ItemDiscMedian; \ItemsLowDisc{} z \ItemsDiscTested{} pytań miało korelację poniżej 0{,}20,
+natomiast w \ItemsGoodDisc{} osiągnęła ona co najmniej 0{,}30 (rys.~\ref{fig:pytania}). Błędy koncentrowały się na jednym
+dystraktorze (mediana \TopDistractorMedian\% błędów w pytaniu), a \NNonFunctional{} z \NDistractors{}
+zaobserwowanych dystraktorów (\NonFunctionalPct\%) było niefunkcjonalnych. Poprawność istotnie rosła
+wraz z powtórkami w \ItemsImproving{} z \ItemsTestable{} testowalnych pytań, a malała w
+\ItemsWorsening{} (po korekcie FDR). Najtrudniejsze pytania zestawiono w
+tab.~\ref{tab:najtrudniejsze_pytania}.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics{\FigDir rys_analiza_pytan}
+\caption{Trudność pytania (odsetek poprawnych w pierwszej próbie) a dyskryminacja (korelacja
+pytanie--reszta). Trójkąty: pytania, w których poprawność istotnie rosła wraz z powtórkami
+(Benjamini--Hochberg, $q < \Alpha$). Linie kropkowane: $r = 0{,}20$ i 90\% poprawnych.}
+\label{fig:pytania}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Analiza pytań (klasyczna teoria testu).}
+\label{tab:pytania}
+\small
+\tabelacsv{p{8.5cm}r}{pytania}
+\uwagatabeli{Trudność i dyskryminację obliczono na pierwszych próbach; korelacja pytanie--reszta
+wykorzystuje poprawność pracownika w pozostałych pytaniach (pracownicy z $\geq$10 pierwszymi próbami).
+Trend: regresja logistyczna poprawności względem log$_2$(numeru próby) dla każdego pytania z błędami
+standardowymi klastrowanymi względem pracowników, korekta Benjaminiego--Hochberga. Dystraktory, których
+nigdy nie wybrano, nie są widoczne w logu i nie zostały uwzględnione.}
+\end{table}
+
+% \begin{table*}[htbp]
+% \centering
+% \caption{\TopItems{} najtrudniejszych pytań.}
+% \label{tab:najtrudniejsze_pytania}
+% \small
+% \setlength{\tabcolsep}{3.5pt}
+% \tabelacsv{rlrrrrrrr}{najtrudniejsze_pytania}
+% \uwagatabeli{Pierwsza/Kolejne: odsetek poprawnych w pierwszej i w późniejszych próbach; Dom.\
+% dystr.: udział błędów przypadających na najczęstszy dystraktor; $r_{\mathrm{it}}$: korelacja
+% pytanie--reszta; OR trendu: iloraz szans na podwojenie numeru próby; $q$: wartość $p$ skorygowana
+% metodą Benjaminiego--Hochberga.}
+% \end{table*}
+
+\subsection{Analizy wrażliwości}
+Oszacowanie efektu numeru próby pozostawało zbliżone we wszystkich specyfikacjach (OR od \ORRange{};
+rys.~\ref{fig:wrazliwosc}, tab.~\ref{tab:wrazliwosc}) i wynosiło \ORSensCohort{} w zbalansowanej kohorcie,
+\ORSensLenThree, \ORSensLenFive{} i \ORSensLenEight{} w sekwencjach liczących 3--4, 5--7 i co najmniej
+8 prób, \ORSensGee{} w uśrednionym populacyjnie modelu GEE oraz \ORSensMixed{} w modelu mieszanym.
+Oszacowanie było wyższe po korekcie o staż (\ORSensTenure), który jest skorelowany z numerem próby.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics{\FigDir rys_wrazliwosc}
+\caption{Iloraz szans (95\% PU) poprawnej odpowiedzi na podwojenie numeru próby w różnych
+specyfikacjach modelu. Romb: model główny; linia pionowa: brak efektu.}
+\label{fig:wrazliwosc}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Analizy wrażliwości: iloraz szans poprawnej odpowiedzi na podwojenie numeru próby.}
+\label{tab:wrazliwosc}
+\small
+\tabelacsv{p{8cm}rr}{wrazliwosc}
+\uwagatabeli{Odchylenia standardowe losowych wyrazów wolnych (skala logitowa): pracownik
+SD = \SDEmployee, pytanie SD = \SDItem; ICC w skali latentnej: pracownik = \ICCEmployee, pytanie =
+\ICCItem; $R^2$ Nakagawy: brzegowy = \RsqMarginal, warunkowy = \RsqConditional. Warstwy według
+długości sekwencji służą kontroli obciążenia typu \emph{pattern-mixture} (ubywania obserwacji)
+w krzywej uczenia.}
+\end{table}

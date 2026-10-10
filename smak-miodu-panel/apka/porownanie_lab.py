@@ -9,8 +9,11 @@ regułowo na trzystopniową skalę typowości:
 Wynik laboratorium dla próbki = minimum z kodów zapachu i smaku (o ile podano
 kwalifikator typowości). Zastrzeżenie organoleptyczne = wynik 0.
 Laboratorium w Puławach nie stosuje kwalifikatora typowości (metoda
-PN-88/A-77626, wyłącznie deskryptory), dlatego jego opisy raportowane są
-osobno i nie wchodzą do miar zgodności.
+PN-88/A-77626); jego werdykt końcowy „cechy niejednoznaczne” kodowany jest
+jako 1 (L) i laboratorium wchodzi do wszystkich miar na równi z pozostałymi.
+
+Wspólne odniesienie dla wszystkich porównań z panelem: werdykt większości
+laboratoriów (więcej niż połowa ocen N).
 """
 
 import re
@@ -39,14 +42,18 @@ PANEL_LOT_TO_P = {
     "7-4/21/05": "P7",
 }
 SAMPLES = ["P1", "P2", "P3", "P4", "P5", "P6", "P7"]
-RATED_LABS = ["QSI", "Eurofins", "Intertek"]
+RATED_LABS = ["QSI", "Eurofins", "Intertek", "Puławy"]
+N_LABS = len(RATED_LABS)
 LAB_NO = {"QSI": 1, "Eurofins": 2, "Intertek": 3, "Puławy": 4}
+# deskryptory laboratorium 4 wskazujące wadę (tylko analiza wrażliwości)
+DEFECT_WORDS = ("fermentac", "nienatural", "landrynk")
 
-# kolory wg liczby laboratoriów z zastrzeżeniem (0, 1, 2, 3)
-FLAG_CLR = {0: "#2874A6", 1: "#7F8C8D", 2: "#CA6F1E", 3: "#CA6F1E"}
-FLAG_LABEL = {0: "bez zastrzeżeń laboratoriów (0/3)",
-              1: "zastrzeżenie jednego laboratorium (1/3)",
-              3: "zastrzeżenie wszystkich laboratoriów (3/3)"}
+# kolory wg liczby laboratoriów z zastrzeżeniem: brak / mniejszość / większość
+CLR_NONE, CLR_MINOR, CLR_MAJOR = "#2874A6", "#7F8C8D", "#CA6F1E"
+
+
+def flag_color(k: int) -> str:
+    return CLR_NONE if k == 0 else (CLR_MAJOR if k > N_LABS / 2 else CLR_MINOR)
 
 
 # --------------------------------------------------------------------------- #
@@ -73,6 +80,7 @@ def load_lab_descriptions(path: Path = XLSX) -> pd.DataFrame:
     labs_row = rows[rows.index(codes_row) + 1]
     smell = next(r for r in rows if r[0] == "Zapach")
     taste = next(r for r in rows if r[0] == "Smak")
+    verdict = next(r for r in rows if str(r[0]).startswith("Ocena końcowa"))
 
     out, code = [], None
     for j in range(1, len(codes_row)):
@@ -82,11 +90,14 @@ def load_lab_descriptions(path: Path = XLSX) -> pd.DataFrame:
         if lab is None or code not in LAB_CODE_TO_P:
             continue
         out.append({"P": LAB_CODE_TO_P[code], "lab": lab,
-                    "smell": smell[j], "taste": taste[j]})
+                    "smell": smell[j], "taste": taste[j], "verdict": verdict[j]})
     d = pd.DataFrame(out)
     d["smell_code"] = d["smell"].map(typicality_code)
     d["taste_code"] = d["taste"].map(typicality_code)
     d["score"] = d[["smell_code", "taste_code"]].min(axis=1, skipna=True)
+    # „cechy niejednoznaczne” (PN-88/A-77626) -> L
+    ambiguous = d["verdict"].astype(str).str.lower().str.contains("niejednoznaczn")
+    d.loc[d["score"].isna() & ambiguous, "score"] = 1
     d["flag"] = (d["score"] == 0).astype(int)
     return d
 
@@ -149,11 +160,54 @@ def _pct(x: float) -> str:
 #  Główne obliczenia
 # --------------------------------------------------------------------------- #
 
+def panel_verdict(lo: float, hi: float) -> str:
+    """Werdykt panelu jako całości z 95% CI Wilsona."""
+    return "T" if lo > 0.5 else ("N" if hi < 0.5 else "nr")
+
+
+def n_to_decide(p: float, n_max: int = 1_000_000) -> int | None:
+    """Najmniejsza liczba osób, przy której 95% CI Wilsona dla odsetka p wyklucza 0,5."""
+    if p == 0.5:
+        return None
+    lo_n, hi_n = 1, n_max
+    excl = lambda n: (lambda ci: ci[0] > 0.5 or ci[1] < 0.5)(wilson_ci(p * n, n))
+    if not excl(hi_n):
+        return None
+    while lo_n < hi_n:
+        mid = (lo_n + hi_n) // 2
+        lo_n, hi_n = (lo_n, mid) if excl(mid) else (mid + 1, hi_n)
+    return lo_n
+
+
+def pair_agreement(lab_typ: pd.DataFrame, wide: pd.DataFrame) -> dict:
+    """Zgodność par oceniających na skali typowy / nietypowy (1 / 0), średnio po próbkach.
+
+    lab_typ: próbki × laboratoria; wide: respondenci × próbki (komplet odpowiedzi).
+    κ = (p_o − p_e) / (1 − p_e), p_e z łącznych odsetków odpowiedzi „typowy”.
+    """
+    m, n = lab_typ.shape[1], len(wide)
+    q, kq = lab_typ.mean(axis=1), lab_typ.sum(axis=1)
+    p, kp = wide.mean(axis=0), wide.sum(axis=0)
+    po = {
+        "ll": ((kq * (kq - 1) + (m - kq) * (m - kq - 1)) / (m * (m - 1))).mean(),
+        "cc": ((kp * (kp - 1) + (n - kp) * (n - kp - 1)) / (n * (n - 1))).mean(),
+        "cl": (p * q + (1 - p) * (1 - q)).mean(),
+    }
+    pe = {
+        "ll": q.mean() ** 2 + (1 - q.mean()) ** 2,
+        "cc": p.mean() ** 2 + (1 - p.mean()) ** 2,
+        "cl": p.mean() * q.mean() + (1 - p.mean()) * (1 - q.mean()),
+    }
+    return {k: (po[k], (po[k] - pe[k]) / (1 - pe[k])) for k in po}
+
+
 def compute_lab_comparison(df: pd.DataFrame, out_dir: str = "..") -> dict:
+    from analiza import auc
+
     d = df.copy()
     d["P"] = d["lot"].map(PANEL_LOT_TO_P)
     labs = load_lab_descriptions()
-    r: dict = {}
+    r: dict = {"n_labs": N_LABS}
 
     # --- panel: profil próbek ---
     g = d.groupby("P")
@@ -170,51 +224,96 @@ def compute_lab_comparison(df: pd.DataFrame, out_dir: str = "..") -> dict:
     panel[["lo", "hi"]] = [wilson_ci(int(k), int(n)) for k, n in zip(panel.k, panel.n)]
     panel["p_binom"] = [stats.binomtest(int(k), int(n), 0.5).pvalue
                         for k, n in zip(panel.k, panel.n)]
+    panel["verdict"] = [panel_verdict(lo, hi) for lo, hi in zip(panel.lo, panel.hi)]
 
     # --- laboratoria: wynik i zastrzeżenia ---
     rated = labs[labs.lab.isin(RATED_LABS)]
     score = rated.pivot(index="P", columns="lab", values="score").loc[SAMPLES, RATED_LABS]
     flag = rated.pivot(index="P", columns="lab", values="flag").loc[SAMPLES, RATED_LABS]
-    lab_mean = score.mean(axis=1)
     n_flags = flag.sum(axis=1).astype(int)
-    lab_majority = (n_flags >= 2).astype(int)          # 1 = laboratoria kwestionują
-    panel_majority = (panel["typ"] < 0.5).astype(int)  # 1 = większość panelu: nietypowy
+    lab_majority = (n_flags > N_LABS / 2).astype(int)   # 1 = większość laboratoriów: N
+    flagged = [p for p in SAMPLES if lab_majority[p] == 1]
+    clean = [p for p in SAMPLES if lab_majority[p] == 0]
+    clean_wo = [p for p in clean if p != "P3"]
 
-    # zgodność między laboratoriami (3 oceniające)
+    # zgodność między laboratoriami
     cnt_bin = np.column_stack([(flag == 0).sum(axis=1), (flag == 1).sum(axis=1)])
     cnt_ord = np.column_stack([(score == c).sum(axis=1) for c in (0, 1, 2)])
     r["kappa_bin"] = _f(fleiss_kappa(cnt_bin), 2)
     r["kappa_ord"] = _f(fleiss_kappa(cnt_ord), 2)
-    r["n_full_agree_bin"] = int(((n_flags == 0) | (n_flags == 3)).sum())
+    r["n_full_agree_bin"] = int(((n_flags == 0) | (n_flags == N_LABS)).sum())
     r["n_full_agree_ord"] = int((score.nunique(axis=1) == 1).sum())
+    r["lab_flagged"] = ", ".join(flagged)
+    r["lab_clean"] = ", ".join(clean)
+    r["lab_clean_wo"] = ", ".join(clean_wo)
+    r["lab_none"] = ", ".join(p for p in SAMPLES if n_flags[p] == 0)
+    r["lab_minor"] = ", ".join(p for p in SAMPLES if 0 < n_flags[p] <= N_LABS / 2)
+    r["n_flags_major"] = " i~".join(sorted({f"{n_flags[p]}" for p in flagged}))
 
-    # panel vs laboratoria (poziom próbek, n = 7)
-    rho, p_rho = stats.spearmanr(panel["typ"], lab_mean)
+    # wrażliwość: opisy wady w laboratorium 4 kodowane jako N
+    alt = flag.copy()
+    pul = labs[labs.lab == "Puławy"].set_index("P").loc[SAMPLES]
+    alt["Puławy"] = [int(any(w in f"{s} {t}".lower() for w in DEFECT_WORDS))
+                     for s, t in zip(pul.smell, pul.taste)]
+    alt_n = alt.sum(axis=1)
+    r["kappa_bin_alt"] = _f(fleiss_kappa(np.column_stack([N_LABS - alt_n, alt_n])), 2)
+    r["alt_majority_same"] = "nie zmienił" if ((alt_n > N_LABS / 2) == (lab_majority == 1)).all() \
+        else "zmienił"
+
+    # wrażliwość: kodowanie wyłącznie opisów smaku (zapach tylko przy braku kwalifikatora)
+    taste_only = rated.assign(s=rated.taste_code.fillna(rated.smell_code).fillna(rated.score))
+    t_flags = (taste_only.pivot(index="P", columns="lab", values="s")
+               .loc[SAMPLES, RATED_LABS] == 0).sum(axis=1)
+    r["taste_only_same"] = "ten sam" if ((t_flags > N_LABS / 2) == (lab_majority == 1)).all() \
+        else "inny"
+
+    # --- panel jako całość wobec laboratoriów ---
+    r["panel_T"] = ", ".join(panel.index[panel.verdict == "T"]) or "żadnej"
+    r["n_panel_N"] = int((panel.verdict == "N").sum())
+    for p in flagged:
+        nd = n_to_decide(panel.loc[p, "typ"])
+        r[f"n_decide_{p}"] = f"{nd:,}".replace(",", "\\,") if nd else "--"
+
+    # --- ranking (n = 7 próbek) ---
+    no_flag = N_LABS - n_flags
+    rho, p_rho = stats.spearmanr(panel["typ"], no_flag)
     r["rho_panel_lab"], r["p_rho_panel_lab"] = _f(rho, 2), _p(p_rho)
-    rho_o, p_rho_o = stats.spearmanr(panel["overall"], lab_mean)
+    rho_o, p_rho_o = stats.spearmanr(panel["overall"], no_flag)
     r["rho_overall_lab"], r["p_rho_overall_lab"] = _f(rho_o, 2), _p(p_rho_o)
     wo3 = [p for p in SAMPLES if p != "P3"]
-    rho3, p_rho3 = stats.spearmanr(panel.loc[wo3, "typ"], lab_mean[wo3])
+    rho3, p_rho3 = stats.spearmanr(panel.loc[wo3, "typ"], no_flag[wo3])
     r["rho_panel_lab_wo3"], r["p_rho_panel_lab_wo3"] = _f(rho3, 2), _p(p_rho3)
-    r["agree_panel_lab"] = int((panel_majority == lab_majority).sum())
+    rho_m, p_rho_m = stats.spearmanr(panel["typ"], score.mean(axis=1))
+    r["rho_meancode"], r["p_rho_meancode"] = _f(rho_m, 2), _p(p_rho_m)
 
-    # zdolność pojedynczej oceny panelu do odtworzenia werdyktu laboratoriów
-    from analiza import auc
-    dt = d.dropna(subset=["is_typical"])
-    y_lab = dt["P"].map(lab_majority)
-    atyp = 1 - dt["is_typical"].astype(float)
-    r["auc_lab"] = _f(auc(atyp.to_numpy(), y_lab.to_numpy()))
+    # --- zgodność par oceniających ---
+    wide = d.pivot_table(index="id", columns="P", values="is_typical").dropna()
+    pa = pair_agreement(1 - flag, wide[SAMPLES])
+    for k, (po, kap) in pa.items():
+        r[f"agree_{k}"], r[f"kappa_{k}"] = _pct(po), _f(kap, 2)
+
+    # --- pojedyncza ocena panelisty (AUC z bootstrapem po respondentach) ---
+    dt = d.dropna(subset=["is_typical"]).reset_index(drop=True)
+    y_lab = dt["P"].map(lab_majority).to_numpy()
+    atyp = 1 - dt["is_typical"].astype(float).to_numpy()
+    r["auc_lab"] = _f(auc(atyp, y_lab))
+    rng = np.random.default_rng(2026)
+    groups = [idx.to_numpy() for _, idx in dt.groupby("id").groups.items()]
+    boot = []
+    for _ in range(2000):
+        idx = np.concatenate([groups[i] for i in rng.integers(0, len(groups), len(groups))])
+        boot.append(auc(atyp[idx], y_lab[idx]))
+    lo, hi = np.percentile(boot, [2.5, 97.5])
+    r["auc_lab_lo"], r["auc_lab_hi"] = _f(lo), _f(hi)
     r["fp_lab_pct"] = _pct(atyp[y_lab == 0].mean())       # „nietypowy”, choć laby bez zastrzeżeń
     r["fn_lab_pct"] = _pct(1 - atyp[y_lab == 1].mean())   # „typowy”, choć laby kwestionują
 
-    # Cochran Q: czy panel różnicuje próbki (wszystkie / bez P3)
-    wide = d.pivot_table(index="id", columns="P", values="is_typical").dropna()
+    # --- Cochran Q: czy panel różnicuje próbki (wszystkie / bez P3) ---
     q7, pq7, df7 = cochran_q(wide[SAMPLES].to_numpy())
     q6, pq6, df6 = cochran_q(wide[wo3].to_numpy())
     r["n_complete_typ"] = len(wide)
     r.update(q_all=_f(q7, 2), p_q_all=_p(pq7), df_q_all=df7,
              q_rest=_f(q6, 2), p_q_rest=_p(pq6), df_q_rest=df6)
-    # Friedman dla ogólnej akceptacji (skala 1–5)
     wide_o = d.pivot_table(index="id", columns="P", values="overall_rate").dropna()
     r["n_complete_overall"] = len(wide_o)
     fr = stats.friedmanchisquare(*[wide_o[p] for p in SAMPLES])
@@ -222,16 +321,11 @@ def compute_lab_comparison(df: pd.DataFrame, out_dir: str = "..") -> dict:
     r.update(fr_all=_f(fr.statistic, 2), p_fr_all=_p(fr.pvalue),
              fr_rest=_f(fr6.statistic, 2), p_fr_rest=_p(fr6.pvalue))
 
-    # kontrast: próbki jednogłośnie zakwestionowane przez laboratoria vs bez zastrzeżeń
-    flagged = [p for p in SAMPLES if n_flags[p] == 3]
-    clean = [p for p in SAMPLES if n_flags[p] == 0]
-    clean_wo = [p for p in clean if p != "P3"]
+    # --- kontrast: próbki zakwestionowane przez większość vs pozostałe ---
     c = paired_contrast(wide, clean, flagged)
     c2 = paired_contrast(wide, clean_wo, flagged)
     co = paired_contrast(wide_o, clean, flagged)
     r.update(
-        lab_flagged=", ".join(flagged), lab_clean=", ".join(clean),
-        lab_clean_wo=", ".join(clean_wo),
         typ_flagged=_f(d[d.P.isin(flagged)]["is_typical"].mean()),
         typ_clean=_f(d[d.P.isin(clean)]["is_typical"].mean()),
         diff_flag=_f(c["mean"]), diff_flag_lo=_f(c["lo"]), diff_flag_hi=_f(c["hi"]),
@@ -245,6 +339,7 @@ def compute_lab_comparison(df: pd.DataFrame, out_dir: str = "..") -> dict:
         r[f"typ_{p}"] = _f(panel.loc[p, "typ"])
         r[f"sweet3_{p}"] = _pct(panel.loc[p, "sweet3"])
         r[f"pbin_{p}"] = _p(panel.loc[p, "p_binom"])
+        r[f"hi_{p}"] = _f(panel.loc[p, "hi"], 2)
     r["n_sig_binom"] = int((panel["p_binom"] < 0.05).sum())
 
     # --- tabela: profil sensoryczny w panelu ---
@@ -262,9 +357,9 @@ def compute_lab_comparison(df: pd.DataFrame, out_dir: str = "..") -> dict:
     r["panel_lab_rows"] = "\n".join(
         f"{p} & {int(panel.loc[p, 'n'])} & {_f(panel.loc[p, 'typ'])} & "
         f"{_f(panel.loc[p, 'lo'], 2)}--{_f(panel.loc[p, 'hi'], 2)} & "
-        f"{_pt(panel.loc[p, 'p_binom'])} & "
+        f"{_pt(panel.loc[p, 'p_binom'])} & {panel.loc[p, 'verdict']} & "
         + " & ".join(sym(score.loc[p, lab]) for lab in RATED_LABS)
-        + f" & {n_flags[p]}/3 \\\\"
+        + f" & {n_flags[p]}/{N_LABS} \\\\"
         for p in SAMPLES)
 
     save_panel_lab_figure(panel, n_flags, out_dir)
@@ -296,11 +391,11 @@ def save_panel_lab_figure(panel: pd.DataFrame, n_flags: pd.Series,
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.4))
     x = np.arange(len(SAMPLES))
     for i, p in enumerate(SAMPLES):
-        clr = FLAG_CLR[n_flags[p]]
+        clr = flag_color(n_flags[p])
         y, lo, hi = panel.loc[p, ["typ", "lo", "hi"]]
         ax1.errorbar(i, y, yerr=[[y - lo], [hi - y]], fmt="o", color=clr,
                      ms=8, capsize=4, lw=1.4)
-        ax1.text(i, 0.05, f"{n_flags[p]}/3", ha="center", va="center",
+        ax1.text(i, 0.05, f"{n_flags[p]}/{N_LABS}", ha="center", va="center",
                  fontsize=9.5, fontweight="bold", color=clr)
         ax2.bar(i, panel.loc[p, "overall"], color=clr, width=0.6)
         ax2.text(i, panel.loc[p, "overall"] + 0.06, f"{panel.loc[p, 'overall']:.2f}".replace(".", ","),
@@ -316,16 +411,19 @@ def save_panel_lab_figure(panel: pd.DataFrame, n_flags: pd.Series,
             ylabel="Średnia ocena (1–5)")
     ax2.set_xticklabels(labels, fontsize=10)
     fig.tight_layout(rect=(0, 0.08, 1, 1))
-    present = sorted({0 if v == 0 else (1 if v == 1 else 3) for v in n_flags})
-    fig.legend(handles=[Line2D([], [], marker="o", ls="", color=FLAG_CLR[k],
-                               label=FLAG_LABEL[k]) for k in present],
+    legend = {CLR_NONE: "bez zastrzeżeń laboratoriów",
+              CLR_MINOR: "zastrzeżenie mniejszości laboratoriów",
+              CLR_MAJOR: "zastrzeżenie większości laboratoriów"}
+    present = [c for c in legend if c in {flag_color(v) for v in n_flags}]
+    fig.legend(handles=[Line2D([], [], marker="o", ls="", color=c, label=legend[c])
+                        for c in present],
                loc="lower center", ncol=len(present), frameon=False, fontsize=9)
     _save(fig, out_dir, "fig_panel_lab")
 
 
 def save_contrast_figure(wide: pd.DataFrame, clean: list[str], flagged: list[str],
                          out_dir: str = "..") -> None:
-    """Średnia typowość per respondent: próbki bez zastrzeżeń vs zakwestionowane."""
+    """Średnia typowość per respondent: próbki zakwestionowane przez większość vs pozostałe."""
     _style()
     xs, ys = wide[flagged].mean(axis=1), wide[clean].mean(axis=1)
     pts = pd.DataFrame({"x": xs.round(3), "y": ys.round(3)}).value_counts().reset_index(name="n")
@@ -334,7 +432,7 @@ def save_contrast_figure(wide: pd.DataFrame, clean: list[str], flagged: list[str
     ax.plot([0, 1], [0, 1], ls="--", color="grey", lw=0.8)
     ax.set(xlim=(-0.05, 1.05), ylim=(-0.05, 1.05), aspect="equal",
            xlabel=f"Typowość próbek zakwestionowanych ({', '.join(flagged)})",
-           ylabel=f"Typowość próbek bez zastrzeżeń ({', '.join(clean)})")
+           ylabel=f"Typowość pozostałych próbek ({', '.join(clean)})")
     for n in (1, 5, 10):
         ax.scatter([], [], s=n * 28, color="#2874A6", alpha=0.6, label=f"n = {n}")
     ax.legend(frameon=False, fontsize=8, loc="lower right", title="respondenci",

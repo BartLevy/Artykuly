@@ -1,0 +1,18 @@
+Cecha;Wartość
+Odpowiedzi;60\,962
+Pracownicy;187
+Pytania;164
+Okres obserwacji;2023-04-24 -- 2026-06-08
+Sekwencje pracownik--pytanie;15\,783
+Zaobserwowane opcje odpowiedzi na pytanie, mediana (zakres);3 (2--5)
+\midrule Odpowiedzi na pracownika, mediana [IQR];{218 [67; 592]}
+Pytania na pracownika, mediana [IQR];{90 [26; 139]}
+Dni aktywności na pracownika, mediana [IQR];{84 [28; 220]}
+Odpowiedzi na dzień aktywności, mediana [IQR];{3 [2; 4]}
+Odpowiedzi w dni robocze (\%);100{,}0
+Miesiące między pierwszą a ostatnią odpowiedzią, mediana [IQR];{18 [5; 30]}
+\midrule Próby w sekwencji, mediana [IQR] (maks.);{3 [2; 5] (19)}
+Sekwencje z $\geq$2 / $\geq$3 próbami (\%);78{,}6 / 60{,}6
+Dni między próbami, mediana [IQR];{36 [18; 90]}
+\midrule Odpowiedzi poprawne, ogółem (\%);86{,}5
+Odpowiedzi poprawne, pierwsze próby (\%);82{,}5

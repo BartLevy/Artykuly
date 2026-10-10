@@ -7,6 +7,8 @@ Oprócz tabel roboczych (CSV) i raportu tekstowego skrypt tworzy katalog
   tabele/*.csv    zawartość tabel (separator ';', komórki w składni LaTeX) wczytywana przez \\tabelacsv,
   rysunki/*.pdf   wykresy (oraz PNG 300 dpi),
   dane/*.csv      surowe dane źródłowe tabel i wykresów (materiał uzupełniający).
+Opcja --osoby (domyślnie people.csv) dodaje analizę demograficzną (płeć, wiek w przedziałach 10-letnich)
+pracowników objętych analizą; osoby łączone przez MD5 imie.nazwisko = user_symbol, bez zapisu nazwisk.
 Tekst artykułu (main.tex, sekcja-*.tex, references.bib) jest edytowany ręcznie i skrypt go nie zmienia;
 podpisy i uwagi do tabel znajdują się w plikach sekcji.
 
@@ -17,6 +19,7 @@ Uruchomienie: python analiza_odpowiedzi_naukowa.py data.csv --wyniki wyniki_nauk
 """
 
 import argparse
+import hashlib
 import warnings
 from pathlib import Path
 
@@ -360,6 +363,48 @@ def analiza_pozycji(x, min_n, alfa):
     return out
 
 
+# ------------------------------------------------------------ demografia (people.csv)
+
+PLCI = {"k": "kobieta", "m": "mężczyzna"}
+BRAK = "brak danych"
+
+
+def demografia(x, plik):
+    """Wiek i płeć pracowników objętych analizą (jeden wiersz na osobę z logu).
+
+    people.csv (separator ';'): Odpowiadajacy = imie.nazwisko, wiek, Plec (k/m). Osoby są łączone z logiem
+    przez MD5 identyfikatora imie.nazwisko (= user_symbol); imiona i nazwiska nie trafiają do wyników.
+    """
+    p = pd.read_csv(plik, sep=";", dtype=str, keep_default_na=False, encoding="utf-8-sig")
+    brak = {"Odpowiadajacy", "wiek", "Plec"} - set(p.columns)
+    if brak:
+        raise ValueError(f"{plik}: brak kolumn {sorted(brak)}")
+    p["user_symbol"] = p["Odpowiadajacy"].str.strip().map(lambda s: hashlib.md5(s.encode("utf-8")).hexdigest())
+    p["wiek"] = pd.to_numeric(p["wiek"], errors="coerce")
+    p["plec"] = p["Plec"].str.strip().str.lower().map(PLCI)
+    osoby = p.groupby("user_symbol").agg(wiek=("wiek", "first"), plec=("plec", "first"))  # first pomija braki
+    o = pd.DataFrame(index=pd.Index(x["user_symbol"].unique(), name="user_symbol")).join(osoby)
+    o["dopasowana"] = o.index.isin(osoby.index)
+    o["plec"] = o["plec"].fillna(BRAK)
+    o["dekada"] = (o["wiek"] // 10 * 10).astype("Int64")
+    return o
+
+
+def podsumuj_demografie(o):
+    """Liczebności: osoby, płeć, wiek (mediana, IQR, zakres) i przedziały 10-letnie z podziałem na płeć."""
+    w = o["wiek"].dropna()
+    znana = o["plec"] != BRAK
+    wiek_plec = pd.crosstab(o["dekada"], o["plec"]).reindex(columns=["kobieta", "mężczyzna", BRAK], fill_value=0)
+    wiek_plec = wiek_plec.loc[:, (wiek_plec.sum() > 0) | (wiek_plec.columns != BRAK)]
+    return {"osoby": len(o), "dopasowane": int(o["dopasowana"].sum()),
+            "kobiety": int((o["plec"] == "kobieta").sum()), "mezczyzni": int((o["plec"] == "mężczyzna").sum()),
+            "plec_znana": int(znana.sum()), "plec_brak": int((~znana).sum()),
+            "wiek_n": len(w), "wiek_brak": int(o["wiek"].isna().sum()),
+            "wiek_med": w.median(), "wiek_q1": w.quantile(.25), "wiek_q3": w.quantile(.75),
+            "wiek_min": w.min(), "wiek_max": w.max(), "wiek_sr": w.mean(), "wiek_sd": w.std(),
+            "wiek_plec": wiek_plec}
+
+
 # ------------------------------------------------------------ formatowanie (polska notacja, składnia LaTeX)
 
 PRZECINEK = "{,}"  # przecinek dziesiętny poprawny zarówno w trybie tekstowym, jak i matematycznym
@@ -560,6 +605,26 @@ def wykres_wrazliwosc(plt, katalog, wraz):
     zapisz(fig, katalog, "rys_wrazliwosc")
 
 
+def wykres_demografia(plt, katalog, d):
+    t = d["wiek_plec"]
+    fig, ax = plt.subplots(figsize=(3.5, 2.4))
+    xs, dol = np.arange(len(t)), np.zeros(len(t))
+    for kol, kolor, et in (("kobieta", KOLOR_1, "Kobiety"), ("mężczyzna", KOLOR_2, "Mężczyźni"),
+                           (BRAK, SZARY, "Brak danych o płci")):
+        if kol in t.columns:
+            ax.bar(xs, t[kol], bottom=dol, color=kolor, width=0.7, label=et, edgecolor="white", linewidth=0.5)
+            dol += t[kol].to_numpy()
+    for xi, n in zip(xs, dol):
+        ax.text(xi, n, f"{int(n)}", ha="center", va="bottom", fontsize=7, color="#52514e")
+    ax.set_xticks(xs)
+    ax.set_xticklabels([f"{d}–{d + 9}" for d in t.index])
+    ax.set_ylim(0, dol.max() * 1.15)
+    ax.set_xlabel("Wiek (lata)")
+    ax.set_ylabel("Pracownicy")
+    ax.legend(loc="upper left")
+    zapisz(fig, katalog, "rys_demografia")
+
+
 def wykres_aktywnosc(plt, katalog, x):
     import matplotlib.dates as mdates
     mies = x.groupby(x["create_time"].dt.to_period("M")).agg(n=("id", "size"), osoby=("user_symbol", "nunique"))
@@ -577,7 +642,7 @@ def wykres_aktywnosc(plt, katalog, x):
 
 # ------------------------------------------------------------ artykuł: definicje, tabele (CSV), rysunki
 
-def materialy_artykulu(x, rejected, pairs, users, katalog, args):
+def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
     rng = np.random.default_rng(args.seed)
     tdir, fdir, ddir = katalog / "tabele", katalog / "rysunki", katalog / "dane"
     for d in (tdir, fdir, ddir):
@@ -631,9 +696,8 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args):
         ("Pytania na pracownika, mediana [IQR]", med_iqr(per_user["q"])),
         ("Dni aktywności na pracownika, mediana [IQR]", med_iqr(per_user["dni"])),
         ("Odpowiedzi na dzień aktywności, mediana [IQR]", med_iqr(dzienne)),
-        ("Odpowiedzi w dni robocze (\\%)", f_pct(wd)),
         ("Miesiące między pierwszą a ostatnią odpowiedzią, mediana [IQR]", med_iqr(staz_mies)),
-        ("Pracownicy aktywni w ostatnich 90 dniach danych (\\%)", M["ActiveLastQuarterPct"]),
+        #("Pracownicy aktywni w ostatnich 90 dniach danych (\\%)", M["ActiveLastQuarterPct"]),
         (SEP, ""),
         ("Próby w sekwencji, mediana [IQR] (maks.)", f"{med_iqr(sek)} ({f_int(sek.max())})"),
         ("Sekwencje z $\\geq$2 / $\\geq$3 próbami (\\%)", f"{M['SeqRepeatedPct']} / {M['SeqMinThreePct']}"),
@@ -695,7 +759,7 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args):
     t4.append(["Odpowiedzi"] + [f_int(info[m]["n"]) for m in ("M1", "M2", "M3")])
     t4.append(["Pracownicy / pytania"] + [f"{f_int(info[m]['osoby'])} / {f_int(info[m]['pytania'])}"
                                           for m in ("M1", "M2", "M3")])
-    tabela_csv(tdir, "regresja", pd.DataFrame(t4, columns=["Predyktor", "Model 1", "Model 2", "Model 3"]))
+    tabela_csv(tdir, "regresja", pd.DataFrame(t4, columns=["Predyktor", "M1 (uczenie)", "M2 (retencja)", "M3 (nowe pytania)"]))
     pd.concat([w.assign(model=m) for m, w in wyniki.items()]).to_csv(ddir / "regresja.csv", index=False)
     for m, pref in (("M1", "MOne"), ("M2", "MTwo"), ("M3", "MThree")):
         for _, r in wyniki[m].iterrows():
@@ -833,6 +897,42 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args):
              ItemsLowDisc=f_int((dk < .2).sum()), ItemsEasy=f_int((pp > .9).sum()),
              ItemsHard=f_int((pp < .5).sum()), TopItems=f"{args.top_pozycje}")
 
+    # --- Tabela i wykres: demografia pracowników objętych analizą (people.csv)
+    if demo is not None:
+        d = demo
+        t = d["wiek_plec"]
+        t11 = [
+            ("Pracownicy objęci analizą", f_int(d["osoby"])),
+            ("w tym z danymi demograficznymi, $n$ (\\%)", f"{f_int(d['dopasowane'])} ({f_pct(d['dopasowane'] / d['osoby'])})"),
+            (SEP, ""),
+            ("Kobiety, $n$ (\\%)", f"{f_int(d['kobiety'])} ({f_pct(d['kobiety'] / d['plec_znana'])})"),
+            ("Mężczyźni, $n$ (\\%)", f"{f_int(d['mezczyzni'])} ({f_pct(d['mezczyzni'] / d['plec_znana'])})"),
+            ("Brak danych o płci, $n$", f_int(d["plec_brak"])),
+            (SEP, ""),
+            ("Wiek (lata), mediana [IQR]",
+             f"{f_num(d['wiek_med'], 0)} {f_ci(d['wiek_q1'], d['wiek_q3'], 0, 1)}"),
+            ("Wiek (lata), średnia (SD)", f"{f_num(d['wiek_sr'], 1)} ({f_num(d['wiek_sd'], 1)})"),
+            ("Wiek (lata), zakres", f"{f_num(d['wiek_min'], 0)}--{f_num(d['wiek_max'], 0)}"),
+        ]
+        wiersze_wieku = [(f"{dek}--{dek + 9} lat, $n$ (\\%)", f"{f_int(n)} ({f_pct(n / d['wiek_n'])})")
+                         for dek, n in t.sum(axis=1).items()]
+        t11 += [(SEP, "")] + wiersze_wieku + [("Brak danych o wieku, $n$", f_int(d["wiek_brak"]))]
+        tabela_csv(tdir, "demografia", pd.DataFrame(t11, columns=["Cecha", "Wartość"]))
+        t.rename(index=lambda dek: f"{dek}-{dek + 9}").rename_axis("przedzial_wieku").reset_index() \
+            .to_csv(ddir / "demografia_wiek_plec.csv", index=False)
+        M.update(DemoN=f_int(d["osoby"]), DemoMatched=f_int(d["dopasowane"]),
+                 DemoMatchedPct=f_pct(d["dopasowane"] / d["osoby"]), DemoUnmatched=f_int(d["osoby"] - d["dopasowane"]),
+                 DemoWomen=f_int(d["kobiety"]), DemoWomenPct=f_pct(d["kobiety"] / d["plec_znana"]),
+                 DemoMen=f_int(d["mezczyzni"]), DemoMenPct=f_pct(d["mezczyzni"] / d["plec_znana"]),
+                 DemoSexMissing=f_int(d["plec_brak"]), DemoAgeN=f_int(d["wiek_n"]),
+                 DemoAgeMissing=f_int(d["wiek_brak"]), AgeMedian=f_num(d["wiek_med"], 0),
+                 AgeQOne=f_num(d["wiek_q1"], 0), AgeQThree=f_num(d["wiek_q3"], 0),
+                 AgeMin=f_num(d["wiek_min"], 0), AgeMax=f_num(d["wiek_max"], 0),
+                 AgeMean=f_num(d["wiek_sr"], 1), AgeSD=f_num(d["wiek_sd"], 1))
+        modalna = t.sum(axis=1).idxmax()
+        M.update(AgeModalGroup=f"{modalna}--{modalna + 9}",
+                 AgeModalGroupPct=f_pct(t.sum(axis=1).max() / d["wiek_n"]))
+
     # --- wykresy
     plt = styl_wykresow()
     wykres_krzywa(plt, fdir, krzywa, fit, MX, K)
@@ -841,6 +941,8 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args):
     wykres_pozycje(plt, fdir, poz, args.alfa)
     wykres_aktywnosc(plt, fdir, x)
     wykres_wrazliwosc(plt, fdir, wraz)
+    if demo is not None:
+        wykres_demografia(plt, fdir, demo)
     plt.close("all")
 
     # --- definicje.tex: stałe liczbowe + polecenia pomocnicze
@@ -879,7 +981,7 @@ DEFINICJE_NAGLOWEK = r"""% Wygenerowano automatycznie przez analiza_odpowiedzi_n
 
 # ------------------------------------------------------------ raport tekstowy
 
-def raport(df, rejected, bins, trends, pairs, users, katalog, threshold, art=None, wykluczenie=""):
+def raport(df, rejected, bins, trends, pairs, users, katalog, threshold, art=None, wykluczenie="", demo=None):
     n = len(df)
     lines = ["RAPORT: ODPOWIEDZI I UCZENIE SIĘ (ANALIZA EKSPLORACYJNA)", "",
              f"Rekordy prawidłowe: {n}; odrzucone: {len(rejected)}", wykluczenie,
@@ -942,6 +1044,20 @@ def raport(df, rejected, bins, trends, pairs, users, katalog, threshold, art=Non
                   f"{M['WilcoxonP']}; r_rb {M['RankBiserial']}.",
                   f"Pytania: poprawa {M['ItemsImproving']} / pogorszenie {M['ItemsWorsening']} z "
                   f"{M['ItemsTestable']} (FDR); niska dyskryminacja (r<0.20): {M['ItemsLowDisc']}."]]
+    if demo is not None:
+        d = demo
+        lines += ["", "DEMOGRAFIA PRACOWNIKÓW OBJĘTYCH ANALIZĄ (people.csv, łączenie przez MD5 imie.nazwisko)",
+                  f"Osoby w analizie: {d['osoby']}; z danymi demograficznymi: {d['dopasowane']} "
+                  f"({100 * d['dopasowane'] / d['osoby']:.1f}%); bez dopasowania: {d['osoby'] - d['dopasowane']}.",
+                  f"Płeć: kobiety {d['kobiety']} ({100 * d['kobiety'] / d['plec_znana']:.1f}%), mężczyźni "
+                  f"{d['mezczyzni']} ({100 * d['mezczyzni'] / d['plec_znana']:.1f}%), brak danych {d['plec_brak']}.",
+                  f"Wiek: mediana {d['wiek_med']:.0f} [IQR {d['wiek_q1']:.0f}–{d['wiek_q3']:.0f}], średnia "
+                  f"{d['wiek_sr']:.1f} (SD {d['wiek_sd']:.1f}), zakres {d['wiek_min']:.0f}–{d['wiek_max']:.0f}; "
+                  f"brak danych {d['wiek_brak']}.",
+                  "Przedziały wieku (kobiety / mężczyźni" + (" / brak danych o płci" if BRAK in d["wiek_plec"] else "")
+                  + " / razem):"]
+        for dek, r in d["wiek_plec"].iterrows():
+            lines.append(f"  {dek}–{dek + 9} lat: " + " / ".join(str(int(v)) for v in r.values) + f" / {int(r.sum())}")
     lines += ["", "OGRANICZENIA I DEFINICJE",
               "10 części ma podobną liczbę odpowiedzi w każdym pytaniu; nie są to równe okresy kalendarzowe.",
               "Za poprawę osoby uznano wzrost odsetka poprawnych między próbą 1 i 3 w jej własnych pytaniach min3.",
@@ -955,6 +1071,7 @@ def raport(df, rejected, bins, trends, pairs, users, katalog, threshold, art=Non
     text = "\n".join(lines) + "\n"
     (katalog / "raport.txt").write_text(text, encoding="utf-8")
     print(text)
+
 
 
 def main():
@@ -976,6 +1093,9 @@ def main():
     parser.add_argument("--top-pozycje", type=int, default=10, help="Liczba najtrudniejszych pytań w tabeli")
     parser.add_argument("--alfa", type=float, default=0.05, help="Próg FDR")
     parser.add_argument("--bez-artykulu", action="store_true", help="Tylko tabele robocze i raport")
+    parser.add_argument("--osoby", default="people.csv",
+                        help="Plik z wiekiem i płcią (Odpowiadajacy=imie.nazwisko;wiek;Plec), łączony z logiem "
+                             "przez MD5 imie.nazwisko; pusty napis = bez analizy demograficznej")
     args = parser.parse_args()
     if args.minimum < 10:
         parser.error("--minimum musi wynosić co najmniej 10")
@@ -1016,12 +1136,19 @@ def main():
     }
     for name, table in tables.items():
         table.to_csv(out / name, index=False, encoding="utf-8-sig")
+    demo = None
+    if args.osoby:
+        if Path(args.osoby).exists():
+            demo = podsumuj_demografie(demografia(data, args.osoby))
+        else:
+            print(f"UWAGA: brak pliku {args.osoby} -- pomijam analizę demograficzną "
+                  "(artykuł odwołuje się do tabeli demografia i rys_demografia)")
     art = None
     if not args.bez_artykulu and not pairs.empty:
-        art = materialy_artykulu(data, rejected, pairs, users, out / "artykul", args)
+        art = materialy_artykulu(data, rejected, pairs, users, out / "artykul", args, demo)
     raport(data, rejected, bins, trends, pairs, users, out, args.minimum, art,
            f"Wykluczone pokoje: {', '.join(args.wyklucz_pokoje) or 'brak'} ({args.wykluczone_n} rekordów); "
-           f"wykluczone pytania z jedną odpowiedzią: {args.wykluczone_pytania} ({args.wykluczone_pytania_n} rekordów)")
+           f"wykluczone pytania z jedną odpowiedzią: {args.wykluczone_pytania} ({args.wykluczone_pytania_n} rekordów)", demo)
     print(f"Pliki zapisano w: {out.resolve()}")
 
 
