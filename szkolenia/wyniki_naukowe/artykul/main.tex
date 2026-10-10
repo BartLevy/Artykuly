@@ -1,41 +1,88 @@
-% Dokument do podglądu szkicu: pdflatex main && bibtex main && pdflatex main && pdflatex main
+% Kompilacja: pdflatex main && bibtex main && pdflatex main && pdflatex main
+% Dane liczbowe (definicje.tex), tabele (tabele/*.csv) i rysunki (rysunki/) generuje
+% analiza_odpowiedzi_naukowa.py; tekst (main.tex, sekcja-*.tex) jest edytowany ręcznie.
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{booktabs,graphicx,xcolor,amsmath}
 \usepackage[hidelinks]{hyperref}
 \usepackage{doi}
-% BIBLIOGRAPHY:
+% BIBLIOGRAFIA:
 \usepackage[numbers,sort&compress]{natbib}
-\bibliographystyle{plainnat}  
+\bibliographystyle{plainnat}
 
 \extrafloats{100}
 \newcommand{\fillin}[1]{\textcolor{red}{[#1]}}
-\input{macros.tex}
+\input{definicje.tex}
 
-% Optimization of Stimulus Sets in Auditory Perception Tests via Vector-Based Signal Similarity Analysis
 \usepackage{authblk}
+\renewcommand\Authand{ i }\renewcommand\Authands{ i }
 \author[1,*]{Bartosz Lewandowski \small{(ORCID:0009-0004-1158-0693)}}
-\author[2]{Ewaryst Tkacz \small{(ORCID:0000-0003-2580-7954)}}
-\author[3]{Monika Szerszeń \small{(ORCID:0000-0000-0000-0000)}}
-\author[4]{Maciej J. Wróbel \small{(ORCID:0000-0003-1865-2122)}}
+\author[2]{Monika Szerszeń \small{(ORCID: 0009-0009-6625-3979)}}
+\author[3]{Magdalena Dowgalec \small{(ORCID:0009-0005-4469-2832)}}
+\author[4]{Ewaryst Tkacz \small{(ORCID:0000-0003-2580-7954)}}
+\author[5]{Maciej J. Wróbel \small{(ORCID:0000-0003-1865-2122)}}
 
-
-\affil[1,2]{Department of Clinical Engineering, Academy of Silesia in Katowice}
+\affil[1,4]{Department of Clinical Engineering, Academy of Silesia in Katowice}
 \affil[3]{Powiślański Bank Spółdzieczy w Kwidzynie}
-\affil[4]{Department of Otolaryngology and Oncological Laryngology Collegium Medicum NCU}
+\affil[4]{Atende SA}
+\affil[5]{Department of Otolaryngology and Oncological Laryngology Collegium Medicum NCU}
 
-% Corresponding author - footnote definition
-\affil[*]{Corresponding author: Bartosz Lewandowski, Ph.D., bartosz.lewandowski@akademiaslaska.pl}     
+% Autor korespondencyjny
+\affil[*]{Autor korespondencyjny: dr Bartosz Lewandowski, bartosz.lewandowski@akademiaslaska.pl}
 
-\title{\fillin{Title, e.g.\ Spaced retrieval practice in workplace training:
-evidence from three years of quiz logs}}
+\title{Przyrost wiedzy bez transferu: skuteczność mikrouczenia z powtórkami rozłożonymi
+w czasie w szkoleniach pracowniczych}
+
+\newcommand{\Women}{xx}
+
 
 \date{}
 \begin{document}
 \maketitle
-\input{draft.tex}
+\Women{}
+
+\begin{abstract}
+\noindent\textbf{Wprowadzenie.} Przypominanie rozłożone w czasie poprawia zapamiętywanie w warunkach
+laboratoryjnych i edukacyjnych, jednak dowodów z wieloletnich programów szkoleń w miejscu pracy jest
+niewiele.
+\textbf{Metody.} Przeanalizowano \NResponses{} odpowiedzi udzielonych przez \NEmployees{} pracowników
+na \NItems{} pytań wielokrotnego wyboru w \NModules{} modułach programu mikrouczenia opartego na
+quizach (od \DateStart{} do \DateEnd). Każde pytanie było ponownie zadawane temu samemu pracownikowi
+w stałym, nieadaptacyjnym odstępie (mediana \GapMedian{} dni). Poprawność odpowiedzi modelowano
+regresją logistyczną z efektami stałymi pracownika i pytania; oszacowania opisowe podano
+z przedziałami ufności z bootstrapu klastrowego.
+\textbf{Wyniki.} Odsetek poprawnych odpowiedzi wzrósł z \AccAttOne\% w pierwszej próbie do
+\AccAttMax\% w próbie \AttMax{}. i kolejnych. Każde podwojenie liczby prób zwiększało szanse
+poprawnej odpowiedzi \ORMOneAttempt-krotnie (95\% PU \ORMOneAttemptCI; zakres w dziesięciu
+specyfikacjach analiz wrażliwości \ORRange). Dłuższy odstęp od poprzedniej próby wiązał się z niższą
+poprawnością (OR \ORMTwoGap{} na podwojenie odstępu). Powtarzane błędy koncentrowały się na tym samym
+dystraktorze (\SameDistractorPct\% wobec oczekiwanych \SameDistractorExpectedPop\%). Poprawność
+odpowiedzi na nowo napotkane pytania nie rosła wraz ze stażem (OR \ORMThreeTenure{} na rok). % SPRAWDŹ
+\textbf{Wnioski.} Powtarzanemu przypominaniu w rutynowych szkoleniach pracowniczych towarzyszyła
+systematyczna poprawa specyficzna dla powtarzanych pytań oraz mierzalne zapominanie między powtórkami.
+Adaptacyjny harmonogram powtórek, ukierunkowana informacja zwrotna dotycząca utrwalonych błędnych
+przekonań oraz zmiana słabo funkcjonujących pytań mogłyby zwiększyć skuteczność programu.
+
+\medskip\noindent\textbf{Słowa kluczowe:} powtórki rozłożone w czasie; praktyka przypominania;
+mikrouczenie; szkolenia pracownicze; analityka uczenia się; analiza pytań testowych
+\end{abstract}
+
+\input{sekcja-wstep}
+\input{sekcja-metodologia}
+\input{sekcja-wyniki}
+\input{sekcja-dyskusja}
+
+\section*{Oświadczenia}
+\noindent\textbf{Etyka.} W badaniu wykorzystano w pełni zanonimizowane dane przekazane przez bank;
+nie przetwarzano danych osobowych.
+\fillin{Zgoda komisji bioetycznej lub zwolnienie z obowiązku jej uzyskania, jeśli wymaga tego czasopismo.}\\
+\textbf{Dostępność danych.} \fillin{Dostępność zanonimizowanych danych i kodu analizy.}\\
+\textbf{Finansowanie.} \fillin{Źródła finansowania.}\\
+\textbf{Konflikt interesów.} \fillin{Oświadczenie.}\\
+\textbf{Wykorzystanie narzędzi AI.} \fillin{Oświadczenie o użyciu generatywnej AI, jeśli wymaga tego czasopismo.}
 
 \bibliography{references}
 \end{document}

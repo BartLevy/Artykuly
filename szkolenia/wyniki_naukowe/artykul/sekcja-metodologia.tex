@@ -1,0 +1,84 @@
+% =============================================================================
+% Materiał i metody. Plik edytowany ręcznie -- skrypt analiza_odpowiedzi_naukowa.py go NIE nadpisuje.
+% Liczby: definicje.tex; tabele: \TabDir (CSV); rysunki: \FigDir; literatura: references.bib.
+% =============================================================================
+\section{Materiał i metody}
+
+\subsection{Środowisko i program szkoleniowy}
+Program prowadzono w banku. Jego treść stanowiły pytania ogólne pogrupowane w cztery kategorie:
+wymogi regulacyjne, produkty bankowe, umiejętności miękkie oraz moduł dla kadry kierowniczej.
+Każde pytanie było pytaniem wielokrotnego wyboru z trzema do pięciu opcjami odpowiedzi, z których
+dokładnie jedna była poprawna, i zawierało wyjaśnienie poprawnej odpowiedzi. Dedykowana aplikacja
+uruchamiała się automatycznie na ekranach komputerów pracowników i wyświetlała od jednego do trzech
+pytań dziennie w godzinach 10:00--14:00; po każdej odpowiedzi pokazywano poprawną odpowiedź wraz
+z wyjaśnieniem. To samo pytanie mogło zostać ponownie zadane temu samemu pracownikowi nie wcześniej
+niż siedem dni po poprzedniej odpowiedzi, a harmonogram powtórek nie zależał od tego, czy odpowiedź
+była poprawna. Na czas przeglądu i aktualizacji pytań program był zawieszany.
+O udziale w programie decydował Departament Digitalizacji i Procesów banku, który był również autorem
+pytań. Pytania prezentowano w modułach tematycznych (mediana \OptionsMedian{} zaobserwowanych opcji
+odpowiedzi na pytanie). W analizowanych danych pracownicy odpowiadali na medianę \DailyMedian{}
+pytań w dniu aktywności, \WeekdayPct\% odpowiedzi udzielono w dni robocze, a to samo pytanie było
+ponownie zadawane temu samemu pracownikowi po medianie \GapMedian{} dni
+(IQR \GapQOne--\GapQThree).
+
+\subsection{Dane}
+Log platformy zawierał dla każdej odpowiedzi: identyfikator rekordu, moduł, pytanie, wybraną opcję,
+zanonimizowany kod pracownika, znacznik czasu oraz poprawność odpowiedzi. Usunięto rekordy z
+brakującymi lub nieprawidłowymi wartościami (\NRejected{} rekordów). Wykluczono moduł(y) testowe
+(\ExcludedModules; \NExcluded{} odpowiedzi) oraz \NExcludedItems{} pytania, w których zarejestrowano
+tylko jedną opcję odpowiedzi (\NExcludedItemResp{} odpowiedzi), ponieważ nie niosą one informacji
+o błędach. Zbiór analityczny obejmował \NResponses{} odpowiedzi (tab.~\ref{tab:zbior_danych}).
+Bank przekazał autorom dane w pełni zanonimizowane: pracownicy byli reprezentowani wyłącznie przez
+kody, których nie można było powiązać z ich tożsamością, i nie przekazano żadnych danych osobowych ani
+demograficznych. Ponieważ dane zanonimizowane nie są danymi osobowymi w rozumieniu RODO, nie była
+wymagana dodatkowa podstawa prawna przetwarzania.
+\fillin{Zgoda komisji bioetycznej lub zwolnienie z obowiązku jej uzyskania, jeśli wymaga tego czasopismo.}
+
+\subsection{Definicje}
+\emph{Sekwencja} to uporządkowana chronologicznie seria prób jednego pracownika dotyczących jednego
+pytania; \emph{numer próby} to pozycja odpowiedzi w jej sekwencji (przy jednakowym czasie o kolejności
+decydował identyfikator rekordu). \emph{Poprawność} to odsetek poprawnych odpowiedzi. \emph{Odstęp}
+to czas w dniach od poprzedniej próby w tej samej sekwencji. \emph{Staż} to czas od pierwszej
+odpowiedzi pracownika w programie. Zmianę na poziomie pracownika zdefiniowano jako różnicę odsetka
+poprawnych odpowiedzi między próbą~3 a próbą~1, obliczoną na podstawie własnych sekwencji pracownika
+liczących co najmniej trzy próby.
+
+\subsection{Analiza statystyczna}
+Opisowe odsetki poprawnych odpowiedzi podano z 95-procentowymi przedziałami ufności (PU) z bootstrapu
+klastrowego, w którym losowano pracowników ze zwracaniem (\BootReps{} replikacji); uwzględnia to
+zależność odpowiedzi tej samej osoby. Ponieważ osoby kontynuujące do kolejnych prób mogą różnić się od
+tych, które przestają, zagregowane krzywe uczenia mogą być zniekształcone przez ubywanie obserwacji
+\citep{murray2013,goutte2018}; dlatego krzywe uczenia obliczono dodatkowo dla zbalansowanej kohorty
+sekwencji liczących co najmniej \CohortK{} prób. Zależność odsetka błędów od numeru próby opisano
+funkcją potęgową \citep{newell1981}. Ponieważ harmonogram powtórek nie był adaptacyjny, sprawdzono,
+czy ponowne zadanie pytania zależało od wyniku poprzedniej próby.
+
+Poprawność odpowiedzi modelowano regresją logistyczną z efektami stałymi pracownika i pytania oraz
+błędami standardowymi klastrowanymi względem pracowników, tak aby efekt numeru próby był szacowany
+w obrębie osób i w obrębie pytań. Model~1 zawierał numer próby w skali log$_2$, dzięki czemu iloraz
+szans (OR) odnosi się do podwojenia liczby prób. Model~2, dopasowany do prób powtórnych, uwzględniał
+dodatkowo wynik poprzedniej próby, odstęp od poprzedniej próby (log$_2$ dni) oraz staż -- analogicznie
+do modeli \emph{performance factors analysis} i \emph{half-life regression} stosowanych do logów
+uczących się \citep{pavlik2009,settles2016}. Model~3, dopasowany wyłącznie do pierwszych prób,
+weryfikował, czy poprawność odpowiedzi na nowo napotkane pytania zmieniała się wraz ze stażem (PB4).
+W analizach wrażliwości wykorzystano zbalansowaną kohortę, obcięcie do 10 prób, warstwy według długości
+sekwencji (kontrola obciążenia typu \emph{pattern-mixture}), wykluczenie pracowników o niskiej
+aktywności, korektę o staż, uogólnione równania estymujące (GEE) z wymienną macierzą korelacji
+roboczej \citep{liang1986} oraz model mieszany ze skrzyżowanymi losowymi wyrazami wolnymi pracowników
+i pytań \citep{baayen2008}, na podstawie którego wyznaczono współczynniki korelacji wewnątrzklasowej
+(ICC) w skali latentnej oraz brzegowy i warunkowy współczynnik $R^2$ \citep{nakagawa2013}.
+
+Zestawiono przejścia między kolejnymi próbami. Dla kolejnych błędów porównano odsetek ponownych wyborów
+tego samego dystraktora z odsetkiem oczekiwanym przy losowym wyborze spośród zaobserwowanych
+dystraktorów oraz przy wyborze proporcjonalnym do popularności każdego dystraktora w danym pytaniu.
+Zmianę na poziomie pracowników testowano testem znaków i testem rangowanych znaków Wilcoxona
+(korelacja rangowo-dwuseryjna jako miara wielkości efektu). Pytania opisano wskaźnikami klasycznej
+teorii testu obliczonymi na pierwszych próbach: trudnością (odsetek poprawnych odpowiedzi),
+dyskryminacją (korelacja pytanie--reszta, tj.\ z poprawnością pracownika w pozostałych pytaniach) oraz
+funkcjonowaniem dystraktorów; dystraktory wybierane przez mniej niż 5\% odpowiadających uznano za
+niefunkcjonalne \citep{tarrant2009,gierl2017}. Trendy poprawności w kolejnych próbach dla
+poszczególnych pytań testowano regresją logistyczną z błędami standardowymi klastrowanymi względem
+pracowników, kontrolując odsetek fałszywych odkryć (FDR) na poziomie \Alpha{} \citep{benjamini1995}.
+Analizy wykonano w języku Python \VerPython{} z użyciem bibliotek pandas \VerPandas, NumPy \VerNumpy,
+SciPy \VerScipy, statsmodels \VerStatsmodels{} i Matplotlib \VerMatplotlib{} (ziarno generatora
+liczb losowych \Seed).

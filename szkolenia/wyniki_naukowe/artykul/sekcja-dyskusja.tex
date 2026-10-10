@@ -1,0 +1,55 @@
+% =============================================================================
+% Dyskusja i wnioski. Plik edytowany ręcznie -- skrypt analiza_odpowiedzi_naukowa.py go NIE nadpisuje.
+% Liczby: definicje.tex; literatura: references.bib.
+% =============================================================================
+\section{Dyskusja}
+
+\subsection{Główne wyniki}
+W ciągu trzech lat rutynowego stosowania programu mikrouczenia w miejscu pracy odsetek poprawnych
+odpowiedzi na wielokrotnie prezentowane pytania rósł systematycznie wraz z liczbą przypomnień, zgodnie
+z funkcją potęgową, a efekt był odporny na ubywanie obserwacji, specyfikację modelu i klastrowanie
+danych. Poprawność malała wraz z odstępem od poprzedniego przypomnienia, wcześniejsze błędy były
+w kolejnej próbie korygowane tylko częściowo, a powtarzane błędy w większości odtwarzały ten sam
+dystraktor. Poprawność odpowiedzi na nowe pytania nie rosła wraz ze stażem. % SPRAWDŹ
+
+\subsection{Porównanie z wcześniejszymi badaniami}
+Stopniowy, regularny przyrost przypomina krzywe uczenia obserwowane w wielu zbiorach danych
+edukacyjnych \citep{koedinger2023} i jest zgodny z efektami testowania i rozłożenia w czasie
+\citep{roediger2006,cepeda2006}. Randomizowane badania edukacji rozłożonej w czasie wykazały lepsze
+utrwalenie wiedzy \citep{kerfoot2007mededuc,kerfoot2009}; nasze dane obserwacyjne rozszerzają te
+wyniki na niemedyczne środowisko pracy z długimi odstępami między powtórkami. Ujemny związek między
+odstępem a poprawnością jest zgodny z modelami krzywej zapominania dopasowywanymi do logów uczących się
+\citep{settles2016,tabibian2019}. Podobnie jak w badaniach, w których wielokrotnie wykorzystywano te
+same pytania \citep{donker2022}, poprawy w powtarzanych pytaniach nie da się oddzielić od zapamiętania
+konkretnego pytania i jego odpowiedzi; brak efektu stażu w nowych pytaniach sugeruje ograniczony
+transfer.
+
+\subsection{Implikacje praktyczne}
+Program ponownie prezentował pytania w tym samym odstępie niezależnie od wyniku poprzedniej próby.
+Harmonogramy adaptacyjne, które skracają odstęp po błędach i wydłużają go po poprawnych odpowiedziach,
+efektywniej wykorzystują historię uczącego się \citep{lindsey2014,settles2016,tabibian2019}. Konkretne
+dystraktory utrzymywały się, mimo że po każdej odpowiedzi wyświetlano wyjaśnienie poprawnej odpowiedzi,
+co sugeruje, że ogólne wyjaśnienie nie wystarcza do skorygowania błędnych przekonań; skuteczniejsza może
+być informacja zwrotna odnosząca się do konkretnego wybranego dystraktora. Analiza pytań wskazała
+kandydatów do zmiany: pytania o niskiej dyskryminacji, pytania, na które niemal wszyscy odpowiadali
+poprawnie już w pierwszej próbie (mało miejsca na uczenie się), oraz dystraktory niefunkcjonalne
+\citep{tarrant2009,gierl2017}.
+
+\subsection{Ograniczenia}
+Badanie ma charakter obserwacyjny i nie obejmuje grupy kontrolnej, nie można więc przypisać przyrostu
+wiedzy programowi w sensie przyczynowym; poprawa w powtarzanych pytaniach może częściowo odzwierciedlać
+rozpoznawanie pytania, a nie jego zrozumienie. Udział i aktywność różniły się między pracownikami,
+a wyniki dla sekwencji z wieloma próbami opisują bardziej aktywnych uczestników, choć analizy
+zbalansowanej kohorty i długości sekwencji nie wskazały na obciążenie wynikające z ubywania obserwacji.
+Wysoka poprawność w pierwszych próbach (\AccFirst\%) ogranicza możliwość poprawy (efekt sufitowy).
+Dystraktory, których nigdy nie wybrano, nie są widoczne w logu, więc funkcjonowanie dystraktorów może
+być przeszacowane. Nie dysponowano informacjami o stanowiskach pracowników, ich wcześniejszej wiedzy
+ani danych demograficznych. Znaczniki czasu nie zawierały informacji o strefie czasowej. Model mieszany
+zawierał wyłącznie losowe wyrazy wolne; nie modelowano indywidualnego tempa uczenia się pracowników.
+Dane pochodzą z jednej organizacji. \fillin{Dodaj ograniczenia specyficzne dla kontekstu.}
+
+\section{Wnioski}
+Rutynowemu, powtarzanemu przypominaniu w szkoleniach pracowniczych towarzyszyła systematyczna poprawa
+specyficzna dla powtarzanych pytań oraz zapominanie między powtórkami. Dane z logów takich programów
+mogą służyć do monitorowania uczenia się, oceny pytań i projektowania adaptacyjnych harmonogramów
+powtórek.
