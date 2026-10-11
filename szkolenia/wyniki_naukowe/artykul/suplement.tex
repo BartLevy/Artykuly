@@ -9,7 +9,9 @@
 \usepackage[polish]{babel}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{booktabs,graphicx,xcolor,amsmath}
+\usepackage{xr-hyper}% odwołania do tabel artykułu głównego (prefiks M-) z main.aux
 \usepackage[hidelinks]{hyperref}
+\externaldocument[M-][nocite]{main}
 \usepackage{doi}
 \usepackage[numbers,sort&compress]{natbib}
 \bibliographystyle{plainnat}
@@ -31,23 +33,12 @@ przyrost poprawności, zapominanie i utrwalone błędy w trzyletnich logach odpo
 % -----------------------------------------------------------------------------
 \section{Uczestnicy i aktywność}
 Spośród \DemoN{} pracowników objętych analizą dane o wieku i płci były dostępne dla \DemoMatched{}
-(\DemoMatchedPct\%; tab.~\ref{tab:demografia}). Wśród osób o znanej płci kobiety stanowiły
+(\DemoMatchedPct\%; tab.~\ref{M-tab:demografia} w artykule głównym). Wśród osób o znanej płci kobiety stanowiły
 \DemoWomenPct\% ($n = \DemoWomen$), a mężczyźni \DemoMenPct\% ($n = \DemoMen$). Mediana wieku wynosiła
 \AgeMedian{} lat (IQR \AgeQOne--\AgeQThree; zakres \AgeMin--\AgeMax), a najliczniejszą grupę stanowiły
 osoby w wieku \AgeModalGroup{} lat (\AgeModalGroupPct\% osób o znanym wieku; rys.~\ref{fig:demografia}).
 Aktywność w kolejnych miesiącach przedstawiono na rys.~\ref{fig:aktywnosc}.
 % SPRAWDŹ: przedział modalny i proporcje płci po zmianie danych
-
-\begin{table}[htbp]
-\centering
-\caption{Charakterystyka demograficzna pracowników objętych analizą.}
-\label{tab:demografia}
-\small
-\tabelacsv{lr}{demografia}
-\uwagatabeli{Odsetki płci liczono wśród osób o znanej płci, a odsetki przedziałów wieku wśród osób
-o znanym wieku ($n = \DemoAgeN$). Brak danych dotyczy głównie pracowników nieobecnych w zestawieniu
-demograficznym (\DemoUnmatched). IQR: rozstęp międzykwartylowy; SD: odchylenie standardowe.}
-\end{table}
 
 \begin{figure}[htbp]
 \centering

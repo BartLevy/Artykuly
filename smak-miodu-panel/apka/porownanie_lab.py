@@ -16,6 +16,7 @@ Wspólne odniesienie dla wszystkich porównań z panelem: werdykt większości
 laboratoriów (więcej niż połowa ocen N).
 """
 
+import itertools
 import re
 from pathlib import Path
 
@@ -291,6 +292,10 @@ def compute_lab_comparison(df: pd.DataFrame, out_dir: str = "..") -> dict:
     pa = pair_agreement(1 - flag, wide[SAMPLES])
     for k, (po, kap) in pa.items():
         r[f"agree_{k}"], r[f"kappa_{k}"] = _pct(po), _f(kap, 2)
+    full_pairs = [f"Lab{LAB_NO[a]}--Lab{LAB_NO[b]}"
+                  for a, b in itertools.combinations(RATED_LABS, 2)
+                  if (flag[a] == flag[b]).all()]
+    r["full_agree_pairs"] = " i~".join(full_pairs) or "żadna"
 
     # --- pojedyncza ocena panelisty (AUC z bootstrapem po respondentach) ---
     dt = d.dropna(subset=["is_typical"]).reset_index(drop=True)

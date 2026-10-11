@@ -1,6 +1,6 @@
 key,analysis,short,OR,lo,hi,n
 main,Efekty stałe pracownika i pytania (model główny),Model główny (efekty stałe),1.381073737550673,1.3186931507193942,1.4464052289280869,60680
-cohort,"Kohorta zbalansowana (sekwencje z $\geq$5 próbami, próby 1--5)",Kohorta zbalansowana (≥5 prób),1.3638966519698235,1.2740937558767051,1.46002919225868,24920
+cohort,"Kohorta (sekwencje z $\geq$5 próbami, próby 1--5)",Kohorta (≥5 prób),1.3638966519698235,1.2740937558767051,1.46002919225868,24920
 trunc,Próby obcięte do 10,Próby ≤10,1.3786466736566483,1.3170632175380474,1.4431096590317118,59877
 len3,Wyłącznie sekwencje o długości 3--4,Długość sekwencji 3–4,1.3004405273607882,1.2097404618205563,1.397940813401723,14218
 len5,Wyłącznie sekwencje o długości 5--7,Długość sekwencji 5–7,1.353626665413712,1.2616625796221506,1.4522941227818564,18154
@@ -8,4 +8,4 @@ len8,Wyłącznie sekwencje o długości $\geq$8,Długość sekwencji ≥8,1.4001
 active,Pracownicy z $\geq$50 odpowiedziami,Pracownicy z ≥50 odpowiedziami,1.3823180958355559,1.3197367862667457,1.4478669822333987,60256
 tenure,Z korektą o staż pracownika,Korekta o staż,1.502307645888601,1.4156743835131969,1.5942424961412827,60680
 gee,"GEE, korelacja wymienna w obrębie pracownika (efekt uśredniony populacyjnie)",GEE (uśredniony populacyjnie),1.2903724085892527,1.2365989663497898,1.346484186189626,60962
-mixed,Skrzyżowane losowe wyrazy wolne pracownika i pytania (aproksymacja Laplace'a),Model mieszany (efekty losowe),1.3739023086906366,1.3366780677464236,1.4121631822746066,60962
+mixed,Skrzyżowane losowe wyrazy wolne pracownika i pytania (aproksymacja Laplace'a),Model mieszany (efekty losowe),1.3739023101200323,1.3366780624844559,1.4121631907721328,60962

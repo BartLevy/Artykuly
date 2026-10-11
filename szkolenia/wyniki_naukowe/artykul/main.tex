@@ -1,5 +1,4 @@
-% Kompilacja: najpierw suplement (pdflatex suplement x2), potem
-% pdflatex main && bibtex main && pdflatex main && pdflatex main
+% Kompilacja: pdflatex main && bibtex main && pdflatex main && pdflatex main
 % Dane liczbowe (definicje.tex), tabele (tabele/*.csv) i rysunki (rysunki/) generuje
 % analiza_odpowiedzi_naukowa.py; tekst (main.tex, sekcja-*.tex) jest edytowany ręcznie.
 \documentclass[11pt]{article}
@@ -8,9 +7,10 @@
 \usepackage[polish]{babel}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{booktabs,graphicx,xcolor,amsmath}
-\usepackage{xr-hyper}% odwołania do tabel i rycin S1, S2... z suplement.aux
 \usepackage[hidelinks]{hyperref}
-\externaldocument{suplement}
+\usepackage{float}
+\usepackage{changepage} % do marginesow
+\usepackage{enumitem}% numeracja rzymska listy definicji
 \usepackage{doi}
 % BIBLIOGRAFIA:
 \usepackage[numbers,sort&compress]{natbib}
@@ -28,13 +28,13 @@
 \author[4]{Ewaryst Tkacz \small{(ORCID:0000-0003-2580-7954)}}
 \author[5]{Maciej J. Wróbel \small{(ORCID:0000-0003-1865-2122)}}
 
-\affil[1,4]{Department of Clinical Engineering, Academy of Silesia in Katowice}
-\affil[3]{Powiślański Bank Spółdzielczy w Kwidzynie}
-\affil[4]{Atende SA}
-\affil[5]{Department of Otolaryngology and Oncological Laryngology Collegium Medicum NCU}
+\affil[1,4]{Department of Clinical Engineering, Academy of Silesia, Katowice, Poland}
+\affil[3]{Banking Process Support and Optimization Department, Powiślański Cooperative Bank, Kwidzyn, Poland}
+\affil[4]{Legal Department, Atende SA, Warsaw, Poland}
+\affil[5]{Department of Otolaryngology and Oncological Laryngology, Collegium Medicum NCU, Toruń, Poland}
 
 % Autor korespondencyjny
-\affil[*]{Autor korespondencyjny: dr Bartosz Lewandowski, bartosz.lewandowski@akademiaslaska.pl}
+\affil[*]{Autor korespondencyjny: dr inż. Bartosz Lewandowski, bartosz.lewandowski@akademiaslaska.pl}
 
 \title{Powtarzane pytania, poprawność odpowiedzi i trwałość błędów: trzyletnia analiza mikrouczenia w organizacji}
 
@@ -46,27 +46,28 @@
 
 \begin{abstract}
 \noindent\textbf{Wprowadzenie.} Przypominanie rozłożone w czasie poprawia zapamiętywanie w warunkach
-laboratoryjnych i edukacyjnych, jednak wyniki wieloletnich programów szkoleń w miejscu pracy opisano
-w niewielu badaniach.
-\textbf{Metody.} Przeanalizowano \NResponses{} odpowiedzi udzielonych przez \NEmployees{} pracowników
-banku na \NItems{} pytań wielokrotnego wyboru w programie mikrouczenia opartym na quizach (od
-\DateStart{} do \DateEnd). Pytania wracały do pracownika w stałym, nieadaptacyjnym odstępie (mediana
-\GapMedian{} dni), a po każdej odpowiedzi wyświetlano odpowiedź poprawną. Poprawność modelowano
-regresją logistyczną z efektami stałymi pracownika i pytania w trzech modelach: uczenia, retencji
-i nowych pytań.
-\textbf{Wyniki.} Odsetek poprawnych odpowiedzi wzrósł z \AccAttOne\% w pierwszej próbie do
-\AccAttMax\% w próbie \AttMax{}. i kolejnych. Każde podwojenie numeru próby zwiększało szanse
-poprawnej odpowiedzi \ORMOneAttempt-krotnie (95\% PU \ORMOneAttemptCI; zakres w analizach
-wrażliwości \ORRange), a każde podwojenie odstępu od poprzedniej próby zmniejszało je (OR
-\ORMTwoGap). Po powtórzonym błędzie pracownicy w \SameDistractorPct\% przypadków wybierali ten sam
-dystraktor, wobec \SameDistractorExpectedPop\% oczekiwanych przy uwzględnieniu popularności
-dystraktorów. Poprawność na nowo napotykanych pytaniach nie rosła wraz ze stażem (OR
-\ORMThreeTenure{} na rok, 95\% PU \ORMThreeTenureCI). % SPRAWDŹ
-\textbf{Wnioski.} Powtarzanemu przypominaniu towarzyszyła poprawa w powtarzanych pytaniach,
-zapominanie między powtórkami i utrwalanie konkretnych błędów mimo informacji zwrotnej. Dane nie
-rozstrzygają, czy poprawa dotyczy wiedzy, czy zapamiętania odpowiedzi. Adaptacyjny harmonogram
-powtórek i informacja zwrotna odnosząca się do wybranego dystraktora mogłyby zwiększyć skuteczność
-takich programów.
+laboratoryjnych i edukacyjnych, jednak skuteczność mikrouczenia w organizacjach rzadko oceniano na
+podstawie wieloletnich danych o odpowiedziach. Dane rejestrowane przez platformy mikrouczenia pozwalają
+zweryfikować, czy wiedza sprawdzana przez pytania jest nabywana i utrwalana.
+\textbf{Metody.} Przeanalizowano \NResponses{} odpowiedzi \NEmployees{} pracowników banku na
+\NItems{} pytań wielokrotnego wyboru, udzielonych od \DateStart{} do \DateEnd. Pytania wracały
+w stałym, nieadaptacyjnym odstępie (mediana \GapMedian{} dni), a po każdej odpowiedzi wyświetlano
+poprawną odpowiedź z wyjaśnieniem. Poprawność analizowano w sekwencjach pracownik--pytanie, w kohorcie
+sekwencji liczących co najmniej \CohortK{} prób oraz według wyniku poprzedniej próby i odstępu;
+przedziały ufności wyznaczono metodą bootstrap.
+\textbf{Wyniki.} Poprawność w pierwszej próbie wynosiła \FirstAcc\%. W kohorcie wzrosła z
+\CohortAccOne\% do \CohortAccK\% (o \SeqChange{} p.p., 95\% PU \SeqChangeCI), a tempo wzrostu nie
+zależało od wieku pracowników. Wzrost wynikał z przewagi korekt błędów (\RecoverPct\%) nad
+zapominaniem (\ForgetPct\%), przy czym odsetek utrzymanych odpowiedzi poprawnych malał z
+\RetShortCorrect\% przy odstępie krótszym niż 14 dni do \RetLongCorrect\% przy odstępie co najmniej
+240 dni. Szansa korekty malała z każdym kolejnym błędem z rzędu (z \CorrRunOne\% do \CorrRunMax\%),
+a powtórzone błędy w \SameDistractorPct\% przypadków dotyczyły tego samego dystraktora (oczekiwane
+\SameDistractorExpectedPop\%), niezależnie od odstępu. % SPRAWDŹ
+\textbf{Wnioski.} Program utrwalał wiedzę sprawdzaną przez pytania, lecz wymagała ona podtrzymywania
+powtórkami, a część błędnych przekonań opierała się informacji zwrotnej ograniczonej do wyświetlenia
+poprawnej odpowiedzi. Adaptacyjny harmonogram powtórek i informacja zwrotna odnosząca się do
+wybranego dystraktora mogą zwiększyć skuteczność takich programów. Dane nie pozwalają odróżnić
+utrwalenia wiedzy od zapamiętania odpowiedzi na konkretne pytania.
 
 \medskip\noindent\textbf{Słowa kluczowe:} powtórki rozłożone w czasie; praktyka przypominania;
 mikrouczenie; szkolenia pracownicze; analityka uczenia się; informacja zwrotna; zapominanie
@@ -85,18 +86,17 @@ mikrouczenie; szkolenia pracownicze; analityka uczenia się; informacja zwrotna;
 W badaniu wykorzystano dane przekazane przez bank, w których pracownicy
 byli reprezentowani przez kody. Dane dotyczące wieku i płci raportowano
 wyłącznie w postaci zagregowanej.
-\fillin{Informacja o zgodzie właściwej komisji etycznej lub zwolnieniu
-z obowiązku jej uzyskania, jeśli jest wymagana.}\\
+\fillin{Informacja o zgodzie banku i warunkach przekazania (chociaż jest o tym wzmianka w metodologii).}\\
 \textbf{Dostępność danych.}
-Dane wykorzystane w badaniu stanowią własność klienta i nie są
+Dane wykorzystane w badaniu stanowią własność banku i nie są
 udostępniane publicznie.\\
 \textbf{Finansowanie.}
 Badanie nie otrzymało finansowania.\\
 \textbf{Konflikt interesów.}
 Autorzy deklarują brak konfliktu interesów.\\
-\textbf{Wykorzystanie narzędzi AI.}
-Narzędzia generatywnej sztucznej inteligencji wykorzystano do
-przygotowania opisu wyników analizy oraz tłumaczenia tekstu
-na język angielski.
+% \textbf{Wykorzystanie narzędzi AI.}
+% Narzędzia generatywnej sztucznej inteligencji wykorzystano do
+% przygotowania opisu wyników analizy oraz tłumaczenia tekstu
+% na język angielski.
 \bibliography{references}
 \end{document}

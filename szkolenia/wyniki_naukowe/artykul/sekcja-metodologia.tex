@@ -6,93 +6,187 @@
 \section{Materiał i metody}
 
 \subsection{Środowisko i program szkoleniowy}
-Program prowadzono w banku. Jego treść stanowiły pytania ogólne pogrupowane w cztery kategorie:
+Badania prowadzono w siedzibie banku. Polegały one na zadawaniu pracownikom losowo wybranych pytań,
+pogrupowanych w cztery kategorie:
 wymogi regulacyjne, produkty bankowe, umiejętności miękkie oraz moduł dla kadry kierowniczej.
 Każde pytanie było pytaniem wielokrotnego wyboru z trzema do pięciu opcjami odpowiedzi, z których
-dokładnie jedna była poprawna, i zawierało wyjaśnienie poprawnej odpowiedzi. Aplikacja szkoleniowa
-uruchamiała się automatycznie na ekranach komputerów pracowników i wyświetlała od jednego do trzech
-pytań dziennie w godzinach 10:00--14:00; po każdej odpowiedzi pokazywano poprawną odpowiedź wraz
-z wyjaśnieniem. To samo pytanie mogło zostać ponownie zadane temu samemu pracownikowi nie wcześniej
-niż siedem dni po poprzedniej odpowiedzi, a harmonogram powtórek nie zależał od tego, czy odpowiedź
-była poprawna. Na czas przeglądu i aktualizacji pytań program był zawieszany.
-O udziale w programie decydował Departament Digitalizacji i Procesów banku, który był również autorem
-pytań. Pytania prezentowano w modułach tematycznych (mediana \OptionsMedian{} zaobserwowanych opcji
+dokładnie jedna była poprawna. Każde pytanie zawierało wyjaśnienie definiujące kontekst poprawnej odpowiedzi.
+Aplikacja szkoleniowa uruchamiała się automatycznie na ekranach komputerów PC pracowników i wyświetlała od jednego do trzech pytań dziennie w godzinach 10:00--14:00; po każdej odpowiedzi pokazywano poprawną odpowiedź wraz z wyjaśnieniem. To samo pytanie mogło zostać ponownie zadane temu samemu pracownikowi nie wcześniej niż siedem dni po poprzedniej odpowiedzi, a harmonogram powtórek nie zależał od tego, czy odpowiedź była poprawna. Na czas przeglądu i aktualizacji pytań program był zawieszany.
+O udziale w programie decydował \textit{Wydziału wsparcia i optymalizacji procesów bankowych}, który był również autorem pytań. Pytania prezentowano w modułach tematycznych (mediana \OptionsMedian{} zaobserwowanych opcji
 odpowiedzi na pytanie). W analizowanych danych pracownicy odpowiadali na medianę \DailyMedian{}
 pytań w dniu aktywności, a to samo pytanie było ponownie zadawane temu samemu pracownikowi po
 medianie \GapMedian{} dni (IQR \GapQOne--\GapQThree).
 
-\subsection{Dane}
-Dane przekazano w formie listy odpowiedzi zawierającej moduł, pytanie, wybraną opcję, kod
-odpowiadającego, znacznik czasu oraz poprawność odpowiedzi (wartość logiczna). Wykluczono
-\NExcludedItems{} pytania, w których zarejestrowano tylko jedną opcję odpowiedzi
-(\NExcludedItemResp{} odpowiedzi), ponieważ nie niosą one informacji o błędach. Zbiór analityczny
-obejmował \NResponses{} odpowiedzi (tab.~\ref{tab:zbior_danych}). Dane osób odpowiadających
-przekazano w formie metadanych zawierających płeć pracownika oraz przedział wiekowy (co 10 lat) oraz medianę wieku.
-% SPRAWDŹ: people.csv - nie bedzie dostarczany i brany pod uwage.
-
-\fillin{Podstawa prawna przetwarzania danych spseudonimizowanych (wiek, płeć)}
-
 \subsection{Definicje}
-\emph{Sekwencja} to uporządkowana chronologicznie seria prób jednego pracownika dotyczących jednego
-pytania; \emph{numer próby} to pozycja odpowiedzi w jej sekwencji (przy jednakowym czasie o kolejności
-decydował identyfikator rekordu). \emph{Poprawność} to odsetek poprawnych odpowiedzi. \emph{Odstęp}
-to czas w dniach od poprzedniej próby w tej samej sekwencji. \emph{Staż} to czas od pierwszej
-odpowiedzi pracownika w programie.
+\label{sec:definicje}
+\fillin{Ten rozdział zostanie usunięty w wersji docelowej, a ewentualne definicje zostaną wstawione przy pierwszym użyciu.}
+% Lista definicji pojęć stosowanych w artykule. Uzupełniana ręcznie; skill "artykul" (pkt 5)
+% traktuje ją jako wiążące źródło terminologii w sekcja-*.tex i suplement.tex.
+W badaniu stosowano następujące definicje:
+\begin{enumerate}[label=\Roman*.]
+  \item \emph{Sekwencja} to uporządkowana chronologicznie seria prób jednego pracownika dotyczących
+  jednego pytania.
+  \item \emph{Numer próby} to pozycja odpowiedzi w jej sekwencji; przy jednakowym czasie o kolejności
+  decydował identyfikator rekordu.
+  \item \emph{Pierwsza próba} to próba o numerze 1, czyli pierwszy kontakt pracownika z danym pytaniem.
+  \item \emph{Poprawność} to odsetek poprawnych odpowiedzi.
+  \item \emph{Odstęp} to czas w dniach od poprzedniej próby w tej samej sekwencji.
+  \item \emph{Staż} to czas od pierwszej odpowiedzi pracownika w programie.
+  \item \emph{Dystraktor} to błędna opcja odpowiedzi w pytaniu wielokrotnego wyboru.
+  \item \emph{Informacja zwrotna} to wyświetlenie poprawnej odpowiedzi wraz z wyjaśnieniem po każdej
+  udzielonej odpowiedzi, niezależnie od jej poprawności.
+  \item \emph{Korekta błędu} to odpowiedź poprawna w próbie następującej bezpośrednio po próbie
+  z odpowiedzią błędną w tej samej sekwencji.
+  \item \emph{Zapominanie} to odpowiedź błędna w próbie następującej bezpośrednio po próbie
+  z odpowiedzią poprawną w tej samej sekwencji.
+  \item \emph{Powtórzony błąd} to odpowiedź błędna w próbie następującej bezpośrednio po próbie
+  z odpowiedzią błędną w tej samej sekwencji.
+  \item \emph{Błędy z rzędu} to liczba kolejnych prób zakończonych odpowiedzią błędną, które
+  bezpośrednio poprzedzają daną próbę w tej samej sekwencji.
+  \item \emph{Kohorta} to zbiór sekwencji liczących co najmniej \CohortK{} prób, analizowanych
+  wyłącznie w próbach od 1 do \CohortK{}. Poprawność w każdej z tych prób obliczano dla tych samych
+  sekwencji, co eliminuje wpływ ubywania sekwencji wraz z numerem próby.
+  \item \emph{Bootstrap} to procedura wyznaczania 95-procentowych przedziałów ufności (PU), w której
+  pracowników losowano ze zwracaniem (\BootReps{} replikacji), a granice przedziału stanowiły 2,5.
+  i 97,5. percentyl rozkładu statystyki. Losowanie całych pracowników uwzględnia zależność odpowiedzi
+  udzielanych przez tę samą osobę.
+\end{enumerate}
 
-\subsection{Analiza opisowa}
-Odsetki poprawnych odpowiedzi podano z 95-procentowymi przedziałami ufności (PU) z bootstrapu
-klastrowego, w którym losowano pracowników ze zwracaniem (\BootReps{} replikacji); procedura ta
-uwzględnia zależność odpowiedzi udzielanych przez tę samą osobę. Ponieważ osoby kontynuujące do
-kolejnych prób mogą różnić się od tych, które przestają, zagregowane krzywe uczenia mogą być
-zniekształcone przez ubywanie obserwacji \citep{murray2013,goutte2018}; krzywą obliczono więc
-dodatkowo dla zbalansowanej kohorty sekwencji liczących co najmniej \CohortK{} prób. Zależność odsetka
-błędów od numeru próby opisano funkcją potęgową \citep{newell1981}. Ponieważ harmonogram powtórek nie
-był adaptacyjny, sprawdzono, czy ponowne zadanie pytania zależało od wyniku poprzedniej próby.
+\subsection{Grupa badana oraz charakterystyka danych}
+Źródło danych stanowiła lista odpowiedzi zawierająca moduł, pytanie, wybraną opcję, kod odpowiadającego, znacznik czasu oraz poprawność odpowiedzi (wartość logiczna). Zbiór analityczny
+obejmował \NResponses{} odpowiedzi (tab.~\ref{tab:zbior_danych}). Dane osób odpowiadających
+przekazano w formie metadanych zawierających płeć pracownika, przedział wiekowy (co 10 lat) oraz medianę wieku.
 
-\subsection{Modele statystyczne}
-Niech $Y_{ijt}$ oznacza poprawność ($1$ albo $0$) odpowiedzi pracownika $i$ na pytanie $j$ w próbie
-$t$. Zastosowano trzy modele regresji logistycznej o wspólnej postaci
-\begin{equation*}
-\operatorname{logit} P(Y_{ijt}=1) = \alpha_i + \gamma_j + \mathbf{x}_{ijt}^{\top}\boldsymbol{\beta},
-\end{equation*}
-gdzie $\alpha_i$ i $\gamma_j$ są efektami stałymi pracownika i pytania. Efekty stałe pochłaniają
-stałe różnice poziomu wiedzy między osobami i trudności między pytaniami, dlatego współczynniki
-$\boldsymbol{\beta}$ opisują zmiany w obrębie tej samej osoby i tego samego pytania. Modele różniły
-się zbiorem odpowiedzi i wektorem predyktorów $\mathbf{x}_{ijt}$:
-\begin{description}
-\item[M1, model uczenia (PB1).] Wszystkie odpowiedzi; jedynym predyktorem jest numer próby,
-  $\beta_1 \log_2 t$. Wartość $e^{\beta_1}$ jest ilorazem szans (OR) poprawnej odpowiedzi przy
-  podwojeniu numeru próby (np.\ z 1 do 2 albo z 4 do 8).
-\item[M2, model retencji (PB2).] Wyłącznie próby powtórne ($t \geq 2$);
-  $\beta_1 \log_2 t + \beta_2 Y_{ij,t-1} + \beta_3 \log_2 \Delta_{ijt} + \beta_4 S_{it}$, gdzie
-  $Y_{ij,t-1}$ to wynik poprzedniej próby, $\Delta_{ijt}$ odstęp od niej w dniach (ograniczony od dołu
-  do 1 dnia), a $S_{it}$ staż w latach. Konstrukcją model odpowiada modelom \emph{performance factors
-  analysis} i \emph{half-life regression} stosowanym do logów uczących się \citep{pavlik2009,settles2016}.
-\item[M3, model nowych pytań.] Wyłącznie pierwsze próby ($t = 1$); jedynym predyktorem jest staż,
-  $\beta_4 S_{it}$. Przy efektach stałych pracownika współczynnik porównuje pierwsze kontakty tej samej
-  osoby z kolejnymi pytaniami, napotkanymi przy różnym stażu.
-\end{description}
-Pracowników i pytania, w których wszystkie odpowiedzi były poprawne albo wszystkie błędne, usuwano
-iteracyjnie przed estymacją, ponieważ ich efekty stałe nie są identyfikowalne. Modele szacowano metodą
-największej wiarygodności, a błędy standardowe klastrowano względem pracowników.
+\begin{table}[H]
+\centering
+\caption{Charakterystyka zbioru danych.}
+\label{tab:zbior_danych}
+\small
+\tabelacsv{lr}{zbior_danych}
+\uwagatabeli{IQR: rozstęp międzykwartylowy. Sekwencja to seria prób jednego pracownika dotyczących
+jednego pytania. Wykluczone moduły testowe: \ExcludedModules{} (\NExcluded{} odpowiedzi). Wykluczone
+pytania z jedną zaobserwowaną opcją odpowiedzi: \NExcludedItems{} (\NExcludedItemResp{} odpowiedzi).}
+\end{table}
 
-Odporność oszacowania $e^{\beta_1}$ z modelu M1 sprawdzono w analizach wrażliwości: w zbalansowanej
-kohorcie, po obcięciu sekwencji do 10 prób, w warstwach długości sekwencji (kontrola obciążenia typu
-\emph{pattern-mixture}), po wykluczeniu pracowników z mniej niż 50 odpowiedziami oraz po dodaniu stażu
-jako predyktora. Efekt uśredniony populacyjnie oszacowano ponadto metodą uogólnionych równań
-estymujących (GEE) z wymienną macierzą korelacji roboczej \citep{liang1986}, a w modelu mieszanym
-efekty stałe zastąpiono skrzyżowanymi losowymi wyrazami wolnymi pracowników i pytań \citep{baayen2008}.
-Z modelu mieszanego wyznaczono współczynniki korelacji wewnątrzklasowej (ICC) w skali latentnej oraz
-brzegowy i warunkowy współczynnik $R^2$ \citep{nakagawa2013}.
+Dane demograficzne były dostępne dla \DemoMatched{} z \DemoN{} pracowników (\DemoMatchedPct\%);
+pozostałych \DemoUnmatched{} osób nie obejmowało zestawienie demograficzne. Wśród osób o znanej płci
+kobiety stanowiły \DemoWomenPct\% ($n = \DemoWomen$), a mężczyźni \DemoMenPct\% ($n = \DemoMen$).
+Mediana wieku wynosiła \AgeMedian{} lat (IQR \AgeQOne--\AgeQThree; zakres \AgeMin--\AgeMax), a
+najliczniejszy przedział wiekowy stanowił \AgeModalGroup{} lat (\AgeModalGroupPct\% osób o znanym
+wieku, $n = \DemoAgeN$; tab.~\ref{tab:demografia}). Wiek uwzględniono w analizie poprawności
+w pierwszej próbie i tempa jej wzrostu; płci nie uwzględniano w analizach.
+% SPRAWDŹ: przedział modalny i proporcje płci po zmianie danych
 
-\subsection{Przejścia i powtarzane błędy}
-Przejścia między kolejnymi próbami tego samego pytania zestawiono w tabeli kontyngencji. Dla dwóch
-następujących po sobie błędów porównano odsetek ponownych wyborów tego samego dystraktora z odsetkiem
-oczekiwanym przy losowym wyborze spośród zaobserwowanych dystraktorów oraz przy wyborze proporcjonalnym
-do popularności każdego dystraktora w danym pytaniu.
+\begin{table}[H]
+\centering
+\caption{Charakterystyka demograficzna pracowników objętych analizą.}
+\label{tab:demografia}
+\small
+\tabelacsv{lr}{demografia}
+\uwagatabeli{Odsetki płci liczono wśród osób o znanej płci, a odsetki przedziałów wieku wśród osób
+o znanym wieku ($n = \DemoAgeN$). Brak danych dotyczy głównie pracowników nieobecnych w zestawieniu
+demograficznym (\DemoUnmatched). IQR: rozstęp międzykwartylowy; SD: odchylenie standardowe.}
+\end{table}
 
-Analizy uzupełniające, czyli zmianę poprawności na poziomie pracowników oraz analizę pytań metodami
-klasycznej teorii testu, opisano w materiale uzupełniającym. Obliczenia wykonano w języku Python
+\fillin{Podstawa prawna przetwarzania danych anonimizowanych (wiek, płeć) i podstawa przekazania przez Bank do analizy.}
+
+\subsection{Analiza statystyczna}
+\label{sec:analiza}
+\fillin{Rozważam usunięcie całego tego punktu lub wtłoczenia w wyniki.  Stąd jest napisany mniejszą czcionką.}
+\begin{small}
+  \begin{adjustwidth}{1cm}{1cm}
+Poprawność podawano z 95\% PU wyznaczonymi metodą bootstrap. Analizę podzielono na etap opisu pierwszej
+próby oraz trzy etapy odpowiadające pytaniom badawczym.
+
+\emph{Pierwsza próba.} Poprawność w pierwszej próbie porównano między przedziałami wieku. Zależność od
+wieku oszacowano regresją logistyczną poprawności pierwszej próby względem środka przedziału wieku (na 10 lat), z efektami stałymi pytania uwzględniającymi różnice trudności pytań i z błędami standardowymi
+klastrowanymi względem pracowników.
+
+\emph{Zmiany w sekwencji (PB1).} Poprawność obliczono dla kolejnych numerów prób we wszystkich
+sekwencjach; próby \MaxAttemptPooled{}. i dalsze połączono. Pracownicy kontynuujący sekwencje mogą
+różnić się od tych, którzy je kończą, a krzywe zagregowane mogą być wówczas zniekształcone przez
+ubywanie sekwencji \citep{murray2013,goutte2018}. Zmianę oceniono więc także w kohorcie, jako różnicę
+poprawności między próbą~\CohortK{} a próbą~1 wyrażoną w punktach procentowych (p.p.). Zależność
+odsetka błędów od numeru próby opisano funkcją potęgową \citep{newell1981}, dopasowaną ważoną metodą
+najmniejszych kwadratów w skali logarytmicznej. Zależność tempa wzrostu od wieku sprawdzono w kohorcie
+regresją logistyczną poprawności względem $\log_2$ numeru próby i jego interakcji z wiekiem, z efektami
+stałymi pracownika i pytania oraz błędami standardowymi klastrowanymi względem pracowników. Pracowników
+i pytania bez zmienności poprawności usuwano przed estymacją, ponieważ ich efekty stałe nie są
+identyfikowalne.
+
+\emph{Wynik poprzedniej próby i odstęp (PB2).} Każdą próbę od drugiej wzwyż zaklasyfikowano jako
+odpowiedź poprawną po poprawnej, korektę błędu, zapominanie albo powtórzony błąd, a odsetki przejść
+porównano w sześciu przedziałach odstępu, od krótszego niż 14 dni do co najmniej 240 dni. Ponieważ
+harmonogram powtórek nie był adaptacyjny, sprawdzono, czy prawdopodobieństwo ponownego zadania pytania
+i odstęp zależały od wyniku poprzedniej próby.
+
+\emph{Utrwalone błędy (PB3).} Poprawność porównano według liczby błędów z rzędu, od 0 do co najmniej
+\RunMax. W parach dwóch kolejnych błędów odsetek ponownych wyborów tego samego dystraktora porównano
+z odsetkiem oczekiwanym przy losowym wyborze spośród zaobserwowanych dystraktorów oraz przy wyborze
+proporcjonalnym do popularności dystraktorów w danym pytaniu, a następnie zestawiono go w trzech
+przedziałach odstępu. Koncentrację powtórzonych błędów opisano udziałem 10\% pytań o największej
+liczbie takich błędów.
+
+Obliczenia wykonano w języku Python
 \VerPython{} z użyciem bibliotek pandas \VerPandas, NumPy \VerNumpy, SciPy \VerScipy, statsmodels
-\VerStatsmodels{} i Matplotlib \VerMatplotlib{}.
-%  (ziarno generatora liczb losowych \Seed).
+\VerStatsmodels{} i Matplotlib \VerMatplotlib.
+
+\end{adjustwidth}
+\end{small}
+% \subsection{Analiza opisowa}
+% Odsetki poprawnych odpowiedzi podano z 95-procentowymi przedziałami ufności (PU) z bootstrapu
+% klastrowego, w którym losowano pracowników ze zwracaniem (\BootReps{} replikacji); procedura ta
+% uwzględnia zależność odpowiedzi udzielanych przez tę samą osobę. Ponieważ osoby kontynuujące do
+% kolejnych prób mogą różnić się od tych, które przestają, zagregowane krzywe uczenia mogą być
+% zniekształcone przez ubywanie obserwacji \citep{murray2013,goutte2018}; krzywą obliczono więc
+% dodatkowo dla zbalansowanej kohorty sekwencji liczących co najmniej \CohortK{} prób. Zależność odsetka
+% błędów od numeru próby opisano funkcją potęgową \citep{newell1981}. Ponieważ harmonogram powtórek nie
+% był adaptacyjny, sprawdzono, czy ponowne zadanie pytania zależało od wyniku poprzedniej próby.
+
+% \subsection{Modele statystyczne}
+% Niech $Y_{ijt}$ oznacza poprawność ($1$ albo $0$) odpowiedzi pracownika $i$ na pytanie $j$ w próbie
+% $t$. Zastosowano trzy modele regresji logistycznej o wspólnej postaci
+% \begin{equation*}
+% \operatorname{logit} P(Y_{ijt}=1) = \alpha_i + \gamma_j + \mathbf{x}_{ijt}^{\top}\boldsymbol{\beta},
+% \end{equation*}
+% gdzie $\alpha_i$ i $\gamma_j$ są efektami stałymi pracownika i pytania. Efekty stałe pochłaniają
+% stałe różnice poziomu wiedzy między osobami i trudności między pytaniami, dlatego współczynniki
+% $\boldsymbol{\beta}$ opisują zmiany w obrębie tej samej osoby i tego samego pytania. Modele różniły
+% się zbiorem odpowiedzi i wektorem predyktorów $\mathbf{x}_{ijt}$:
+% \begin{description}
+% \item[M1, model uczenia (PB1).] Wszystkie odpowiedzi; jedynym predyktorem jest numer próby,
+%   $\beta_1 \log_2 t$. Wartość $e^{\beta_1}$ jest ilorazem szans (OR) poprawnej odpowiedzi przy
+%   podwojeniu numeru próby (np.\ z 1 do 2 albo z 4 do 8).
+% \item[M2, model retencji (PB2).] Wyłącznie próby powtórne ($t \geq 2$);
+%   $\beta_1 \log_2 t + \beta_2 Y_{ij,t-1} + \beta_3 \log_2 \Delta_{ijt} + \beta_4 S_{it}$, gdzie
+%   $Y_{ij,t-1}$ to wynik poprzedniej próby, $\Delta_{ijt}$ odstęp od niej w dniach (ograniczony od dołu
+%   do 1 dnia), a $S_{it}$ staż w latach. Konstrukcją model odpowiada modelom \emph{performance factors
+%   analysis} i \emph{half-life regression} stosowanym do logów uczących się \citep{pavlik2009,settles2016}.
+% \item[M3, model nowych pytań.] Wyłącznie pierwsze próby ($t = 1$); jedynym predyktorem jest staż,
+%   $\beta_4 S_{it}$. Przy efektach stałych pracownika współczynnik porównuje pierwsze kontakty tej samej
+%   osoby z kolejnymi pytaniami, napotkanymi przy różnym stażu.
+% \end{description}
+% Pracowników i pytania, w których wszystkie odpowiedzi były poprawne albo wszystkie błędne, usuwano
+% iteracyjnie przed estymacją, ponieważ ich efekty stałe nie są identyfikowalne. Modele szacowano metodą
+% największej wiarygodności, a błędy standardowe klastrowano względem pracowników.
+
+% Odporność oszacowania $e^{\beta_1}$ z modelu M1 sprawdzono w analizach wrażliwości: w zbalansowanej
+% kohorcie, po obcięciu sekwencji do 10 prób, w warstwach długości sekwencji (kontrola obciążenia typu
+% \emph{pattern-mixture}), po wykluczeniu pracowników z mniej niż 50 odpowiedziami oraz po dodaniu stażu
+% jako predyktora. Efekt uśredniony populacyjnie oszacowano ponadto metodą uogólnionych równań
+% estymujących (GEE) z wymienną macierzą korelacji roboczej \citep{liang1986}, a w modelu mieszanym
+% efekty stałe zastąpiono skrzyżowanymi losowymi wyrazami wolnymi pracowników i pytań \citep{baayen2008}.
+% Z modelu mieszanego wyznaczono współczynniki korelacji wewnątrzklasowej (ICC) w skali latentnej oraz
+% brzegowy i warunkowy współczynnik $R^2$ \citep{nakagawa2013}.
+
+% \subsection{Przejścia i powtarzane błędy}
+% Przejścia między kolejnymi próbami tego samego pytania zestawiono w tabeli kontyngencji. Dla dwóch
+% następujących po sobie błędów porównano odsetek ponownych wyborów tego samego dystraktora z odsetkiem
+% oczekiwanym przy losowym wyborze spośród zaobserwowanych dystraktorów oraz przy wyborze proporcjonalnym
+% do popularności każdego dystraktora w danym pytaniu.
+
+% Analizy uzupełniające, czyli zmianę poprawności na poziomie pracowników oraz analizę pytań metodami
+% klasycznej teorii testu, opisano w materiale uzupełniającym. Obliczenia wykonano w języku Python
+% \VerPython{} z użyciem bibliotek pandas \VerPandas, NumPy \VerNumpy, SciPy \VerScipy, statsmodels
+% \VerStatsmodels{} i Matplotlib \VerMatplotlib{}.
+% %  (ziarno generatora liczb losowych \Seed).

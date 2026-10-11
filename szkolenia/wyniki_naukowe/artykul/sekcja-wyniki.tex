@@ -1,143 +1,264 @@
-% =============================================================================
-% Wyniki. Plik edytowany ręcznie -- skrypt analiza_odpowiedzi_naukowa.py go NIE nadpisuje.
-% Liczby: definicje.tex; tabele: \tabelacsv{<kolumny>}{<plik>} wczytuje \TabDir<plik>.csv;
-% rysunki: \FigDir. Odwołania do tabel/rycin S1, S2... pochodzą z suplement.tex (xr-hyper).
-% Zdania interpretujące kierunek wyniku oznaczono komentarzem "% SPRAWDŹ" --
-% zweryfikuj je po ponownym uruchomieniu skryptu na nowych danych lub z innymi parametrami.
-% =============================================================================
 \section{Wyniki}
 
-\subsection{Próba i harmonogram powtórek}
-Zbiór danych obejmował \NResponses{} odpowiedzi \NEmployees{} pracowników na \NItems{} pytań
-w \NModules{} modułach, zebranych od \DateStart{} do \DateEnd{} (tab.~\ref{tab:zbior_danych}).
-Mediana liczby odpowiedzi na pracownika wynosiła \RespPerEmpMedian{} (IQR
-\RespPerEmpQOne--\RespPerEmpQThree), udzielonych na \ItemsPerEmpMedian{} różnych pytań w ciągu
-\ActiveDaysMedian{} dni aktywności, a mediana czasu uczestnictwa w programie wynosiła
-\SpanMonthsMedian{} miesięcy. Okresy bez odpowiedzi odpowiadają zawieszeniom programu na czas
-przeglądu pytań (rys.~\ref{fig:aktywnosc}). Wśród \DemoMatched{} pracowników o znanych danych
-demograficznych kobiety stanowiły \DemoWomenPct\%, a mediana wieku wynosiła \AgeMedian{} lat
-(tab.~\ref{tab:demografia}). Ogólny odsetek poprawnych odpowiedzi wynosił \AccOverall\%, a w pierwszych
-próbach \AccFirst\%.
+% \subsection{Pierwsza próba}
+W pierwszych próbach, czyli przy pierwszym kontakcie pracownika z danym pytaniem, zarejestrowano
+\FirstN{} odpowiedzi \NEmployees{} pracowników. Poprawność wynosiła \FirstAcc\% (95\% PU
+\FirstAccCI; tab.~\ref{tab:pierwsza_proba_wiek}). W przedziałach wieku mieściła się w zakresie od
+\FirstAccMin\% (\FirstAccMinGroup{} lat) do \FirstAccMax\% (\FirstAccMaxGroup{} lat), a przedziały
+ufności w grupach o mniejszej liczbie pracowników były szerokie. Po uwzględnieniu trudności pytań
+szanse poprawnej odpowiedzi w pierwszej próbie rosły wraz z wiekiem (OR \FirstAgeOR{} na 10 lat,
+95\% PU \FirstAgeORCI; $p \FirstAgeP$). Zależność ta nie miała jednak charakteru monotonicznego,
+ponieważ najniższą poprawność odnotowano w przedziale \FirstAccMinGroup{} lat, a nie w przedziale
+najmłodszym. % SPRAWDŹ: kierunek OR i położenie minimum po zmianie danych
 
-Harmonogram powtórek nie zależał od wyniku poprzedniej próby: prawdopodobieństwo kolejnej próby
-wynosiło \ReaskAfterCorrect\% po odpowiedzi poprawnej i \ReaskAfterIncorrect\% po błędnej, natomiast
-mediana odstępu do kolejnej próby wynosiła odpowiednio \GapAfterCorrect{} i \GapAfterIncorrect{} dni.
-Kontynuacja sekwencji nie była więc selekcjonowana według wyników. % SPRAWDŹ
-
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
-\caption{Charakterystyka zbioru danych.}
-\label{tab:zbior_danych}
-\small
-\tabelacsv{lr}{zbior_danych}
-\uwagatabeli{IQR: rozstęp międzykwartylowy. Sekwencja to seria prób jednego pracownika dotyczących
-jednego pytania. Wykluczone moduły testowe: \ExcludedModules{} (\NExcluded{} odpowiedzi). Wykluczone
-pytania z jedną zaobserwowaną opcją odpowiedzi: \NExcludedItems{} (\NExcludedItemResp{} odpowiedzi).}
+\caption{Poprawność w pierwszej próbie ogółem i według przedziału wieku pracownika.}
+\label{tab:pierwsza_proba_wiek}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\tabelacsv{l*{7}{r}}{pierwsza_proba_wiek}% 7 = ogółem + przedziały wieku + brak danych
+\uwagatabeli{Pierwsza próba to pierwsza odpowiedź w sekwencji. 95\% PU wyznaczono metodą bootstrap.
+Zależność od wieku oszacowano regresją logistyczną poprawności pierwszej próby względem środka
+przedziału wieku (na 10 lat) z efektami stałymi pytania i błędami standardowymi klastrowanymi względem
+pracowników (\FirstAgeN{} odpowiedzi \FirstAgeEmp{} pracowników o znanym wieku): OR \FirstAgeOR,
+95\% PU \FirstAgeORCI, $p \FirstAgeP$.}
 \end{table}
 
-\subsection{Uczenie się w kolejnych próbach (PB1)}
-Odsetek poprawnych odpowiedzi rósł wraz z numerem próby: z \AccAttOne\% \AccAttOneCI{} w pierwszej
-próbie do \AccAttMax\% \AccAttMaxCI{} w próbie \AttMax{}. i kolejnych (rys.~\ref{fig:krzywa_uczenia},
-tab.~\ref{tab:krzywa_uczenia}). Wzrost był podobny w zbalansowanej kohorcie \CohortN{} sekwencji
-liczących co najmniej \CohortK{} prób (\CohortAccOne\% \CohortAccOneCI{} w próbie~1 wobec \CohortAccK\%
-\CohortAccKCI{} w próbie~\CohortK), nie wynika więc z selektywnej kontynuacji przez pracowników
-osiągających lepsze wyniki. Odsetek błędów był funkcją potęgową numeru próby (wykładnik \PowerLawB,
+\subsection{Zmiany w sekwencji (PB1)}
+Poprawność rosła wraz z numerem próby: z \AccAttOne\% \AccAttOneCI{} w pierwszej próbie do
+\AccAttMax\% \AccAttMaxCI{} w próbie \AttMax{}. i kolejnych (rys.~\ref{fig:krzywa_uczenia}).
+Liczba sekwencji malała jednak wraz z numerem próby, dlatego zmianę
+oceniono również w kohorcie \CohortN{} sekwencji. W kohorcie poprawność wzrosła z \CohortAccOne\%
+\CohortAccOneCI{} w próbie~1 do \CohortAccK\% \CohortAccKCI{} w próbie~\CohortK{}, czyli
+o \SeqChange{} p.p. (95\% PU \SeqChangeCI; tab.~\ref{tab:sekwencje_wiek}). Wzrost obserwowany w tych
+samych sekwencjach wskazuje, że poprawa nie wynika z wcześniejszego kończenia sekwencji z niższą
+poprawnością. Odsetek błędów był funkcją potęgową numeru próby (wykładnik \PowerLawB,
 $R^2 = \PowerLawRsq$), zgodnie z potęgowym prawem praktyki \citep{newell1981}.
 
-W modelu uczenia M1 każde podwojenie numeru próby wiązało się z \ORMOneAttempt-krotnie wyższymi
-szansami poprawnej odpowiedzi (95\% PU \ORMOneAttemptCI; tab.~\ref{tab:regresja}). Efekt ten wyjaśniał
-jednak niewielką część zmienności poprawności (brzegowy $R^2 = \RsqMarginal$ wobec warunkowego
-$R^2 = \RsqConditional$), a pytania odpowiadały za większą jej część niż pracownicy (ICC
-\ICCItem{} wobec \ICCEmployee). Na poziomie pracowników wynik w trzeciej próbie był lepszy niż
-w pierwszej u \EmpImproved{} z \EmpN{} osób, a gorszy u \EmpWorsened{} (średnia zmiana
-\EmpMeanChange{} p.p., 95\% PU \EmpMeanChangeCI; tab.~\ref{tab:zmiana_pracownikow}).
+Wzrost poprawności w kohorcie wystąpił we wszystkich przedziałach wieku i wynosił od \SeqChangeMin{}
+p.p. (\SeqChangeMinGroup{} lat) do \SeqChangeMax{} p.p. (\SeqChangeMaxGroup{} lat;
+tab.~\ref{tab:sekwencje_wiek}). Tempo poprawy nie zależało od wieku: iloraz szans dla interakcji
+numeru próby z wiekiem wynosił \SeqAgeOR{} na 10 lat (95\% PU \SeqAgeORCI; $p \SeqAgeP$). Różnice
+między przedziałami wieku dotyczyły zatem raczej poziomu wyjściowego niż przyrostu poprawności
+w kolejnych próbach. % SPRAWDŹ: znak zmiany we wszystkich przedziałach i istotność interakcji
 
-\begin{figure}[tbp]
+\begin{figure}[H]
 \centering
 \includegraphics{\FigDir rys_krzywa_uczenia}
-\caption{Odsetek poprawnych odpowiedzi według numeru próby w sekwencjach pracownik--pytanie. Koła:
-wszystkie sekwencje dostępne w danej próbie (ich liczba maleje wraz z numerem próby). Kwadraty:
-zbalansowana kohorta, tj.\ te same \CohortN{} sekwencje, które osiągnęły co najmniej \CohortK{} prób,
-obserwowane wyłącznie w próbach 1--\CohortK{}, dzięki czemu każdy punkt opiera się na identycznych
-sekwencjach. Słupki błędów: 95\% PU z bootstrapu klastrowego po pracownikach (\BootReps{} replikacji).
-Linia przerywana: dopasowanie funkcji potęgowej do odsetka błędów. Próby \MaxAttemptPooled{}.
-i dalsze połączono.}
+\caption{Poprawność według numeru próby we wszystkich sekwencjach dostępnych w danej próbie (ich liczba
+maleje wraz z numerem próby). Słupki błędów: 95\% PU (bootstrap). Linia przerywana: dopasowanie funkcji
+potęgowej do odsetka błędów. Próby \MaxAttemptPooled{}. i dalsze połączono. Przebieg w kohorcie
+przedstawiono na rys.~\ref{fig:stany_kohorty}.}
 \label{fig:krzywa_uczenia}
 \end{figure}
 
-\begin{table*}[htbp]
+\begin{table}[H]
 \centering
-\caption{Modele regresji logistycznej poprawności odpowiedzi: ilorazy szans [95\% PU].}
-\label{tab:regresja}
-\small
-\setlength{\tabcolsep}{3.5pt}
-\tabelacsv{llll}{regresja}
-\uwagatabeli{Definicje modeli M1--M3 podano w podrozdziale ,,Modele statystyczne''. Wszystkie modele
-zawierają efekty stałe pracownika i pytania; błędy standardowe klastrowane względem pracowników.
-Pracowników i pytania bez zmienności poprawności usunięto przed estymacją (M1: \MOneDropped{}
-odpowiedzi). OR dla numeru próby i odstępu dotyczą podwojenia wartości, dla stażu jednego roku.}
-\end{table*}
+\caption{Poprawność w kolejnych próbach w kohorcie, ogółem i według przedziału wieku pracownika.}
+\label{tab:sekwencje_wiek}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\tabelacsv{l*{7}{r}}{sekwencje_wiek}% 7 = ogółem + przedziały wieku + brak danych
+\uwagatabeli{Kohorta: sekwencje liczące co najmniej \CohortK{} prób, próby od 1 do \CohortK{}.
+p.p.: punkty procentowe; 95\% PU zmiany wyznaczono metodą bootstrap. Zależność tempa poprawy od wieku
+oszacowano regresją logistyczną poprawności względem $\log_2(\text{numer próby})$ i jego interakcji
+z wiekiem (środek przedziału, na 10 lat), z efektami stałymi pracownika i pytania oraz błędami
+standardowymi klastrowanymi względem pracowników (\SeqAgeN{} odpowiedzi pracowników o znanym wieku).}
+\end{table}
 
 \subsection{Wynik poprzedniej próby, odstęp i zapominanie (PB2)}
-W modelu retencji M2, po uwzględnieniu numeru próby, poprawna poprzednia odpowiedź wiązała się
-z wyższymi szansami poprawnej odpowiedzi (OR \ORMTwoPrev, 95\% PU \ORMTwoPrevCI), natomiast dłuższy
-odstęp od poprzedniej próby wiązał się z niższymi szansami (OR \ORMTwoGap{} na podwojenie odstępu,
-95\% PU \ORMTwoGapCI; tab.~\ref{tab:regresja}). Wśród odpowiedzi poprzednio poprawnych odsetek
-poprawnych zmniejszał się z \RetShortCorrect\%, gdy pytanie powtórzono w ciągu 14 dni, do
-\RetLongCorrect\% po 240 dniach lub dłużej; odpowiedzi poprzednio błędne były korygowane odpowiednio
-w \RetShortIncorrect\% i \RetLongIncorrect\% przypadków (rys.~\ref{fig:odstep},
-tab.~\ref{tab:retencja_wg_odstepu}). Wzorzec ten jest zgodny z zapominaniem między powtórkami
-\citep{cepeda2006,cepeda2008}. % SPRAWDŹ
+Wzrost poprawności opisany w PB1 jest wynikiem netto dwóch procesów zachodzących między kolejnymi
+próbami: korygowania błędów i zapominania odpowiedzi poprawnych. Aby je rozdzielić, każdą próbę od
+drugiej wzwyż powiązano z wynikiem próby poprzedniej i odstępem od niej. Harmonogram powtórek nie
+zniekształcał tego porównania, ponieważ pytanie wracało po odpowiedzi poprawnej i błędnej z podobnym
+prawdopodobieństwem (\ReaskAfterCorrect\% i \ReaskAfterIncorrect\%) i po podobnym odstępie (mediana
+\GapAfterCorrect{} i \GapAfterIncorrect{} dni). Odpowiedź poprawna powtórzyła się w kolejnej próbie
+w \RetainPct\% \RetainCI{} przypadków, a odpowiedź błędna została skorygowana w \RecoverPct\%
+\RecoverCI{} (tab.~\ref{tab:przejscia}). Korekty błędów przeważały zatem nad zapominaniem
+(\ForgetPct\%), co tłumaczy przyrost poprawności w kolejnych próbach. Upływ czasu działał
+w przeciwnym kierunku, lecz tylko w odniesieniu do odpowiedzi poprawnych: odsetek ich powtórzeń
+malał z \RetShortCorrect\% przy odstępie krótszym niż 14 dni do \RetLongCorrect\% przy odstępie
+wynoszącym co najmniej 240 dni, podczas gdy odsetek skorygowanych błędów nie wykazywał wyraźnego
+trendu (\RetShortIncorrect\% i \RetLongIncorrect\% w tych samych przedziałach; rys.~\ref{fig:odstep}).
+Wiedza potwierdzona poprawną odpowiedzią podlegała więc
+zapominaniu między powtórkami \citep{cepeda2006,cepeda2008}, natomiast szansa skorygowania błędu po
+informacji zwrotnej nie zależała od czasu, który upłynął do kolejnego kontaktu z pytaniem. % SPRAWDŹ: brak trendu dla odpowiedzi błędnych po zmianie danych
 
-\begin{figure}[tbp]
+\begin{figure}[H]
 \centering
 \includegraphics{\FigDir rys_odstep}
-\caption{Odsetek poprawnych odpowiedzi według odstępu od poprzedniej próby tego samego pytania,
-osobno dla odpowiedzi poprzednio poprawnych (koła) i poprzednio błędnych (kwadraty). Słupki błędów:
-95\% PU z bootstrapu klastrowego po pracownikach.}
+\caption{Poprawność według odstępu, osobno dla prób poprzedzonych odpowiedzią poprawną (koła)
+i błędną (kwadraty). Słupki błędów: 95\% PU (bootstrap).}
 \label{fig:odstep}
 \end{figure}
 
-\subsection{Przejścia i utrwalone błędy (PB3)}
-Spośród odpowiedzi poprzednio poprawnych \RetainPct\% \RetainCI{} było poprawnych również w kolejnej
-próbie, a \ForgetPct\% zapomniano. Spośród odpowiedzi poprzednio błędnych \RecoverPct\% \RecoverCI{}
-skorygowano, a \PersistPct\% pozostało błędnych, mimo że po każdej odpowiedzi wyświetlano poprawną
-odpowiedź (tab.~\ref{tab:przejscia}). Gdy błąd się powtarzał (\SameDistractorN{} przypadków),
-pracownicy wybierali ten sam dystraktor w \SameDistractorPct\% \SameDistractorCI{} przypadków, wobec
-\SameDistractorExpected\% oczekiwanych przy wyborze losowym i \SameDistractorExpectedPop\% oczekiwanych
-przy uwzględnieniu popularności poszczególnych dystraktorów. Wskazuje to na utrwalone błędne
-przekonania, a nie na zgadywanie. % SPRAWDŹ
-
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Przejścia między kolejnymi próbami tego samego pytania.}
 \label{tab:przejscia}
 \small
 \tabelacsv{lrrlr}{przejscia}
-\uwagatabeli{Po dwóch kolejnych błędach ten sam dystraktor wybrano w \SameDistractorPct\%
-\SameDistractorCI{} przypadków ($n = \SameDistractorN$); wartość oczekiwana przy losowym wyborze spośród
-zaobserwowanych dystraktorów wynosiła \SameDistractorExpected\%, a po uwzględnieniu ogólnej popularności
-każdego dystraktora w danym pytaniu wynosiła ona \SameDistractorExpectedPop\%. 95\% PU z bootstrapu
-klastrowego, w którym losowano pracowników (\BootReps{} replikacji).}
+\uwagatabeli{Próby od drugiej wzwyż według wyniku próby poprzedniej. 95\% PU wyznaczono metodą
+bootstrap.}
 \end{table}
 
-\subsection{Odporność wyników i nowe pytania}
-Oszacowanie efektu numeru próby pozostawało zbliżone we wszystkich specyfikacjach (OR od \ORRange;
-rys.~\ref{fig:wrazliwosc}, tab.~\ref{tab:wrazliwosc}) i wynosiło \ORSensCohort{} w zbalansowanej
-kohorcie, \ORSensLenThree, \ORSensLenFive{} i \ORSensLenEight{} w sekwencjach liczących 3--4, 5--7
-i co najmniej 8 prób, \ORSensGee{} w uśrednionym populacyjnie modelu GEE oraz \ORSensMixed{} w modelu
-mieszanym. Oszacowanie było wyższe po dodaniu stażu jako predyktora (\ORSensTenure), ponieważ staż
-jest skorelowany z numerem próby.
+\subsection{Utrwalone błędy (PB3)}
+Większość błędów miała charakter przejściowy: w \EverCorrectedPct\% z \FirstWrongSeqN{} sekwencji
+rozpoczętych odpowiedzią błędną pracownik odpowiedział poprawnie w którejś z kolejnych prób. Szansa
+korekty malała jednak z każdym kolejnym błędem. Po jednym błędzie poprawność wynosiła \CorrRunOne\%
+\CorrRunOneCI, po dwóch błędach z rzędu \CorrRunTwo\%, po trzech \CorrRunThree\%, a po co najmniej
+\RunMax{} błędach \CorrRunMax\% \CorrRunMaxCI{} (tab.~\ref{tab:seria_bledow}). Każde kolejne
+wyświetlenie poprawnej odpowiedzi przynosiło więc mniejszy efekt. Spadek ten może częściowo wynikać
+z tego, że wiele błędów z rzędu występowało w trudniejszych pytaniach, nie musi zatem w całości odzwierciedlać
+utrwalania się błędu.
 
-W modelu nowych pytań M3 odsetek poprawnych odpowiedzi przy pierwszym kontakcie z pytaniem nie rósł
-wraz ze stażem (OR \ORMThreeTenure{} na rok, 95\% PU \ORMThreeTenureCI; tab.~\ref{tab:regresja}).
-Przedział ufności obejmuje zarówno brak efektu, jak i niewielki spadek, dlatego wynik oznacza brak
-dowodu na uogólnienie poprawy na nowe pytania, a nie dowód jego braku. % SPRAWDŹ
+O naturze powtórzonych błędów świadczy wybór dystraktora. Gdy pracownik pomylił się w dwóch kolejnych
+próbach, w \SameDistractorPct\% \SameDistractorCI{} przypadków ($n = \SameDistractorN$) wskazał ten sam
+dystraktor, wobec \SameDistractorExpected\% oczekiwanych przy wyborze losowym
+i \SameDistractorExpectedPop\% oczekiwanych przy uwzględnieniu popularności poszczególnych dystraktorów
+w danym pytaniu. Powtórzony błąd był zatem wyborem konkretnej odpowiedzi, a nie zgadywaniem. Tendencja
+ta nie słabła z upływem czasu: do tego samego dystraktora wracano w \SameDistrGapShort\% przypadków przy
+odstępie krótszym niż 30 dni, w \SameDistrGapMid\% przy odstępie od 30 do 89 dni i w \SameDistrGapLong\%
+przy odstępie wynoszącym co najmniej 90 dni. Powtórzone błędy skupiały się przy tym w niewielkiej części
+materiału, ponieważ na \PersistTopItems{} spośród \PersistItems{} pytań, w których wystąpiły, przypadało
+\PersistTopItemsShare\% wszystkich powtórzonych błędów.
 
-\begin{figure}[tbp]
+Zestawienie wyników PB2 i PB3 ujawnia asymetrię. Odpowiedzi poprawne słabły wraz z odstępem, natomiast
+błędne przekonanie, które przetrwało pierwszą korektę, utrzymywało się niezależnie od upływu czasu
+i w coraz mniejszym stopniu ulegało informacji zwrotnej. Wyświetlenie poprawnej odpowiedzi wystarczało
+do skorygowania większości błędów, ale nie usuwało przyczyny, dla której pracownik wybierał określony
+dystraktor. % SPRAWDŹ: monotoniczny spadek korekty i brak trendu dystraktora wg odstępu po zmianie danych
+
+\begin{table}[H]
 \centering
-\includegraphics{\FigDir rys_wrazliwosc}
-\caption{Iloraz szans (95\% PU) poprawnej odpowiedzi na podwojenie numeru próby w różnych
-specyfikacjach modelu M1. Romb: model główny; linia pionowa: brak efektu.}
-\label{fig:wrazliwosc}
+\caption{Poprawność według liczby błędów popełnionych z rzędu bezpośrednio przed daną próbą.}
+\label{tab:seria_bledow}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\tabelacsv{l*{5}{r}}{seria_bledow}% 5 = 0, 1, 2, 3, >=RunMax
+\uwagatabeli{Próby od drugiej wzwyż. Kolumna 0: próby poprzedzone odpowiedzią poprawną. 95\% PU
+wyznaczono metodą bootstrap.}
+\end{table}
+
+\subsection{Podsumowanie wyników}
+Wyniki pozwalają odpowiedzieć na trzy pytania badawcze.
+\begin{enumerate}[label=(PB\arabic*)]
+  \item Poprawność rosła wraz z numerem próby, również w kohorcie, w której zwiększyła się
+  o \SeqChange{} p.p. między próbą~1 a próbą~\CohortK{}. Przyrost nie zależał od wieku pracownika,
+  a wiek wiązał się jedynie z poprawnością w pierwszej próbie.
+  \item Przyrost poprawności wynikał z przewagi korekt błędów (\RecoverPct\%) nad zapominaniem
+  (\ForgetPct\%). Zapominanie nasilało się wraz z odstępem, natomiast odsetek korekt błędów od odstępu
+  nie zależał.
+  \item Większość błędów korygowano (\EverCorrectedPct\% sekwencji rozpoczętych odpowiedzią błędną),
+  lecz powtórzone błędy polegały na wyborze tego samego dystraktora (\SameDistractorPct\%), nie słabły
+  wraz z odstępem, a szansa ich korekty malała z każdym kolejnym błędem z rzędu, do \CorrRunMax\%
+  po co najmniej \RunMax{} błędach.
+\end{enumerate}
+Łącznie wyniki wskazują, że program utrwalał wiedzę sprawdzaną przez pytania, przy czym wiedza ta
+wymagała podtrzymywania kolejnymi powtórkami, a niewielka część pytań generowała błędy odporne na
+informację zwrotną ograniczoną do wyświetlenia poprawnej odpowiedzi. % SPRAWDŹ
+Rys.~\ref{fig:stany_kohorty} zestawia te wyniki w kohorcie: linia poprawności rośnie (PB1), korekty
+błędów przeważają nad zapominaniem (PB2), a powtórzone błędy utrzymują się we wszystkich kolejnych
+próbach (PB3).
+
+\begin{figure}[H]
+\centering
+\includegraphics{\FigDir rys_stany_kohorty}
+\caption{Poprawność i stan odpowiedzi w kohorcie (\CohortN{} sekwencji, próby od 1 do \CohortK{}).
+Słupki: udział odpowiedzi według wyniku bieżącej i poprzedniej próby (definicje IX--XI
+w podrozdziale~\ref{sec:definicje}); w próbie~1 tylko odpowiedzi poprawne i błędne. Linia: poprawność z 95\% PU (bootstrap),
+wartości nad słupkami.}
+\label{fig:stany_kohorty}
 \end{figure}
+
+% \section{Wyniki - stare do usuniecia}
+
+% \subsection{Próba i harmonogram powtórek}
+% Zbiór danych obejmował \NResponses{} odpowiedzi \NEmployees{} pracowników na \NItems{} pytań
+% w \NModules{} modułach, zebranych od \DateStart{} do \DateEnd{} (tab.~\ref{tab:zbior_danych}).
+% Mediana liczby odpowiedzi na pracownika wynosiła \RespPerEmpMedian{} (IQR
+% \RespPerEmpQOne--\RespPerEmpQThree), udzielonych na \ItemsPerEmpMedian{} różnych pytań w ciągu
+% \ActiveDaysMedian{} dni aktywności, a mediana czasu uczestnictwa w programie wynosiła
+% \SpanMonthsMedian{} miesięcy. Okresy bez odpowiedzi odpowiadają zawieszeniom programu na czas
+% przeglądu pytań (rys.~\ref{fig:aktywnosc}). Wśród \DemoMatched{} pracowników o znanych danych
+% demograficznych kobiety stanowiły \DemoWomenPct\%, a mediana wieku wynosiła \AgeMedian{} lat
+% (tab.~\ref{tab:demografia}). Ogólny odsetek poprawnych odpowiedzi wynosił \AccOverall\%, a w pierwszych
+% próbach \AccFirst\%.
+
+% Harmonogram powtórek nie zależał od wyniku poprzedniej próby: prawdopodobieństwo kolejnej próby
+% wynosiło \ReaskAfterCorrect\% po odpowiedzi poprawnej i \ReaskAfterIncorrect\% po błędnej, natomiast
+% mediana odstępu do kolejnej próby wynosiła odpowiednio \GapAfterCorrect{} i \GapAfterIncorrect{} dni.
+% Kontynuacja sekwencji nie była więc selekcjonowana według wyników. % SPRAWDŹ
+
+% \subsection{Uczenie się w kolejnych próbach (PB1)}
+% Odsetek poprawnych odpowiedzi rósł wraz z numerem próby: z \AccAttOne\% \AccAttOneCI{} w pierwszej
+% próbie do \AccAttMax\% \AccAttMaxCI{} w próbie \AttMax{}. i kolejnych (rys.~\ref{fig:krzywa_uczenia},
+% tab.~\ref{tab:krzywa_uczenia}). Wzrost był podobny w zbalansowanej kohorcie \CohortN{} sekwencji
+% liczących co najmniej \CohortK{} prób (\CohortAccOne\% \CohortAccOneCI{} w próbie~1 wobec \CohortAccK\%
+% \CohortAccKCI{} w próbie~\CohortK), nie wynika więc z selektywnej kontynuacji przez pracowników
+% osiągających lepsze wyniki. Odsetek błędów był funkcją potęgową numeru próby (wykładnik \PowerLawB,
+% $R^2 = \PowerLawRsq$), zgodnie z potęgowym prawem praktyki \citep{newell1981}.
+
+% W modelu uczenia M1 każde podwojenie numeru próby wiązało się z \ORMOneAttempt-krotnie wyższymi
+% szansami poprawnej odpowiedzi (95\% PU \ORMOneAttemptCI; tab.~\ref{tab:regresja}). Efekt ten wyjaśniał
+% jednak niewielką część zmienności poprawności (brzegowy $R^2 = \RsqMarginal$ wobec warunkowego
+% $R^2 = \RsqConditional$), a pytania odpowiadały za większą jej część niż pracownicy (ICC
+% \ICCItem{} wobec \ICCEmployee). Na poziomie pracowników wynik w trzeciej próbie był lepszy niż
+% w pierwszej u \EmpImproved{} z \EmpN{} osób, a gorszy u \EmpWorsened{} (średnia zmiana
+% \EmpMeanChange{} p.p., 95\% PU \EmpMeanChangeCI; tab.~\ref{tab:zmiana_pracownikow}).
+
+% \begin{table*}[htbp]
+% \centering
+% \caption{Modele regresji logistycznej poprawności odpowiedzi: ilorazy szans [95\% PU].}
+% \label{tab:regresja}
+% \small
+% \setlength{\tabcolsep}{3.5pt}
+% \tabelacsv{llll}{regresja}
+% \uwagatabeli{Definicje modeli M1--M3 podano w podrozdziale ,,Modele statystyczne''. Wszystkie modele
+% zawierają efekty stałe pracownika i pytania; błędy standardowe klastrowane względem pracowników.
+% Pracowników i pytania bez zmienności poprawności usunięto przed estymacją (M1: \MOneDropped{}
+% odpowiedzi). OR dla numeru próby i odstępu dotyczą podwojenia wartości, dla stażu jednego roku.}
+% \end{table*}
+
+% \subsection{Wynik poprzedniej próby, odstęp i zapominanie (PB2)}
+% W modelu retencji M2, po uwzględnieniu numeru próby, poprawna poprzednia odpowiedź wiązała się
+% z wyższymi szansami poprawnej odpowiedzi (OR \ORMTwoPrev, 95\% PU \ORMTwoPrevCI), natomiast dłuższy
+% odstęp od poprzedniej próby wiązał się z niższymi szansami (OR \ORMTwoGap{} na podwojenie odstępu,
+% 95\% PU \ORMTwoGapCI; tab.~\ref{tab:regresja}). Wśród odpowiedzi poprzednio poprawnych odsetek
+% poprawnych zmniejszał się z \RetShortCorrect\%, gdy pytanie powtórzono w ciągu 14 dni, do
+% \RetLongCorrect\% po 240 dniach lub dłużej; odpowiedzi poprzednio błędne były korygowane odpowiednio
+% w \RetShortIncorrect\% i \RetLongIncorrect\% przypadków (rys.~\ref{fig:odstep},
+% tab.~\ref{tab:retencja_wg_odstepu}). Wzorzec ten jest zgodny z zapominaniem między powtórkami
+% \citep{cepeda2006,cepeda2008}. % SPRAWDŹ
+
+% \subsection{Przejścia i utrwalone błędy (PB3)}
+% Spośród odpowiedzi poprzednio poprawnych \RetainPct\% \RetainCI{} było poprawnych również w kolejnej
+% próbie, a \ForgetPct\% zapomniano. Spośród odpowiedzi poprzednio błędnych \RecoverPct\% \RecoverCI{}
+% skorygowano, a \PersistPct\% pozostało błędnych, mimo że po każdej odpowiedzi wyświetlano poprawną
+% odpowiedź (tab.~\ref{tab:przejscia}). Gdy błąd się powtarzał (\SameDistractorN{} przypadków),
+% pracownicy wybierali ten sam dystraktor w \SameDistractorPct\% \SameDistractorCI{} przypadków, wobec
+% \SameDistractorExpected\% oczekiwanych przy wyborze losowym i \SameDistractorExpectedPop\% oczekiwanych
+% przy uwzględnieniu popularności poszczególnych dystraktorów. Wskazuje to na utrwalone błędne
+% przekonania, a nie na zgadywanie. % SPRAWDŹ
+
+% \subsection{Odporność wyników i nowe pytania}
+% Oszacowanie efektu numeru próby pozostawało zbliżone we wszystkich specyfikacjach (OR od \ORRange;
+% rys.~\ref{fig:wrazliwosc}, tab.~\ref{tab:wrazliwosc}) i wynosiło \ORSensCohort{} w zbalansowanej
+% kohorcie, \ORSensLenThree, \ORSensLenFive{} i \ORSensLenEight{} w sekwencjach liczących 3--4, 5--7
+% i co najmniej 8 prób, \ORSensGee{} w uśrednionym populacyjnie modelu GEE oraz \ORSensMixed{} w modelu
+% mieszanym. Oszacowanie było wyższe po dodaniu stażu jako predyktora (\ORSensTenure), ponieważ staż
+% jest skorelowany z numerem próby.
+
+% W modelu nowych pytań M3 odsetek poprawnych odpowiedzi przy pierwszym kontakcie z pytaniem nie rósł
+% wraz ze stażem (OR \ORMThreeTenure{} na rok, 95\% PU \ORMThreeTenureCI; tab.~\ref{tab:regresja}).
+% Przedział ufności obejmuje zarówno brak efektu, jak i niewielki spadek, dlatego wynik oznacza brak
+% dowodu na uogólnienie poprawy na nowe pytania, a nie dowód jego braku. % SPRAWDŹ
+
+% \begin{figure}[tbp]
+% \centering
+% \includegraphics{\FigDir rys_wrazliwosc}
+% \caption{Iloraz szans (95\% PU) poprawnej odpowiedzi na podwojenie numeru próby w różnych
+% specyfikacjach modelu M1. Romb: model główny; linia pionowa: brak efektu.}
+% \label{fig:wrazliwosc}
+% \end{figure}

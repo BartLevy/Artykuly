@@ -224,8 +224,8 @@ def modele(x, kohorta):
                        m1.OR, m1.lo, m1.hi, info["M1"]["n"]))
     c = x.loc[(x["liczba_prob"] >= kohorta) & (x["proba"] <= kohorta)]
     r, i = logit_fe("correct ~ log2_proba", c)
-    wrazliwosc.append(("cohort", f"Kohorta zbalansowana (sekwencje z $\\geq${kohorta} próbami, próby 1--{kohorta})",
-                       f"Kohorta zbalansowana (≥{kohorta} prób)", r.OR[0], r.lo[0], r.hi[0], i["n"]))
+    wrazliwosc.append(("cohort", f"Kohorta (sekwencje z $\\geq${kohorta} próbami, próby 1--{kohorta})",
+                       f"Kohorta (≥{kohorta} prób)", r.OR[0], r.lo[0], r.hi[0], i["n"]))
     r, i = logit_fe("correct ~ log2_proba", x.loc[x["proba"] <= 10])
     wrazliwosc.append(("trunc", "Próby obcięte do 10", "Próby ≤10", r.OR[0], r.lo[0], r.hi[0], i["n"]))
     for od, do in ((3, 4), (5, 7), (8, None)):
@@ -283,6 +283,27 @@ def przejscia(x, B, rng):
     dystraktor = {"n": len(bb), "p": bb["ten_sam"].mean(), "lo": ci.ci_lo, "hi": ci.ci_hi,
                   "oczekiwane": oczek, "oczekiwane_pop": oczek_pop}
     return tab, dystraktor
+
+
+def utrwalanie_bledow(x, B, rng, max_seria=4):
+    """PB3: korekta wg liczby błędów z rzędu, powrót do tego samego dystraktora wg odstępu, koncentracja."""
+    klucz = [x[k] for k in KLUCZ]
+    reset = (x["blad"] == 0).groupby(klucz).cumsum()
+    seria = x["blad"].groupby(klucz + [reset]).cumsum().groupby(klucz).shift(fill_value=0)
+    p = x.loc[x["proba"] >= 2].assign(seria=seria.clip(upper=max_seria))
+    korekta = udzialy_z_ci(p, "seria", B, rng)
+    bb = p.loc[(p["poprzednia"] == 0) & (p["correct"] == 0)]
+    ten_sam = (bb["answer_id"] == bb["poprzednia_odp"])
+    przedzial = pd.cut(bb["odstep_dni"], [0, 30, 90, np.inf], right=False, labels=["<30", "30--89", "$\\geq$90"])
+    dys_odstep = ten_sam.groupby(przedzial, observed=True).agg(["size", "mean"])
+    pierwsza_bledna = x.loc[(x["proba"] == 1) & (x["correct"] == 0) & (x["liczba_prob"] >= 2), KLUCZ]
+    pozniej = x.loc[x["proba"] >= 2].groupby(KLUCZ)["correct"].max().rename("kiedys")
+    kiedys = pierwsza_bledna.merge(pozniej, left_on=KLUCZ, right_index=True)["kiedys"]
+    na_pytanie = bb.groupby("question_id").size().sort_values(ascending=False)
+    top = max(1, int(round(0.1 * len(na_pytanie))))
+    return korekta, dys_odstep, {"kiedys": kiedys.mean(), "kiedys_n": len(kiedys),
+                                 "top_n": top, "top_udzial": na_pytanie.head(top).sum() / na_pytanie.sum(),
+                                 "pytania_bb": len(na_pytanie), "max_seria": max_seria}
 
 
 def retencja_wg_odstepu(x, B, rng):
@@ -363,6 +384,38 @@ def analiza_pozycji(x, min_n, alfa):
     return out
 
 
+def grupy_wieku(x, dekada):
+    """Lista (etykieta, maska odpowiedzi): ogółem, przedziały 10-letnie, brak danych o wieku."""
+    d = x["user_symbol"].map(dekada)
+    out = [("Ogółem", pd.Series(True, index=x.index))]
+    out += [(f"{int(k)}--{int(k) + 9}", d == k) for k in sorted(d.dropna().unique())]
+    if d.isna().any():
+        out.append(("Brak danych", d.isna()))
+    return out
+
+
+def bootstrap_roznica(c, proba_a, proba_b, B, rng):
+    """95% PU różnicy odsetków poprawnych (próba_b minus próba_a); bootstrap klastrowy po pracownikach."""
+    t = c.loc[c["proba"].isin([proba_a, proba_b])].groupby(["user_symbol", "proba"])["correct"] \
+        .agg(["size", "sum"]).unstack(fill_value=0)
+    w = rng.multinomial(len(t), np.full(len(t), 1 / len(t)), size=B)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        d = (w @ t[("sum", proba_b)].to_numpy(float)) / (w @ t[("size", proba_b)].to_numpy(float)) \
+            - (w @ t[("sum", proba_a)].to_numpy(float)) / (w @ t[("size", proba_a)].to_numpy(float))
+    return np.nanpercentile(d, [2.5, 97.5])
+
+
+def logit_wiek_pytanie(d):
+    """Pierwsze próby: poprawność ~ wiek (na 10 lat) + efekty stałe pytania; SE klastrowane po pracownikach."""
+    d = d.loc[d.groupby("question_id")["correct"].transform("nunique") > 1]
+    grupy = d["user_symbol"].astype("category").cat.codes
+    r = smf.logit("correct ~ wiek10 + C(question_id)", d).fit(
+        disp=0, maxiter=300, cov_type="cluster", cov_kwds={"groups": grupy})
+    lo, hi = np.exp(r.conf_int().loc["wiek10"])
+    return {"OR": np.exp(r.params["wiek10"]), "lo": lo, "hi": hi, "p": r.pvalues["wiek10"],
+            "n": len(d), "osoby": d["user_symbol"].nunique()}
+
+
 # ------------------------------------------------------------ demografia (people.csv)
 
 PLCI = {"k": "kobieta", "m": "mężczyzna"}
@@ -396,7 +449,7 @@ def podsumuj_demografie(o):
     znana = o["plec"] != BRAK
     wiek_plec = pd.crosstab(o["dekada"], o["plec"]).reindex(columns=["kobieta", "mężczyzna", BRAK], fill_value=0)
     wiek_plec = wiek_plec.loc[:, (wiek_plec.sum() > 0) | (wiek_plec.columns != BRAK)]
-    return {"osoby": len(o), "dopasowane": int(o["dopasowana"].sum()),
+    return {"dekada": o["dekada"], "osoby": len(o), "dopasowane": int(o["dopasowana"].sum()),
             "kobiety": int((o["plec"] == "kobieta").sum()), "mezczyzni": int((o["plec"] == "mężczyzna").sum()),
             "plec_znana": int(znana.sum()), "plec_brak": int((~znana).sum()),
             "wiek_n": len(w), "wiek_brak": int(o["wiek"].isna().sum()),
@@ -516,14 +569,10 @@ def zapisz(fig, katalog, nazwa):
 
 def wykres_krzywa(plt, katalog, krzywa, fit, max_proba, kohorta):
     fig, ax = plt.subplots(figsize=(3.5, 2.5))
-    n_kohorta = f"{int(krzywa.loc[krzywa['proba'] == 'cohort', 'n'].iloc[0]):,}".replace(",", "\u2009")
-    for proba, kolor, marker, etykieta in [
-            ("all", KOLOR_1, "o", "Wszystkie sekwencje"),
-            ("cohort", KOLOR_2, "s", f"Kohorta zbalansowana ($n$ = {n_kohorta}), próby 1–{kohorta}")]:
-        k = krzywa.loc[krzywa["proba"] == proba]
-        off = -0.08 if proba == "all" else 0.08
-        ax.errorbar(k["etap"] + off, 100 * k["p"], yerr=[100 * (k["p"] - k["ci_lo"]), 100 * (k["ci_hi"] - k["p"])],
-                    color=kolor, marker=marker, capsize=2, elinewidth=0.8, label=etykieta)
+    # kohorta jest pokazana na rycinie syntetycznej (rys_stany_kohorty)
+    k = krzywa.loc[krzywa["proba"] == "all"]
+    ax.errorbar(k["etap"], 100 * k["p"], yerr=[100 * (k["p"] - k["ci_lo"]), 100 * (k["ci_hi"] - k["p"])],
+                color=KOLOR_1, marker="o", capsize=2, elinewidth=0.8, label="Wszystkie sekwencje")
     xs = np.linspace(1, max_proba - 1, 100)
     wyk = f"{fit['b']:.2f}".replace(".", "{,}")
     ax.plot(xs, 100 * (1 - fit["a"] * xs ** (-fit["b"])), ls="--", lw=1, color=SZARY,
@@ -532,9 +581,58 @@ def wykres_krzywa(plt, katalog, krzywa, fit, max_proba, kohorta):
     ax.set_xticklabels([str(i) for i in range(1, max_proba)] + [f"{max_proba}+"])
     przecinek(ax.yaxis)
     ax.set_xlabel("Numer próby (ten sam pracownik, to samo pytanie)")
-    ax.set_ylabel("Odpowiedzi poprawne (%)")
+    ax.set_ylabel("Poprawność (%)")
     ax.legend(loc="lower right")
     zapisz(fig, katalog, "rys_krzywa_uczenia")
+
+
+STANY = [("utrzymana", "Poprawna po poprawnej", "#184f95"), ("korekta", "Korekta błędu", "#5598e7"),
+         ("zapominanie", "Zapominanie", "#f08a5c"), ("powtorzony", "Powtórzony błąd", "#b8461a")]
+
+
+def stany_kohorty(x, K):
+    """Udział stanów odpowiedzi w kohorcie wg numeru próby (próba 1: poprawna/błędna)."""
+    c = x.loc[(x["liczba_prob"] >= K) & (x["proba"] <= K)]
+    pop, cor = c["poprzednia"], c["correct"]
+    stan = np.select([c["proba"] == 1, (pop == 1) & (cor == 1), (pop == 0) & (cor == 1), (pop == 1) & (cor == 0)],
+                     [np.where(cor == 1, "pierwsza_poprawna", "pierwsza_bledna"), "utrzymana", "korekta",
+                      "zapominanie"], default="powtorzony")
+    out = pd.crosstab(c["proba"], stan, normalize="index")
+    return out.reindex(columns=["pierwsza_poprawna", "pierwsza_bledna"] + [k for k, _, _ in STANY], fill_value=0)
+
+
+def wykres_stany_kohorty(plt, katalog, stany, krzywa, K):
+    fig, ax = plt.subplots(figsize=(4.6, 3.1))
+    proby = stany.index.to_numpy()
+    biel = dict(edgecolor="#fcfcfb", linewidth=1.0, width=0.62)
+    # próba 1: tylko poprawna / błędna, z etykietami bezpośrednio na słupku
+    p1 = stany.loc[1]
+    ax.bar(1, 100 * p1["pierwsza_poprawna"], color=STANY[0][2], **biel)
+    ax.bar(1, 100 * p1["pierwsza_bledna"], bottom=100 * p1["pierwsza_poprawna"], color=STANY[3][2], **biel)
+    ax.text(1, 50 * p1["pierwsza_poprawna"], "poprawna", ha="center", va="center", color="#fcfcfb", fontsize=6)
+    ax.text(1, 100 * p1["pierwsza_poprawna"] + 55 * p1["pierwsza_bledna"], "błędna", ha="center", va="center",
+            color="#fcfcfb", fontsize=6)
+    dalej = stany.loc[proby >= 2]
+    dol = np.zeros(len(dalej))
+    for klucz, etykieta, kolor in STANY:
+        h = 100 * dalej[klucz].to_numpy()
+        ax.bar(dalej.index, h, bottom=dol, color=kolor, label=etykieta, **biel)
+        dol += h
+    k = krzywa.loc[krzywa["proba"] == "cohort"].sort_values("etap")
+    ax.errorbar(k["etap"], 100 * k["p"], yerr=[100 * (k["p"] - k["ci_lo"]), 100 * (k["ci_hi"] - k["p"])],
+                color="#0b0b0b", marker="o", ms=5, mfc="#fcfcfb", mew=1.5, lw=2, capsize=2, elinewidth=0.8,
+                label="Poprawność (95% PU)", zorder=5)
+    for e, v in zip(k["etap"], k["p"]):
+        ax.text(e, 101.5, f"{100 * v:.1f}%".replace(".", ","), ha="center", va="bottom", fontsize=6.5,
+                color="#0b0b0b")
+    ax.set_xticks(proby)
+    ax.set_ylim(0, 108)
+    ax.set_yticks(range(0, 101, 20))
+    ax.grid(False)
+    ax.set_xlabel("Numer próby (kohorta)")
+    ax.set_ylabel("Udział odpowiedzi (%)")
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=3, handlelength=1.2, columnspacing=1.0)
+    zapisz(fig, katalog, "rys_stany_kohorty")
 
 
 def wykres_odstep(plt, katalog, ret):
@@ -549,7 +647,7 @@ def wykres_odstep(plt, katalog, ret):
     ax.set_xticklabels([e.replace("--", "–").replace("$\\geq$", "≥") for e in ETYKIETY_DNI])
     przecinek(ax.yaxis)
     ax.set_xlabel("Dni od poprzedniej próby tego samego pytania")
-    ax.set_ylabel("Odpowiedzi poprawne (%)")
+    ax.set_ylabel("Poprawność (%)")
     ax.legend(loc="center right")
     zapisz(fig, katalog, "rys_odstep")
 
@@ -803,6 +901,27 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
              SameDistractorN=f_int(dys["n"]), SameDistractorExpected=f_pct(dys["oczekiwane"]),
              SameDistractorExpectedPop=f_pct(dys["oczekiwane_pop"]))
 
+    # --- Tabela: utrwalanie błędów (PB3); osobny strumień losowy, aby nie zmieniać PU pozostałych analiz
+    kor, dys_od, ub = utrwalanie_bledow(x, B, np.random.default_rng(args.seed + 3))
+    kor.to_csv(ddir / "korekta_wg_serii_bledow.csv", index=False)
+    dys_od.reset_index().to_csv(ddir / "dystraktor_wg_odstepu.csv", index=False)
+    S = ub["max_seria"]
+    et = [f"$\\geq${S}" if k == S else str(k) for k in kor["seria"]]
+    t14 = [["Próby, $n$"] + [f_int(v) for v in kor["n"]], ["Pracownicy"] + [f_int(v) for v in kor["osoby"]],
+           ["Poprawność (\\%)"] + [f_pct(v) for v in kor["p"]],
+           ["95\\% PU"] + [f_ci(a, b) for a, b in zip(kor["ci_lo"], kor["ci_hi"])]]
+    tabela_csv(tdir, "seria_bledow", pd.DataFrame(t14, columns=["Błędy z rzędu przed próbą"] + et))
+    k = kor.set_index("seria")
+    M.update(CorrRunOne=f_pct(k.loc[1, "p"]), CorrRunOneCI=f_ci(k.loc[1, "ci_lo"], k.loc[1, "ci_hi"]),
+             CorrRunTwo=f_pct(k.loc[2, "p"]), CorrRunThree=f_pct(k.loc[3, "p"]),
+             CorrRunMax=f_pct(k.loc[S, "p"]), CorrRunMaxCI=f_ci(k.loc[S, "ci_lo"], k.loc[S, "ci_hi"]),
+             CorrRunMaxN=f_int(k.loc[S, "n"]), RunMax=f"{S}",
+             EverCorrectedPct=f_pct(ub["kiedys"]), FirstWrongSeqN=f_int(ub["kiedys_n"]),
+             SameDistrGapShort=f_pct(dys_od["mean"].iloc[0]), SameDistrGapMid=f_pct(dys_od["mean"].iloc[1]),
+             SameDistrGapLong=f_pct(dys_od["mean"].iloc[2]),
+             PersistTopItems=f_int(ub["top_n"]), PersistTopItemsShare=f_pct(ub["top_udzial"]),
+             PersistItems=f_int(ub["pytania_bb"]))
+
     # --- Tabela i wykres: retencja wg odstępu
     ret = retencja_wg_odstepu(x, B, rng)
     ret.to_csv(ddir / "retencja_wg_odstepu.csv", index=False)
@@ -933,9 +1052,74 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
         M.update(AgeModalGroup=f"{modalna}--{modalna + 9}",
                  AgeModalGroupPct=f_pct(t.sum(axis=1).max() / d["wiek_n"]))
 
+    # --- Tabele poziome wg przedziału wieku: pierwsza próba i zmiana w sekwencji (kohorta)
+    if demo is not None:
+        dekada = demo["dekada"]
+        wiek = (x["user_symbol"].map(dekada) + 5).astype(float)  # środek przedziału 10-letniego
+        x = x.assign(wiek10=wiek / 10)
+        f = x.loc[x["proba"] == 1]
+        kolumny, wiersze = [""], {k: [] for k in ("os", "n", "p", "ci")}
+        pierwsza = []
+        for et, maska in grupy_wieku(f, dekada):
+            g = f.loc[maska]
+            ci = bootstrap_srednie(g.assign(grp=1), "grp", "correct", B, rng).iloc[0]
+            pierwsza.append({"grupa": et, "osoby": g["user_symbol"].nunique(), "n": len(g),
+                             "p": g["correct"].mean(), "ci_lo": ci.ci_lo, "ci_hi": ci.ci_hi})
+        pierwsza = pd.DataFrame(pierwsza)
+        pierwsza.to_csv(ddir / "pierwsza_proba_wiek.csv", index=False)
+        t12 = [["Pracownicy"] + [f_int(v) for v in pierwsza["osoby"]],
+               ["Pierwsze próby, $n$"] + [f_int(v) for v in pierwsza["n"]],
+               ["Poprawność (\\%)"] + [f_pct(v) for v in pierwsza["p"]],
+               ["95\\% PU"] + [f_ci(a, b) for a, b in zip(pierwsza["ci_lo"], pierwsza["ci_hi"])]]
+        tabela_csv(tdir, "pierwsza_proba_wiek", pd.DataFrame(t12, columns=["Przedział wieku (lata)"]
+                                                               + list(pierwsza["grupa"])))
+        fw = logit_wiek_pytanie(f.dropna(subset=["wiek10"]))
+        dek = pierwsza.loc[~pierwsza["grupa"].isin(["Ogółem", "Brak danych"])]
+        lo_g, hi_g = dek.loc[dek["p"].idxmin()], dek.loc[dek["p"].idxmax()]
+        M.update(FirstN=f_int(pierwsza["n"].iloc[0]), FirstAcc=f_pct(pierwsza["p"].iloc[0]),
+                 FirstAccCI=f_ci(pierwsza["ci_lo"].iloc[0], pierwsza["ci_hi"].iloc[0]),
+                 FirstAccMinGroup=lo_g["grupa"], FirstAccMin=f_pct(lo_g["p"]),
+                 FirstAccMaxGroup=hi_g["grupa"], FirstAccMax=f_pct(hi_g["p"]),
+                 FirstAgeOR=f_or(fw["OR"]), FirstAgeORCI=f_ci(fw["lo"], fw["hi"], 2, 1),
+                 FirstAgeP=f_p_rel(fw["p"]), FirstAgeN=f_int(fw["n"]), FirstAgeEmp=f_int(fw["osoby"]))
+
+        c = x.loc[(x["liczba_prob"] >= K) & (x["proba"] <= K)]
+        seq = []
+        for et, maska in grupy_wieku(c, dekada):
+            g = c.loc[maska]
+            p_k = g.groupby("proba")["correct"].mean()
+            lo, hi = bootstrap_roznica(g, 1, K, B, rng)
+            seq.append({"grupa": et, "sekwencje": len(g.groupby(KLUCZ)), "osoby": g["user_symbol"].nunique(),
+                        **{f"p{k}": p_k.get(k, np.nan) for k in range(1, K + 1)},
+                        "zmiana": p_k[K] - p_k[1], "ci_lo": lo, "ci_hi": hi})
+        seq = pd.DataFrame(seq)
+        seq.to_csv(ddir / "sekwencje_wiek.csv", index=False)
+        t13 = [["Pracownicy"] + [f_int(v) for v in seq["osoby"]],
+               ["Sekwencje, $n$"] + [f_int(v) for v in seq["sekwencje"]], [SEP] + [""] * len(seq)]
+        t13 += [[f"Próba {k} (\\%)"] + [f_pct(v) for v in seq[f"p{k}"]] for k in range(1, K + 1)]
+        t13 += [[SEP] + [""] * len(seq),
+                [f"Zmiana, próba {K} wobec 1 (p.p.)"] + [f_num(100 * v, 1) for v in seq["zmiana"]],
+                ["95\\% PU"] + [f_ci(a, b) for a, b in zip(seq["ci_lo"], seq["ci_hi"])]]
+        tabela_csv(tdir, "sekwencje_wiek", pd.DataFrame(t13, columns=["Przedział wieku (lata)"] + list(seq["grupa"])))
+        cw = c.dropna(subset=["wiek10"])
+        r, i = logit_fe("correct ~ log2_proba + log2_proba:wiek10", cw)
+        r = r.set_index("term")
+        dek = seq.loc[~seq["grupa"].isin(["Ogółem", "Brak danych"])]
+        lo_g, hi_g = dek.loc[dek["zmiana"].idxmin()], dek.loc[dek["zmiana"].idxmax()]
+        M.update(SeqChange=f_num(100 * seq["zmiana"].iloc[0], 1),
+                 SeqChangeCI=f_ci(seq["ci_lo"].iloc[0], seq["ci_hi"].iloc[0]),
+                 SeqChangeMinGroup=lo_g["grupa"], SeqChangeMin=f_num(100 * lo_g["zmiana"], 1),
+                 SeqChangeMaxGroup=hi_g["grupa"], SeqChangeMax=f_num(100 * hi_g["zmiana"], 1),
+                 SeqAgeOR=f_or(r.loc["log2_proba:wiek10", "OR"]),
+                 SeqAgeORCI=f_ci(r.loc["log2_proba:wiek10", "lo"], r.loc["log2_proba:wiek10", "hi"], 2, 1),
+                 SeqAgeP=f_p_rel(r.loc["log2_proba:wiek10", "p"]), SeqAgeN=f_int(i["n"]))
+
     # --- wykresy
     plt = styl_wykresow()
     wykres_krzywa(plt, fdir, krzywa, fit, MX, K)
+    stany = stany_kohorty(x, K)
+    stany.to_csv(ddir / "stany_kohorty.csv")
+    wykres_stany_kohorty(plt, fdir, stany, krzywa, K)
     wykres_odstep(plt, fdir, ret)
     wykres_osoby(plt, fdir, dvec)
     wykres_pozycje(plt, fdir, poz, args.alfa)
