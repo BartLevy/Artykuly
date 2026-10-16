@@ -5,76 +5,54 @@
 % =============================================================================
 \section{Materiał i metody}
 
-\subsection{Środowisko i program szkoleniowy}
-Badania prowadzono w siedzibie banku. Polegały one na zadawaniu pracownikom losowo wybranych pytań,
-pogrupowanych w cztery kategorie:
-wymogi regulacyjne, produkty bankowe, umiejętności miękkie oraz moduł dla kadry kierowniczej.
-Każde pytanie było pytaniem wielokrotnego wyboru z trzema do pięciu opcjami odpowiedzi, z których
-dokładnie jedna była poprawna. Każde pytanie zawierało wyjaśnienie definiujące kontekst poprawnej odpowiedzi.
-Aplikacja szkoleniowa uruchamiała się automatycznie na ekranach komputerów PC pracowników i wyświetlała od jednego do trzech pytań dziennie w godzinach 10:00--14:00; po każdej odpowiedzi pokazywano poprawną odpowiedź wraz z wyjaśnieniem. To samo pytanie mogło zostać ponownie zadane temu samemu pracownikowi nie wcześniej niż siedem dni po poprzedniej odpowiedzi, a harmonogram powtórek nie zależał od tego, czy odpowiedź była poprawna. Na czas przeglądu i aktualizacji pytań program był zawieszany.
-O udziale w programie decydował \textit{Wydziału wsparcia i optymalizacji procesów bankowych}, który był również autorem pytań. Pytania prezentowano w modułach tematycznych (mediana \OptionsMedian{} zaobserwowanych opcji
-odpowiedzi na pytanie). W analizowanych danych pracownicy odpowiadali na medianę \DailyMedian{}
-pytań w dniu aktywności, a to samo pytanie było ponownie zadawane temu samemu pracownikowi po
-medianie \GapMedian{} dni (IQR \GapQOne--\GapQThree).
+\subsection{Program szkoleniowy}
+Badanie przeprowadzono w banku. Pytania przygotował \textit{Wydział wsparcia i optymalizacji procesów
+bankowych}, który decydował również o udziale pracowników w programie. Pytania dotyczyły wiedzy
+wykorzystywanej w codziennej pracy w banku. Każde było pytaniem wielokrotnego wyboru z trzema do pięciu
+opcjami odpowiedzi, z których jedna była poprawna, a pozostałe stanowiły \emph{dystraktory}.
+Pytania, opcje odpowiedzi i wyjaśnienia sformułowano w języku polskim. Przykładowe pytanie z zakresu cyberbezpieczeństwa brzmiało:
+,,Która z poniższych sytuacji jest phishingiem?''. Opcje odpowiedzi: 
+,,1 - Atak typu DDoS'',
+,,2 - Instalacja oprogramowania antywirusowego'',
+,,3 - Tworzenie kopii zapasowych danych'',
+,,4 - Fałszywy e-mail z linkiem do strony logowania banku (oznaczona jako odpowiedź poprawna)''.
+Wyjaśnienie wyświetlane po odpowiedzi:
+,,Phishing to metoda oszustwa, w której ktoś podszywa się pod zaufaną osobę lub instytucję (np. bank, kuriera, urząd), żeby wyłudzić od Ciebie poufne dane, takie jak hasła, numery kart czy loginy. Najczęściej wygląda to jak e-mail z "banku" z pilną prośbą o zalogowanie, SMS z linkiem do "dopłaty za paczkę" albo fałszywa strona łudząco podobna do prawdziwej. Kluczowy mechanizm polega na tym, że oszust wywołuje pośpiech lub stres, żebyś kliknął/a bez zastanowienia. WAŻNE: nie klikaj w podejrzane linki, zawsze sprawdzaj adres strony (URL), nie podawaj danych logowania przez link z wiadomości, a jeśli coś wygląda na "zbyt pilne", to często oszustwo.''.
 
-\subsection{Definicje}
-\label{sec:definicje}
-\fillin{Ten rozdział zostanie usunięty w wersji docelowej, a ewentualne definicje zostaną wstawione przy pierwszym użyciu.}
-% Lista definicji pojęć stosowanych w artykule. Uzupełniana ręcznie; skill "artykul" (pkt 5)
-% traktuje ją jako wiążące źródło terminologii w sekcja-*.tex i suplement.tex.
-W badaniu stosowano następujące definicje:
-\begin{enumerate}[label=\Roman*.]
-  \item \emph{Sekwencja} to uporządkowana chronologicznie seria prób jednego pracownika dotyczących
-  jednego pytania.
-  \item \emph{Numer próby} to pozycja odpowiedzi w jej sekwencji; przy jednakowym czasie o kolejności
-  decydował identyfikator rekordu.
-  \item \emph{Pierwsza próba} to próba o numerze 1, czyli pierwszy kontakt pracownika z danym pytaniem.
-  \item \emph{Poprawność} to odsetek poprawnych odpowiedzi.
-  \item \emph{Odstęp} to czas w dniach od poprzedniej próby w tej samej sekwencji.
-  \item \emph{Staż} to czas od pierwszej odpowiedzi pracownika w programie.
-  \item \emph{Dystraktor} to błędna opcja odpowiedzi w pytaniu wielokrotnego wyboru.
-  \item \emph{Informacja zwrotna} to wyświetlenie poprawnej odpowiedzi wraz z wyjaśnieniem po każdej
-  udzielonej odpowiedzi, niezależnie od jej poprawności.
-  \item \emph{Korekta błędu} to odpowiedź poprawna w próbie następującej bezpośrednio po próbie
-  z odpowiedzią błędną w tej samej sekwencji.
-  \item \emph{Zapominanie} to odpowiedź błędna w próbie następującej bezpośrednio po próbie
-  z odpowiedzią poprawną w tej samej sekwencji.
-  \item \emph{Powtórzony błąd} to odpowiedź błędna w próbie następującej bezpośrednio po próbie
-  z odpowiedzią błędną w tej samej sekwencji.
-  \item \emph{Błędy z rzędu} to liczba kolejnych prób zakończonych odpowiedzią błędną, które
-  bezpośrednio poprzedzają daną próbę w tej samej sekwencji.
-  \item \emph{Kohorta} to zbiór sekwencji liczących co najmniej \CohortK{} prób, analizowanych
-  wyłącznie w próbach od 1 do \CohortK{}. Poprawność w każdej z tych prób obliczano dla tych samych
-  sekwencji, co eliminuje wpływ ubywania sekwencji wraz z numerem próby.
-  \item \emph{Bootstrap} to procedura wyznaczania 95-procentowych przedziałów ufności (PU), w której
-  pracowników losowano ze zwracaniem (\BootReps{} replikacji), a granice przedziału stanowiły 2,5.
-  i 97,5. percentyl rozkładu statystyki. Losowanie całych pracowników uwzględnia zależność odpowiedzi
-  udzielanych przez tę samą osobę.
-\end{enumerate}
+Aplikacja szkoleniowa uruchamiała się automatycznie w dni robocze na komputerach pracowników
+i wyświetlała od jednego do czterech losowo wybranych pytań dziennie, w godzinach 9:00--16:00.
+Po każdej odpowiedzi, poprawnej lub błędnej, pokazywała poprawną odpowiedź z wyjaśnieniem (\emph{informacja zwrotna}). To samo pytanie
+mogło wrócić do pracownika najwcześniej po siedmiu dniach, a harmonogram powtórek nie zależał od wyniku
+odpowiedzi. Na czas przeglądu i aktualizacji pytań program zawieszano. W analizowanych danych mediana
+liczby odpowiedzi pracownika w dniu aktywności wynosiła \DailyMedian{} (IQR \DailyQOne--\DailyQThree).
+To samo pytanie wracało po medianie \GapMedian{} dni (IQR \GapQOne--\GapQThree).
 
-\subsection{Grupa badana oraz charakterystyka danych}
-Źródło danych stanowiła lista odpowiedzi zawierająca moduł, pytanie, wybraną opcję, kod odpowiadającego, znacznik czasu oraz poprawność odpowiedzi (wartość logiczna). Zbiór analityczny
-obejmował \NResponses{} odpowiedzi (tab.~\ref{tab:zbior_danych}). Dane osób odpowiadających
-przekazano w formie metadanych zawierających płeć pracownika, przedział wiekowy (co 10 lat) oraz medianę wieku.
+\subsection{Dane i grupa badana}
+\label{sec:dane}
+Analizowano zarejestrowane odpowiedzi pracowników. Każdy rekord zawierał pytanie, wybraną opcję,
+kod pracownika, datę i godzinę odpowiedzi oraz informację, czy odpowiedź była poprawna. Zbiór analityczny liczył \NResponses{} odpowiedzi
+% Po wykluczeniu odpowiedzi testowych, pytań z jedną zaobserwowaną opcją oraz powtórek niezgodnych
+% z regułą siedmiu dni zbiór analityczny liczył \NResponses{} odpowiedzi
+(tab.~\ref{tab:zbior_danych}). Bank przekazał ponadto zestawienie wieku i płci pracowników.
 
-\begin{table}[H]
+\begin{table}[H] 
 \centering
 \caption{Charakterystyka zbioru danych.}
-\label{tab:zbior_danych}
+\label{tab:zbior_danych} 
 \small
 \tabelacsv{lr}{zbior_danych}
 \uwagatabeli{IQR: rozstęp międzykwartylowy. Sekwencja to seria prób jednego pracownika dotyczących
-jednego pytania. Wykluczone moduły testowe: \ExcludedModules{} (\NExcluded{} odpowiedzi). Wykluczone
-pytania z jedną zaobserwowaną opcją odpowiedzi: \NExcludedItems{} (\NExcludedItemResp{} odpowiedzi).}
+jednego pytania. Liczba zaobserwowanych opcji odpowiedzi bywa mniejsza niż liczba opcji w pytaniu,
+ponieważ części opcji nie wybrał żaden pracownik. Wykluczone odpowiedzi testowe: \NExcluded. Wykluczone
+pytania z jedną zaobserwowaną opcją odpowiedzi: \NExcludedItems{} (\NExcludedItemResp{} odpowiedzi).
+Wykluczone powtórki udzielone wcześniej niż po \MinGapDays{} dniach: \NExcludedShortRep.}
 \end{table}
 
-Dane demograficzne były dostępne dla \DemoMatched{} z \DemoN{} pracowników (\DemoMatchedPct\%);
-pozostałych \DemoUnmatched{} osób nie obejmowało zestawienie demograficzne. Wśród osób o znanej płci
-kobiety stanowiły \DemoWomenPct\% ($n = \DemoWomen$), a mężczyźni \DemoMenPct\% ($n = \DemoMen$).
-Mediana wieku wynosiła \AgeMedian{} lat (IQR \AgeQOne--\AgeQThree; zakres \AgeMin--\AgeMax), a
-najliczniejszy przedział wiekowy stanowił \AgeModalGroup{} lat (\AgeModalGroupPct\% osób o znanym
-wieku, $n = \DemoAgeN$; tab.~\ref{tab:demografia}). Wiek uwzględniono w analizie poprawności
-w pierwszej próbie i tempa jej wzrostu; płci nie uwzględniano w analizach.
+Dane demograficzne były dostępne dla \DemoMatched{} ze \DemoN{} pracowników (\DemoMatchedPct\%).
+Kobiety stanowiły \DemoWomenPct\% osób o znanej płci ($n = \DemoWomen$). Mediana wieku wynosiła
+\AgeMedian{} lat (IQR \AgeQOne--\AgeQThree; zakres \AgeMin--\AgeMax), a najliczniejszy był przedział
+\AgeModalGroup{} lat (\AgeModalGroupPct\%; tab.~\ref{tab:demografia}). Wiek uwzględniono w analizie
+pierwszej próby i tempa wzrostu poprawności; płci nie analizowano.
 % SPRAWDŹ: przedział modalny i proporcje płci po zmianie danych
 
 \begin{table}[H]
@@ -86,53 +64,61 @@ w pierwszej próbie i tempa jej wzrostu; płci nie uwzględniano w analizach.
 \uwagatabeli{Odsetki płci liczono wśród osób o znanej płci, a odsetki przedziałów wieku wśród osób
 o znanym wieku ($n = \DemoAgeN$). Brak danych dotyczy głównie pracowników nieobecnych w zestawieniu
 demograficznym (\DemoUnmatched). IQR: rozstęp międzykwartylowy; SD: odchylenie standardowe.}
-\end{table}
+\end{table} 
 
-\fillin{Podstawa prawna przetwarzania danych anonimizowanych (wiek, płeć) i podstawa przekazania przez Bank do analizy.}
+W bazie danych odpowiedzi, pracowników oznaczono losowym kodem, a zestawienie demograficzne połączono z zarejestrowanymi odpowiedziami według
+tego kodu. Tego rodzaju kodu nie można odtworzyć przy znajomości listy pracowników, dlatego analizowane dane
+stanowiły dane w pełni zanonimizowane.
 
 \subsection{Analiza statystyczna}
 \label{sec:analiza}
-\fillin{Rozważam usunięcie całego tego punktu lub wtłoczenia w wyniki.  Stąd jest napisany mniejszą czcionką.}
-\begin{small}
-  \begin{adjustwidth}{1cm}{1cm}
-Poprawność podawano z 95\% PU wyznaczonymi metodą bootstrap. Analizę podzielono na etap opisu pierwszej
-próby oraz trzy etapy odpowiadające pytaniom badawczym.
+Odpowiedzi jednego pracownika na jedno pytanie, uporządkowane w czasie, tworzyły \emph{sekwencję}.
+Pozycję odpowiedzi w sekwencji nazwano \emph{numerem próby}, a pierwszą odpowiedź, czyli pierwszy
+kontakt pracownika z pytaniem, \emph{pierwszą próbą}. \emph{Odstęp} oznaczał liczbę dni od poprzedniej
+próby w tej samej sekwencji, a \emph{poprawność} odsetek poprawnych odpowiedzi. Poprawność podawano
+z 95-procentowymi przedziałami ufności (PU) wyznaczonymi metodą bootstrap: pracowników losowano ze
+zwracaniem (\BootReps{} replikacji), co uwzględnia zależność odpowiedzi udzielanych przez tę samą osobę.
+W modelach regresji błędy standardowe klastrowano względem pracowników.
 
 \emph{Pierwsza próba.} Poprawność w pierwszej próbie porównano między przedziałami wieku. Zależność od
-wieku oszacowano regresją logistyczną poprawności pierwszej próby względem środka przedziału wieku (na 10 lat), z efektami stałymi pytania uwzględniającymi różnice trudności pytań i z błędami standardowymi
-klastrowanymi względem pracowników.
+wieku (podział grup po 10 lat) oszacowano regresją logistyczną z efektami stałymi pytania, czyli z osobnym wyrazem
+wolnym dla każdego pytania. Trudność pytań nie była oznaczona w danych, dlatego efekty stałe szacowano
+z odpowiedzi wszystkich pracowników. Model porównywał więc pracowników w różnym wieku odpowiadających
+na te same pytania. Dla porównania dopasowano go również bez efektów stałych pytania.
 
-\emph{Zmiany w sekwencji (PB1).} Poprawność obliczono dla kolejnych numerów prób we wszystkich
-sekwencjach; próby \MaxAttemptPooled{}. i dalsze połączono. Pracownicy kontynuujący sekwencje mogą
-różnić się od tych, którzy je kończą, a krzywe zagregowane mogą być wówczas zniekształcone przez
-ubywanie sekwencji \citep{murray2013,goutte2018}. Zmianę oceniono więc także w kohorcie, jako różnicę
-poprawności między próbą~\CohortK{} a próbą~1 wyrażoną w punktach procentowych (p.p.). Zależność
-odsetka błędów od numeru próby opisano funkcją potęgową \citep{newell1981}, dopasowaną ważoną metodą
-najmniejszych kwadratów w skali logarytmicznej. Zależność tempa wzrostu od wieku sprawdzono w kohorcie
-regresją logistyczną poprawności względem $\log_2$ numeru próby i jego interakcji z wiekiem, z efektami
-stałymi pracownika i pytania oraz błędami standardowymi klastrowanymi względem pracowników. Pracowników
-i pytania bez zmienności poprawności usuwano przed estymacją, ponieważ ich efekty stałe nie są
-identyfikowalne.
+\emph{Zmiany w sekwencji (PB1).} Poprawność obliczono dla kolejnych numerów prób; próby
+\MaxAttemptPooled{} i dalsze połączono. Z każdą próbą ubywało sekwencji, a pracownicy kontynuujący
+odpowiedzi mogli różnić się od pozostałych, co zniekształca krzywe zagregowane \citep{murray2013}.
+Zmianę oceniono więc także w \emph{kohorcie}, czyli w sekwencjach liczących co najmniej \CohortK{}
+prób, ograniczonych do prób od 1 do \CohortK{}. Poprawność w każdej z tych prób obliczano dla tych
+samych sekwencji, a miarą zmiany była różnica między próbą~\CohortK{} a próbą~1 w punktach
+procentowych (p.p.). 
+Związek tempa wzrostu z wiekiem sprawdzono w kohorcie regresją logistyczną z interakcją $\log_2$
+numeru próby i wieku oraz z efektami stałymi pracownika i pytania.
 
-\emph{Wynik poprzedniej próby i odstęp (PB2).} Każdą próbę od drugiej wzwyż zaklasyfikowano jako
-odpowiedź poprawną po poprawnej, korektę błędu, zapominanie albo powtórzony błąd, a odsetki przejść
-porównano w sześciu przedziałach odstępu, od krótszego niż 14 dni do co najmniej 240 dni. Ponieważ
-harmonogram powtórek nie był adaptacyjny, sprawdzono, czy prawdopodobieństwo ponownego zadania pytania
-i odstęp zależały od wyniku poprzedniej próby.
+\emph{Wynik poprzedniej próby i odstęp (PB2).} Każdą próbę od drugiej wzwyż przypisano do jednej
+z czterech kategorii według wyniku tej i poprzedniej próby: odpowiedź poprawna po poprawnej,
+\emph{korekta błędu} (poprawna po błędnej), \emph{zapominanie} (błędna po poprawnej) albo
+\emph{powtórzony błąd} (błędna po błędnej). Ponieważ odsetek korekt błędów ($r$) i odsetek
+zapominania ($f$) mają różne mianowniki, porównano liczby obu zdarzeń oraz wyznaczono poziom równowagi
+$r/(r+f)$, do którego dążyłaby poprawność przy stałych odsetkach. Odsetki porównano w sześciu
+przedziałach odstępu: \MinGapDays--13, 14--29, 30--59, 60--119, 120--239 oraz co najmniej 240 dni. Odsetek zapominania zestawiono także według liczby
+poprawnych odpowiedzi z rzędu przed daną próbą oraz osobno po korekcie błędu. Odpowiedź błędną
+w próbie następującej po korekcie błędu określono jako \emph{nawrót błędu} i sprawdzono, czy pracownik
+wybrał w niej ten sam dystraktor co przed korektą. Sprawdzono również, czy harmonogram
+powtórek zależał od wyniku poprzedniej próby.
 
-\emph{Utrwalone błędy (PB3).} Poprawność porównano według liczby błędów z rzędu, od 0 do co najmniej
-\RunMax. W parach dwóch kolejnych błędów odsetek ponownych wyborów tego samego dystraktora porównano
-z odsetkiem oczekiwanym przy losowym wyborze spośród zaobserwowanych dystraktorów oraz przy wyborze
-proporcjonalnym do popularności dystraktorów w danym pytaniu, a następnie zestawiono go w trzech
-przedziałach odstępu. Koncentrację powtórzonych błędów opisano udziałem 10\% pytań o największej
-liczbie takich błędów.
+\emph{Utrwalone błędy (PB3).} Poprawność porównano według liczby \emph{błędów z rzędu}, czyli
+kolejnych odpowiedzi błędnych bezpośrednio poprzedzających daną próbę, od 0 do co najmniej \RunMax.
+Dla dwóch kolejnych błędów obliczono, jak często pracownik wybierał ten sam dystraktor, i porównano
+ten odsetek z oczekiwanym przy wyborze losowym oraz przy wyborze zgodnym z popularnością dystraktorów
+w danym pytaniu. Odsetek ten zestawiono także w trzech przedziałach odstępu: krótszym niż 30 dni,
+30--89 dni oraz co najmniej 90 dni. Obliczono też, jaką część powtórzonych błędów skupia 10\% pytań, w których było ich
+najwięcej.
 
-Obliczenia wykonano w języku Python
-\VerPython{} z użyciem bibliotek pandas \VerPandas, NumPy \VerNumpy, SciPy \VerScipy, statsmodels
-\VerStatsmodels{} i Matplotlib \VerMatplotlib.
+Obliczenia wykonano w języku Python \VerPython{} z użyciem bibliotek pandas \VerPandas, NumPy
+\VerNumpy, SciPy \VerScipy, statsmodels \VerStatsmodels{} i Matplotlib \VerMatplotlib.
 
-\end{adjustwidth}
-\end{small}
 % \subsection{Analiza opisowa}
 % Odsetki poprawnych odpowiedzi podano z 95-procentowymi przedziałami ufności (PU) z bootstrapu
 % klastrowego, w którym losowano pracowników ze zwracaniem (\BootReps{} replikacji); procedura ta

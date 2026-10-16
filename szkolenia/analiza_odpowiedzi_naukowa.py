@@ -60,6 +60,24 @@ def wczytaj(plik):
     return df, rejected
 
 
+def usun_szybkie_powtorki(df, min_dni):
+    """Usuwa powtórki tego samego pytania u tej samej osoby udzielone wcześniej niż `min_dni` dni po ostatniej
+    zachowanej odpowiedzi (regułę programu łamią np. ponowne wyświetlenia tego samego dnia). Zwraca (zachowane,
+    usunięte). min_dni <= 0 wyłącza filtr. Dane muszą być posortowane chronologicznie (jak po wczytaj)."""
+    if min_dni <= 0:
+        return df, df.iloc[0:0]
+    t = df["create_time"].to_numpy("datetime64[s]").astype("int64") / 86400
+    zachowaj = np.ones(len(df), dtype=bool)
+    for idx in df.groupby(KLUCZ, sort=False).indices.values():
+        ostatni = None
+        for i in idx:
+            if ostatni is not None and t[i] - ostatni < min_dni:
+                zachowaj[i] = False
+            else:
+                ostatni = t[i]
+    return df.loc[zachowaj].reset_index(drop=True), df.loc[~zachowaj]
+
+
 def przygotuj(df):
     """Dodaje numer próby w sekwencji osoba–pytanie, odstęp od poprzedniej próby i staż."""
     g = df.groupby(KLUCZ)
@@ -306,6 +324,31 @@ def utrwalanie_bledow(x, B, rng, max_seria=4):
                                  "pytania_bb": len(na_pytanie), "max_seria": max_seria}
 
 
+def zrodla_zapominania(x, B, rng, max_seria=4):
+    """PB2: zapominanie wg liczby poprawnych odpowiedzi z rzędu, w przedziałach odstępu, oraz nawrót błędu
+    po korekcie (błąd -> poprawna -> błąd) z odsetkiem powrotów do dystraktora sprzed korekty."""
+    klucz = [x[k] for k in KLUCZ]
+    reset = (x["correct"] == 0).groupby(klucz).cumsum()
+    seria = x["correct"].groupby(klucz + [reset]).cumsum().groupby(klucz).shift(fill_value=0)
+    g = x.groupby(KLUCZ)
+    p = x.assign(seria=seria.clip(upper=max_seria), wczesniejsza=g["correct"].shift(2),
+                 wczesniejsza_odp=g["answer_id"].shift(2))
+    p = p.loc[(p["proba"] >= 2) & (p["poprzednia"] == 1)]
+    wg_serii = udzialy_z_ci(p, "seria", B, rng, wartosc="blad")
+    p = p.assign(przedzial=pd.cut(p["odstep_dni"], PRZEDZIALY_DNI, right=False, labels=ETYKIETY_DNI))
+    seria_odstep = p.assign(stopien=np.where(p["seria"] == 1, "1", np.where(p["seria"] >= 3, ">=3", "2"))) \
+        .groupby(["stopien", "przedzial"], observed=True)["blad"].agg(["size", "mean"]).reset_index()
+    po_korekcie = p.loc[p["wczesniejsza"] == 0]
+    ci = bootstrap_srednie(po_korekcie.assign(g=1), "g", "blad", B, rng).iloc[0]
+    nawrot = po_korekcie.loc[po_korekcie["blad"] == 1]
+    ten_sam = (nawrot["answer_id"] == nawrot["wczesniejsza_odp"]).astype(int)
+    ci_ts = bootstrap_srednie(nawrot.assign(g=1, ts=ten_sam), "g", "ts", B, rng).iloc[0]
+    return wg_serii, seria_odstep, {"n": len(po_korekcie), "p": po_korekcie["blad"].mean(),
+                                    "lo": ci.ci_lo, "hi": ci.ci_hi, "ten_sam_n": len(nawrot),
+                                    "ten_sam": ten_sam.mean(), "ten_sam_lo": ci_ts.ci_lo,
+                                    "ten_sam_hi": ci_ts.ci_hi, "max_seria": max_seria}
+
+
 def retencja_wg_odstepu(x, B, rng):
     p = x.loc[x["proba"] >= 2].copy()
     p["przedzial"] = pd.cut(p["odstep_dni"], PRZEDZIALY_DNI, right=False, labels=range(len(ETYKIETY_DNI)))
@@ -412,7 +455,11 @@ def logit_wiek_pytanie(d):
     r = smf.logit("correct ~ wiek10 + C(question_id)", d).fit(
         disp=0, maxiter=300, cov_type="cluster", cov_kwds={"groups": grupy})
     lo, hi = np.exp(r.conf_int().loc["wiek10"])
+    # ten sam model bez efektów stałych pytania: pokazuje wpływ uwzględnienia trudności pytań
+    r0 = smf.logit("correct ~ wiek10", d).fit(disp=0, cov_type="cluster", cov_kwds={"groups": grupy})
+    lo0, hi0 = np.exp(r0.conf_int().loc["wiek10"])
     return {"OR": np.exp(r.params["wiek10"]), "lo": lo, "hi": hi, "p": r.pvalues["wiek10"],
+            "OR0": np.exp(r0.params["wiek10"]), "lo0": lo0, "hi0": hi0, "p0": r0.pvalues["wiek10"],
             "n": len(d), "osoby": d["user_symbol"].nunique()}
 
 
@@ -572,17 +619,12 @@ def wykres_krzywa(plt, katalog, krzywa, fit, max_proba, kohorta):
     # kohorta jest pokazana na rycinie syntetycznej (rys_stany_kohorty)
     k = krzywa.loc[krzywa["proba"] == "all"]
     ax.errorbar(k["etap"], 100 * k["p"], yerr=[100 * (k["p"] - k["ci_lo"]), 100 * (k["ci_hi"] - k["p"])],
-                color=KOLOR_1, marker="o", capsize=2, elinewidth=0.8, label="Wszystkie sekwencje")
-    xs = np.linspace(1, max_proba - 1, 100)
-    wyk = f"{fit['b']:.2f}".replace(".", "{,}")
-    ax.plot(xs, 100 * (1 - fit["a"] * xs ** (-fit["b"])), ls="--", lw=1, color=SZARY,
-            label=f"Dopasowanie potęgowe (błąd $\\propto$ próba$^{{-{wyk}}}$)")
+                color=KOLOR_1, marker="o", capsize=2, elinewidth=0.8)
     ax.set_xticks(range(1, max_proba + 1))
     ax.set_xticklabels([str(i) for i in range(1, max_proba)] + [f"{max_proba}+"])
     przecinek(ax.yaxis)
     ax.set_xlabel("Numer próby (ten sam pracownik, to samo pytanie)")
     ax.set_ylabel("Poprawność (%)")
-    ax.legend(loc="lower right")
     zapisz(fig, katalog, "rys_krzywa_uczenia")
 
 
@@ -754,6 +796,10 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
                                             dni=("create_time", lambda s: s.dt.normalize().nunique()))
     gap = x["odstep_dni"].dropna()
     dzienne = x.groupby(["user_symbol", x["create_time"].dt.normalize()]).size()
+    moduly_dzien = x.groupby(["user_symbol", x["create_time"].dt.normalize()])["room_Code"].nunique()
+    M.update(DaysOverThreePct=f_pct((dzienne > 3).mean()),
+             DaysOverThreeMultiModPct=f_pct((moduly_dzien[dzienne > 3] >= 2).mean()),
+             DailyQOne=f_num(dzienne.quantile(.25), 0), DailyQThree=f_num(dzienne.quantile(.75), 0))
     opcje = x.groupby("question_id")["answer_id"].nunique()
     M.update(NResponses=f_int(len(x)), NEmployees=f_int(x["user_symbol"].nunique()),
              NItems=f_int(x["question_id"].nunique()), NModules=f_int(x["room_Code"].nunique()),
@@ -776,7 +822,23 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
              ActiveDaysMedian=f_num(per_user["dni"].median(), 0), OptionsMedian=f_num(opcje.median(), 0),
              NExcluded=f_int(args.wykluczone_n), NExcludedItems=f_int(args.wykluczone_pytania),
              NExcludedItemResp=f_int(args.wykluczone_pytania_n),
+             NExcludedShortRep=f_int(args.wykluczone_szybkie_n), MinGapDays=f_num(args.min_odstep, 0),
+             NShortRep=f_int(args.szybkie_n), NShortRepSameDay=f_int(args.szybkie_dzien_n),
+             ShortRepPct=f_pct(args.szybkie_n / args.n_przed_szybkimi, 2), NShortRepHour=f_int(args.szybkie_godz_n),
              ExcludedModules=", ".join(esc(k) for k in args.wyklucz_pokoje) or "brak")
+    # pilotaż i rzeczywisty limit/okno wyświetlania (opis programu w metodach)
+    f_dzien = lambda t: f"{t.day}.{t.month:02d}.{t.year}" if pd.notna(t) else "--"
+    godz = x["create_time"].dt.hour + x["create_time"].dt.minute / 60
+    f_godz = lambda h: f"{int(h)}:{int(round(60 * (h % 1))):02d}"
+    M.update(NExcludedPilot=f_int(args.pilotaz_n), NExcludedPilotLater=f_int(args.pilotaz_po_n),
+             NExcludedPilotTotal=f_int(args.pilotaz_n + args.pilotaz_po_n),
+             NPilotSeq=f_int(args.pilotaz_sek), NPilotEmp=f_int(args.pilotaz_osoby),
+             PilotStart=f_dzien(args.pilotaz_od), PilotEnd=f_dzien(args.pilotaz_do),
+             DaysUpToThreePct=f_pct((dzienne <= 3).mean()), DaysUpToFourPct=f_pct((dzienne <= 4).mean()),
+             DailyMax=f_int(dzienne.max()), HourPOne=f_godz(godz.quantile(.01)),
+             HourPNinetyNine=f_godz(godz.quantile(.99)),
+             HoursNineSixteenPct=f_pct(((godz >= 9) & (godz < 16)).mean()),
+             HoursTenFourteenPct=f_pct(((godz >= 10) & (godz < 14)).mean()))
 
     def med_iqr(s, d=0):
         return f"{f_num(s.median(), d)} {f_ci(s.quantile(.25), s.quantile(.75), d, 1)}"
@@ -894,6 +956,9 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
                pd.DataFrame(t6, columns=["Poprzednia próba", "$n$", "Kolejna poprawna (\\%)", "95\\% PU",
                                          "Kolejna błędna (\\%)"]))
     r1, r0 = tr.set_index("poprzednia").loc[1], tr.set_index("poprzednia").loc[0]
+    # liczby zdarzeń (różne mianowniki odsetków) i poziom równowagi r / (r + f) przy stałych odsetkach
+    M.update(NCorrections=f_int(r0["k"]), NForgetting=f_int(r1["n"] - r1["k"]),
+             EquilibriumPct=f_pct(r0["p"] / (r0["p"] + 1 - r1["p"])))
     M.update(RetainPct=f_pct(r1["p"]), RetainCI=f_ci(r1["ci_lo"], r1["ci_hi"]),
              ForgetPct=f_pct(1 - r1["p"]), RecoverPct=f_pct(r0["p"]),
              RecoverCI=f_ci(r0["ci_lo"], r0["ci_hi"]), PersistPct=f_pct(1 - r0["p"]),
@@ -942,6 +1007,28 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
     tabela_csv(tdir, "retencja_wg_odstepu",
                pd.DataFrame(t7, columns=["Dni od poprzedniej", "$n$", "Poprawne, \\% [95\\% PU]",
                                          "$n$", "Poprawne, \\% [95\\% PU]"]))
+    M.update(ForgetShort=f_pct(1 - rc["p"].iloc[0]), ForgetLong=f_pct(1 - rc["p"].iloc[-1]))
+
+    # --- Tabela: źródła zapominania (PB2); osobny strumień losowy, aby nie zmieniać PU pozostałych analiz
+    zs, zso, nk = zrodla_zapominania(x, B, np.random.default_rng(args.seed + 4))
+    zs.to_csv(ddir / "zapominanie_wg_serii_poprawnych.csv", index=False)
+    zso.to_csv(ddir / "zapominanie_wg_serii_i_odstepu.csv", index=False)
+    S = nk["max_seria"]
+    et = [f"$\\geq${S}" if k == S else str(k) for k in zs["seria"]]
+    t15 = [["Próby, $n$"] + [f_int(v) for v in zs["n"]], ["Pracownicy"] + [f_int(v) for v in zs["osoby"]],
+           ["Odsetek zapominania (\\%)"] + [f_pct(v) for v in zs["p"]],
+           ["95\\% PU"] + [f_ci(a, b) for a, b in zip(zs["ci_lo"], zs["ci_hi"])]]
+    tabela_csv(tdir, "seria_poprawnych", pd.DataFrame(t15, columns=["Poprawne z rzędu przed próbą"] + et))
+    z, so = zs.set_index("seria"), zso.set_index("stopien")
+    M.update(ForgetRunOne=f_pct(z.loc[1, "p"]), ForgetRunOneCI=f_ci(z.loc[1, "ci_lo"], z.loc[1, "ci_hi"]),
+             ForgetRunTwo=f_pct(z.loc[2, "p"]), ForgetRunThree=f_pct(z.loc[3, "p"]),
+             ForgetRunMax=f_pct(z.loc[S, "p"]), ForgetRunMaxCI=f_ci(z.loc[S, "ci_lo"], z.loc[S, "ci_hi"]),
+             ForgetFreshShort=f_pct(so.loc["1", "mean"].iloc[0]), ForgetFreshLong=f_pct(so.loc["1", "mean"].iloc[-1]),
+             ForgetStableShort=f_pct(so.loc[">=3", "mean"].iloc[0]),
+             ForgetStableLong=f_pct(so.loc[">=3", "mean"].iloc[-1]),
+             RelapsePct=f_pct(nk["p"]), RelapseCI=f_ci(nk["lo"], nk["hi"]), RelapseN=f_int(nk["n"]),
+             RelapseSamePct=f_pct(nk["ten_sam"]), RelapseSameCI=f_ci(nk["ten_sam_lo"], nk["ten_sam_hi"]),
+             RelapseSameN=f_int(nk["ten_sam_n"]), ForgetRunK=f"{S}")
 
     # --- Tabela i wykres: zmiana na poziomie pracowników
     zo, dvec = zmiana_osob(pairs, users, B, rng)
@@ -1081,7 +1168,9 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
                  FirstAccMinGroup=lo_g["grupa"], FirstAccMin=f_pct(lo_g["p"]),
                  FirstAccMaxGroup=hi_g["grupa"], FirstAccMax=f_pct(hi_g["p"]),
                  FirstAgeOR=f_or(fw["OR"]), FirstAgeORCI=f_ci(fw["lo"], fw["hi"], 2, 1),
-                 FirstAgeP=f_p_rel(fw["p"]), FirstAgeN=f_int(fw["n"]), FirstAgeEmp=f_int(fw["osoby"]))
+                 FirstAgeP=f_p_rel(fw["p"]), FirstAgeN=f_int(fw["n"]), FirstAgeEmp=f_int(fw["osoby"]),
+                 FirstAgeRawOR=f_or(fw["OR0"]), FirstAgeRawORCI=f_ci(fw["lo0"], fw["hi0"], 2, 1),
+                 FirstAgeRawP=f_p_rel(fw["p0"]))
 
         c = x.loc[(x["liczba_prob"] >= K) & (x["proba"] <= K)]
         seq = []
@@ -1266,9 +1355,19 @@ def main():
     parser.add_argument("--wyklucz-pokoje", nargs="*", default=["mnk-tst"],
                         help="Kody pokoi pomijane w analizie (domyślnie testowy mnk-tst; "
                              "sam przełącznik bez wartości = bez wykluczeń)")
+    parser.add_argument("--od-daty", default="2023-05-01",
+                        help="Odpowiedzi wcześniejsze (pilotaż 24-28.04.2023, inny limit dzienny) są pomijane; "
+                             "pusty napis = bez wykluczenia")
+    parser.add_argument("--pilotaz", choices=["sekwencje", "odpowiedzi"], default="sekwencje",
+                        help="sekwencje (domyślnie): pomija też późniejsze odpowiedzi w sekwencjach osoba-pytanie "
+                             "rozpoczętych w pilotażu (pierwsza próba = pierwszy kontakt); odpowiedzi: tylko "
+                             "odpowiedzi z pilotażu")
     parser.add_argument("--min-opcje", type=int, default=2,
                         help="Pytania, w których zaobserwowano mniej różnych odpowiedzi, są wykluczane "
                              "(domyślnie 2 = wyklucz pytania z jedną odpowiedzią)")
+    parser.add_argument("--min-odstep", type=float, default=7,
+                        help="Powtórki tego samego pytania wcześniejsze niż N dni po poprzedniej odpowiedzi są "
+                             "usuwane (reguła programu: >= 7 dni, domyślnie); 0 = bez usuwania")
     parser.add_argument("--bootstrap", type=int, default=2000, help="Liczba replikacji bootstrapu klastrowego")
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument("--kohorta", type=int, default=5, help="Min. liczba prób w kohorcie zbalansowanej")
@@ -1291,15 +1390,37 @@ def main():
     if args.wyklucz_pokoje:
         data = data.loc[~data["room_Code"].isin(args.wyklucz_pokoje)].reset_index(drop=True)
     args.wykluczone_n = n0 - len(data)
-    opcje = data.groupby("question_id")["answer_id"].transform("nunique")
+    # pilotaż: odpowiedzi sprzed --od-daty, domyślnie razem z sekwencjami rozpoczętymi w pilotażu
+    pil = data["create_time"] < pd.Timestamp(args.od_daty) if args.od_daty else pd.Series(False, index=data.index)
+    usun = pil
+    if args.pilotaz == "sekwencje" and pil.any():
+        klucze = pd.MultiIndex.from_frame(data.loc[pil, KLUCZ]).unique()
+        usun = pd.MultiIndex.from_frame(data[KLUCZ]).isin(klucze)
+    args.pilotaz_n, args.pilotaz_po_n = int(pil.sum()), int((usun & ~pil).sum())
+    args.pilotaz_osoby = data.loc[pil, "user_symbol"].nunique()
+    args.pilotaz_sek = len(data.loc[pil, KLUCZ].drop_duplicates())
+    args.pilotaz_od, args.pilotaz_do = data.loc[pil, "create_time"].min(), data.loc[pil, "create_time"].max()
+    data = data.loc[~np.asarray(usun)].reset_index(drop=True)
+    opcje =data.groupby("question_id")["answer_id"].transform("nunique")
     args.wykluczone_pytania = data.loc[opcje < args.min_opcje, "question_id"].nunique()
     args.wykluczone_pytania_n = int((opcje < args.min_opcje).sum())
     data = data.loc[opcje >= args.min_opcje].reset_index(drop=True)
+    # powtórki łamiące regułę programu (>= 7 dni): zawsze liczone do opisu, usuwane tylko przy --min-odstep > 0
+    _, naruszenia = usun_szybkie_powtorki(data, 7)
+    t_prev = data.groupby(KLUCZ)["create_time"].shift().loc[naruszenia.index]
+    args.szybkie_n = len(naruszenia)
+    args.szybkie_dzien_n = int(((naruszenia["create_time"] - t_prev).dt.total_seconds() < 86400).sum())
+    args.szybkie_godz_n = int(((naruszenia["create_time"] - t_prev).dt.total_seconds() < 3600).sum())
+    args.n_przed_szybkimi = len(data)
+    data, szybkie = usun_szybkie_powtorki(data, args.min_odstep)
+    args.wykluczone_szybkie_n = len(szybkie)
     if data.empty:
         parser.error("Brak prawidłowych rekordów")
     out.mkdir(parents=True, exist_ok=True)
     if not rejected.empty:
         rejected.to_csv(out / "odrzucone.csv", index=True, index_label="indeks_0")
+    if not szybkie.empty:
+        szybkie.to_csv(out / "usuniete_szybkie_powtorki.csv", index=False, encoding="utf-8-sig")
     data = przygotuj(data)
     data["miesiac"] = data["create_time"].dt.to_period("M").astype(str)
     data["dzien"] = data["create_time"].dt.strftime("%Y-%m-%d")
@@ -1332,7 +1453,10 @@ def main():
         art = materialy_artykulu(data, rejected, pairs, users, out / "artykul", args, demo)
     raport(data, rejected, bins, trends, pairs, users, out, args.minimum, art,
            f"Wykluczone pokoje: {', '.join(args.wyklucz_pokoje) or 'brak'} ({args.wykluczone_n} rekordów); "
-           f"wykluczone pytania z jedną odpowiedzią: {args.wykluczone_pytania} ({args.wykluczone_pytania_n} rekordów)", demo)
+           f"pilotaż przed {args.od_daty or '-'}: {args.pilotaz_n} odpowiedzi + {args.pilotaz_po_n} późniejszych "
+           f"w {args.pilotaz_sek} sekwencjach; "
+           f"wykluczone pytania z jedną odpowiedzią: {args.wykluczone_pytania} ({args.wykluczone_pytania_n} rekordów); "
+           f"usunięte powtórki < {args.min_odstep:g} dni: {args.wykluczone_szybkie_n}", demo)
     print(f"Pliki zapisano w: {out.resolve()}")
 
 

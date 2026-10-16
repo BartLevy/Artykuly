@@ -1,0 +1,34 @@
+% =============================================================================
+% Lista terminologii artykułu. Plik NIE jest wczytywany do main.tex (definicje wprowadzono w tekście
+% przy pierwszym użyciu, głównie w sekcja-metodologia.tex, podrozdziały "Środowisko i program
+% szkoleniowy" oraz "Analiza statystyczna"). Skill "artykul" (pkt 5) traktuje tę listę jako wiążące
+% źródło terminologii w sekcja-*.tex i main.tex. Uzupełniana ręcznie.
+% =============================================================================
+\begin{enumerate}[label=\Roman*.]
+  \item \emph{Sekwencja} to uporządkowana chronologicznie seria prób jednego pracownika dotyczących
+  jednego pytania.
+  \item \emph{Numer próby} to pozycja odpowiedzi w jej sekwencji; przy jednakowym czasie o kolejności
+  decydował identyfikator rekordu.
+  \item \emph{Pierwsza próba} to próba o numerze 1, czyli pierwszy kontakt pracownika z danym pytaniem.
+  \item \emph{Poprawność} to odsetek poprawnych odpowiedzi.
+  \item \emph{Odstęp} to czas w dniach od poprzedniej próby w tej samej sekwencji.
+  \item \emph{Dystraktor} to błędna opcja odpowiedzi w pytaniu wielokrotnego wyboru.
+  \item \emph{Informacja zwrotna} to wyświetlenie poprawnej odpowiedzi wraz z wyjaśnieniem po każdej
+  udzielonej odpowiedzi, niezależnie od jej poprawności.
+  \item \emph{Korekta błędu} to odpowiedź poprawna w próbie następującej bezpośrednio po próbie
+  z odpowiedzią błędną w tej samej sekwencji.
+  \item \emph{Zapominanie} to odpowiedź błędna w próbie następującej bezpośrednio po próbie
+  z odpowiedzią poprawną w tej samej sekwencji.
+  \item \emph{Powtórzony błąd} to odpowiedź błędna w próbie następującej bezpośrednio po próbie
+  z odpowiedzią błędną w tej samej sekwencji.
+  \item \emph{Błędy z rzędu} to liczba kolejnych prób zakończonych odpowiedzią błędną, które
+  bezpośrednio poprzedzają daną próbę w tej samej sekwencji.
+  \item \emph{Kohorta} to zbiór sekwencji liczących co najmniej \CohortK{} prób, analizowanych
+  wyłącznie w próbach od 1 do \CohortK{}. Poprawność w każdej z tych prób obliczano dla tych samych
+  sekwencji, co eliminuje wpływ ubywania sekwencji wraz z numerem próby.
+  \item \emph{Bootstrap} to procedura wyznaczania 95-procentowych przedziałów ufności (PU), w której
+  pracowników losowano ze zwracaniem (\BootReps{} replikacji), a granice przedziału stanowiły 2,5.
+  i 97,5. percentyl rozkładu statystyki. Losowanie całych pracowników uwzględnia zależność odpowiedzi
+  udzielanych przez tę samą osobę.
+\end{enumerate}
+% Usunięto: "Staż" (termin nieużywany po usunięciu modelu M3).

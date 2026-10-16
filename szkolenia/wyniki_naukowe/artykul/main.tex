@@ -29,14 +29,14 @@
 \author[5]{Maciej J. Wróbel \small{(ORCID:0000-0003-1865-2122)}}
 
 \affil[1,4]{Department of Clinical Engineering, Academy of Silesia, Katowice, Poland}
-\affil[3]{Banking Process Support and Optimization Department, Powiślański Cooperative Bank, Kwidzyn, Poland}
-\affil[4]{Legal Department, Atende SA, Warsaw, Poland}
+\affil[2]{Banking Process Support and Optimization Department, Powiślański Cooperative Bank, Kwidzyn, Poland}
+\affil[3]{Legal Department, Atende SA, Warsaw, Poland}% SPRAWDŹ: afiliacja M. Szerszeń (wcześniej podwójny numer [4])
 \affil[5]{Department of Otolaryngology and Oncological Laryngology, Collegium Medicum NCU, Toruń, Poland}
 
 % Autor korespondencyjny
 \affil[*]{Autor korespondencyjny: dr inż. Bartosz Lewandowski, bartosz.lewandowski@akademiaslaska.pl}
 
-\title{Powtarzane pytania, poprawność odpowiedzi i trwałość błędów: trzyletnia analiza mikrouczenia w organizacji}
+\title{Poprawność odpowiedzi pracowników w powtarzanych pytaniach: zapominanie i utrwalone błędy w trzyletnim programie mikrouczenia}
 
 
 \date{}
@@ -45,32 +45,29 @@
 
 
 \begin{abstract}
-\noindent\textbf{Wprowadzenie.} Przypominanie rozłożone w czasie poprawia zapamiętywanie w warunkach
-laboratoryjnych i edukacyjnych, jednak skuteczność mikrouczenia w organizacjach rzadko oceniano na
-podstawie wieloletnich danych o odpowiedziach. Dane rejestrowane przez platformy mikrouczenia pozwalają
-zweryfikować, czy wiedza sprawdzana przez pytania jest nabywana i utrwalana.
+\noindent\textbf{Wprowadzenie.} Powtórki rozłożone w czasie poprawiają zapamiętywanie, jednak
+skuteczność mikrouczenia w organizacjach rzadko oceniano na podstawie wieloletnich danych
+o odpowiedziach pracowników.
 \textbf{Metody.} Przeanalizowano \NResponses{} odpowiedzi \NEmployees{} pracowników banku na
-\NItems{} pytań wielokrotnego wyboru, udzielonych od \DateStart{} do \DateEnd. Pytania wracały
-w stałym, nieadaptacyjnym odstępie (mediana \GapMedian{} dni), a po każdej odpowiedzi wyświetlano
-poprawną odpowiedź z wyjaśnieniem. Poprawność analizowano w sekwencjach pracownik--pytanie, w kohorcie
-sekwencji liczących co najmniej \CohortK{} prób oraz według wyniku poprzedniej próby i odstępu;
-przedziały ufności wyznaczono metodą bootstrap.
-\textbf{Wyniki.} Poprawność w pierwszej próbie wynosiła \FirstAcc\%. W kohorcie wzrosła z
-\CohortAccOne\% do \CohortAccK\% (o \SeqChange{} p.p., 95\% PU \SeqChangeCI), a tempo wzrostu nie
-zależało od wieku pracowników. Wzrost wynikał z przewagi korekt błędów (\RecoverPct\%) nad
-zapominaniem (\ForgetPct\%), przy czym odsetek utrzymanych odpowiedzi poprawnych malał z
-\RetShortCorrect\% przy odstępie krótszym niż 14 dni do \RetLongCorrect\% przy odstępie co najmniej
-240 dni. Szansa korekty malała z każdym kolejnym błędem z rzędu (z \CorrRunOne\% do \CorrRunMax\%),
-a powtórzone błędy w \SameDistractorPct\% przypadków dotyczyły tego samego dystraktora (oczekiwane
-\SameDistractorExpectedPop\%), niezależnie od odstępu. % SPRAWDŹ
-\textbf{Wnioski.} Program utrwalał wiedzę sprawdzaną przez pytania, lecz wymagała ona podtrzymywania
-powtórkami, a część błędnych przekonań opierała się informacji zwrotnej ograniczonej do wyświetlenia
-poprawnej odpowiedzi. Adaptacyjny harmonogram powtórek i informacja zwrotna odnosząca się do
-wybranego dystraktora mogą zwiększyć skuteczność takich programów. Dane nie pozwalają odróżnić
-utrwalenia wiedzy od zapamiętania odpowiedzi na konkretne pytania.
+\NItems{} pytania wielokrotnego wyboru, udzielonych od \DateStart{} do \DateEnd. Pytania wracały
+według harmonogramu niezależnego od wyniku odpowiedzi (mediana odstępu \GapMedian{} dni), a po każdej odpowiedzi wyświetlano poprawną odpowiedź
+z wyjaśnieniem. Poprawność analizowano w kolejnych próbach tego samego pytania oraz według wyniku
+poprzedniej próby i odstępu.
+\textbf{Wyniki.} Poprawność w pierwszej próbie wynosiła \FirstAcc\%. W sekwencjach liczących co
+najmniej \CohortK{} prób wzrosła z \CohortAccOne\% do \CohortAccK\% (o \SeqChange{} p.p., 95\% PU
+\SeqChangeCI). Korekt błędów było więcej niż przypadków zapominania (\NCorrections{} wobec
+\NForgetting).
+Odsetek zapominania rósł wraz z odstępem i malał wraz z liczbą poprawnych odpowiedzi z rzędu,
+z \ForgetRunOne\% po jednej do \ForgetRunMax\% po co najmniej \ForgetRunK{}. Powtórzone błędy
+w \SameDistractorPct\% przypadków dotyczyły tego samego dystraktora (oczekiwane przy wyborze zgodnym
+z popularnością dystraktorów \SameDistractorExpectedPop\%), niezależnie od odstępu.
+\textbf{Wnioski.} Poprawność odpowiedzi na powracające pytania rosła, lecz wiedza wymagała dalszych
+powtórek, a część błędów utrzymywała się mimo informacji zwrotnej. Harmonogram dopasowany do wyników
+pracownika i informacja zwrotna odnosząca się do wybranego dystraktora mogą zwiększyć skuteczność
+takich programów.
 
-\medskip\noindent\textbf{Słowa kluczowe:} powtórki rozłożone w czasie; praktyka przypominania;
-mikrouczenie; szkolenia pracownicze; analityka uczenia się; informacja zwrotna; zapominanie
+\medskip\noindent\textbf{Słowa kluczowe:} powtórki rozłożone w czasie; mikrouczenie; szkolenia
+pracownicze; informacja zwrotna; zapominanie; analityka uczenia się
 \end{abstract}
 
 \input{sekcja-wstep}
@@ -83,20 +80,19 @@ mikrouczenie; szkolenia pracownicze; analityka uczenia się; informacja zwrotna;
 % SPRAWDŹ: sposób kodowania danych pracowników oraz status zgody
 % komisji etycznej lub zwolnienia z obowiązku jej uzyskania.
 \noindent\textbf{Etyka.}
-W badaniu wykorzystano dane przekazane przez bank, w których pracownicy
-byli reprezentowani przez kody. Dane dotyczące wieku i płci raportowano
-wyłącznie w postaci zagregowanej.
-\fillin{Informacja o zgodzie banku i warunkach przekazania (chociaż jest o tym wzmianka w metodologii).}\\
+W badaniu wykorzystano w pełni anonimizowane dane przekazane przez bank za jego zgodą
+\fillin{data i forma zgody banku}. Sposób oznaczenia pracowników i zasady ochrony danych opisano
+w podrozdziale~\ref{sec:dane}.
 \textbf{Dostępność danych.}
 Dane wykorzystane w badaniu stanowią własność banku i nie są
 udostępniane publicznie.\\
 \textbf{Finansowanie.}
 Badanie nie otrzymało finansowania.\\
 \textbf{Konflikt interesów.}
-Autorzy deklarują brak konfliktu interesów.\\
-% \textbf{Wykorzystanie narzędzi AI.}
-% Narzędzia generatywnej sztucznej inteligencji wykorzystano do
-% przygotowania opisu wyników analizy oraz tłumaczenia tekstu
-% na język angielski.
+M. Szerszeń jest pracownikiem banku, w którym prowadzono program badań. Pozostali autorzy deklarują
+brak konfliktu interesów.\\
+\textbf{Wykorzystanie narzędzi AI.}
+Wykorzystanie narzędzi AI. W trakcie przygotowywania artykułu wykorzystano narzędzie Antropic Claude Sonnet 5.5, do (1) redakcji językowej opisu wyników analizy przeprowadzonej przez autorów oraz (2) tłumaczenia tekstu z języka polskiego na angielski. Analiza danych, interpretacja wyników i wnioski zostały wykonane przez autora. Autorzy zweryfikowli zredagowali całość tekstu i ponoszą pełną odpowiedzialność za jego treść.
+
 \bibliography{references}
 \end{document}

@@ -1,9 +1,9 @@
 Cecha;Wartość
-Pracownicy objęci analizą;187
-w tym z danymi demograficznymi, $n$ (\%);151 (80{,}7)
+Pracownicy objęci analizą;180
+w tym z danymi demograficznymi, $n$ (\%);151 (83{,}9)
 \midrule Kobiety, $n$ (\%);121 (80{,}1)
 Mężczyźni, $n$ (\%);30 (19{,}9)
-Brak danych o płci, $n$;36
+Brak danych o płci, $n$;29
 \midrule Wiek (lata), mediana [IQR];{47 [41; 56]}
 Wiek (lata), średnia (SD);47{,}2 (10{,}6)
 Wiek (lata), zakres;22--67
@@ -12,4 +12,4 @@ Wiek (lata), zakres;22--67
 40--49 lat, $n$ (\%);49 (32{,}7)
 50--59 lat, $n$ (\%);51 (34{,}0)
 60--69 lat, $n$ (\%);16 (10{,}7)
-Brak danych o wieku, $n$;37
+Brak danych o wieku, $n$;30

@@ -1,17 +1,17 @@
 Cecha;Wartość
-Odpowiedzi;60\,962
-Pracownicy;187
+Odpowiedzi;57\,997
+Pracownicy;180
 Pytania;164
-Okres obserwacji;2023-04-24 -- 2026-06-08
-Sekwencje pracownik--pytanie;15\,783
+Okres obserwacji;2023-05-10 -- 2026-06-08
+Sekwencje pracownik--pytanie;15\,270
 Zaobserwowane opcje odpowiedzi na pytanie, mediana (zakres);3 (2--5)
-\midrule Odpowiedzi na pracownika, mediana [IQR];{218 [67; 592]}
-Pytania na pracownika, mediana [IQR];{90 [26; 139]}
-Dni aktywności na pracownika, mediana [IQR];{84 [28; 220]}
+\midrule Odpowiedzi na pracownika, mediana [IQR];{195 [70; 575]}
+Pytania na pracownika, mediana [IQR];{86 [38; 138]}
+Dni aktywności na pracownika, mediana [IQR];{84 [30; 224]}
 Odpowiedzi na dzień aktywności, mediana [IQR];{3 [2; 4]}
 Miesiące między pierwszą a ostatnią odpowiedzią, mediana [IQR];{18 [5; 30]}
-\midrule Próby w sekwencji, mediana [IQR] (maks.);{3 [2; 5] (19)}
-Sekwencje z $\geq$2 / $\geq$3 próbami (\%);78{,}6 / 60{,}6
-Dni między próbami, mediana [IQR];{36 [18; 90]}
-\midrule Odpowiedzi poprawne, ogółem (\%);86{,}5
-Odpowiedzi poprawne, pierwsze próby (\%);82{,}5
+\midrule Próby w sekwencji, mediana [IQR] (maks.);{3 [2; 5] (17)}
+Sekwencje z $\geq$2 / $\geq$3 próbami (\%);78{,}1 / 59{,}8
+Dni między próbami, mediana [IQR];{37 [18; 90]}
+\midrule Odpowiedzi poprawne, ogółem (\%);86{,}6
+Odpowiedzi poprawne, pierwsze próby (\%);82{,}6

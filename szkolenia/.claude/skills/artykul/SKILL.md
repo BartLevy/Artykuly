@@ -32,7 +32,7 @@ Podczas generowania i modyfikowania treści BEZWZGLĘDNIE przestrzegaj poniższy
 - Buduj zdania o zróżnicowanej długości i strukturze.
 
 ## 5. Ujednolicaj terminologię według listy definicji
-- Wiążącym źródłem terminologii jest lista `enumerate` w podrozdziale `\subsection{Definicje}` (`\label{sec:definicje}`) w pliku `wyniki_naukowe/artykul/sekcja-metodologia.tex`. Lista jest uzupełniana ręcznie, dlatego przed każdą edycją tekstu wczytaj jej aktualną wersję, nie polegaj na pamięci.
+- Wiążącym źródłem terminologii jest lista `enumerate` w pliku `wyniki_naukowe/artykul/terminologia.tex` (plik nie jest wczytywany do artykułu; w tekście definicje wprowadza się przy pierwszym użyciu, głównie w `sekcja-metodologia.tex`). Lista jest uzupełniana ręcznie, dlatego przed każdą edycją tekstu wczytaj jej aktualną wersję, nie polegaj na pamięci.
 - Każde pojęcie zdefiniowane na liście stosuj wyłącznie w zdefiniowanej formie i znaczeniu we wszystkich plikach `sekcja-*.tex`, `suplement.tex`, `main.tex` (w tym w streszczeniu, podpisach tabel i rycin oraz przypisach `\uwagatabeli{}`).
 - Nie zastępuj zdefiniowanego terminu synonimem (np. jeśli zdefiniowano *sekwencję*, nie pisz *seria pytań*, *ciąg prób*; jeśli zdefiniowano *odstęp*, nie pisz *przerwa*, *interwał*). Zasada urozmaicania słownictwa z pkt 4 nie dotyczy terminów z listy definicji.
 - Nie nadawaj zdefiniowanemu terminowi innego znaczenia niż na liście (np. *poprawność* oznacza odsetek poprawnych odpowiedzi, a nie ocenę pojedynczej odpowiedzi, chyba że lista stanowi inaczej).

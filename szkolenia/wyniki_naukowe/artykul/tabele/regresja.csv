@@ -1,8 +1,8 @@
 Predyktor;M1 (uczenie);M2 (retencja);M3 (nowe pytania)
-Numer próby (na podwojenie);{1{,}38 [1{,}32; 1{,}45]};{1{,}33 [1{,}24; 1{,}42]};
-Poprzednia próba poprawna;;{3{,}85 [3{,}49; 4{,}26]};
+Numer próby (na podwojenie);{1{,}39 [1{,}33; 1{,}45]};{1{,}35 [1{,}25; 1{,}45]};
+Poprzednia próba poprawna;;{3{,}89 [3{,}51; 4{,}31]};
 Dni od poprzedniej próby (na podwojenie);;{0{,}88 [0{,}86; 0{,}90]};
-Staż pracownika (na rok);;{0{,}87 [0{,}77; 1{,}00]};{0{,}88 [0{,}76; 1{,}01]}
+Staż pracownika (na rok);;{0{,}86 [0{,}76; 0{,}98]};{0{,}88 [0{,}76; 1{,}01]}
 \midrule Dane;Wszystkie próby;Próby $\geq$2;Pierwsze próby
-Odpowiedzi;60\,680;44\,499;15\,333
-Pracownicy / pytania;163 / 164;146 / 163;162 / 161
+Odpowiedzi;57\,705;41\,984;14\,810
+Pracownicy / pytania;162 / 164;144 / 163;161 / 161
