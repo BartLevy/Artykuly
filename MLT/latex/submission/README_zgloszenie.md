@@ -1,4 +1,4 @@
-# Zgłoszenie do Applied Acoustics – instrukcja
+# Zgłoszenie do Measurement (Elsevier) – instrukcja
 
 ## Jak zbudować paczkę
 
@@ -7,7 +7,7 @@ cd latex
 ./make_submission.sh            # wynik: latex/submission_package/
 ```
 
-Skrypt kopiuje `main-en.tex` jako `manuscript.tex`. Ryciny zapisuje jako `Figure_1…6` w jednym folderze, bez podfolderów, bo tego wymaga Elsevier. Wstawia `declarations.tex` przed bibliografią i ustawia numerację literatury w kolejności cytowania. Wszystko kompiluje, sprawdza limity z wytycznych i pakuje źródła do `manuscript_source.zip`. Skrypt jest bezpieczny do wielokrotnego uruchamiania, bo za każdym razem buduje folder od nowa. Źródła dokumentów leżą w `latex/submission/`, więc poprawki wprowadzaj tam, a nie w `submission_package/`.
+Skrypt kopiuje `main-els.tex` (klasa `elsarticle`) jako `manuscript.tex` i dodaje opcję `doubleblind`, bo Measurement stosuje recenzję podwójnie anonimową: nazwiska i afiliacje nie są drukowane w manuskrypcie. Sekcję CRediT (zawiera nazwiska) przenosi z deklaracji na koniec `title_page`. Ryciny zapisuje jako `Figure_1…6` w jednym folderze, bez podfolderów, bo tego wymaga Elsevier. Wstawia `declarations.tex` przed bibliografią i ustawia numerację literatury w kolejności cytowania. Wszystko kompiluje, sprawdza limity z wytycznych i pakuje źródła do `manuscript_source.zip`. Skrypt jest bezpieczny do wielokrotnego uruchamiania, bo za każdym razem buduje folder od nowa. Źródła dokumentów leżą w `latex/submission/`, więc poprawki wprowadzaj tam, a nie w `submission_package/`.
 
 ## Co wgrać w Editorial Manager (krok „Attach files”)
 
@@ -50,4 +50,4 @@ Skrypt wypisuje ostrzeżenia dla punktów 1–5.
 
 - **Graphical abstract** (zalecany, nieobowiązkowy): 531 × 1328 px (wys. × szer.) lub proporcjonalnie więcej, TIFF/EPS/PDF.
 - **Preprint na SSRN:** do wyboru przy zgłoszeniu, bez wpływu na decyzję redakcji.
-- Szablon `elsarticle` jest zalecany, ale nie wymagany; obecna klasa `article` jest dopuszczalna.
+- Manuskrypt jest na klasie `elsarticle` (`main-els.tex`). Poprawki merytoryczne wprowadzaj teraz w `main-els.tex`, nie w `main-en.tex`.

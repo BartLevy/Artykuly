@@ -1,0 +1,274 @@
+% Wygenerowano automatycznie przez analiza_odpowiedzi_naukowa.py -- plik jest NADPISYWANY, nie edytuj ręcznie.
+% Wersja angielska definicje.tex (te same nazwy makr); main-en.tex wstawia ją dosłownie (skill tlumaczenie-en).
+%
+% Liczby w notacji angielskiej: kropka dziesiętna, separator tysięcy {,} (od 10{,}000),
+% minus \ensuremath{-}, przedziały [a, b].
+% Makra wartości p (\SignP, \WilcoxonP, \P...) zawierają relację i są do trybu matematycznego: $p \SignP$.
+%
+% Tabele: \tabelacsv{<kolumny tabular>}{<nazwa pliku bez .csv>} wczytuje \TabDir<nazwa>-en.csv
+% (csvsimple-l3; separator ';'; pierwszy wiersz = nagłówek; komórki w składni LaTeX; komórki ze średnikiem
+% są ujęte w klamry; prefiks \midrule w pierwszej komórce = linia oddzielająca grupy wierszy).
+% Przypis pod tabelą: \uwagatabeli{...}. Katalogi \TabDir i \FigDir można zdefiniować przed \input.
+\RequirePackage{booktabs,csvsimple-l3}
+\providecommand{\TabDir}{tabele/}
+\providecommand{\FigDir}{rysunki/}
+\providecommand{\fillin}[1]{\textbf{[#1]}}
+\providecommand{\tabelacsv}[2]{\csvloop{file={\TabDir #2-en.csv}, separator=semicolon, head,
+  column names detection=false, after head=\begin{tabular}{#1}\toprule\csvlinetotablerow\\\midrule,
+  command=\csvlinetotablerow, late after line=\\, late after last line=\\\bottomrule\end{tabular}}}
+\providecommand{\uwagatabeli}[1]{\par\vspace{2pt}\parbox{\linewidth}{\footnotesize #1}}
+%
+% Stałe liczbowe
+\newcommand{\DaysOverThreePct}{32.0}
+\newcommand{\DaysOverThreeMultiModPct}{84.9}
+\newcommand{\DailyQOne}{2}
+\newcommand{\DailyQThree}{4}
+\newcommand{\NResponses}{57{,}997}
+\newcommand{\NEmployees}{180}
+\newcommand{\NItems}{164}
+\newcommand{\NModules}{9}
+\newcommand{\NSequences}{15{,}270}
+\newcommand{\NRejected}{0}
+\newcommand{\DateStart}{May 2023}
+\newcommand{\DateEnd}{June 2026}
+\newcommand{\AccOverall}{86.6}
+\newcommand{\AccFirst}{82.6}
+\newcommand{\AttemptsMedian}{3}
+\newcommand{\AttemptsMax}{17}
+\newcommand{\SeqRepeatedPct}{78.1}
+\newcommand{\SeqMinThreePct}{59.8}
+\newcommand{\GapMedian}{37}
+\newcommand{\GapQOne}{18}
+\newcommand{\GapQThree}{90}
+\newcommand{\DailyMedian}{3}
+\newcommand{\RespPerEmpMedian}{195}
+\newcommand{\RespPerEmpQOne}{70}
+\newcommand{\RespPerEmpQThree}{575}
+\newcommand{\SpanMonthsMedian}{18}
+\newcommand{\ActiveLastQuarterPct}{58.3}
+\newcommand{\WeekdayPct}{100.0}
+\newcommand{\ItemsPerEmpMedian}{86}
+\newcommand{\ActiveDaysMedian}{84}
+\newcommand{\OptionsMedian}{3}
+\newcommand{\NExcluded}{212}
+\newcommand{\NExcludedItems}{2}
+\newcommand{\NExcludedItemResp}{348}
+\newcommand{\NExcludedShortRep}{88}
+\newcommand{\MinGapDays}{7}
+\newcommand{\NShortRep}{88}
+\newcommand{\NShortRepSameDay}{88}
+\newcommand{\ShortRepPct}{0.15}
+\newcommand{\NShortRepHour}{80}
+\newcommand{\ExcludedModules}{mnk-tst}
+\newcommand{\NExcludedPilot}{644}
+\newcommand{\NExcludedPilotLater}{2233}
+\newcommand{\NExcludedPilotTotal}{2877}
+\newcommand{\NPilotSeq}{513}
+\newcommand{\NPilotEmp}{72}
+\newcommand{\PilotStart}{24 April 2023}
+\newcommand{\PilotEnd}{28 April 2023}
+\newcommand{\DaysUpToThreePct}{68.0}
+\newcommand{\DaysUpToFourPct}{98.8}
+\newcommand{\DailyMax}{7}
+\newcommand{\HourPOne}{9:05}
+\newcommand{\HourPNinetyNine}{15:57}
+\newcommand{\HoursNineSixteenPct}{99.3}
+\newcommand{\HoursTenFourteenPct}{62.6}
+\newcommand{\ReaskAfterCorrect}{73.5}
+\newcommand{\ReaskAfterIncorrect}{74.5}
+\newcommand{\GapAfterCorrect}{37}
+\newcommand{\GapAfterIncorrect}{39}
+\newcommand{\AccAttOne}{82.6}
+\newcommand{\AccAttOneCI}{[81.1, 84.1]}
+\newcommand{\AccAttMax}{92.7}
+\newcommand{\AccAttMaxCI}{[90.6, 94.8]}
+\newcommand{\AttMax}{10}
+\newcommand{\CohortK}{5}
+\newcommand{\CohortN}{4890}
+\newcommand{\CohortAccOne}{81.9}
+\newcommand{\CohortAccK}{89.0}
+\newcommand{\CohortAccOneCI}{[79.6, 84.1]}
+\newcommand{\CohortAccKCI}{[87.3, 90.7]}
+\newcommand{\PowerLawB}{0.29}
+\newcommand{\PowerLawRsq}{0.97}
+\newcommand{\ORMOneAttempt}{1.39}
+\newcommand{\ORMOneAttemptCI}{[1.33, 1.45]}
+\newcommand{\PMOneAttempt}{< 0.001}
+\newcommand{\ORMTwoAttempt}{1.35}
+\newcommand{\ORMTwoAttemptCI}{[1.25, 1.45]}
+\newcommand{\PMTwoAttempt}{< 0.001}
+\newcommand{\ORMTwoPrev}{3.89}
+\newcommand{\ORMTwoPrevCI}{[3.51, 4.31]}
+\newcommand{\PMTwoPrev}{< 0.001}
+\newcommand{\ORMTwoGap}{0.88}
+\newcommand{\ORMTwoGapCI}{[0.86, 0.90]}
+\newcommand{\PMTwoGap}{< 0.001}
+\newcommand{\ORMTwoTenure}{0.86}
+\newcommand{\ORMTwoTenureCI}{[0.76, 0.98]}
+\newcommand{\PMTwoTenure}{= 0.020}
+\newcommand{\ORMThreeTenure}{0.88}
+\newcommand{\ORMThreeTenureCI}{[0.76, 1.01]}
+\newcommand{\PMThreeTenure}{= 0.067}
+\newcommand{\MOneDropped}{292}
+\newcommand{\ICCEmployee}{0.10}
+\newcommand{\ICCItem}{0.24}
+\newcommand{\SDEmployee}{0.71}
+\newcommand{\SDItem}{1.10}
+\newcommand{\RsqMarginal}{0.022}
+\newcommand{\RsqConditional}{0.36}
+\newcommand{\ORRange}{1.29--1.51}
+\newcommand{\ORSensMain}{1.39}
+\newcommand{\ORSensMainCI}{[1.33, 1.45]}
+\newcommand{\ORSensCohort}{1.36}
+\newcommand{\ORSensCohortCI}{[1.27, 1.46]}
+\newcommand{\ORSensTrunc}{1.39}
+\newcommand{\ORSensTruncCI}{[1.33, 1.45]}
+\newcommand{\ORSensLenThree}{1.31}
+\newcommand{\ORSensLenThreeCI}{[1.22, 1.41]}
+\newcommand{\ORSensLenFive}{1.35}
+\newcommand{\ORSensLenFiveCI}{[1.26, 1.46]}
+\newcommand{\ORSensLenEight}{1.41}
+\newcommand{\ORSensLenEightCI}{[1.32, 1.51]}
+\newcommand{\ORSensActive}{1.39}
+\newcommand{\ORSensActiveCI}{[1.33, 1.46]}
+\newcommand{\ORSensTenure}{1.51}
+\newcommand{\ORSensTenureCI}{[1.42, 1.61]}
+\newcommand{\ORSensGee}{1.29}
+\newcommand{\ORSensGeeCI}{[1.24, 1.35]}
+\newcommand{\ORSensMixed}{1.38}
+\newcommand{\ORSensMixedCI}{[1.34, 1.42]}
+\newcommand{\NCorrections}{3382}
+\newcommand{\NForgetting}{2719}
+\newcommand{\EquilibriumPct}{88.8}
+\newcommand{\RetainPct}{92.6}
+\newcommand{\RetainCI}{[91.8, 93.4]}
+\newcommand{\ForgetPct}{7.4}
+\newcommand{\RecoverPct}{58.3}
+\newcommand{\RecoverCI}{[55.5, 61.2]}
+\newcommand{\PersistPct}{41.7}
+\newcommand{\SameDistractorPct}{71.8}
+\newcommand{\SameDistractorCI}{[69.4, 74.1]}
+\newcommand{\SameDistractorN}{2420}
+\newcommand{\SameDistractorExpected}{47.2}
+\newcommand{\SameDistractorExpectedPop}{60.0}
+\newcommand{\CorrRunOne}{64.4}
+\newcommand{\CorrRunOneCI}{[62.2, 66.8]}
+\newcommand{\CorrRunTwo}{48.1}
+\newcommand{\CorrRunThree}{41.8}
+\newcommand{\CorrRunMax}{34.2}
+\newcommand{\CorrRunMaxCI}{[27.6, 40.9]}
+\newcommand{\CorrRunMaxN}{295}
+\newcommand{\RunMax}{4}
+\newcommand{\EverCorrectedPct}{81.8}
+\newcommand{\FirstWrongSeqN}{2068}
+\newcommand{\SameDistrGapShort}{70.6}
+\newcommand{\SameDistrGapMid}{73.2}
+\newcommand{\SameDistrGapLong}{71.6}
+\newcommand{\PersistTopItems}{14}
+\newcommand{\PersistTopItemsShare}{39.6}
+\newcommand{\PersistItems}{145}
+\newcommand{\RetShortCorrect}{95.2}
+\newcommand{\RetLongCorrect}{88.5}
+\newcommand{\RetShortIncorrect}{60.9}
+\newcommand{\RetLongIncorrect}{58.1}
+\newcommand{\ForgetShort}{4.8}
+\newcommand{\ForgetLong}{11.5}
+\newcommand{\ForgetRunOne}{11.9}
+\newcommand{\ForgetRunOneCI}{[10.7, 13.0]}
+\newcommand{\ForgetRunTwo}{7.6}
+\newcommand{\ForgetRunThree}{5.0}
+\newcommand{\ForgetRunMax}{3.2}
+\newcommand{\ForgetRunMaxCI}{[2.7, 3.7]}
+\newcommand{\ForgetFreshShort}{7.7}
+\newcommand{\ForgetFreshLong}{13.9}
+\newcommand{\ForgetStableShort}{2.3}
+\newcommand{\ForgetStableLong}{5.2}
+\newcommand{\RelapsePct}{24.9}
+\newcommand{\RelapseCI}{[22.9, 26.8]}
+\newcommand{\RelapseN}{2457}
+\newcommand{\RelapseSamePct}{73.6}
+\newcommand{\RelapseSameCI}{[69.5, 77.7]}
+\newcommand{\RelapseSameN}{611}
+\newcommand{\ForgetRunK}{4}
+\newcommand{\EmpN}{148}
+\newcommand{\EmpImproved}{101}
+\newcommand{\EmpWorsened}{18}
+\newcommand{\EmpUnchanged}{29}
+\newcommand{\EmpMeanChange}{4.1}
+\newcommand{\EmpMeanChangeCI}{[2.7, 5.5]}
+\newcommand{\SignP}{< 0.001}
+\newcommand{\WilcoxonP}{< 0.001}
+\newcommand{\RankBiserial}{0.77}
+\newcommand{\EmpSharePct}{82.2}
+\newcommand{\ItemDifficultyMedian}{85.5}
+\newcommand{\TopDistractorMedian}{71.9}
+\newcommand{\NDistractors}{349}
+\newcommand{\NNonFunctional}{196}
+\newcommand{\NonFunctionalPct}{56.2}
+\newcommand{\ItemsModerate}{102}
+\newcommand{\ItemsGoodDisc}{50}
+\newcommand{\ItemsDiscTested}{161}
+\newcommand{\ItemsImproving}{43}
+\newcommand{\ItemsWorsening}{1}
+\newcommand{\ItemsTestable}{164}
+\newcommand{\ItemDiscMedian}{0.23}
+\newcommand{\ItemsLowDisc}{65}
+\newcommand{\ItemsEasy}{58}
+\newcommand{\ItemsHard}{4}
+\newcommand{\TopItems}{10}
+\newcommand{\DemoN}{180}
+\newcommand{\DemoMatched}{151}
+\newcommand{\DemoMatchedPct}{83.9}
+\newcommand{\DemoUnmatched}{29}
+\newcommand{\DemoWomen}{121}
+\newcommand{\DemoWomenPct}{80.1}
+\newcommand{\DemoMen}{30}
+\newcommand{\DemoMenPct}{19.9}
+\newcommand{\DemoSexMissing}{29}
+\newcommand{\DemoAgeN}{150}
+\newcommand{\DemoAgeMissing}{30}
+\newcommand{\AgeMedian}{47}
+\newcommand{\AgeQOne}{41}
+\newcommand{\AgeQThree}{56}
+\newcommand{\AgeMin}{22}
+\newcommand{\AgeMax}{67}
+\newcommand{\AgeMean}{47.2}
+\newcommand{\AgeSD}{10.6}
+\newcommand{\AgeModalGroup}{50--59}
+\newcommand{\AgeModalGroupPct}{34.0}
+\newcommand{\FirstN}{15{,}270}
+\newcommand{\FirstAcc}{82.6}
+\newcommand{\FirstAccCI}{[81.2, 84.1]}
+\newcommand{\FirstAccMinGroup}{30--39}
+\newcommand{\FirstAccMin}{74.9}
+\newcommand{\FirstAccMaxGroup}{50--59}
+\newcommand{\FirstAccMax}{84.3}
+\newcommand{\FirstAgeOR}{1.16}
+\newcommand{\FirstAgeORCI}{[1.03, 1.31]}
+\newcommand{\FirstAgeP}{= 0.012}
+\newcommand{\FirstAgeN}{13{,}578}
+\newcommand{\FirstAgeEmp}{150}
+\newcommand{\FirstAgeRawOR}{1.12}
+\newcommand{\FirstAgeRawORCI}{[1.01, 1.24]}
+\newcommand{\FirstAgeRawP}{= 0.039}
+\newcommand{\SeqChange}{7.2}
+\newcommand{\SeqChangeCI}{[5.5, 8.9]}
+\newcommand{\SeqChangeMinGroup}{60--69}
+\newcommand{\SeqChangeMin}{4.0}
+\newcommand{\SeqChangeMaxGroup}{40--49}
+\newcommand{\SeqChangeMax}{8.8}
+\newcommand{\SeqAgeOR}{0.97}
+\newcommand{\SeqAgeORCI}{[0.90, 1.05]}
+\newcommand{\SeqAgeP}{= 0.484}
+\newcommand{\SeqAgeN}{23{,}140}
+\newcommand{\BootReps}{2000}
+\newcommand{\Alpha}{0.05}
+\newcommand{\MinItemN}{30}
+\newcommand{\Seed}{2026}
+\newcommand{\MaxAttemptPooled}{10}
+\newcommand{\VerPython}{3.14.4}
+\newcommand{\VerPandas}{3.0.3}
+\newcommand{\VerNumpy}{2.5.0}
+\newcommand{\VerScipy}{1.18.0}
+\newcommand{\VerStatsmodels}{0.14.6}
+\newcommand{\VerMatplotlib}{3.11.0}

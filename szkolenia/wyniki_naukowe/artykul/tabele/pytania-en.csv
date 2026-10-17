@@ -1,0 +1,9 @@
+Measure;Value
+Questions analyzed;164
+Difficulty (\% correct at first attempt), median [IQR];85.5 [75.1, 94.2]
+Questions with $<$50\% / 50--90\% / $>$90\% correct;4 / 102 / 58
+Discrimination (item--rest correlation $r$), median [IQR], questions with $n\geq$30;0.23 [0.14, 0.32] ($k$ = 161)
+Questions with $r<0.20$ / $0.20$--$0.29$ / $\geq0.30$;65 / 46 / 50
+Share of errors on the most frequent distractor (\%), median [IQR];71.9 [58.8, 84.3]
+Observed distractors chosen in $<$5\% of responses (non-functional);196 of 349 (56.2\%)
+Questions improving / worsening with repetition (FDR $q<0.05$);43 / 1 (of 164 testable)

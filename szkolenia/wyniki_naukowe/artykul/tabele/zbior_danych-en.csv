@@ -1,0 +1,17 @@
+Characteristic;Value
+Responses;57{,}997
+Employees;180
+Questions;164
+Observation period;2023-05-10 -- 2026-06-08
+Employee--question sequences;15{,}270
+Observed answer options per question, median (range);3 (2--5)
+\midrule Responses per employee, median [IQR];195 [70, 575]
+Questions per employee, median [IQR];86 [38, 138]
+Active days per employee, median [IQR];84 [30, 224]
+Responses per active day, median [IQR];3 [2, 4]
+Months between first and last response, median [IQR];18 [5, 30]
+\midrule Attempts per sequence, median [IQR] (max.);3 [2, 5] (17)
+Sequences with $\geq$2 / $\geq$3 attempts (\%);78.1 / 59.8
+Days between attempts, median [IQR];37 [18, 90]
+\midrule Correct responses, overall (\%);86.6
+Correct responses, first attempts (\%);82.6

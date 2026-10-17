@@ -1,0 +1,89 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs,graphicx,xcolor,amsmath}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{changepage}
+\usepackage{enumitem}
+\usepackage{doi}
+\usepackage[numbers,sort&compress]{natbib}
+\bibliographystyle{plainnat}
+
+\extrafloats{100}
+\newcommand{\fillin}[1]{\textcolor{red}{[#1]}}
+\input{definicje.tex}
+
+\usepackage{authblk}
+\renewcommand\Authand{ and }\renewcommand\Authands{, and }
+\author[1,*]{Bartosz Lewandowski \small{(ORCID:0009-0004-1158-0693)}}
+\author[2]{Monika Szerszeń \small{(ORCID: 0009-0009-6625-3979)}}
+\author[3]{Magdalena Dowgalec \small{(ORCID:0009-0005-4469-2832)}}
+\author[4]{Ewaryst Tkacz \small{(ORCID:0000-0003-2580-7954)}}
+\author[5]{Maciej J. Wróbel \small{(ORCID:0000-0003-1865-2122)}}
+
+\affil[1,4]{Department of Clinical Engineering, Academy of Silesia, Katowice, Poland}
+\affil[2]{Banking Process Support and Optimization Department, Powiślański Cooperative Bank, Kwidzyn, Poland}
+\affil[3]{Legal Department, Atende SA, Warsaw, Poland}
+\affil[5]{Department of Otolaryngology and Oncological Laryngology, Collegium Medicum NCU, Toruń, Poland}
+
+\affil[*]{Corresponding author: Bartosz Lewandowski, bartosz.lewandowski@akademiaslaska.pl}
+
+\title{Employee response accuracy on repeated questions: forgetting and persistent errors in a three-year microlearning program}
+
+\date{}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent\textbf{Background.} Spaced repetition improves retention, but the effectiveness of
+microlearning in organizations has rarely been assessed using multi-year data on employee responses.
+\textbf{Methods.} The analysis covered \NResponses{} responses from \NEmployees{} bank employees to
+\NItems{} multiple-choice questions, given from \DateStart{} to \DateEnd. Questions recurred on
+a schedule independent of response outcome (median interval \GapMedian{} days), and the correct answer
+with an explanation was displayed after every response. Accuracy was analyzed across successive
+attempts at the same question and by the outcome of, and interval since, the previous attempt.
+\textbf{Results.} Accuracy at the first attempt was \FirstAcc\%. In sequences of at least
+\CohortK{} attempts, it rose from \CohortAccOne\% to \CohortAccK\% (by \SeqChange{} pp, 95\% CI
+\SeqChangeCI). Error corrections outnumbered forgetting events (\NCorrections{} vs.\
+\NForgetting).
+The forgetting rate increased with the interval and decreased with the number of consecutive correct
+responses, from \ForgetRunOne\% after one to \ForgetRunMax\% after at least \ForgetRunK{}. In
+\SameDistractorPct\% of cases, repeated errors involved the same distractor (expected under choice
+proportional to distractor popularity: \SameDistractorExpectedPop\%), regardless of the interval.
+\textbf{Conclusions.} Accuracy on recurring questions increased, but knowledge required further
+repetition, and some errors persisted despite feedback. A schedule adapted to employee performance and
+feedback addressing the selected distractor may increase the effectiveness of such programs.
+
+\medskip\noindent\textbf{Keywords:} spaced repetition; microlearning; employee training; feedback;
+forgetting; learning analytics
+\end{abstract}
+
+\input{sekcja-wstep}
+\input{sekcja-metodologia}
+\input{sekcja-wyniki}
+\input{sekcja-dyskusja}
+
+\section*{Declarations}
+
+\noindent\textbf{Ethics.}
+The study used fully anonymized data provided by the bank with its written consent of 3 August 2026.
+Employee coding and data protection rules are described in Section~\ref{sec:dane}.\\
+\textbf{Data availability.}
+The data used in the study are the property of the bank and are not publicly available.\\
+\textbf{Funding.}
+The study received no funding.\\
+\textbf{Competing interests.}
+M. Szerszeń is an employee of the bank in which the study was conducted. The other authors declare no
+competing interests.\\
+\textbf{Use of AI tools.}
+During the preparation of this article, the authors used Anthropic Claude Sonnet 5.5 for (1) language
+editing of the description of the results of the analysis performed by the authors and (2) translation
+of the text from Polish into English. Data analysis, interpretation of the results and conclusions were
+carried out by the author. The authors verified and edited the entire text and take full responsibility
+for its content.
+
+\bibliography{references}
+\end{document}

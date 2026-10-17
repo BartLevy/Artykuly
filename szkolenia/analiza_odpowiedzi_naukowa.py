@@ -7,6 +7,9 @@ Oprócz tabel roboczych (CSV) i raportu tekstowego skrypt tworzy katalog
   tabele/*.csv    zawartość tabel (separator ';', komórki w składni LaTeX) wczytywana przez \\tabelacsv,
   rysunki/*.pdf   wykresy (oraz PNG 300 dpi),
   dane/*.csv      surowe dane źródłowe tabel i wykresów (materiał uzupełniający).
+Drugi przebieg (pomijany opcją --bez-en) zapisuje te same materiały po angielsku, z sufiksem -en:
+definicje-en.tex, tabele/*-en.csv, rysunki/*-en.{pdf,png} (kropka dziesiętna; te same obliczenia i ziarno,
+więc te same liczby). Tekst angielski (main-en.tex, suplement-en.tex) składa skill tlumaczenie-en.
 Opcja --osoby (domyślnie people.csv) dodaje analizę demograficzną (płeć, wiek w przedziałach 10-letnich)
 pracowników objętych analizą; osoby łączone przez MD5 imie.nazwisko = user_symbol, bez zapisu nazwisk.
 Tekst artykułu (main.tex, sekcja-*.tex, references.bib) jest edytowany ręcznie i skrypt go nie zmienia;
@@ -20,6 +23,7 @@ Uruchomienie: python analiza_odpowiedzi_naukowa.py data.csv --wyniki wyniki_nauk
 
 import argparse
 import hashlib
+import tempfile
 import warnings
 from pathlib import Path
 
@@ -36,6 +40,16 @@ KLUCZ = ["user_symbol", "question_id"]
 PRZEDZIALY_DNI = [0, 14, 30, 60, 120, 240, np.inf]
 ETYKIETY_DNI = ["<14", "14--29", "30--59", "60--119", "120--239", "$\\geq$240"]
 KOLOR_1, KOLOR_2, SZARY = "#2a78d6", "#eb6834", "#8a8984"
+JEZYK = "pl"  # język materiałów artykułu; "en" = drugi przebieg z sufiksem -en (ustawiany w main)
+
+
+def T(pl, en):
+    """Napis w języku bieżącego przebiegu materiałów artykułu."""
+    return en if JEZYK == "en" else pl
+
+
+def sufiks():
+    return "-en" if JEZYK == "en" else ""
 
 
 # --------------------------------------------------------------------------- dane
@@ -238,34 +252,41 @@ def modele(x, kohorta):
     # analizy wrażliwości dla efektu log2(próba)
     wrazliwosc = []
     m1 = wyniki["M1"].iloc[0]
-    wrazliwosc.append(("main", "Efekty stałe pracownika i pytania (model główny)", "Model główny (efekty stałe)",
+    wrazliwosc.append(("main", T("Efekty stałe pracownika i pytania (model główny)",
+                                 "Employee and question fixed effects (main model)"),
+                       T("Model główny (efekty stałe)", "Main model (fixed effects)"),
                        m1.OR, m1.lo, m1.hi, info["M1"]["n"]))
     c = x.loc[(x["liczba_prob"] >= kohorta) & (x["proba"] <= kohorta)]
     r, i = logit_fe("correct ~ log2_proba", c)
-    wrazliwosc.append(("cohort", f"Kohorta (sekwencje z $\\geq${kohorta} próbami, próby 1--{kohorta})",
-                       f"Kohorta (≥{kohorta} prób)", r.OR[0], r.lo[0], r.hi[0], i["n"]))
+    wrazliwosc.append(("cohort", T(f"Kohorta (sekwencje z $\\geq${kohorta} próbami, próby 1--{kohorta})",
+                                   f"Cohort (sequences with $\\geq${kohorta} attempts, attempts 1--{kohorta})"),
+                       T(f"Kohorta (≥{kohorta} prób)", f"Cohort (≥{kohorta} attempts)"), r.OR[0], r.lo[0], r.hi[0], i["n"]))
     r, i = logit_fe("correct ~ log2_proba", x.loc[x["proba"] <= 10])
-    wrazliwosc.append(("trunc", "Próby obcięte do 10", "Próby ≤10", r.OR[0], r.lo[0], r.hi[0], i["n"]))
+    wrazliwosc.append(("trunc", T("Próby obcięte do 10", "Attempts truncated at 10"), T("Próby ≤10", "Attempts ≤10"), r.OR[0], r.lo[0], r.hi[0], i["n"]))
     for od, do in ((3, 4), (5, 7), (8, None)):
         s = x.loc[(x["liczba_prob"] >= od) & ((x["liczba_prob"] <= do) if do else True)]
         r, i = logit_fe("correct ~ log2_proba", s)
         et = f"{od}--{do}" if do else f"$\\geq${od}"
         krotko = f"{od}–{do}" if do else f"≥{od}"
-        wrazliwosc.append((f"len{od}", f"Wyłącznie sekwencje o długości {et}", f"Długość sekwencji {krotko}",
+        wrazliwosc.append((f"len{od}", T(f"Wyłącznie sekwencje o długości {et}", f"Sequences of length {et} only"),
+                           T(f"Długość sekwencji {krotko}", f"Sequence length {krotko}"),
                            r.OR[0], r.lo[0], r.hi[0], i["n"]))
     aktywni = x.groupby("user_symbol")["id"].transform("size") >= 50
     r, i = logit_fe("correct ~ log2_proba", x.loc[aktywni])
-    wrazliwosc.append(("active", "Pracownicy z $\\geq$50 odpowiedziami", "Pracownicy z ≥50 odpowiedziami",
+    wrazliwosc.append(("active", T("Pracownicy z $\\geq$50 odpowiedziami", "Employees with $\\geq$50 responses"),
+                       T("Pracownicy z ≥50 odpowiedziami", "Employees with ≥50 responses"),
                        r.OR[0], r.lo[0], r.hi[0], i["n"]))
     r, i = logit_fe("correct ~ log2_proba + staz_lata", x)
-    wrazliwosc.append(("tenure", "Z korektą o staż pracownika", "Korekta o staż",
+    wrazliwosc.append(("tenure", T("Z korektą o staż pracownika", "Adjusted for employee tenure"),
+                       T("Korekta o staż", "Tenure-adjusted"),
                        r.OR[0], r.lo[0], r.hi[0], i["n"]))
     grupy = x["user_symbol"].astype("category").cat.codes
     g = smf.gee("correct ~ log2_proba", groups=grupy, data=x, family=sm.families.Binomial(),
                 cov_struct=sm.cov_struct.Exchangeable()).fit()
     ci = g.conf_int().loc["log2_proba"]
-    wrazliwosc.append(("gee", "GEE, korelacja wymienna w obrębie pracownika (efekt uśredniony populacyjnie)",
-                       "GEE (uśredniony populacyjnie)", np.exp(g.params["log2_proba"]), np.exp(ci[0]), np.exp(ci[1]),
+    wrazliwosc.append(("gee", T("GEE, korelacja wymienna w obrębie pracownika (efekt uśredniony populacyjnie)",
+                                "GEE, exchangeable within-employee correlation (population-averaged effect)"),
+                       T("GEE (uśredniony populacyjnie)", "GEE (population-averaged)"), np.exp(g.params["log2_proba"]), np.exp(ci[0]), np.exp(ci[1]),
                        len(x)))
     # model mieszany (MAP/Laplace): wariancje efektów losowych i ICC
     from statsmodels.genmod.bayes_mixed_glm import BinomialBayesMixedGLM
@@ -274,8 +295,9 @@ def modele(x, kohorta):
         mm = BinomialBayesMixedGLM.from_formula(
             "correct ~ log2_proba", {"u": "0 + C(user_symbol)", "q": "0 + C(question_id)"}, x).fit_map()
     beta, se = mm.fe_mean[1], mm.fe_sd[1]
-    wrazliwosc.append(("mixed", "Skrzyżowane losowe wyrazy wolne pracownika i pytania (aproksymacja Laplace'a)",
-                       "Model mieszany (efekty losowe)",
+    wrazliwosc.append(("mixed", T("Skrzyżowane losowe wyrazy wolne pracownika i pytania (aproksymacja Laplace'a)",
+                                  "Crossed random intercepts for employee and question (Laplace approximation)"),
+                       T("Model mieszany (efekty losowe)", "Mixed model (random effects)"),
                        np.exp(beta), np.exp(beta - 1.96 * se), np.exp(beta + 1.96 * se), len(x)))
     su, sq = np.exp(mm.vcp_mean)
     total = su ** 2 + sq ** 2 + np.pi ** 2 / 3
@@ -427,13 +449,16 @@ def analiza_pozycji(x, min_n, alfa):
     return out
 
 
+OGOLEM, BRAK_WIEKU = ("Ogółem", "Overall"), ("Brak danych", "Missing")
+
+
 def grupy_wieku(x, dekada):
     """Lista (etykieta, maska odpowiedzi): ogółem, przedziały 10-letnie, brak danych o wieku."""
     d = x["user_symbol"].map(dekada)
-    out = [("Ogółem", pd.Series(True, index=x.index))]
+    out = [(T(*OGOLEM), pd.Series(True, index=x.index))]
     out += [(f"{int(k)}--{int(k) + 9}", d == k) for k in sorted(d.dropna().unique())]
     if d.isna().any():
-        out.append(("Brak danych", d.isna()))
+        out.append((T(*BRAK_WIEKU), d.isna()))
     return out
 
 
@@ -512,15 +537,17 @@ MINUS = "\\ensuremath{-}"
 SEP = "\\midrule"  # wiersz-separator grup w tabeli
 MIESIACE = ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia",
             "września", "października", "listopada", "grudnia"]
+MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+          "November", "December"]
 
 
 def f_num(v, d=2):
-    return (MINUS if round(v, d) < 0 else "") + f"{abs(v):.{d}f}".replace(".", PRZECINEK)
+    return (MINUS if round(v, d) < 0 else "") + f"{abs(v):.{d}f}".replace(".", T(PRZECINEK, "."))
 
 
 def f_int(v):
     n = int(round(v))
-    s = f"{abs(n):,}".replace(",", "\\,") if abs(n) >= 10000 else str(abs(n))
+    s = f"{abs(n):,}".replace(",", T("\\,", "{,}")) if abs(n) >= 10000 else str(abs(n))
     return (MINUS if n < 0 else "") + s
 
 
@@ -528,8 +555,13 @@ def f_pct(p, d=1):
     return f_num(100 * p, d)
 
 
+def sep_pu():
+    """Separator granic przedziału: [a; b] po polsku, [a, b] po angielsku."""
+    return T("; ", ", ")
+
+
 def f_ci(lo, hi, d=1, skala=100):
-    return f"[{f_num(skala * lo, d)}; {f_num(skala * hi, d)}]"
+    return f"[{f_num(skala * lo, d)}{sep_pu()}{f_num(skala * hi, d)}]"
 
 
 def f_or(v):
@@ -539,18 +571,18 @@ def f_or(v):
 def f_p(p):
     if pd.isna(p):
         return "--"
-    return "$<$0{,}001" if p < 0.001 else f_num(p, 3)
+    return T("$<$0{,}001", "$<$0.001") if p < 0.001 else f_num(p, 3)
 
 
 def f_p_rel(p):
     """Wartość p z relacją, do trybu matematycznego: $p \\SignP$ -> p = 0,003 albo p < 0,001."""
     if pd.isna(p):
         return "= \\textrm{--}"
-    return "< 0{,}001" if p < 0.001 else "= " + f_num(p, 3)
+    return T("< 0{,}001", "< 0.001") if p < 0.001 else "= " + f_num(p, 3)
 
 
 def f_data(t):
-    return f"{MIESIACE[t.month - 1]} {t.year}"  # dopełniacz: ,,od stycznia 2023''
+    return f"{T(MIESIACE, MONTHS)[t.month - 1]} {t.year}"  # dopełniacz: ,,od stycznia 2023''
 
 
 def bez_latexu(s):
@@ -582,7 +614,7 @@ def tabela_csv(katalog, nazwa, df):
         if grupa:
             komorki[0], grupa = f"{SEP} {komorki[0]}", False
         linie.append(";".join(komorki))
-    (katalog / f"{nazwa}.csv").write_text("\n".join(linie) + "\n", encoding="utf-8")
+    (katalog / f"{nazwa}{sufiks()}.csv").write_text("\n".join(linie) + "\n", encoding="utf-8")
 
 
 # ------------------------------------------------------------ wykresy
@@ -605,12 +637,25 @@ def przecinek(*osie):
     """Etykiety osi z przecinkiem dziesiętnym."""
     from matplotlib.ticker import FuncFormatter
     for o in osie:
-        o.set_major_formatter(FuncFormatter(lambda v, _: f"{v:g}".replace(".", ",").replace("-", "−")))
+        o.set_major_formatter(FuncFormatter(lambda v, _: f"{v:g}".replace(".", T(",", ".")).replace("-", "−")))
 
 
 def zapisz(fig, katalog, nazwa):
+    # bbox "tight" może pominąć część napisu (np. podpis osi X szerszy niż rycina): taki napis zostałby obcięty
+    import matplotlib
+    from matplotlib.text import Text
+    fig.canvas.draw()
+    r = fig.canvas.get_renderer()
+    kadr = fig.get_tightbbox(r).transformed(fig.dpi_scale_trans)
+    tol = matplotlib.rcParams["savefig.pad_inches"] * fig.dpi
+    podzialki = {t for ax in fig.axes for t in ax.get_xticklabels(which="both") + ax.get_yticklabels(which="both")}
+    for t in fig.findobj(Text):
+        if t.get_visible() and t.get_text().strip() and t not in podzialki:
+            bb = t.get_window_extent(r)
+            if bb.x0 < kadr.x0 - tol or bb.x1 > kadr.x1 + tol or bb.y0 < kadr.y0 - tol or bb.y1 > kadr.y1 + tol:
+                print(f"UWAGA: {nazwa}{sufiks()}: napis wychodzi poza rycinę i zostanie obcięty: {t.get_text()!r}")
     for ext in ("pdf", "png"):
-        fig.savefig(katalog / f"{nazwa}.{ext}")
+        fig.savefig(katalog / f"{nazwa}{sufiks()}.{ext}")
     fig.clf()
 
 
@@ -623,13 +668,15 @@ def wykres_krzywa(plt, katalog, krzywa, fit, max_proba, kohorta):
     ax.set_xticks(range(1, max_proba + 1))
     ax.set_xticklabels([str(i) for i in range(1, max_proba)] + [f"{max_proba}+"])
     przecinek(ax.yaxis)
-    ax.set_xlabel("Numer próby (ten sam pracownik, to samo pytanie)")
-    ax.set_ylabel("Poprawność (%)")
+    ax.set_xlabel(T("Numer próby (ten sam pracownik, to samo pytanie)", "Attempt number (same employee, same question)"))
+    ax.set_ylabel(T("Poprawność (%)", "Accuracy (%)"))
     zapisz(fig, katalog, "rys_krzywa_uczenia")
 
 
-STANY = [("utrzymana", "Poprawna po poprawnej", "#184f95"), ("korekta", "Korekta błędu", "#5598e7"),
-         ("zapominanie", "Zapominanie", "#f08a5c"), ("powtorzony", "Powtórzony błąd", "#b8461a")]
+STANY = [("utrzymana", ("Poprawna po poprawnej", "Correct after correct"), "#184f95"),
+         ("korekta", ("Korekta błędu", "Error correction"), "#5598e7"),
+         ("zapominanie", ("Zapominanie", "Forgetting"), "#f08a5c"),
+         ("powtorzony", ("Powtórzony błąd", "Repeated error"), "#b8461a")]
 
 
 def stany_kohorty(x, K):
@@ -651,36 +698,36 @@ def wykres_stany_kohorty(plt, katalog, stany, krzywa, K):
     p1 = stany.loc[1]
     ax.bar(1, 100 * p1["pierwsza_poprawna"], color=STANY[0][2], **biel)
     ax.bar(1, 100 * p1["pierwsza_bledna"], bottom=100 * p1["pierwsza_poprawna"], color=STANY[3][2], **biel)
-    ax.text(1, 50 * p1["pierwsza_poprawna"], "poprawna", ha="center", va="center", color="#fcfcfb", fontsize=6)
-    ax.text(1, 100 * p1["pierwsza_poprawna"] + 55 * p1["pierwsza_bledna"], "błędna", ha="center", va="center",
+    ax.text(1, 50 * p1["pierwsza_poprawna"], T("poprawna", "correct"), ha="center", va="center", color="#fcfcfb", fontsize=6)
+    ax.text(1, 100 * p1["pierwsza_poprawna"] + 55 * p1["pierwsza_bledna"], T("błędna", "incorrect"), ha="center", va="center",
             color="#fcfcfb", fontsize=6)
     dalej = stany.loc[proby >= 2]
     dol = np.zeros(len(dalej))
     for klucz, etykieta, kolor in STANY:
         h = 100 * dalej[klucz].to_numpy()
-        ax.bar(dalej.index, h, bottom=dol, color=kolor, label=etykieta, **biel)
+        ax.bar(dalej.index, h, bottom=dol, color=kolor, label=T(*etykieta), **biel)
         dol += h
     k = krzywa.loc[krzywa["proba"] == "cohort"].sort_values("etap")
     ax.errorbar(k["etap"], 100 * k["p"], yerr=[100 * (k["p"] - k["ci_lo"]), 100 * (k["ci_hi"] - k["p"])],
                 color="#0b0b0b", marker="o", ms=5, mfc="#fcfcfb", mew=1.5, lw=2, capsize=2, elinewidth=0.8,
-                label="Poprawność (95% PU)", zorder=5)
+                label=T("Poprawność (95% PU)", "Accuracy (95% CI)"), zorder=5)
     for e, v in zip(k["etap"], k["p"]):
-        ax.text(e, 101.5, f"{100 * v:.1f}%".replace(".", ","), ha="center", va="bottom", fontsize=6.5,
+        ax.text(e, 101.5, f"{100 * v:.1f}%".replace(".", T(",", ".")), ha="center", va="bottom", fontsize=6.5,
                 color="#0b0b0b")
     ax.set_xticks(proby)
     ax.set_ylim(0, 108)
     ax.set_yticks(range(0, 101, 20))
     ax.grid(False)
-    ax.set_xlabel("Numer próby (kohorta)")
-    ax.set_ylabel("Udział odpowiedzi (%)")
+    ax.set_xlabel(T("Numer próby (kohorta)", "Attempt number (cohort)"))
+    ax.set_ylabel(T("Udział odpowiedzi (%)", "Share of responses (%)"))
     ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=3, handlelength=1.2, columnspacing=1.0)
     zapisz(fig, katalog, "rys_stany_kohorty")
 
 
 def wykres_odstep(plt, katalog, ret):
     fig, ax = plt.subplots(figsize=(3.5, 2.5))
-    for prev, kolor, marker, etykieta in [(1, KOLOR_1, "o", "Poprzednia próba poprawna"),
-                                          (0, KOLOR_2, "s", "Poprzednia próba błędna")]:
+    for prev, kolor, marker, etykieta in [(1, KOLOR_1, "o", T("Poprzednia próba poprawna", "Previous attempt correct")),
+                                          (0, KOLOR_2, "s", T("Poprzednia próba błędna", "Previous attempt incorrect"))]:
         k = ret.loc[ret["poprzednia"] == prev]
         xs = k["przedzial"].astype(int) + (-0.08 if prev else 0.08)
         ax.errorbar(xs, 100 * k["p"], yerr=[100 * (k["p"] - k["ci_lo"]), 100 * (k["ci_hi"] - k["p"])],
@@ -688,8 +735,8 @@ def wykres_odstep(plt, katalog, ret):
     ax.set_xticks(range(len(ETYKIETY_DNI)))
     ax.set_xticklabels([e.replace("--", "–").replace("$\\geq$", "≥") for e in ETYKIETY_DNI])
     przecinek(ax.yaxis)
-    ax.set_xlabel("Dni od poprzedniej próby tego samego pytania")
-    ax.set_ylabel("Poprawność (%)")
+    ax.set_xlabel(T("Dni od poprzedniej próby tego samego pytania", "Days since previous attempt at the same question"))
+    ax.set_ylabel(T("Poprawność (%)", "Accuracy (%)"))
     ax.legend(loc="center right")
     zapisz(fig, katalog, "rys_odstep")
 
@@ -701,8 +748,9 @@ def wykres_osoby(plt, katalog, d):
     ax.hist(v, bins=kraw, color=KOLOR_1, edgecolor="white", linewidth=1)
     ax.axvline(0, color="#52514e", lw=0.8)
     przecinek(ax.xaxis)
-    ax.set_xlabel("Zmiana odsetka poprawnych, próba 3 − próba 1 (p.p.)")
-    ax.set_ylabel("Pracownicy")
+    ax.set_xlabel(T("Zmiana odsetka poprawnych, próba 3 − próba 1 (p.p.)",
+                    "Change in % correct, attempt 3 − 1 (pp)"))
+    ax.set_ylabel(T("Pracownicy", "Employees"))
     zapisz(fig, katalog, "rys_zmiana_pracownikow")
 
 
@@ -712,15 +760,15 @@ def wykres_pozycje(plt, katalog, poz, alfa):
     k = poz.dropna(subset=["dyskryminacja"])
     sig = k["istotna_poprawa"]
     ax.scatter(100 * k.loc[~sig, "p_pierwsza"], k.loc[~sig, "dyskryminacja"], s=14, color=SZARY,
-               marker="o", alpha=0.8, label="Brak istotnego trendu", edgecolors="white", linewidths=0.5)
+               marker="o", alpha=0.8, label=T("Brak istotnego trendu", "No significant trend"), edgecolors="white", linewidths=0.5)
     ax.scatter(100 * k.loc[sig, "p_pierwsza"], k.loc[sig, "dyskryminacja"], s=16, color=KOLOR_1,
-               marker="^", label=f"Poprawa (FDR $q$ < {alfa:g})".replace(".", ","),
+               marker="^", label=T(f"Poprawa (FDR $q$ < {alfa:g})".replace(".", ","), f"Improvement (FDR $q$ < {alfa:g})"),
                edgecolors="white", linewidths=0.5)
     ax.axhline(0.2, color="#52514e", lw=0.7, ls=":")
     ax.axvline(90, color="#52514e", lw=0.7, ls=":")
     przecinek(ax.xaxis, ax.yaxis)
-    ax.set_xlabel("Trudność pytania: poprawne w pierwszej próbie (%)")
-    ax.set_ylabel("Dyskryminacja (korelacja pytanie–reszta $r$)")
+    ax.set_xlabel(T("Trudność pytania: poprawne w pierwszej próbie (%)", "Question difficulty: correct at first attempt (%)"))
+    ax.set_ylabel(T("Dyskryminacja (korelacja pytanie–reszta $r$)", "Discrimination (item–rest correlation $r$)"))
     ax.legend(loc="lower left", bbox_to_anchor=(0, 1), ncol=2, borderaxespad=0.2, handletextpad=0.2)
     zapisz(fig, katalog, "rys_analiza_pytan")
 
@@ -738,10 +786,11 @@ def wykres_wrazliwosc(plt, katalog, wraz):
     ax.axvline(1, color="#52514e", lw=0.8)
     ax.set_xscale("log")
     ticks = [1, 1.2, 1.4, 1.6]
-    ax.set_xticks(ticks); ax.set_xticklabels([f"{t:g}".replace(".", ",") for t in ticks]); ax.minorticks_off()
+    ax.set_xticks(ticks); ax.set_xticklabels([f"{t:g}".replace(".", T(",", ".")) for t in ticks]); ax.minorticks_off()
     ax.set_xlim(0.95, max(1.7, w["hi"].max() * 1.05))
     ax.set_yticks(w.index); ax.set_yticklabels(w["short"])
-    ax.set_xlabel("Iloraz szans na podwojenie numeru próby (skala log.)")
+    ax.set_xlabel(T("Iloraz szans na podwojenie numeru próby (skala log.)",
+                    "OR per doubling of attempt number (log scale)"))
     zapisz(fig, katalog, "rys_wrazliwosc")
 
 
@@ -749,8 +798,8 @@ def wykres_demografia(plt, katalog, d):
     t = d["wiek_plec"]
     fig, ax = plt.subplots(figsize=(3.5, 2.4))
     xs, dol = np.arange(len(t)), np.zeros(len(t))
-    for kol, kolor, et in (("kobieta", KOLOR_1, "Kobiety"), ("mężczyzna", KOLOR_2, "Mężczyźni"),
-                           (BRAK, SZARY, "Brak danych o płci")):
+    for kol, kolor, et in (("kobieta", KOLOR_1, T("Kobiety", "Women")), ("mężczyzna", KOLOR_2, T("Mężczyźni", "Men")),
+                           (BRAK, SZARY, T("Brak danych o płci", "Sex not recorded"))):
         if kol in t.columns:
             ax.bar(xs, t[kol], bottom=dol, color=kolor, width=0.7, label=et, edgecolor="white", linewidth=0.5)
             dol += t[kol].to_numpy()
@@ -759,8 +808,8 @@ def wykres_demografia(plt, katalog, d):
     ax.set_xticks(xs)
     ax.set_xticklabels([f"{d}–{d + 9}" for d in t.index])
     ax.set_ylim(0, dol.max() * 1.15)
-    ax.set_xlabel("Wiek (lata)")
-    ax.set_ylabel("Pracownicy")
+    ax.set_xlabel(T("Wiek (lata)", "Age (years)"))
+    ax.set_ylabel(T("Pracownicy", "Employees"))
     ax.legend(loc="upper left")
     zapisz(fig, katalog, "rys_demografia")
 
@@ -771,7 +820,8 @@ def wykres_aktywnosc(plt, katalog, x):
     mies = mies.reindex(pd.period_range(mies.index.min(), mies.index.max(), freq="M"), fill_value=0)
     fig, axs = plt.subplots(2, 1, figsize=(7, 3.4), sharex=True)
     xs = mies.index.to_timestamp()
-    for ax, kol, et in [(axs[0], "n", "Odpowiedzi w miesiącu"), (axs[1], "osoby", "Aktywni pracownicy")]:
+    for ax, kol, et in [(axs[0], "n", T("Odpowiedzi w miesiącu", "Responses per month")),
+                         (axs[1], "osoby", T("Aktywni pracownicy", "Active employees"))]:
         ax.bar(xs, mies[kol], width=24, color=KOLOR_1)
         ax.set_ylabel(et)
     axs[1].xaxis.set_major_locator(mdates.YearLocator())
@@ -782,9 +832,10 @@ def wykres_aktywnosc(plt, katalog, x):
 
 # ------------------------------------------------------------ artykuł: definicje, tabele (CSV), rysunki
 
-def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
+def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None, dane=None):
+    """Materiały artykułu w języku JEZYK; dane = katalog surowych danych (domyślnie <katalog>/dane)."""
     rng = np.random.default_rng(args.seed)
-    tdir, fdir, ddir = katalog / "tabele", katalog / "rysunki", katalog / "dane"
+    tdir, fdir, ddir = katalog / "tabele", katalog / "rysunki", dane or katalog / "dane"
     for d in (tdir, fdir, ddir):
         d.mkdir(parents=True, exist_ok=True)
     B, K, MX = args.bootstrap, args.kohorta, args.max_proba
@@ -825,9 +876,10 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
              NExcludedShortRep=f_int(args.wykluczone_szybkie_n), MinGapDays=f_num(args.min_odstep, 0),
              NShortRep=f_int(args.szybkie_n), NShortRepSameDay=f_int(args.szybkie_dzien_n),
              ShortRepPct=f_pct(args.szybkie_n / args.n_przed_szybkimi, 2), NShortRepHour=f_int(args.szybkie_godz_n),
-             ExcludedModules=", ".join(esc(k) for k in args.wyklucz_pokoje) or "brak")
+             ExcludedModules=", ".join(esc(k) for k in args.wyklucz_pokoje) or T("brak", "none"))
     # pilotaż i rzeczywisty limit/okno wyświetlania (opis programu w metodach)
-    f_dzien = lambda t: f"{t.day}.{t.month:02d}.{t.year}" if pd.notna(t) else "--"
+    f_dzien = lambda t: (T(f"{t.day}.{t.month:02d}.{t.year}", f"{t.day} {MONTHS[t.month - 1]} {t.year}")
+                         if pd.notna(t) else "--")
     godz = x["create_time"].dt.hour + x["create_time"].dt.minute / 60
     f_godz = lambda h: f"{int(h)}:{int(round(60 * (h % 1))):02d}"
     M.update(NExcludedPilot=f_int(args.pilotaz_n), NExcludedPilotLater=f_int(args.pilotaz_po_n),
@@ -844,29 +896,37 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
         return f"{f_num(s.median(), d)} {f_ci(s.quantile(.25), s.quantile(.75), d, 1)}"
 
     t1 = [
-        ("Odpowiedzi", M["NResponses"]), ("Pracownicy", M["NEmployees"]),
-        ("Pytania", M["NItems"]),
-        ("Okres obserwacji", f"{x['create_time'].min():%Y-%m-%d} -- {x['create_time'].max():%Y-%m-%d}"),
-        ("Sekwencje pracownik--pytanie", M["NSequences"]),
-        ("Zaobserwowane opcje odpowiedzi na pytanie, mediana (zakres)",
+        (T("Odpowiedzi", "Responses"), M["NResponses"]), (T("Pracownicy", "Employees"), M["NEmployees"]),
+        (T("Pytania", "Questions"), M["NItems"]),
+        (T("Okres obserwacji", "Observation period"),
+         f"{x['create_time'].min():%Y-%m-%d} -- {x['create_time'].max():%Y-%m-%d}"),
+        (T("Sekwencje pracownik--pytanie", "Employee--question sequences"), M["NSequences"]),
+        (T("Zaobserwowane opcje odpowiedzi na pytanie, mediana (zakres)",
+           "Observed answer options per question, median (range)"),
          f"{f_num(opcje.median(), 0)} ({opcje.min()}--{opcje.max()})"),
         (SEP, ""),
-        ("Odpowiedzi na pracownika, mediana [IQR]",
-         f"{M['RespPerEmpMedian']} [{M['RespPerEmpQOne']}; {M['RespPerEmpQThree']}]"),
-        ("Pytania na pracownika, mediana [IQR]", med_iqr(per_user["q"])),
-        ("Dni aktywności na pracownika, mediana [IQR]", med_iqr(per_user["dni"])),
-        ("Odpowiedzi na dzień aktywności, mediana [IQR]", med_iqr(dzienne)),
-        ("Miesiące między pierwszą a ostatnią odpowiedzią, mediana [IQR]", med_iqr(staz_mies)),
+        (T("Odpowiedzi na pracownika, mediana [IQR]", "Responses per employee, median [IQR]"),
+         f"{M['RespPerEmpMedian']} [{M['RespPerEmpQOne']}{sep_pu()}{M['RespPerEmpQThree']}]"),
+        (T("Pytania na pracownika, mediana [IQR]", "Questions per employee, median [IQR]"), med_iqr(per_user["q"])),
+        (T("Dni aktywności na pracownika, mediana [IQR]", "Active days per employee, median [IQR]"),
+         med_iqr(per_user["dni"])),
+        (T("Odpowiedzi na dzień aktywności, mediana [IQR]", "Responses per active day, median [IQR]"),
+         med_iqr(dzienne)),
+        (T("Miesiące między pierwszą a ostatnią odpowiedzią, mediana [IQR]",
+           "Months between first and last response, median [IQR]"), med_iqr(staz_mies)),
         #("Pracownicy aktywni w ostatnich 90 dniach danych (\\%)", M["ActiveLastQuarterPct"]),
         (SEP, ""),
-        ("Próby w sekwencji, mediana [IQR] (maks.)", f"{med_iqr(sek)} ({f_int(sek.max())})"),
-        ("Sekwencje z $\\geq$2 / $\\geq$3 próbami (\\%)", f"{M['SeqRepeatedPct']} / {M['SeqMinThreePct']}"),
-        ("Dni między próbami, mediana [IQR]", f"{M['GapMedian']} [{M['GapQOne']}; {M['GapQThree']}]"),
+        (T("Próby w sekwencji, mediana [IQR] (maks.)", "Attempts per sequence, median [IQR] (max.)"),
+         f"{med_iqr(sek)} ({f_int(sek.max())})"),
+        (T("Sekwencje z $\\geq$2 / $\\geq$3 próbami (\\%)", "Sequences with $\\geq$2 / $\\geq$3 attempts (\\%)"),
+         f"{M['SeqRepeatedPct']} / {M['SeqMinThreePct']}"),
+        (T("Dni między próbami, mediana [IQR]", "Days between attempts, median [IQR]"),
+         f"{M['GapMedian']} [{M['GapQOne']}{sep_pu()}{M['GapQThree']}]"),
         (SEP, ""),
-        ("Odpowiedzi poprawne, ogółem (\\%)", M["AccOverall"]),
-        ("Odpowiedzi poprawne, pierwsze próby (\\%)", M["AccFirst"]),
+        (T("Odpowiedzi poprawne, ogółem (\\%)", "Correct responses, overall (\\%)"), M["AccOverall"]),
+        (T("Odpowiedzi poprawne, pierwsze próby (\\%)", "Correct responses, first attempts (\\%)"), M["AccFirst"]),
     ]
-    tabela_csv(tdir, "zbior_danych", pd.DataFrame(t1, columns=["Cecha", "Wartość"]))
+    tabela_csv(tdir, "zbior_danych", pd.DataFrame(t1, columns=[T("Cecha", "Characteristic"), T("Wartość", "Value")]))
 
     # --- czy harmonogram powtórek zależy od poprawności? (argument przeciw selekcji)
     nast = x.assign(ma_nast=x.groupby(KLUCZ)["id"].shift(-1).notna(),
@@ -889,8 +949,10 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
                 if e in c.index else ["", "", ""])
         t3.append(row)
     tabela_csv(tdir, "krzywa_uczenia",
-               pd.DataFrame(t3, columns=["Próba", "$n$", "Pracownicy", "\\%", "95\\% PU",
-                                         "$n$ (kohorta)", "\\% (kohorta)", "95\\% PU (kohorta)"]))
+               pd.DataFrame(t3, columns=T(["Próba", "$n$", "Pracownicy", "\\%", "95\\% PU",
+                                           "$n$ (kohorta)", "\\% (kohorta)", "95\\% PU (kohorta)"],
+                                          ["Attempt", "$n$", "Employees", "\\%", "95\\% CI",
+                                           "$n$ (cohort)", "\\% (cohort)", "95\\% CI (cohort)"])))
     a1, aM = a.iloc[0], a.iloc[-1]
     c1, cK = c.iloc[0], c.iloc[-1]
     M.update(AccAttOne=f_pct(a1["p"]), AccAttOneCI=f_ci(a1["ci_lo"], a1["ci_hi"]),
@@ -902,30 +964,33 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
 
     # --- Tabela: modele regresji
     wyniki, info, wraz, icc = modele(x, K)
-    nazwy = {"log2_proba": "Numer próby (na podwojenie)", "poprzednia": "Poprzednia próba poprawna",
-             "log2_odstep": "Dni od poprzedniej próby (na podwojenie)",
-             "staz_lata": "Staż pracownika (na rok)"}
+    nazwy = {"log2_proba": T("Numer próby (na podwojenie)", "Attempt number (per doubling)"),
+             "poprzednia": T("Poprzednia próba poprawna", "Previous attempt correct"),
+             "log2_odstep": T("Dni od poprzedniej próby (na podwojenie)", "Days since previous attempt (per doubling)"),
+             "staz_lata": T("Staż pracownika (na rok)", "Employee tenure (per year)")}
     kolejnosc = ["log2_proba", "poprzednia", "log2_odstep", "staz_lata"]
     t4 = []
     for term in kolejnosc:
         row = [nazwy[term]]
         for m in ("M1", "M2", "M3"):
             w = wyniki[m].set_index("term")
-            row.append(f"{f_or(w.loc[term, 'OR'])} [{f_or(w.loc[term, 'lo'])}; {f_or(w.loc[term, 'hi'])}]"
+            row.append(f"{f_or(w.loc[term, 'OR'])} [{f_or(w.loc[term, 'lo'])}{sep_pu()}{f_or(w.loc[term, 'hi'])}]"
                        if term in w.index else "")
         t4.append(row)
     t4.append([SEP, "", "", ""])
-    t4.append(["Dane"] + ["Wszystkie próby", "Próby $\\geq$2", "Pierwsze próby"])
-    t4.append(["Odpowiedzi"] + [f_int(info[m]["n"]) for m in ("M1", "M2", "M3")])
-    t4.append(["Pracownicy / pytania"] + [f"{f_int(info[m]['osoby'])} / {f_int(info[m]['pytania'])}"
+    t4.append(T(["Dane", "Wszystkie próby", "Próby $\\geq$2", "Pierwsze próby"],
+                ["Data", "All attempts", "Attempts $\\geq$2", "First attempts"]))
+    t4.append([T("Odpowiedzi", "Responses")] + [f_int(info[m]["n"]) for m in ("M1", "M2", "M3")])
+    t4.append([T("Pracownicy / pytania", "Employees / questions")] + [f"{f_int(info[m]['osoby'])} / {f_int(info[m]['pytania'])}"
                                           for m in ("M1", "M2", "M3")])
-    tabela_csv(tdir, "regresja", pd.DataFrame(t4, columns=["Predyktor", "M1 (uczenie)", "M2 (retencja)", "M3 (nowe pytania)"]))
+    tabela_csv(tdir, "regresja", pd.DataFrame(t4, columns=T(["Predyktor", "M1 (uczenie)", "M2 (retencja)", "M3 (nowe pytania)"],
+                                                         ["Predictor", "M1 (learning)", "M2 (retention)", "M3 (new questions)"])))
     pd.concat([w.assign(model=m) for m, w in wyniki.items()]).to_csv(ddir / "regresja.csv", index=False)
     for m, pref in (("M1", "MOne"), ("M2", "MTwo"), ("M3", "MThree")):
         for _, r in wyniki[m].iterrows():
             nm = {"log2_proba": "Attempt", "poprzednia": "Prev", "log2_odstep": "Gap", "staz_lata": "Tenure"}[r.term]
             M[f"OR{pref}{nm}"] = f_or(r.OR)
-            M[f"OR{pref}{nm}CI"] = f"[{f_or(r.lo)}; {f_or(r.hi)}]"
+            M[f"OR{pref}{nm}CI"] = f"[{f_or(r.lo)}{sep_pu()}{f_or(r.hi)}]"
             M[f"P{pref}{nm}"] = f_p_rel(r.p)
     M.update(MOneDropped=f_int(info["M1"]["wykluczone"]),
              ICCEmployee=f_num(icc["icc_u"]), ICCItem=f_num(icc["icc_q"]),
@@ -934,8 +999,8 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
 
     # --- Tabela i wykres: analizy wrażliwości
     wraz.to_csv(ddir / "wrazliwosc.csv", index=False)
-    t5 = pd.DataFrame({"Analiza": wraz["analysis"], "Odpowiedzi": wraz["n"].map(f_int),
-                       "OR [95\\% PU]": [f"{f_or(o)} [{f_or(l)}; {f_or(h)}]"
+    t5 = pd.DataFrame({T("Analiza", "Analysis"): wraz["analysis"], T("Odpowiedzi", "Responses"): wraz["n"].map(f_int),
+                       T("OR [95\\% PU]", "OR [95\\% CI]"): [f"{f_or(o)} [{f_or(l)}{sep_pu()}{f_or(h)}]"
                                          for o, l, h in zip(wraz["OR"], wraz["lo"], wraz["hi"])]})
     tabela_csv(tdir, "wrazliwosc", t5)
     M.update(ORRange=f"{f_or(wraz['OR'].min())}--{f_or(wraz['OR'].max())}")
@@ -943,18 +1008,20 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
         nm = "Sens" + "".join(ch for ch in r.key.title() if ch.isalpha()) + \
              {"len3": "Three", "len5": "Five", "len8": "Eight"}.get(r.key, "")
         M[f"OR{nm}"] = f_or(r.OR)
-        M[f"OR{nm}CI"] = f"[{f_or(r.lo)}; {f_or(r.hi)}]"
+        M[f"OR{nm}CI"] = f"[{f_or(r.lo)}{sep_pu()}{f_or(r.hi)}]"
 
     # --- Tabela: przejścia między kolejnymi próbami + dystraktory
     tr, dys = przejscia(x, B, rng)
     tr.to_csv(ddir / "przejscia.csv", index=False)
     t6 = []
     for _, r in tr.sort_values("poprzednia", ascending=False).iterrows():
-        et = "Poprawna" if r["poprzednia"] == 1 else "Błędna"
+        et = T("Poprawna", "Correct") if r["poprzednia"] == 1 else T("Błędna", "Incorrect")
         t6.append([et, f_int(r["n"]), f_pct(r["p"]), f_ci(r["ci_lo"], r["ci_hi"]), f_pct(1 - r["p"])])
     tabela_csv(tdir, "przejscia",
-               pd.DataFrame(t6, columns=["Poprzednia próba", "$n$", "Kolejna poprawna (\\%)", "95\\% PU",
-                                         "Kolejna błędna (\\%)"]))
+               pd.DataFrame(t6, columns=T(["Poprzednia próba", "$n$", "Kolejna poprawna (\\%)", "95\\% PU",
+                                           "Kolejna błędna (\\%)"],
+                                          ["Previous attempt", "$n$", "Next correct (\\%)", "95\\% CI",
+                                           "Next incorrect (\\%)"])))
     r1, r0 = tr.set_index("poprzednia").loc[1], tr.set_index("poprzednia").loc[0]
     # liczby zdarzeń (różne mianowniki odsetków) i poziom równowagi r / (r + f) przy stałych odsetkach
     M.update(NCorrections=f_int(r0["k"]), NForgetting=f_int(r1["n"] - r1["k"]),
@@ -972,10 +1039,10 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
     dys_od.reset_index().to_csv(ddir / "dystraktor_wg_odstepu.csv", index=False)
     S = ub["max_seria"]
     et = [f"$\\geq${S}" if k == S else str(k) for k in kor["seria"]]
-    t14 = [["Próby, $n$"] + [f_int(v) for v in kor["n"]], ["Pracownicy"] + [f_int(v) for v in kor["osoby"]],
-           ["Poprawność (\\%)"] + [f_pct(v) for v in kor["p"]],
-           ["95\\% PU"] + [f_ci(a, b) for a, b in zip(kor["ci_lo"], kor["ci_hi"])]]
-    tabela_csv(tdir, "seria_bledow", pd.DataFrame(t14, columns=["Błędy z rzędu przed próbą"] + et))
+    t14 = [[T("Próby, $n$", "Attempts, $n$")] + [f_int(v) for v in kor["n"]], [T("Pracownicy", "Employees")] + [f_int(v) for v in kor["osoby"]],
+           [T("Poprawność (\\%)", "Accuracy (\\%)")] + [f_pct(v) for v in kor["p"]],
+           [T("95\\% PU", "95\\% CI")] + [f_ci(a, b) for a, b in zip(kor["ci_lo"], kor["ci_hi"])]]
+    tabela_csv(tdir, "seria_bledow", pd.DataFrame(t14, columns=[T("Błędy z rzędu przed próbą", "Consecutive errors before attempt")] + et))
     k = kor.set_index("seria")
     M.update(CorrRunOne=f_pct(k.loc[1, "p"]), CorrRunOneCI=f_ci(k.loc[1, "ci_lo"], k.loc[1, "ci_hi"]),
              CorrRunTwo=f_pct(k.loc[2, "p"]), CorrRunThree=f_pct(k.loc[3, "p"]),
@@ -1005,8 +1072,10 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
     M.update(RetShortCorrect=f_pct(rc["p"].iloc[0]), RetLongCorrect=f_pct(rc["p"].iloc[-1]),
              RetShortIncorrect=f_pct(ri["p"].iloc[0]), RetLongIncorrect=f_pct(ri["p"].iloc[-1]))
     tabela_csv(tdir, "retencja_wg_odstepu",
-               pd.DataFrame(t7, columns=["Dni od poprzedniej", "$n$", "Poprawne, \\% [95\\% PU]",
-                                         "$n$", "Poprawne, \\% [95\\% PU]"]))
+               pd.DataFrame(t7, columns=T(["Dni od poprzedniej", "$n$", "Poprawne, \\% [95\\% PU]",
+                                           "$n$", "Poprawne, \\% [95\\% PU]"],
+                                          ["Days since previous", "$n$", "Correct, \\% [95\\% CI]",
+                                           "$n$", "Correct, \\% [95\\% CI]"])))
     M.update(ForgetShort=f_pct(1 - rc["p"].iloc[0]), ForgetLong=f_pct(1 - rc["p"].iloc[-1]))
 
     # --- Tabela: źródła zapominania (PB2); osobny strumień losowy, aby nie zmieniać PU pozostałych analiz
@@ -1015,10 +1084,10 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
     zso.to_csv(ddir / "zapominanie_wg_serii_i_odstepu.csv", index=False)
     S = nk["max_seria"]
     et = [f"$\\geq${S}" if k == S else str(k) for k in zs["seria"]]
-    t15 = [["Próby, $n$"] + [f_int(v) for v in zs["n"]], ["Pracownicy"] + [f_int(v) for v in zs["osoby"]],
-           ["Odsetek zapominania (\\%)"] + [f_pct(v) for v in zs["p"]],
-           ["95\\% PU"] + [f_ci(a, b) for a, b in zip(zs["ci_lo"], zs["ci_hi"])]]
-    tabela_csv(tdir, "seria_poprawnych", pd.DataFrame(t15, columns=["Poprawne z rzędu przed próbą"] + et))
+    t15 = [[T("Próby, $n$", "Attempts, $n$")] + [f_int(v) for v in zs["n"]], [T("Pracownicy", "Employees")] + [f_int(v) for v in zs["osoby"]],
+           [T("Odsetek zapominania (\\%)", "Forgetting rate (\\%)")] + [f_pct(v) for v in zs["p"]],
+           [T("95\\% PU", "95\\% CI")] + [f_ci(a, b) for a, b in zip(zs["ci_lo"], zs["ci_hi"])]]
+    tabela_csv(tdir, "seria_poprawnych", pd.DataFrame(t15, columns=[T("Poprawne z rzędu przed próbą", "Consecutive correct before attempt")] + et))
     z, so = zs.set_index("seria"), zso.set_index("stopien")
     M.update(ForgetRunOne=f_pct(z.loc[1, "p"]), ForgetRunOneCI=f_ci(z.loc[1, "ci_lo"], z.loc[1, "ci_hi"]),
              ForgetRunTwo=f_pct(z.loc[2, "p"]), ForgetRunThree=f_pct(z.loc[3, "p"]),
@@ -1033,23 +1102,26 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
     # --- Tabela i wykres: zmiana na poziomie pracowników
     zo, dvec = zmiana_osob(pairs, users, B, rng)
     t8 = [
-        ("Pracownicy z $\\geq$1 sekwencją o $\\geq$3 próbach", f_int(zo["osoby"])),
-        ("Poprawa / pogorszenie / bez zmian",
+        (T("Pracownicy z $\\geq$1 sekwencją o $\\geq$3 próbach", "Employees with $\\geq$1 sequence of $\\geq$3 attempts"),
+         f_int(zo["osoby"])),
+        (T("Poprawa / pogorszenie / bez zmian", "Improved / worsened / unchanged"),
          f"{f_int(zo['poprawa'])} / {f_int(zo['pogorszenie'])} / {f_int(zo['bez_zmian'])}"),
-        ("Średnia zmiana, p.p. [95\\% PU]", f"{f_num(zo['sredni_pp'], 1)} {f_ci(zo['sredni_lo'], zo['sredni_hi'], 1, 1)}"),
-        ("Mediana zmiany, p.p.", f_num(zo["mediana_pp"], 1)),
-        ("Test znaków: odsetek z poprawą [95\\% PU]; $p$",
+        (T("Średnia zmiana, p.p. [95\\% PU]", "Mean change, pp [95\\% CI]"), f"{f_num(zo['sredni_pp'], 1)} {f_ci(zo['sredni_lo'], zo['sredni_hi'], 1, 1)}"),
+        (T("Mediana zmiany, p.p.", "Median change, pp"), f_num(zo["mediana_pp"], 1)),
+        (T("Test znaków: odsetek z poprawą [95\\% PU]; $p$", "Sign test: proportion improved [95\\% CI]; $p$"),
          f"{f_num(zo['poprawa'] / (zo['poprawa'] + zo['pogorszenie']))} "
          f"{f_ci(zo['znak_lo'], zo['znak_hi'], 2, 1)}; {f_p(zo['znak_p'])}"),
-        ("Test Wilcoxona $W$; $p$; korelacja rangowo-dwuseryjna $r$",
+        (T("Test Wilcoxona $W$; $p$; korelacja rangowo-dwuseryjna $r$",
+           "Wilcoxon test $W$; $p$; rank-biserial correlation $r$"),
          f"{f_int(zo['wilcoxon_W'])}; {f_p(zo['wilcoxon_p'])}; {f_num(zo['r_rb'])}"),
         (SEP, ""),
-        ("Sekwencje (pracownik--pytanie) z $\\geq$3 próbami", f_int(zo["pary"])),
-        ("Poprawne w próbie 1 / próbie 3 (\\%)", f"{f_pct(zo['p1'])} / {f_pct(zo['p3'])}"),
-        ("Błędna$\\to$poprawna / poprawna$\\to$błędna", f"{f_int(zo['mc_c'])} / {f_int(zo['mc_b'])}"),
-        ("Test McNemara $\\chi^2$; $p$ (bez uwzględnienia klastrów)", f"{f_num(zo['mc_chi2'], 1)}; {f_p(zo['mc_p'])}"),
+        (T("Sekwencje (pracownik--pytanie) z $\\geq$3 próbami", "Sequences (employee--question) with $\\geq$3 attempts"),
+         f_int(zo["pary"])),
+        (T("Poprawne w próbie 1 / próbie 3 (\\%)", "Correct at attempt 1 / attempt 3 (\\%)"), f"{f_pct(zo['p1'])} / {f_pct(zo['p3'])}"),
+        (T("Błędna$\\to$poprawna / poprawna$\\to$błędna", "Incorrect$\\to$correct / correct$\\to$incorrect"), f"{f_int(zo['mc_c'])} / {f_int(zo['mc_b'])}"),
+        (T("Test McNemara $\\chi^2$; $p$ (bez uwzględnienia klastrów)", "McNemar test $\\chi^2$; $p$ (ignoring clustering)"), f"{f_num(zo['mc_chi2'], 1)}; {f_p(zo['mc_p'])}"),
     ]
-    tabela_csv(tdir, "zmiana_pracownikow", pd.DataFrame(t8, columns=["Miara", "Wartość"]))
+    tabela_csv(tdir, "zmiana_pracownikow", pd.DataFrame(t8, columns=[T("Miara", "Measure"), T("Wartość", "Value")]))
     pd.DataFrame([zo]).to_csv(ddir / "zmiana_pracownikow.csv", index=False)
     M.update(EmpN=f_int(zo["osoby"]), EmpImproved=f_int(zo["poprawa"]), EmpWorsened=f_int(zo["pogorszenie"]),
              EmpUnchanged=f_int(zo["bez_zmian"]), EmpMeanChange=f_num(zo["sredni_pp"], 1),
@@ -1064,32 +1136,37 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
     dom = poz["dominujacy_dystraktor_udzial"]
     alfa = f_num(args.alfa, 2)
     t9 = [
-        ("Analizowane pytania", f_int(len(poz))),
-        ("Trudność (\\% poprawnych w pierwszej próbie), mediana [IQR]",
+        (T("Analizowane pytania", "Questions analyzed"), f_int(len(poz))),
+        (T("Trudność (\\% poprawnych w pierwszej próbie), mediana [IQR]",
+           "Difficulty (\\% correct at first attempt), median [IQR]"),
          f"{f_pct(pp.median())} {f_ci(pp.quantile(.25), pp.quantile(.75))}"),
-        ("Pytania z $<$50\\% / 50--90\\% / $>$90\\% poprawnych",
+        (T("Pytania z $<$50\\% / 50--90\\% / $>$90\\% poprawnych", "Questions with $<$50\\% / 50--90\\% / $>$90\\% correct"),
          f"{(pp < .5).sum()} / {pp.between(.5, .9).sum()} / {(pp > .9).sum()}"),
-        (f"Dyskryminacja (korelacja pytanie--reszta $r$), mediana [IQR], pytania z $n\\geq${args.min_pozycja}",
+        (T(f"Dyskryminacja (korelacja pytanie--reszta $r$), mediana [IQR], pytania z $n\\geq${args.min_pozycja}",
+           f"Discrimination (item--rest correlation $r$), median [IQR], questions with $n\\geq${args.min_pozycja}"),
          f"{f_num(dk.median())} {f_ci(dk.quantile(.25), dk.quantile(.75), 2, 1)} ($k$ = {dk.notna().sum()})"),
-        ("Pytania z $r<0{,}20$ / $0{,}20$--$0{,}29$ / $\\geq0{,}30$",
+        (T("Pytania z $r<0{,}20$ / $0{,}20$--$0{,}29$ / $\\geq0{,}30$", "Questions with $r<0.20$ / $0.20$--$0.29$ / $\\geq0.30$"),
          f"{(dk < .2).sum()} / {dk.between(.2, .3, inclusive='left').sum()} / {(dk >= .3).sum()}"),
-        ("Udział błędów przypadających na najczęstszy dystraktor (\\%), mediana [IQR]",
+        (T("Udział błędów przypadających na najczęstszy dystraktor (\\%), mediana [IQR]",
+           "Share of errors on the most frequent distractor (\\%), median [IQR]"),
          f"{f_pct(dom.median())} {f_ci(dom.quantile(.25), dom.quantile(.75))}"),
-        ("Zaobserwowane dystraktory wybierane w $<$5\\% odpowiedzi (niefunkcjonalne)",
-         f"{f_int(poz['dystraktory_niefunkcjonalne'].sum())} z {f_int(poz['dystraktory_obserwowane'].sum())} "
+        (T("Zaobserwowane dystraktory wybierane w $<$5\\% odpowiedzi (niefunkcjonalne)",
+           "Observed distractors chosen in $<$5\\% of responses (non-functional)"),
+         f"{f_int(poz['dystraktory_niefunkcjonalne'].sum())} {T('z', 'of')} {f_int(poz['dystraktory_obserwowane'].sum())} "
          f"({f_pct(poz['dystraktory_niefunkcjonalne'].sum() / poz['dystraktory_obserwowane'].sum())}\\%)"),
-        (f"Pytania z poprawą / pogorszeniem przy powtórkach (FDR $q<{alfa}$)",
+        (T(f"Pytania z poprawą / pogorszeniem przy powtórkach (FDR $q<{alfa}$)",
+           f"Questions improving / worsening with repetition (FDR $q<{alfa}$)"),
          f"{poz['istotna_poprawa'].sum()} / {poz['istotne_pogorszenie'].sum()} "
-         f"(z {poz['p_trend'].notna().sum()} testowalnych)"),
+         + T(f"(z {poz['p_trend'].notna().sum()} testowalnych)", f"(of {poz['p_trend'].notna().sum()} testable)")),
     ]
-    tabela_csv(tdir, "pytania", pd.DataFrame(t9, columns=["Miara", "Wartość"]))
+    tabela_csv(tdir, "pytania", pd.DataFrame(t9, columns=[T("Miara", "Measure"), T("Wartość", "Value")]))
     najtr = poz.sort_values("p_pierwsza").head(args.top_pozycje)
-    t10 = pd.DataFrame({"Pytanie": najtr["question_id"], "Moduł": najtr["room_Code"].map(esc),
-                        "$n$": najtr["n"].map(f_int), "Pierwsza (\\%)": najtr["p_pierwsza"].map(f_pct),
-                        "Kolejne (\\%)": najtr["p_kolejne"].map(lambda v: "--" if pd.isna(v) else f_pct(v)),
-                        "Dom.\\ dystr.\\ (\\%)": najtr["dominujacy_dystraktor_udzial"].map(f_pct),
+    t10 = pd.DataFrame({T("Pytanie", "Question"): najtr["question_id"], T("Moduł", "Module"): najtr["room_Code"].map(esc),
+                        "$n$": najtr["n"].map(f_int), T("Pierwsza (\\%)", "First (\\%)"): najtr["p_pierwsza"].map(f_pct),
+                        T("Kolejne (\\%)", "Subsequent (\\%)"): najtr["p_kolejne"].map(lambda v: "--" if pd.isna(v) else f_pct(v)),
+                        T("Dom.\\ dystr.\\ (\\%)", "Dom.\\ distr.\\ (\\%)"): najtr["dominujacy_dystraktor_udzial"].map(f_pct),
                         "$r_{\\mathrm{it}}$": najtr["dyskryminacja"].map(lambda v: "--" if pd.isna(v) else f_num(v)),
-                        "OR trendu": najtr["OR_log2_proba"].map(lambda v: "--" if pd.isna(v) else f_or(v)),
+                        T("OR trendu", "Trend OR"): najtr["OR_log2_proba"].map(lambda v: "--" if pd.isna(v) else f_or(v)),
                         "$q$": najtr["q_fdr"].map(f_p)})
     tabela_csv(tdir, "najtrudniejsze_pytania", t10)
     ndys = poz["dystraktory_obserwowane"].sum()
@@ -1108,22 +1185,22 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
         d = demo
         t = d["wiek_plec"]
         t11 = [
-            ("Pracownicy objęci analizą", f_int(d["osoby"])),
-            ("w tym z danymi demograficznymi, $n$ (\\%)", f"{f_int(d['dopasowane'])} ({f_pct(d['dopasowane'] / d['osoby'])})"),
+            (T("Pracownicy objęci analizą", "Employees included in the analysis"), f_int(d["osoby"])),
+            (T("w tym z danymi demograficznymi, $n$ (\\%)", "of whom with demographic data, $n$ (\\%)"), f"{f_int(d['dopasowane'])} ({f_pct(d['dopasowane'] / d['osoby'])})"),
             (SEP, ""),
-            ("Kobiety, $n$ (\\%)", f"{f_int(d['kobiety'])} ({f_pct(d['kobiety'] / d['plec_znana'])})"),
-            ("Mężczyźni, $n$ (\\%)", f"{f_int(d['mezczyzni'])} ({f_pct(d['mezczyzni'] / d['plec_znana'])})"),
-            ("Brak danych o płci, $n$", f_int(d["plec_brak"])),
+            (T("Kobiety, $n$ (\\%)", "Women, $n$ (\\%)"), f"{f_int(d['kobiety'])} ({f_pct(d['kobiety'] / d['plec_znana'])})"),
+            (T("Mężczyźni, $n$ (\\%)", "Men, $n$ (\\%)"), f"{f_int(d['mezczyzni'])} ({f_pct(d['mezczyzni'] / d['plec_znana'])})"),
+            (T("Brak danych o płci, $n$", "Sex not recorded, $n$"), f_int(d["plec_brak"])),
             (SEP, ""),
-            ("Wiek (lata), mediana [IQR]",
+            (T("Wiek (lata), mediana [IQR]", "Age (years), median [IQR]"),
              f"{f_num(d['wiek_med'], 0)} {f_ci(d['wiek_q1'], d['wiek_q3'], 0, 1)}"),
-            ("Wiek (lata), średnia (SD)", f"{f_num(d['wiek_sr'], 1)} ({f_num(d['wiek_sd'], 1)})"),
-            ("Wiek (lata), zakres", f"{f_num(d['wiek_min'], 0)}--{f_num(d['wiek_max'], 0)}"),
+            (T("Wiek (lata), średnia (SD)", "Age (years), mean (SD)"), f"{f_num(d['wiek_sr'], 1)} ({f_num(d['wiek_sd'], 1)})"),
+            (T("Wiek (lata), zakres", "Age (years), range"), f"{f_num(d['wiek_min'], 0)}--{f_num(d['wiek_max'], 0)}"),
         ]
-        wiersze_wieku = [(f"{dek}--{dek + 9} lat, $n$ (\\%)", f"{f_int(n)} ({f_pct(n / d['wiek_n'])})")
+        wiersze_wieku = [(T(f"{dek}--{dek + 9} lat, $n$ (\\%)", f"{dek}--{dek + 9} years, $n$ (\\%)"), f"{f_int(n)} ({f_pct(n / d['wiek_n'])})")
                          for dek, n in t.sum(axis=1).items()]
-        t11 += [(SEP, "")] + wiersze_wieku + [("Brak danych o wieku, $n$", f_int(d["wiek_brak"]))]
-        tabela_csv(tdir, "demografia", pd.DataFrame(t11, columns=["Cecha", "Wartość"]))
+        t11 += [(SEP, "")] + wiersze_wieku + [(T("Brak danych o wieku, $n$", "Age not recorded, $n$"), f_int(d["wiek_brak"]))]
+        tabela_csv(tdir, "demografia", pd.DataFrame(t11, columns=[T("Cecha", "Characteristic"), T("Wartość", "Value")]))
         t.rename(index=lambda dek: f"{dek}-{dek + 9}").rename_axis("przedzial_wieku").reset_index() \
             .to_csv(ddir / "demografia_wiek_plec.csv", index=False)
         M.update(DemoN=f_int(d["osoby"]), DemoMatched=f_int(d["dopasowane"]),
@@ -1154,14 +1231,14 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
                              "p": g["correct"].mean(), "ci_lo": ci.ci_lo, "ci_hi": ci.ci_hi})
         pierwsza = pd.DataFrame(pierwsza)
         pierwsza.to_csv(ddir / "pierwsza_proba_wiek.csv", index=False)
-        t12 = [["Pracownicy"] + [f_int(v) for v in pierwsza["osoby"]],
-               ["Pierwsze próby, $n$"] + [f_int(v) for v in pierwsza["n"]],
-               ["Poprawność (\\%)"] + [f_pct(v) for v in pierwsza["p"]],
-               ["95\\% PU"] + [f_ci(a, b) for a, b in zip(pierwsza["ci_lo"], pierwsza["ci_hi"])]]
-        tabela_csv(tdir, "pierwsza_proba_wiek", pd.DataFrame(t12, columns=["Przedział wieku (lata)"]
+        t12 = [[T("Pracownicy", "Employees")] + [f_int(v) for v in pierwsza["osoby"]],
+               [T("Pierwsze próby, $n$", "First attempts, $n$")] + [f_int(v) for v in pierwsza["n"]],
+               [T("Poprawność (\\%)", "Accuracy (\\%)")] + [f_pct(v) for v in pierwsza["p"]],
+               [T("95\\% PU", "95\\% CI")] + [f_ci(a, b) for a, b in zip(pierwsza["ci_lo"], pierwsza["ci_hi"])]]
+        tabela_csv(tdir, "pierwsza_proba_wiek", pd.DataFrame(t12, columns=[T("Przedział wieku (lata)", "Age group (years)")]
                                                                + list(pierwsza["grupa"])))
         fw = logit_wiek_pytanie(f.dropna(subset=["wiek10"]))
-        dek = pierwsza.loc[~pierwsza["grupa"].isin(["Ogółem", "Brak danych"])]
+        dek = pierwsza.loc[~pierwsza["grupa"].isin([T(*OGOLEM), T(*BRAK_WIEKU)])]
         lo_g, hi_g = dek.loc[dek["p"].idxmin()], dek.loc[dek["p"].idxmax()]
         M.update(FirstN=f_int(pierwsza["n"].iloc[0]), FirstAcc=f_pct(pierwsza["p"].iloc[0]),
                  FirstAccCI=f_ci(pierwsza["ci_lo"].iloc[0], pierwsza["ci_hi"].iloc[0]),
@@ -1183,17 +1260,17 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
                         "zmiana": p_k[K] - p_k[1], "ci_lo": lo, "ci_hi": hi})
         seq = pd.DataFrame(seq)
         seq.to_csv(ddir / "sekwencje_wiek.csv", index=False)
-        t13 = [["Pracownicy"] + [f_int(v) for v in seq["osoby"]],
-               ["Sekwencje, $n$"] + [f_int(v) for v in seq["sekwencje"]], [SEP] + [""] * len(seq)]
-        t13 += [[f"Próba {k} (\\%)"] + [f_pct(v) for v in seq[f"p{k}"]] for k in range(1, K + 1)]
+        t13 = [[T("Pracownicy", "Employees")] + [f_int(v) for v in seq["osoby"]],
+               [T("Sekwencje, $n$", "Sequences, $n$")] + [f_int(v) for v in seq["sekwencje"]], [SEP] + [""] * len(seq)]
+        t13 += [[T(f"Próba {k} (\\%)", f"Attempt {k} (\\%)")] + [f_pct(v) for v in seq[f"p{k}"]] for k in range(1, K + 1)]
         t13 += [[SEP] + [""] * len(seq),
-                [f"Zmiana, próba {K} wobec 1 (p.p.)"] + [f_num(100 * v, 1) for v in seq["zmiana"]],
-                ["95\\% PU"] + [f_ci(a, b) for a, b in zip(seq["ci_lo"], seq["ci_hi"])]]
-        tabela_csv(tdir, "sekwencje_wiek", pd.DataFrame(t13, columns=["Przedział wieku (lata)"] + list(seq["grupa"])))
+                [T(f"Zmiana, próba {K} wobec 1 (p.p.)", f"Change, attempt {K} vs 1 (pp)")] + [f_num(100 * v, 1) for v in seq["zmiana"]],
+                [T("95\\% PU", "95\\% CI")] + [f_ci(a, b) for a, b in zip(seq["ci_lo"], seq["ci_hi"])]]
+        tabela_csv(tdir, "sekwencje_wiek", pd.DataFrame(t13, columns=[T("Przedział wieku (lata)", "Age group (years)")] + list(seq["grupa"])))
         cw = c.dropna(subset=["wiek10"])
         r, i = logit_fe("correct ~ log2_proba + log2_proba:wiek10", cw)
         r = r.set_index("term")
-        dek = seq.loc[~seq["grupa"].isin(["Ogółem", "Brak danych"])]
+        dek = seq.loc[~seq["grupa"].isin([T(*OGOLEM), T(*BRAK_WIEKU)])]
         lo_g, hi_g = dek.loc[dek["zmiana"].idxmin()], dek.loc[dek["zmiana"].idxmax()]
         M.update(SeqChange=f_num(100 * seq["zmiana"].iloc[0], 1),
                  SeqChangeCI=f_ci(seq["ci_lo"].iloc[0], seq["ci_hi"].iloc[0]),
@@ -1224,8 +1301,8 @@ def materialy_artykulu(x, rejected, pairs, users, katalog, args, demo=None):
              MaxAttemptPooled=f"{MX}", VerPython=platform.python_version(), VerPandas=pd.__version__,
              VerNumpy=np.__version__, VerScipy=scipy.__version__, VerStatsmodels=sm.__version__,
              VerMatplotlib=matplotlib.__version__.split("+")[0])
-    makra = [DEFINICJE_NAGLOWEK] + [f"\\newcommand{{\\{k}}}{{{v}}}" for k, v in M.items()]
-    (katalog / "definicje.tex").write_text("\n".join(makra) + "\n", encoding="utf-8")
+    makra = [T(DEFINICJE_NAGLOWEK, DEFINICJE_NAGLOWEK_EN)] + [f"\\newcommand{{\\{k}}}{{{v}}}" for k, v in M.items()]
+    (katalog / f"definicje{sufiks()}.tex").write_text("\n".join(makra) + "\n", encoding="utf-8")
     return M, zo, wyniki, wraz, icc
 
 
@@ -1250,6 +1327,15 @@ DEFINICJE_NAGLOWEK = r"""% Wygenerowano automatycznie przez analiza_odpowiedzi_n
 \providecommand{\uwagatabeli}[1]{\par\vspace{2pt}\parbox{\linewidth}{\footnotesize #1}}
 %
 % Stałe liczbowe"""
+DEFINICJE_NAGLOWEK_EN = DEFINICJE_NAGLOWEK \
+    .replace("% Wstaw w preambule: \\input{definicje.tex}",
+             "% Wersja angielska definicje.tex (te same nazwy makr); main-en.tex wstawia ją dosłownie "
+             "(skill tlumaczenie-en).") \
+    .replace("% Liczby w notacji polskiej: przecinek dziesiętny {,} (działa w tekście i w trybie matematycznym),\n"
+             "% odstęp tysięcy \\, (od 10 000), minus \\ensuremath{-}, przedziały [a; b].",
+             "% Liczby w notacji angielskiej: kropka dziesiętna, separator tysięcy {,} (od 10{,}000),\n"
+             "% minus \\ensuremath{-}, przedziały [a, b].") \
+    .replace("\\TabDir<nazwa>.csv", "\\TabDir<nazwa>-en.csv").replace("{\\TabDir #2.csv}", "{\\TabDir #2-en.csv}")
 
 
 # ------------------------------------------------------------ raport tekstowy
@@ -1348,6 +1434,7 @@ def raport(df, rejected, bins, trends, pairs, users, katalog, threshold, art=Non
 
 
 def main():
+    global JEZYK
     parser = argparse.ArgumentParser(description="Analiza odpowiedzi i materiały do artykułu")
     parser.add_argument("plik", nargs="?", default="data.csv")
     parser.add_argument("--wyniki", default="wyniki_naukowe")
@@ -1376,6 +1463,8 @@ def main():
     parser.add_argument("--top-pozycje", type=int, default=10, help="Liczba najtrudniejszych pytań w tabeli")
     parser.add_argument("--alfa", type=float, default=0.05, help="Próg FDR")
     parser.add_argument("--bez-artykulu", action="store_true", help="Tylko tabele robocze i raport")
+    parser.add_argument("--bez-en", action="store_true",
+                        help="Bez angielskich materiałów artykułu (definicje-en.tex, tabele/*-en.csv, rysunki/*-en.*)")
     parser.add_argument("--osoby", default="people.csv",
                         help="Plik z wiekiem i płcią (Odpowiadajacy=imie.nazwisko;wiek;Plec), łączony z logiem "
                              "przez MD5 imie.nazwisko; pusty napis = bez analizy demograficznej")
@@ -1451,6 +1540,15 @@ def main():
     art = None
     if not args.bez_artykulu and not pairs.empty:
         art = materialy_artykulu(data, rejected, pairs, users, out / "artykul", args, demo)
+        if not args.bez_en:
+            # drugi przebieg: te same obliczenia i ziarno, materiały angielskie z sufiksem -en;
+            # dane źródłowe (dane/*.csv) są wspólne dla obu wersji, więc ich kopia trafia do katalogu tymczasowego
+            JEZYK = "en"
+            try:
+                with tempfile.TemporaryDirectory() as tmp:
+                    materialy_artykulu(data, rejected, pairs, users, out / "artykul", args, demo, dane=Path(tmp))
+            finally:
+                JEZYK = "pl"
     raport(data, rejected, bins, trends, pairs, users, out, args.minimum, art,
            f"Wykluczone pokoje: {', '.join(args.wyklucz_pokoje) or 'brak'} ({args.wykluczone_n} rekordów); "
            f"pilotaż przed {args.od_daty or '-'}: {args.pilotaz_n} odpowiedzi + {args.pilotaz_po_n} późniejszych "

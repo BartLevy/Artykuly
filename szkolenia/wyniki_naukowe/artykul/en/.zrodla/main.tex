@@ -1,0 +1,98 @@
+% Kompilacja: pdflatex main && bibtex main && pdflatex main && pdflatex main
+% Dane liczbowe (definicje.tex), tabele (tabele/*.csv) i rysunki (rysunki/) generuje
+% analiza_odpowiedzi_naukowa.py; tekst (main.tex, sekcja-*.tex) jest edytowany ręcznie.
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs,graphicx,xcolor,amsmath}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{changepage} % do marginesow
+\usepackage{enumitem}% numeracja rzymska listy definicji
+\usepackage{doi}
+% BIBLIOGRAFIA:
+\usepackage[numbers,sort&compress]{natbib}
+\bibliographystyle{plainnat}
+
+\extrafloats{100}
+\newcommand{\fillin}[1]{\textcolor{red}{[#1]}}
+\input{definicje.tex}
+
+\usepackage{authblk}
+\renewcommand\Authand{ i }\renewcommand\Authands{ i }
+\author[1,*]{Bartosz Lewandowski \small{(ORCID:0009-0004-1158-0693)}}
+\author[2]{Monika Szerszeń \small{(ORCID: 0009-0009-6625-3979)}}
+\author[3]{Magdalena Dowgalec \small{(ORCID:0009-0005-4469-2832)}}
+\author[4]{Ewaryst Tkacz \small{(ORCID:0000-0003-2580-7954)}}
+\author[5]{Maciej J. Wróbel \small{(ORCID:0000-0003-1865-2122)}}
+
+\affil[1,4]{Department of Clinical Engineering, Academy of Silesia, Katowice, Poland}
+\affil[2]{Banking Process Support and Optimization Department, Powiślański Cooperative Bank, Kwidzyn, Poland}
+\affil[3]{Legal Department, Atende SA, Warsaw, Poland}% SPRAWDŹ: afiliacja M. Szerszeń (wcześniej podwójny numer [4])
+\affil[5]{Department of Otolaryngology and Oncological Laryngology, Collegium Medicum NCU, Toruń, Poland}
+
+% Autor korespondencyjny
+\affil[*]{Autor korespondencyjny: dr inż. Bartosz Lewandowski, bartosz.lewandowski@akademiaslaska.pl}
+
+\title{Poprawność odpowiedzi pracowników w powtarzanych pytaniach: zapominanie i utrwalone błędy w trzyletnim programie mikrouczenia}
+
+
+\date{}
+\begin{document}
+\maketitle
+
+
+\begin{abstract}
+\noindent\textbf{Wprowadzenie.} Powtórki rozłożone w czasie poprawiają zapamiętywanie, jednak
+skuteczność mikrouczenia w organizacjach rzadko oceniano na podstawie wieloletnich danych
+o odpowiedziach pracowników.
+\textbf{Metody.} Przeanalizowano \NResponses{} odpowiedzi \NEmployees{} pracowników banku na
+\NItems{} pytania wielokrotnego wyboru, udzielonych od \DateStart{} do \DateEnd. Pytania wracały
+według harmonogramu niezależnego od wyniku odpowiedzi (mediana odstępu \GapMedian{} dni), a po każdej odpowiedzi wyświetlano poprawną odpowiedź
+z wyjaśnieniem. Poprawność analizowano w kolejnych próbach tego samego pytania oraz według wyniku
+poprzedniej próby i odstępu.
+\textbf{Wyniki.} Poprawność w pierwszej próbie wynosiła \FirstAcc\%. W sekwencjach liczących co
+najmniej \CohortK{} prób wzrosła z \CohortAccOne\% do \CohortAccK\% (o \SeqChange{} p.p., 95\% PU
+\SeqChangeCI). Korekt błędów było więcej niż przypadków zapominania (\NCorrections{} wobec
+\NForgetting).
+Odsetek zapominania rósł wraz z odstępem i malał wraz z liczbą poprawnych odpowiedzi z rzędu,
+z \ForgetRunOne\% po jednej do \ForgetRunMax\% po co najmniej \ForgetRunK{}. Powtórzone błędy
+w \SameDistractorPct\% przypadków dotyczyły tego samego dystraktora (oczekiwane przy wyborze zgodnym
+z popularnością dystraktorów \SameDistractorExpectedPop\%), niezależnie od odstępu.
+\textbf{Wnioski.} Poprawność odpowiedzi na powracające pytania rosła, lecz wiedza wymagała dalszych
+powtórek, a część błędów utrzymywała się mimo informacji zwrotnej. Harmonogram dopasowany do wyników
+pracownika i informacja zwrotna odnosząca się do wybranego dystraktora mogą zwiększyć skuteczność
+takich programów.
+
+\medskip\noindent\textbf{Słowa kluczowe:} powtórki rozłożone w czasie; mikrouczenie; szkolenia
+pracownicze; informacja zwrotna; zapominanie; analityka uczenia się
+\end{abstract}
+
+\input{sekcja-wstep}
+\input{sekcja-metodologia}
+\input{sekcja-wyniki}
+\input{sekcja-dyskusja}
+
+\section*{Oświadczenia}
+
+% SPRAWDŹ: sposób kodowania danych pracowników oraz status zgody
+% komisji etycznej lub zwolnienia z obowiązku jej uzyskania.
+\noindent\textbf{Etyka.}
+W badaniu wykorzystano w pełni anonimizowane dane przekazane przez bank za jego zgodą
+pisemną w dniu 3 sierpnia 2026. Sposób oznaczenia pracowników i zasady ochrony danych opisano
+w podrozdziale~\ref{sec:dane}.\\
+\textbf{Dostępność danych.}
+Dane wykorzystane w badaniu stanowią własność banku i nie są
+udostępniane publicznie.\\
+\textbf{Finansowanie.}
+Badanie nie otrzymało finansowania.\\
+\textbf{Konflikt interesów.}
+M. Szerszeń jest pracownikiem banku, w którym prowadzono program badań. Pozostali autorzy deklarują
+brak konfliktu interesów.\\
+\textbf{Wykorzystanie narzędzi AI.}
+Wykorzystanie narzędzi AI. W trakcie przygotowywania artykułu wykorzystano narzędzie Antropic Claude Sonnet 5.5, do (1) redakcji językowej opisu wyników analizy przeprowadzonej przez autorów oraz (2) tłumaczenia tekstu z języka polskiego na angielski. Analiza danych, interpretacja wyników i wnioski zostały wykonane przez autora. Autorzy zweryfikowli zredagowali całość tekstu i ponoszą pełną odpowiedzialność za jego treść.
+
+\bibliography{references}
+\end{document}

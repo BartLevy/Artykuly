@@ -1,0 +1,11 @@
+Measure;Value
+Employees with $\geq$1 sequence of $\geq$3 attempts;148
+Improved / worsened / unchanged;101 / 18 / 29
+Mean change, pp [95\% CI];4.1 [2.7, 5.5]
+Median change, pp;3.6
+{Sign test: proportion improved [95\% CI]; $p$};{0.85 [0.77, 0.91]; $<$0.001}
+{Wilcoxon test $W$; $p$; rank-biserial correlation $r$};{830; $<$0.001; 0.77}
+\midrule Sequences (employee--question) with $\geq$3 attempts;9137
+Correct at attempt 1 / attempt 3 (\%);82.8 / 87.4
+Incorrect$\to$correct / correct$\to$incorrect;1013 / 591
+{McNemar test $\chi^2$; $p$ (ignoring clustering)};{110.5; $<$0.001}

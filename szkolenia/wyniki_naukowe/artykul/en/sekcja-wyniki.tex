@@ -1,0 +1,160 @@
+\section{Results}
+
+\subsection{First attempt}
+At the first encounter with a question (\FirstN{} responses from \NEmployees{} employees), accuracy
+was \FirstAcc\% (95\% CI \FirstAccCI; Table~\ref{tab:pierwsza_proba_wiek}). Accuracy varied with age
+non-monotonically: it was lowest in the \FirstAccMinGroup{} age group (\FirstAccMin\%) and highest in
+the \FirstAccMaxGroup{} age group (\FirstAccMax\%). When responses to the same questions were
+compared, the odds of a correct response increased with age (OR \FirstAgeOR{} per 10 years, 95\% CI
+\FirstAgeORCI; $p \FirstAgeP$). Without question fixed effects, the association was weaker
+(OR \FirstAgeRawOR, 95\% CI \FirstAgeRawORCI; $p \FirstAgeRawP$).
+
+\begin{table}[H]
+\centering
+\caption{Accuracy at the first attempt, overall and by employee age group.}
+\label{tab:pierwsza_proba_wiek}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\tabelacsv{l*{7}{r}}{pierwsza_proba_wiek}%
+\uwagatabeli{The first attempt is the first response in a sequence. 95\% CIs were obtained with the
+bootstrap. The association with age was estimated by the logistic regression described in
+Section~\ref{sec:analiza} (\FirstAgeN{} responses from \FirstAgeEmp{} employees of known age):
+OR \FirstAgeOR{} per 10 years, 95\% CI \FirstAgeORCI, $p \FirstAgeP$.}
+\end{table}
+
+\subsection{Changes within a sequence (RQ1)}
+Accuracy increased with attempt number, from \AccAttOne\% \AccAttOneCI{} at the first attempt to
+\AccAttMax\% \AccAttMaxCI{} at attempt \AttMax{} and later (Figure~\ref{fig:krzywa_uczenia}). Because
+the number of sequences decreased with each attempt, the change was examined in a cohort of
+\CohortN{} sequences. In the cohort, accuracy rose from \CohortAccOne\% \CohortAccOneCI{} at
+attempt~1 to \CohortAccK\% \CohortAccKCI{} at attempt~\CohortK{}, that is, by \SeqChange{} pp
+(95\% CI \SeqChangeCI; Table~\ref{tab:sekwencje_wiek}). An increase within the same sequences means
+that the improvement did not result from the earlier termination of sequences with lower accuracy.
+Accuracy at attempt~1 in the cohort (\CohortAccOne\%) was close to accuracy at the first attempt in
+all sequences (\FirstAcc\%).
+
+The estimated increase was positive in all age groups and ranged from \SeqChangeMin{} pp
+(\SeqChangeMinGroup{} years) to \SeqChangeMax{} pp (\SeqChangeMaxGroup{} years), although in the small
+extreme age groups the lower limit of the 95\% CI was close to zero. The rate of increase did not
+depend on age (interaction OR \SeqAgeOR{} per 10 years of age and doubling of attempt number, 95\% CI
+\SeqAgeORCI; $p \SeqAgeP$).
+
+\begin{figure}[H]
+\centering
+\includegraphics{\FigDir rys_krzywa_uczenia}
+\caption{Accuracy by attempt number in all sequences available at a given attempt (their number
+decreases with attempt number). Error bars: 95\% CI (bootstrap). Attempts \MaxAttemptPooled{} and
+later were pooled. The course in the cohort is shown in Figure~\ref{fig:stany_kohorty}.}
+\label{fig:krzywa_uczenia}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Accuracy at successive attempts in the cohort, overall and by employee age group.}
+\label{tab:sekwencje_wiek}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\tabelacsv{l*{7}{r}}{sekwencje_wiek}%
+\uwagatabeli{Cohort: sequences of at least \CohortK{} attempts, attempts 1 to \CohortK{}.
+pp: percentage points; 95\% CIs of the change were obtained with the bootstrap. The association between
+the rate of improvement and age was estimated by the logistic regression described in
+Section~\ref{sec:analiza} (\SeqAgeN{} responses from employees of known age).}
+\end{table}
+
+\subsection{Outcome of the previous attempt and interval (RQ2)}
+The increase in accuracy results from two opposing processes: error correction and forgetting. The
+schedule did not bias their comparison, because a question returned after a correct and after an
+incorrect response with similar probability (\ReaskAfterCorrect\% and \ReaskAfterIncorrect\%) and
+after a similar interval (median \GapAfterCorrect{} and \GapAfterIncorrect{} days). After a correct
+response, the next one was correct in \RetainPct\% \RetainCI{} of cases, and forgetting occurred in
+\ForgetPct\%. After an incorrect response, an error correction followed in \RecoverPct\%
+\RecoverCI{} of cases. These rates refer to different groups of attempts, so the numbers of events were
+also compared: there were \NCorrections{} error corrections and \NForgetting{} forgetting events. The
+predominance of corrections explains the increase in accuracy. At constant error-correction and
+forgetting rates, accuracy would tend toward an equilibrium level of \EquilibriumPct\%. Accuracy in the
+cohort at attempt~\CohortK{} (\CohortAccK\%) was close to this level, but at attempts \AttMax{} and
+later it was \AccAttMax\% and exceeded it. This is because the forgetting rate was not constant but
+depended on the interval and on the number of consecutive correct responses.
+
+The forgetting rate increased with the interval, from \ForgetShort\% at intervals shorter than 14 days
+to \ForgetLong\% at intervals of at least 240 days (Figure~\ref{fig:odstep}). The error-correction
+rate changed less with the interval (\RetShortIncorrect\% and \RetLongIncorrect\% in the same bins).
+
+The forgetting rate also depended on the number of consecutive correct responses. After one correct
+response, it was \ForgetRunOne\% \ForgetRunOneCI, after two \ForgetRunTwo\%, after three
+\ForgetRunThree\%, and after at least \ForgetRunK{} \ForgetRunMax\% \ForgetRunMaxCI{}
+(Table~\ref{tab:seria_poprawnych}). The difference persisted at every interval: at intervals shorter
+than 14 days, the forgetting rate was \ForgetFreshShort\% after one and \ForgetStableShort\% after at
+least three correct responses, and at intervals of at least 240 days \ForgetFreshLong\% and
+\ForgetStableLong\%, respectively. Error corrections were the least durable. After a correction, an
+error relapse occurred in \RelapsePct\% \RelapseCI{} of cases ($n = \RelapseN$), and in
+\RelapseSamePct\% \RelapseSameCI{} of these the employee chose the same distractor as before the
+correction. This share was similar to the percentage of repeated choices of the same distractor after
+two successive errors (\SameDistractorPct\%; Section~\ref{sec:pb3}).
+
+\begin{figure}[H]
+\centering
+\includegraphics{\FigDir rys_odstep}
+\caption{Accuracy by interval, separately for attempts preceded by a correct response (circles) and by
+an incorrect response (squares). For attempts preceded by a correct response, the forgetting rate is
+100\% minus accuracy; for attempts preceded by an incorrect response, accuracy is the error-correction
+rate. Error bars: 95\% CI (bootstrap).}
+\label{fig:odstep}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Forgetting rate by the number of consecutive correct responses given immediately before
+a given attempt.}
+\label{tab:seria_poprawnych}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\tabelacsv{l*{4}{r}}{seria_poprawnych}%
+\uwagatabeli{Attempts preceded by a correct response. Forgetting rate: percentage of incorrect
+responses. 95\% CIs were obtained with the bootstrap.}
+\end{table}
+
+\subsection{Persistent errors (RQ3)}
+\label{sec:pb3}
+Most errors were corrected: in \EverCorrectedPct\% of the \FirstWrongSeqN{} sequences that began with
+an incorrect response and comprised at least two attempts, the employee later answered correctly at
+least once. The chance of correction, however, decreased with each successive error. After one error,
+accuracy was \CorrRunOne\% \CorrRunOneCI, after two consecutive errors \CorrRunTwo\%, after three
+\CorrRunThree\%, and after at least \RunMax{} \CorrRunMax\% \CorrRunMaxCI{}
+(Table~\ref{tab:seria_bledow}). Part of this decrease may be due to several consecutive errors
+occurring mainly in more difficult questions.
+
+Repeated errors were not consistent with random choice. After two successive errors, the employee
+chose the same distractor in \SameDistractorPct\% \SameDistractorCI{} of cases
+($n = \SameDistractorN$), whereas \SameDistractorExpected\% would be expected under random choice and
+\SameDistractorExpectedPop\% under choice proportional to distractor popularity. This percentage did
+not depend on the interval (\SameDistrGapShort\% at intervals shorter than 30 days,
+\SameDistrGapMid\% at 30--89 days and \SameDistrGapLong\% at intervals of at least 90 days). Repeated errors were
+concentrated in few questions: \PersistTopItems{} of the \PersistItems{} questions accounted for
+\PersistTopItemsShare\% of them.
+
+\begin{table}[H]
+\centering
+\caption{Accuracy by the number of consecutive errors made immediately before a given attempt.}
+\label{tab:seria_bledow}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\tabelacsv{l*{5}{r}}{seria_bledow}%
+\uwagatabeli{Attempts from the second onward. Column 0: attempts preceded by a correct response.
+95\% CIs were obtained with the bootstrap.}
+\end{table}
+
+\subsection{Summary of results}
+Figure~\ref{fig:stany_kohorty} summarizes the results in the cohort. Accuracy increases from attempt
+to attempt (RQ1), error corrections outnumber forgetting events (RQ2), and at every attempt from the
+second onward, part of the incorrect responses are repeated errors (RQ3).
+
+\begin{figure}[H]
+\centering
+\includegraphics{\FigDir rys_stany_kohorty}
+\caption{Accuracy and response state in the cohort (\CohortN{} sequences, attempts 1 to \CohortK{}).
+Bars: share of responses by the outcome of the current and the previous attempt
+(Section~\ref{sec:analiza}); at attempt~1, only correct and incorrect responses. Line: accuracy with
+95\% CI (bootstrap), values above the bars.}
+\label{fig:stany_kohorty}
+\end{figure}

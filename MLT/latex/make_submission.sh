@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-# Builds the Applied Acoustics submission package from main-en.tex.
+# Builds the Measurement (Elsevier) submission package from main-els.tex (elsarticle class).
+#
+# Measurement uses double-anonymized review, so manuscript.tex gets the elsarticle "doubleblind"
+# option: authors and affiliations stay in the source but are not printed. Author details go only in
+# title_page.tex.
 #
 # Elsevier requires all LaTeX submission files in ONE folder level (no subfolders), so figures are
 # copied next to the manuscript as Figure_1..N in order of appearance and \includegraphics paths
@@ -12,7 +16,7 @@ set -euo pipefail
 SRC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOCS="$SRC_DIR/submission"
 OUT="$(realpath -m "${1:-$SRC_DIR/submission_package}")"
-MAIN="$SRC_DIR/main-en.tex"
+MAIN="$SRC_DIR/main-els.tex"
 WARN=0
 
 warn() { echo "  WARNING: $*"; WARN=$((WARN + 1)); }
@@ -29,6 +33,10 @@ echo "Building package in $OUT"
 # --- manuscript and figures -------------------------------------------------------------------
 cp "$MAIN" "$OUT/manuscript.tex"
 
+# double-anonymized review: hide author names and affiliations in the manuscript
+sed -i '0,/^\\documentclass\[/s//\\documentclass[doubleblind,/' "$OUT/manuscript.tex"
+grep -q 'documentclass\[doubleblind,' "$OUT/manuscript.tex" || { echo "ERROR: could not add doubleblind option"; exit 1; }
+
 n=0
 while IFS= read -r path; do
     n=$((n + 1))
@@ -44,13 +52,22 @@ done < <(grep -v '^\s*%' "$MAIN" | grep -o '\\includegraphics\(\[[^]]*\]\)\?{[^}
 awk '/^\\bibliography\{/ && !done { print "\\input{declarations}"; print "\\clearpage"; done=1 } { print }' \
     "$OUT/manuscript.tex" > "$OUT/manuscript.tmp" && mv "$OUT/manuscript.tmp" "$OUT/manuscript.tex"
 
-# journal style: references numbered in order of first citation, [1] in text
-sed -i 's/\\bibliographystyle{plainnat}/\\bibliographystyle{unsrtnat}/' "$OUT/manuscript.tex"
+# references: elsarticle-num (numbered in order of first citation) is set in main-els.tex
 
 # bibliography: the Polish access note becomes English in the package copy only
 sed 's/Dostęp: \[\([^]]*\)\]/Accessed \1/' "$SRC_DIR/bibliography.bib" > "$OUT/bibliography.bib"
 
 cp "$DOCS/declarations.tex" "$DOCS/highlights.txt" "$DOCS/title_page.tex" "$DOCS/cover_letter.tex" "$OUT/"
+
+# double-anonymized review: the CRediT statement names the authors, so it moves from the
+# manuscript declarations to the end of the title page (package copies only)
+awk '/^\\section\*\{CRediT/{skip=1; next} skip && /^\\section\*/{skip=0} !skip' \
+    "$DOCS/declarations.tex" > "$OUT/declarations.tex"
+credit=$(awk '/^\\section\*\{CRediT/{on=1} on && /^\\section\*/ && !/CRediT/{exit} on' "$DOCS/declarations.tex" \
+         | grep -v '^%' | sed 's/\\section\*{\(.*\)}/\\vspace{1.5em}\\noindent\\textbf{\1}\\par/')
+[[ -n "$credit" ]] || warn "no CRediT statement found in declarations.tex"
+CREDIT="$credit" awk '/^\\end\{document\}/{print ENVIRON["CREDIT"]; print ""} {print}' \
+    "$DOCS/title_page.tex" > "$OUT/title_page.tex"
 
 # --- compile everything inside the flat folder ------------------------------------------------
 echo "Compiling..."
@@ -65,7 +82,7 @@ echo "Compiling..."
     [[ "$undefined" == "0" ]] || echo "  WARNING: $undefined undefined references/citations in manuscript.log"
     # keep manuscript.bbl (Elsevier asks for it with the .tex); drop the rest of the build output
     latexmk -c > /dev/null 2>&1 || true
-    rm -f ./*.build.log ./*.bak
+    rm -f ./*.build.log ./*.bak ./*.spl
 )
 [[ -f "$OUT/manuscript.bbl" ]] || warn "manuscript.bbl was not produced"
 
@@ -77,7 +94,8 @@ words=$(sed -n '/\\begin{abstract}/,/\\end{abstract}/p' "$OUT/manuscript.tex" \
 words=$((words - 0))
 (( words <= 250 )) && echo "  abstract: $words words (limit 250)" || warn "abstract has $words words (limit 250)"
 
-kw=$(grep -o 'Keywords:}.*' "$OUT/manuscript.tex" | sed 's/Keywords:}//' | tr ';' '\n' | grep -c '[a-zA-Z]' || true)
+kw=$(sed -n '/\\begin{keyword}/,/\\end{keyword}/p' "$OUT/manuscript.tex" | grep -v 'keyword}' \
+     | sed 's/\\sep/\n/g' | grep -c '[a-zA-Z]' || true)
 (( kw >= 1 && kw <= 7 )) && echo "  keywords: $kw (allowed 1-7)" || warn "$kw keywords (allowed 1-7)"
 
 hl=$(grep -c '^- ' "$OUT/highlights.txt" || true)

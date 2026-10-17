@@ -1,0 +1,121 @@
+\section{Materials and methods}
+
+\subsection{Training program}
+The study was conducted in a bank. The questions were prepared by the \textit{Banking Process Support
+and Optimization Department}, which also decided on employee participation in the program. The
+questions concerned knowledge used in everyday work at the bank. Each was a multiple-choice question
+with three to five answer options, one of which was correct, while the others were
+\emph{distractors}. The questions, answer options and explanations were written in Polish.
+
+The training application started automatically on working days on employees' computers and displayed
+one to four randomly selected questions per day, between 9:00 and 16:00. After each response, correct
+or incorrect, it showed the correct answer with an explanation (\emph{feedback}). The same question
+could return to an employee no earlier than after seven days, and the repetition schedule did not
+depend on the response outcome. The program was suspended while the questions were reviewed and
+updated. In the analyzed data, the median number of responses per employee on an active day was
+\DailyMedian{} (IQR \DailyQOne--\DailyQThree). The same question returned after a median of
+\GapMedian{} days (IQR \GapQOne--\GapQThree).
+
+An example question presented to program participants, on cybersecurity, read:
+``Which of the following situations is phishing?''. Answer options:
+``1 - A DDoS attack'',
+``2 - Installing antivirus software'',
+``3 - Backing up data'',
+``4 - A fake e-mail with a link to the bank's login page (marked as the correct answer)''.
+Explanation displayed after the response:
+``Phishing is a fraud method in which someone impersonates a trusted person or institution (e.g., a bank, a courier, a public office) to trick you into revealing confidential data such as passwords, card numbers or logins. Most often it looks like an e-mail from the `bank' with an urgent request to log in, a text message with a link to an `extra payment for a parcel', or a fake website deceptively similar to the real one. The key mechanism is that the fraudster creates a sense of urgency or stress so that you click without thinking. IMPORTANT: do not click suspicious links, always check the website address (URL), do not enter your login details via a link from a message, and if something looks `too urgent', it is often a scam.''.
+
+\subsection{Data and study population}
+\label{sec:dane}
+The recorded employee responses were analyzed. Each record contained the question, the selected
+option, the employee code, the date and time of the response, and whether the response was correct.
+The analytical dataset comprised \NResponses{} responses
+(Table~\ref{tab:zbior_danych}). The bank also provided a summary of employees' age and sex.
+
+\begin{table}[H]
+\centering
+\caption{Characteristics of the dataset.}
+\label{tab:zbior_danych}
+\small
+\tabelacsv{lr}{zbior_danych}
+\uwagatabeli{IQR: interquartile range. A sequence is a series of attempts by one employee at one
+question. The number of observed answer options may be smaller than the number of options in the
+question because some options were not chosen by any employee. Excluded test responses: \NExcluded.
+Excluded questions with a single observed answer option: \NExcludedItems{} (\NExcludedItemResp{}
+responses). Excluded repetitions given earlier than \MinGapDays{} days after the previous attempt:
+\NExcludedShortRep.}
+\end{table}
+
+Demographic data were available for \DemoMatched{} of the \DemoN{} employees (\DemoMatchedPct\%).
+Women accounted for \DemoWomenPct\% of persons of known sex ($n = \DemoWomen$). The median age was
+\AgeMedian{} years (IQR \AgeQOne--\AgeQThree; range \AgeMin--\AgeMax), and the largest age group was
+\AgeModalGroup{} years (\AgeModalGroupPct\%; Table~\ref{tab:demografia}). Age was included in the
+analysis of the first attempt and of the rate of accuracy gain; sex was not analyzed.
+
+\begin{table}[H]
+\centering
+\caption{Demographic characteristics of the employees included in the analysis.}
+\label{tab:demografia}
+\small
+\tabelacsv{lr}{demografia}
+\uwagatabeli{Percentages by sex were calculated among persons of known sex, and percentages by age
+group among persons of known age ($n = \DemoAgeN$). Missing data concern mainly employees absent from
+the demographic summary (\DemoUnmatched). IQR: interquartile range; SD: standard deviation.}
+\end{table}
+
+In the response database, employees were identified by a random code, and the demographic summary was
+linked to the recorded responses using this code. Such a code cannot be reconstructed from a list of
+employees; the analyzed data were therefore fully anonymized.
+
+\subsection{Statistical analysis}
+\label{sec:analiza}
+The responses of one employee to one question, ordered in time, formed a \emph{sequence}. The position
+of a response in the sequence was termed the \emph{attempt number}, and the first response, that is,
+the employee's first encounter with the question, the \emph{first attempt}. The \emph{interval} was the
+number of days since the previous attempt in the same sequence, and \emph{accuracy} was the percentage
+of correct responses. Accuracy was reported with 95\% confidence intervals (CI) obtained with the
+bootstrap: employees were resampled with replacement (\BootReps{} replicates), which accounts for the
+dependence between responses given by the same person. In regression models, standard errors were
+clustered by employee.
+
+\emph{First attempt.} Accuracy at the first attempt was compared across age groups. The association
+with age (10-year groups) was estimated by logistic regression with question fixed effects, that is,
+with a separate intercept for each question. Question difficulty was not recorded in the data, so the
+fixed effects were estimated from the responses of all employees. The model thus compared employees of
+different ages answering the same questions. For comparison, it was also fitted without question fixed
+effects.
+
+\emph{Changes within a sequence (RQ1).} Accuracy was calculated for successive attempt numbers;
+attempts \MaxAttemptPooled{} and later were pooled. With each attempt, the number of sequences
+decreased, and employees who continued responding could differ from the others, which distorts
+aggregate curves \citep{murray2013}. The change was therefore also assessed in a \emph{cohort}, that
+is, in sequences of at least \CohortK{} attempts, restricted to attempts 1 to \CohortK{}. Accuracy at
+each of these attempts was calculated for the same sequences, and the measure of change was the
+difference between attempt~\CohortK{} and attempt~1 in percentage points (pp).
+The association between the rate of gain and age was tested in the cohort by logistic regression with
+an interaction between $\log_2$ attempt number and age, and with employee and question fixed effects.
+
+\emph{Outcome of the previous attempt and interval (RQ2).} Each attempt from the second onward was
+assigned to one of four categories according to the outcome of that attempt and of the previous one:
+a correct response after a correct one, \emph{error correction} (correct after incorrect),
+\emph{forgetting} (incorrect after correct) or \emph{repeated error} (incorrect after incorrect).
+Because the error-correction rate ($r$) and the forgetting rate ($f$) have different denominators, the
+numbers of both events were compared, and the equilibrium level $r/(r+f)$, toward which accuracy would
+tend at constant rates, was determined. The rates were compared across six interval bins:
+\MinGapDays--13, 14--29, 30--59, 60--119, 120--239 and at least 240 days. The forgetting rate was also
+tabulated by the number of consecutive correct responses before a given attempt and separately after an
+error correction. An incorrect response at the attempt following an error correction was termed an
+\emph{error relapse}, and it was checked whether the employee chose the same distractor as before the
+correction. It was also checked whether the repetition schedule depended on the outcome of the
+previous attempt.
+
+\emph{Persistent errors (RQ3).} Accuracy was compared by the number of \emph{consecutive errors}, that
+is, successive incorrect responses immediately preceding a given attempt, from 0 to at least \RunMax.
+For two successive errors, the frequency with which the employee chose the same distractor was
+calculated and compared with the percentage expected under random choice and under choice
+proportional to distractor popularity in the given question. This percentage was also tabulated in
+three interval bins: shorter than 30 days, 30--89 days and at least 90 days. The share of repeated
+errors concentrated in the 10\% of questions with the most such errors was also calculated.
+
+Computations were performed in Python \VerPython{} using pandas \VerPandas, NumPy \VerNumpy, SciPy
+\VerScipy, statsmodels \VerStatsmodels{} and Matplotlib \VerMatplotlib.
