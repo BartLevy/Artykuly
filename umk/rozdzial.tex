@@ -1,0 +1,943 @@
+% =====================================================================
+%  Rozdział do monografii:
+%  „Transformacja cyfrowa sektora publicznego – cyberbezpieczeństwo,
+%   regulacje prawne i sztuczna inteligencja” (Wydawnictwo Naukowe UMK)
+%
+%  Kompilacja:  pdflatex rozdzial && biber rozdzial && pdflatex rozdzial
+%               (lub: make)
+%  Bibliografia: bibliografia.bib
+% =====================================================================
+\documentclass[12pt,a4paper]{article}
+
+% ---------------------------------------------------------------------
+%  Język, kodowanie, czcionka (Times New Roman → klon newtx)
+% ---------------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{newtxtext,newtxmath}
+\usepackage[autostyle=true]{csquotes}   % „cytat” wg zasad polskich
+
+% ---------------------------------------------------------------------
+%  Układ strony: marginesy 2,5 cm, interlinia 1,5, wcięcie 0,75 cm,
+%  wyjustowanie, ciągła numeracja stron
+% ---------------------------------------------------------------------
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\setlength{\parindent}{0.75cm}
+\setlength{\parskip}{0pt}
+\usepackage{indentfirst}
+\pagestyle{plain}
+
+% ---------------------------------------------------------------------
+%  Śródtytuły: 12 pt, pogrubienie, wcięcie 0,75 cm; sekcje numerowane
+%  (tekst odwołuje się do numerów sekcji), podsekcje bez numeracji
+% ---------------------------------------------------------------------
+\usepackage{titlesec}
+\setcounter{secnumdepth}{1}
+\titleformat{\section}{\normalfont\normalsize\bfseries}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0.75cm}{1.5ex plus .5ex minus .2ex}{0.5ex plus .2ex}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\subsection}{0.75cm}{1.2ex plus .5ex minus .2ex}{0.5ex plus .2ex}
+
+% ---------------------------------------------------------------------
+%  Przypisy: 10 pt, interlinia pojedyncza, wysunięcie 0,25 cm,
+%  numeracja ciągła, odnośnik w indeksie górnym
+% ---------------------------------------------------------------------
+\makeatletter
+\renewcommand\@makefntext[1]{%
+  \setlength{\hangindent}{0.25cm}\hangafter=1
+  \noindent\textsuperscript{\@thefnmark}\,#1}
+\makeatother
+\setlength{\skip\footins}{1.5em plus 4pt minus 2pt}
+
+% ---------------------------------------------------------------------
+%  Tabele i ilustracje: numer i tytuł / podpis
+% ---------------------------------------------------------------------
+\usepackage{graphicx}
+\graphicspath{{rysunki/}}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{caption}
+\captionsetup{font={small,singlespacing},labelfont=bf,labelsep=period,
+  justification=centering,skip=6pt}
+\captionsetup[table]{position=top}
+% Źródło pod tabelą/rysunkiem, np. \zrodlo{opracowanie własne}
+\newcommand{\zrodlo}[1]{\par\smallskip{\footnotesize Źródło: #1.}\par}
+
+% ---------------------------------------------------------------------
+%  Bibliografia: biblatex + biber, przypisy wg wzoru Wydawnictwa UMK
+% ---------------------------------------------------------------------
+\usepackage[
+  backend=biber,
+  style=verbose-trad2,     % pełny opis przy 1. powołaniu, Tamże, dz. cyt.
+  sorting=nty,
+  dashed=false,            % pełne nazwisko przy każdej pozycji
+  giveninits=true,         % J. Nowak / Nowak J.
+  maxnames=3, minnames=1,
+  idemtracker=false,       % bez „tenże”
+  loccittracker=false,     % bez „loc. cit.”
+  dateabbrev=false,
+  isbn=false, eprint=false,
+  doi=true, url=true,
+]{biblatex}
+\addbibresource{bibliografia.bib}
+
+% --- interpunkcja: przecinki między elementami opisu
+\renewcommand*{\newunitpunct}{\addcomma\space}
+\renewcommand*{\intitlepunct}{\addspace}
+\DeclareDelimFormat{finalnamedelim}{\addcomma\space}
+\DeclareDelimFormat[bib,biblist]{nametitledelim}{%
+  \ifnameundef{author}{\addcolon\space}{\addcomma\space}}% „(red.): Tytuł”
+\DeclareDelimFormat{editortypedelim}{\addspace}
+
+% --- nazwiska: w przypisach „J. Nowak”, w bibliografii „Nowak J.”
+\DeclareNameAlias{default}{given-family}
+\DeclareNameAlias{sortname}{given-family}
+\DeclareNameAlias{labelname}{given-family}
+\renewcommand*{\revsdnamepunct}{}
+\AtBeginBibliography{%
+  \DeclareNameAlias{default}{family-given}%
+  \DeclareNameAlias{sortname}{family-given}}
+
+% --- (red.)
+\DeclareFieldFormat{editortype}{\mkbibparens{#1}}
+
+% --- tytuły kursywą, tytuł czasopisma w cudzysłowie, akty prawne prosto
+\DeclareFieldFormat*{title}{\mkbibemph{#1}}
+\DeclareFieldFormat*{booktitle}{\mkbibemph{#1}}
+\DeclareFieldFormat*{citetitle}{\mkbibemph{#1}}
+\DeclareFieldFormat{journaltitle}{\mkbibquote{#1}}
+\DeclareFieldFormat[legislation]{title}{#1}
+\DeclareFieldFormat[legislation]{citetitle}{#1}
+
+% --- strony: „s. 5”; zakres stron rozdziału nie jest drukowany
+%     (bibliografia „bez numerów stron”, w przypisie strony = postnote)
+\DeclareFieldFormat{postnote}{\mkpageprefix[pagination]{#1}}
+\AtEveryBibitem{\clearfield{pages}}
+\AtEveryCitekey{\clearfield{pages}}
+
+% --- „(w:)” + redaktorzy przed tytułem tomu zbiorowego
+\renewbibmacro*{in:}{%
+  \ifentrytype{article}
+    {}
+    {\setunit{\addspace}%
+     \printtext{(w\addcolon)}%
+     \setunit{\addspace}%
+     \ifnameundef{editor}
+       {}
+       {\printnames{editor}%
+        \setunit{\addspace}%
+        \printtext{\mkbibparens{\bibstring{editor}}\addcolon}%
+        \clearname{editor}%
+        \setunit{\addspace}}}}
+
+% --- czasopismo: „Tytuł czasopisma” 2000, t. 7, nr 1 (12), e1211
+\renewbibmacro*{journal+issuetitle}{%
+  \usebibmacro{journal}%
+  \setunit*{\addspace}%
+  \printfield{year}%
+  \setunit{\addcomma\space}%
+  \printfield{volume}%
+  \setunit{\addcomma\space}%
+  \printfield{number}%
+  \setunit{\addcomma\space}%
+  \printfield{eid}%
+  \newunit}
+\DeclareFieldFormat[article]{volume}{t\adddot~#1}
+\DeclareFieldFormat[article]{number}{nr~#1}
+
+% --- wydawnictwo, miejsce rok: „Wydawnictwo, Warszawa 2000”
+\renewbibmacro*{publisher+location+date}{%
+  \printlist{publisher}%
+  \setunit*{\addcomma\space}%
+  \printlist{location}%
+  \setunit*{\addspace}%
+  \usebibmacro{date}%
+  \newunit}
+
+% --- DOI jako pełny odnośnik, bez daty dostępu; w przypisie tylko przy
+%     pierwszym powołaniu i po numerze strony: „…, s. 15, https://doi.org/…”
+\newcommand*{\urlDOI}[1]{\url{https://doi.org/#1}}
+\DeclareFieldFormat{doi}{\urlDOI{#1}}
+\AtEveryBibitem{\iffieldundef{doi}{}{\clearfield{url}\clearfield{urlyear}}}
+\AtEveryCitekey{%
+  \global\let\cytDOI\relax
+  \iffieldundef{doi}
+    {}
+    {\clearfield{url}\clearfield{urlyear}%
+     \ifciteseen{}{\savefield{doi}{\cytDOItmp}\global\let\cytDOI\cytDOItmp}%
+     \clearfield{doi}}}
+\renewbibmacro*{cite:postnote}{%
+  \usebibmacro{postnote}%
+  \ifx\cytDOI\relax\else
+    \setunit{\addcomma\space}%
+    \printtext{\expandafter\urlDOI\expandafter{\cytDOI}}%
+    \global\let\cytDOI\relax
+  \fi}
+
+% --- strony WWW: „www.nazwastrony.pl (dostęp 01.06.2026 r.)”
+\DeclareFieldFormat{url}{\url{#1}}
+\renewbibmacro*{url+urldate}{%
+  \printfield{url}%
+  \iffieldundef{urlyear}
+    {}
+    {\setunit*{\addspace}%
+     \printtext[parens]{%
+       \bibstring{urlseen}\addspace
+       \mkdayzeros{\thefield{urlday}}.\mkmonthzeros{\thefield{urlmonth}}.%
+       \thefield{urlyear}\addspace r\adddot}}}
+
+% --- akty prawne: „Ustawa z dnia … (Dz.U. … z późn. zm.)”
+\DeclareBibliographyDriver{legislation}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \printfield{title}%
+  \setunit{\addspace}%
+  \printtext[parens]{\printfield{note}}%
+  \usebibmacro{finentry}}
+
+% --- kolejne powołanie aktu prawnego: sam skrót (np. „RODO”), bez „dz. cyt.”
+\renewbibmacro*{cite:title}{%
+  \printtext[bibhyperlink]{%
+    \printfield[citetitle]{labeltitle}%
+    \ifentrytype{legislation}
+      {}
+      {\setunit{\printdelim{nametitledelim}}%
+       \bibstring[\mkibid]{opcit}}}}
+
+% --- bibliografia: 10 pt, wyjustowanie, wysunięcie 0,25 cm
+\renewcommand*{\bibfont}{\footnotesize\setstretch{1}}
+\setlength{\bibhang}{0.25cm}
+\setlength{\bibitemsep}{0.3\baselineskip}
+\defbibheading{bibliography}[Bibliografia]{\section*{#1}}
+
+\usepackage[hidelinks]{hyperref}
+\urlstyle{same}
+
+% ---------------------------------------------------------------------
+%  Pierwsza strona rozdziału
+% ---------------------------------------------------------------------
+\makeatletter
+\newcommand{\autorzy}[1]{\def\@autorzy{#1}}
+\newcommand{\afiliacja}[1]{\def\@afiliacja{#1}}
+\newcommand{\tytulPL}[1]{\def\@tytulPL{#1}}
+\newcommand{\tytulEN}[1]{\def\@tytulEN{#1}}
+\newcommand{\naglowekRozdzialu}{%
+  \begingroup
+  \singlespacing
+  \noindent{\bfseries\@autorzy}\par
+  \noindent\@afiliacja\par
+  \vspace{2\baselineskip}
+  \begin{center}\bfseries\MakeUppercase{\@tytulPL}\\[0.5\baselineskip]
+    \MakeUppercase{\@tytulEN}\end{center}
+  \vspace{\baselineskip}
+  \endgroup}
+\makeatother
+
+% Abstrakty: Times New Roman 10 pt
+\newenvironment{streszczenie}[2]% #1 = etykieta abstraktu, #2 = etykieta słów kluczowych
+  {\def\etykietaSlow{#2}\par\footnotesize\singlespacing\noindent\textbf{#1:}\space\ignorespaces}
+  {\par}
+\newcommand{\slowakluczowe}[1]{\par\smallskip\noindent\textbf{\etykietaSlow:} #1\par\medskip}
+
+% =====================================================================
+\begin{document}
+% =====================================================================
+
+\autorzy{Bartosz LEWANDOWSKI}
+\afiliacja{Atende S.A.}
+\tytulPL{Ochrona przed wyciekiem danych: rola systemów DLP w~wielowarstwowym modelu cyberbezpieczeństwa}
+\tytulEN{Data leak protection: the role of DLP systems in a~multi-layered cybersecurity model}
+
+\naglowekRozdzialu
+
+\begin{streszczenie}{Abstrakt}{Słowa kluczowe}
+Artykuł omawia rolę systemów zapobiegania wyciekom danych (DLP)
+w~wielowarstwowym modelu cyberbezpieczeństwa. Ma charakter
+przeglądowo-koncepcyjny i~opiera się na literaturze naukowej, dokumentach
+NIST, przepisach RODO oraz raportach branżowych. Wyciek danych potraktowano
+jako skutek łańcucha zdarzeń, w~którym błędy użytkowników nakładają się na
+luki organizacyjne i~techniczne. Do opisu tego zjawiska wykorzystano model
+sera szwajcarskiego J.~Reasona. Przedstawiono mechanizmy DLP: klasyfikację
+informacji, ochronę danych w~trzech stanach, analizę treści i~kontekstu oraz
+stopniowanie reakcji. Porównano zakres DLP z~systemami EDR, NDR i~SIEM.
+Zaproponowano ujęcie DLP jako uzupełnienia triady widoczności SOC
+o~perspektywę chronionych informacji. Omówiono warunki skutecznego wdrożenia
+oraz finansowe, prawne i~społeczne konsekwencje wycieków. Analiza wskazuje,
+że DLP skutecznie ogranicza wycieki przypadkowe, ale nie zastępuje innych
+warstw ochrony i~wymaga wsparcia procedur organizacyjnych.
+\slowakluczowe{zapobieganie wyciekom danych, DLP, poufność informacji,
+wielowarstwowa ochrona, SOC, model sera szwajcarskiego, RODO}
+\end{streszczenie}
+
+% TODO: wersja robocza tłumaczenia – do weryfikacji przez autora
+\begin{streszczenie}{Abstract}{Key words}
+The article discusses the role of data loss prevention (DLP) systems in
+a~multi-layered cybersecurity model. It is a~review and conceptual study
+based on scientific literature, NIST publications, the GDPR and industry
+reports. A~data leak is treated as the outcome of a~chain of events in which
+user errors coincide with organisational and technical gaps, described with
+J.~Reason's Swiss cheese model. The article presents the mechanisms of DLP:
+information classification, protection of data in three states, content and
+context analysis, and graduated response. It compares the scope of DLP with
+EDR, NDR and SIEM systems and proposes to view DLP as a~complement to the SOC
+visibility triad, adding the perspective of protected information. The
+conditions for effective deployment and the financial, legal and social
+consequences of leaks are discussed. The analysis shows that DLP effectively
+limits accidental leaks, but does not replace other layers of protection and
+requires the support of organisational procedures.
+\slowakluczowe{data loss prevention, DLP, information confidentiality,
+defence in depth, SOC, Swiss cheese model, GDPR}
+\end{streszczenie}
+
+% ---------------------------------------------------------------------
+\section{Wprowadzenie}
+
+Poufność należy, obok integralności i~dostępności, do podstawowych
+właściwości chronionych w~systemach bezpieczeństwa informacji. Jej naruszenie
+trudno odwrócić. Zniszczone dane można odtworzyć z~kopii zapasowej, natomiast
+danych raz ujawnionych nie da się ponownie uczynić poufnymi.
+
+Organizacje przetwarzają informacje jednocześnie na stacjach roboczych,
+w~usługach chmurowych, w~poczcie elektronicznej, w~narzędziach do współpracy
+i~w~systemach partnerów. Każde z~tych miejsc może stać się kanałem wycieku.
+Zapory sieciowe i~systemy kontroli dostępu rozstrzygają, kto i~skąd może się
+połączyć. Nie oceniają jednak, czy konkretna treść powinna opuścić
+organizację. Tę funkcję pełnią systemy zapobiegania wyciekom danych (ang.
+\emph{Data Loss Prevention}, DLP), które analizują treść i~kontekst operacji
+na danych\footcite{alneyadi2016survey}.
+
+Celem artykułu jest omówienie roli systemów DLP w~ograniczaniu ryzyka wycieku
+danych oraz określenie ich miejsca w~wielowarstwowym modelu
+cyberbezpieczeństwa. Artykuł ma charakter przeglądowo-koncepcyjny. Opiera się
+na literaturze naukowej, dokumentach instytucji normalizacyjnych i~raportach
+branżowych. Nie zawiera badań empirycznych, a~dobór źródeł nie miał
+charakteru systematycznego przeglądu literatury.
+
+Rozważania obejmują cztery obszary: źródła i~scenariusze zagrożeń, mechanizmy
+ochrony stosowane w~systemach DLP, organizacyjne warunki ich skuteczności oraz
+konsekwencje naruszeń. Sekcja~2 opisuje zmiany w~sposobach przetwarzania
+informacji, które zwiększają liczbę kanałów wycieku. Sekcja~3 przedstawia
+obraz zagrożeń wyłaniający się z~badań i~raportów, wraz z~ograniczeniami ich
+interpretacji. Sekcje~4 i~5 definiują zakres DLP i~lokują tę klasę rozwiązań
+wśród innych narzędzi bezpieczeństwa. Sekcja~6 traktuje wyciek jako skutek
+łańcucha zdarzeń, a~sekcja~7 omawia warunki wdrożenia. Sekcja~8 dotyczy
+konsekwencji finansowych i~społecznych.
+
+% ---------------------------------------------------------------------
+\section{Geneza i~współczesne uwarunkowania wycieków danych}
+
+Ryzyko wycieku rośnie wraz z~liczbą miejsc, w~których informacja jest
+przechowywana i~przez które przepływa. Long Cheng, Fang Liu i~Danfeng Yao
+wiążą je z~potrzebą gromadzenia i~analizowania coraz większych zbiorów danych
+oraz z~intensywnym korzystaniem z~nowoczesnych kanałów
+komunikacji\footcite{cheng2017enterprise}. Autorzy wymieniają wśród możliwych
+wektorów wycieku m.in. usługi udostępniania plików w~chmurze, pocztę
+elektroniczną, komunikatory, nośniki wymienne, podatności baz danych, kradzież
+laptopów, utratę kopii zapasowych i~serwisy społecznościowe. Lista ta
+pokazuje, że wyciek nie jest zjawiskiem jednego kanału.
+
+Praca rozproszona przesunęła przetwarzanie danych poza siedzibę organizacji.
+Ten sam przegląd wskazuje, że współdzielenie danych z~partnerami i~klientami,
+współpraca przez chmurę oraz praca poza siedzibą firmy zwiększają
+prawdopodobieństwo wycieku\footcite{cheng2017enterprise}. Nowsze dane
+potwierdzają znaczenie podmiotów zewnętrznych. Według komunikatu Verizon
+dotyczącego raportu DBIR 2026, opartego na danych z~2025~roku, udział strony
+trzeciej odnotowano w~48\% analizowanych naruszeń, a~wskaźnik ten wzrósł
+o~60\% względem poprzedniej edycji\footcite{verizon2026dbir}. Granica
+organizacji przestaje więc pokrywać się z~granicą jej sieci.
+
+Narzędzia generatywnej sztucznej inteligencji tworzą kolejny kanał przepływu
+informacji. Ten sam komunikat podaje, że korzystanie przez pracowników
+z~niezatwierdzonych narzędzi AI (ang. \emph{shadow AI}) stało się trzecią
+najczęstszą niezłośliwą aktywnością związaną z~wyciekiem danych. Odsetek
+pracowników często korzystających z~takich narzędzi wzrósł w~ciągu roku
+z~15\% do 45\%\footcite{verizon2026dbir}. Z~perspektywy ochrony informacji
+wklejenie dokumentu do zewnętrznej usługi jest przekazaniem danych poza
+kontrolę organizacji, niezależnie od intencji użytkownika. Ta interpretacja
+wyjaśnia, dlaczego problem dotyczy bardziej polityk ochrony danych niż samej
+technologii AI.
+
+Wyciek może mieć trzy różne źródła: działanie napastnika, celowe nadużycie
+uprawnień przez osobę z~wewnątrz albo niezamierzony błąd. Cheng
+i~współautorzy porządkują je według dwóch kryteriów: intencji (celowe lub
+przypadkowe) oraz pochodzenia sprawcy (wewnętrzny lub
+zewnętrzny)\footcite{cheng2017enterprise}. Do zagrożeń przypadkowych zaliczają
+m.in. omyłkową publikację, błąd konfiguracji, niewłaściwe szyfrowanie i~utratę
+komputera. Przykładem jest incydent w~australijskim Red Cross Blood Service
+z~2016~roku. Pracownik umieścił wtedy dokumenty z~danymi ponad 550~tys.
+dawców krwi w~publicznie dostępnym katalogu serwisu
+internetowego\footcite{cheng2017enterprise}.
+
+Podział ten ma konsekwencje praktyczne. Napastnik zewnętrzny musi najpierw
+uzyskać dostęp, osoba z~wewnątrz już go ma, a~pracownik popełniający błąd nie
+ukrywa swoich działań. Każdy z~tych scenariuszy pozostawia inne ślady
+i~wymaga innego sposobu wykrywania.
+
+% ---------------------------------------------------------------------
+\section{Charakterystyka zagrożeń w~świetle badań i~raportów}
+
+Obraz zagrożeń opiera się w~dużej mierze na raportach branżowych, ponieważ
+organizacje rzadko udostępniają dane o~własnych incydentach badaczom
+akademickim. Dwie najczęściej przywoływane serie to \emph{Data Breach
+Investigations Report} (DBIR) firmy Verizon oraz \emph{Cost of a~Data Breach}
+przygotowywany przez Ponemon Institute na zlecenie IBM. Obie serie mają
+odmienną metodykę, więc ich wyniki należy czytać osobno.
+
+Raport DBIR 2026 wskazuje wykorzystanie podatności jako najczęstszy punkt
+wejścia. Odpowiada ono za 31\% naruszeń i~po raz pierwszy w~historii raportu
+wyprzedziło użycie skradzionych poświadczeń\footcite{verizon2026dbir}. Ten sam
+komunikat podaje, że socjotechnika prowadzona kanałami mobilnymi (wiadomości
+tekstowe, połączenia głosowe) osiąga skuteczność o~40\% wyższą niż tradycyjny
+phishing e-mailowy. Dane te dotyczą głównie ataków zewnętrznych, ale pokazują
+też, że użytkownik pozostaje częstym celem ataku.
+
+Udział osób z~wewnątrz organizacji trudniej oszacować. Cheng i~współautorzy
+przywołują analizę Barbary Hauer obejmującą 1259 incydentów, według której
+ponad 60\% naruszeń spowodowali insiderzy\footcite{cheng2017enterprise}.
+Zaznaczają jednocześnie, że raporty oparte na różnych zbiorach danych dają
+różne wyniki. Wspólny pozostaje jedynie wniosek, że znaczna część naruszeń ma
+źródło wewnątrz organizacji. Dane te pochodzą sprzed 2017~roku i~nie powinny
+być traktowane jako opis obecnej sytuacji.
+
+Czynniki ludzkie, techniczne i~organizacyjne występują zwykle łącznie.
+W~ujęciu Chenga i~współautorów przypadkowe wycieki wynikają głównie ze słabo
+zaprojektowanych procesów biznesowych, czyli z~braku odpowiednich technologii
+zapobiegawczych i~polityk bezpieczeństwa, albo z~przeoczenia ze strony
+pracownika\footcite{cheng2017enterprise}. Błąd użytkownika jest tu więc
+objawem, a~nie jedyną przyczyną. Podobnie można odczytać dane IBM: tylko 37\%
+organizacji dotkniętych naruszeniem zadeklarowało szyfrowanie danych
+wrażliwych zarówno w~spoczynku, jak i~podczas
+przesyłania\footcite{ibm2026cost}.
+
+Typowe scenariusze wycieku obejmują wyprowadzenie danych przez złośliwe
+oprogramowanie po włamaniu, nadużycie uprawnień lub sabotaż ze strony
+insidera, błędną konfigurację zasobu, omyłkową publikację oraz utratę
+urządzenia z~niezaszyfrowanymi danymi\footcite{cheng2017enterprise}. Kanałem
+może być sieć, punkt końcowy, usługa chmurowa albo nośnik fizyczny. Asaf
+Shabtai, Yuval Elovici i~Lior Rokach traktują kanał wycieku jako jedną z~osi
+klasyfikacji rozwiązań DLP, obok źródła wycieku i~stanu
+danych\footcite{shabtai2012survey}.
+
+\subsection{Ograniczenia interpretacji statystyk}
+
+Statystyki naruszeń opisują różne zjawiska, choć często używają podobnych
+słów. DBIR odróżnia incydent, czyli zdarzenie naruszające poufność,
+integralność lub dostępność zasobu informacyjnego, od naruszenia, czyli
+incydentu zakończonego potwierdzonym ujawnieniem danych osobie
+nieuprawnionej\footcite{verizon2024dbir}. Samo potencjalne narażenie danych
+nie spełnia tej definicji. Atak DDoS jest więc zwykle incydentem, ale nie
+naruszeniem.
+
+RODO przyjmuje szersze pojęcie. Naruszenie ochrony danych osobowych obejmuje
+nie tylko nieuprawnione ujawnienie lub dostęp, ale także przypadkowe lub
+niezgodne z~prawem zniszczenie, utracenie i~zmodyfikowanie danych (art.~4
+pkt~12)\footcite{rodo2016}. Zaszyfrowanie danych przez oprogramowanie
+ransomware bez ich wyprowadzenia może być naruszeniem w~rozumieniu RODO, ale
+nie naruszeniem w~rozumieniu DBIR. W~tym artykule wyciek oznacza węższą
+kategorię: przekroczenie przez informację granicy, w~której jej przetwarzanie
+jest uprawnione.
+
+Różnice dotyczą też prób badawczych. DBIR opiera się na danych z~dochodzeń
+prowadzonych przez Verizon i~organizacje
+współpracujące\footcite{verizon2024dbir}, a~nie na losowej próbie
+organizacji. Edycja raportu IBM z~2026~roku obejmuje 602 organizacje, które
+doświadczyły naruszenia od marca 2025 do lutego 2026~roku\footcite{ibm2026cost}.
+Odsetki z~tych raportów opisują więc zbiór zbadanych naruszeń lub
+organizacji. Nie mówią o~tym, jak często naruszenia dotykają ogółu
+przedsiębiorstw.
+
+% ---------------------------------------------------------------------
+\section{Istota i~zakres ochrony DLP}
+
+Termin DLP nie ma jednej, powszechnie przyjętej definicji. Sultan Alneyadi,
+Elankayer Sithirasenan i~Vallipuram Muthukkumarasamy określają systemy DLP
+jako wyspecjalizowane mechanizmy wykrywania i~zapobiegania wyciekom danych
+poufnych w~trakcie ich używania, przesyłania i~przechowywania\footcite{alneyadi2016survey}.
+Zwracają jednocześnie uwagę, że samo pojęcie pozostaje niejednoznaczne, mimo
+rosnącej liczby produktów komercyjnych. Cheng i~współautorzy używają
+szerszego określenia DLPD (ang. \emph{data leak prevention and detection})
+i~przypisują tym systemom trzy zadania: identyfikację, monitorowanie
+i~zapobieganie ujawnieniu informacji wrażliwych, zarówno celowemu, jak
+i~przypadkowemu\footcite{cheng2017enterprise}.
+
+DLP różni się od podstawowych zabezpieczeń przedmiotem kontroli. Zapory
+sieciowe, oprogramowanie antywirusowe, systemy wykrywania włamań, kontrola
+dostępu i~szyfrowanie chronią systemy i~kanały. DLP ocenia treść lub kontekst
+samych danych\footcite{cheng2017enterprise}. Cheng i~współautorzy formułują
+też wymagania wobec praktycznego systemu DLP. Powinien blokować tylko
+przepływy zawierające informacje wrażliwe i~przepuszczać zwykły ruch.
+Powinien chronić przed nieostrożnymi pracownikami i~złośliwymi insiderami.
+Powinien też utrudnić wyprowadzenie danych nawet wtedy, gdy zawiodą inne
+zabezpieczenia.
+
+\subsection{Identyfikacja i~klasyfikacja informacji}
+
+System DLP może chronić tylko te informacje, które organizacja wcześniej
+wskazała. Przewodnik NIST SP 1800-28 rozpoczyna ochronę poufności od
+identyfikacji zasobów narażonych na naruszenie i~ryzyk, które mogą do niego
+prowadzić. Dopiero potem wprowadza technologie
+ochronne\footcite{nist2024dataconf}. Klasyfikacja wyznacza więc zakres
+działania DLP. Błędy na tym etapie przenoszą się na wszystkie dalsze decyzje
+systemu: dane pominięte w~klasyfikacji pozostają bez ochrony, a~dane
+sklasyfikowane zbyt szeroko generują nadmiar alarmów.
+
+\subsection{Dane przechowywane, przesyłane i~wykorzystywane}
+
+Klasyczny podział obejmuje trzy stany danych. Cheng i~współautorzy
+przypisują każdemu z~nich inny cel ochrony\footcite{cheng2017enterprise}.
+Skanowanie danych przechowywanych na serwerach pozwala znaleźć zasoby
+narażone na wyciek wewnątrz organizacji. Monitorowanie danych używanych na
+stacjach roboczych ma zapobiegać niewłaściwemu obchodzeniu się z~nimi przez
+użytkowników. Monitorowanie ruchu sieciowego ma powstrzymać przesłanie danych
+poufnych poza sieć firmową. Shabtai i~współautorzy włączają stan danych do
+taksonomii rozwiązań, obok źródła wycieku, kanału, sposobu wdrożenia,
+charakteru działania (zapobiegawczy lub wykrywający) i~reakcji na
+wyciek\footcite{shabtai2012survey}.
+
+\subsection{Analiza treści i~kontekstu}
+
+Systemy DLP rozpoznają dane chronione na dwa sposoby: przez analizę treści
+albo przez analizę kontekstu\footcite{cheng2017enterprise}. Pierwsze podejście
+sprawdza, co zawiera przesyłany lub zapisywany obiekt. Drugie bada metadane
+i~okoliczności operacji: kto ją wykonuje, skąd, dokąd, w~jakim czasie i~czy
+odbiega ona od typowego wzorca zachowania. Część rozwiązań łączy obie metody.
+Tabela~\ref{tab:techniki} zestawia główne techniki wraz z~ich ograniczeniami.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Techniki wykrywania w~systemach DLP}
+  \label{tab:techniki}
+  \footnotesize\setstretch{1}
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabularx}{\textwidth}{@{}P{3.2cm}P{2cm}LL@{}}
+    \toprule
+    Technika & Rodzaj analizy & Zaleta & Ograniczenie \\
+    \midrule
+    Odciski cyfrowe (\emph{fingerprinting}) & treść
+      & prosta implementacja, wykrywa całe dokumenty chronione
+      & duża wrażliwość na modyfikację danych \\
+    Wyrażenia regularne & treść
+      & dobre dla danych o~przewidywalnym formacie (np. numery kart)
+      & ograniczona ochrona, wysoki odsetek fałszywych alarmów \\
+    Porównywanie zbiorów n-gramów & treść
+      & toleruje drobne zmiany tekstu
+      & duży koszt obliczeń i~pamięci \\
+    Uczenie maszynowe & treść lub kontekst
+      & odporność na modyfikacje danych
+      & potrzeba dużych zbiorów uczących, złożoność \\
+    Analiza zachowań & kontekst
+      & ogranicza zagrożenia wewnętrzne
+      & potrzeba dużych zbiorów uczących, wysoki odsetek fałszywych alarmów \\
+    Znakowanie wodne & kontekst
+      & wspiera analizę powykonawczą
+      & podatność na usunięcie lub zniekształcenie znaku \\
+    \bottomrule
+  \end{tabularx}
+  \zrodlo{opracowanie własne na podstawie: \citeauthor{cheng2017enterprise},
+    \citetitle{cheng2017enterprise}}
+\end{table}
+
+Analiza treści skutecznie chroni przed przypadkową utratą danych, ale
+świadomy sprawca może ją ominąć przez zaciemnienie
+danych\footcite{cheng2017enterprise}. Ruch szyfrowany czyni ją bezużyteczną,
+jeżeli system nie ma wglądu w~treść przed zaszyfrowaniem. Cheng
+i~współautorzy przywołują też ocenę trzech rozwiązań komercyjnych
+przeprowadzoną przez Davida Gugelmanna i~współautorów. Systemy te zapobiegały
+przypadkowym wyciekom w~ruchu WWW, ale insider lub złośliwe oprogramowanie
+mogły je łatwo obejść. Wynik ten wyznacza realistyczny zakres oczekiwań wobec
+DLP.
+
+\subsection{Monitorowanie, ostrzeganie i~blokowanie}
+
+Reakcja na wykrytą operację może mieć różną siłę. System może jedynie
+zarejestrować zdarzenie, ostrzec użytkownika i~poprosić o~uzasadnienie albo
+zablokować operację. Shabtai i~współautorzy traktują działanie podejmowane po
+wykryciu wycieku jako odrębną oś klasyfikacji
+rozwiązań\footcite{shabtai2012survey}. Dobór reakcji jest decyzją
+organizacyjną, a~nie wyłącznie techniczną. Blokada chroni dane, ale przy
+błędnej regule zatrzymuje też uprawnioną pracę.
+
+% ---------------------------------------------------------------------
+\section{Miejsce DLP w~architekturze cyberbezpieczeństwa}
+
+DLP nie zastępuje innych narzędzi wykrywania zagrożeń, ponieważ obserwuje
+inny obiekt. Systemy EDR (ang. \emph{Endpoint Detection and Response})
+analizują telemetrię punktów końcowych: uruchamiane procesy, zmiany
+w~systemie i~aktywność na urządzeniu. Systemy NDR (ang. \emph{Network
+Detection and Response}) analizują ruch sieciowy. Systemy SIEM (ang.
+\emph{Security Information and Event Management}) gromadzą i~korelują
+dzienniki zdarzeń z~wielu źródeł. DLP ocenia natomiast, czy dana operacja
+dotyczy informacji chronionej i~czy jest zgodna z~polityką jej przetwarzania.
+Tabela~\ref{tab:porownanie} zestawia te różnice.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Porównanie zakresów działania DLP, EDR, NDR i~SIEM}
+  \label{tab:porownanie}
+  \footnotesize\setstretch{1}
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabularx}{\textwidth}{@{}P{1.9cm}LLL@{}}
+    \toprule
+    Klasa rozwiązań & Przedmiot obserwacji & Pytanie, na które odpowiada
+      & Typowa reakcja \\
+    \midrule
+    DLP & treść i~kontekst operacji na danych
+      & czy ta informacja może opuścić dozwolony obszar?
+      & rejestracja, ostrzeżenie użytkownika, blokada operacji \\
+    EDR & procesy i~zmiany na punkcie końcowym
+      & co dzieje się na urządzeniu?
+      & izolacja hosta, zatrzymanie procesu \\
+    NDR & ruch sieciowy
+      & kto, z~kim i~w~jaki sposób się komunikuje?
+      & alarm, wsparcie blokady połączenia \\
+    SIEM & dzienniki zdarzeń z~wielu systemów
+      & jak zdarzenia z~różnych źródeł łączą się w~całość?
+      & korelacja, alarm, przekazanie do obsługi incydentu \\
+    \bottomrule
+  \end{tabularx}
+  \zrodlo{opracowanie własne}
+\end{table}
+
+Koncepcję trzech źródeł widoczności w~centrum operacji bezpieczeństwa (SOC)
+zaproponował w~2015~roku Anton Chuvakin, pracując wtedy jako analityk
+Gartnera\footcite{chuvakin2020triad}. Pierwotnie nazwał ją \enquote{jądrową
+triadą SOC}, przez analogię do triady środków przenoszenia broni jądrowej.
+Trzy filary to dzienniki zdarzeń (SIEM), dane sieciowe (NTA, później NDR)
+i~telemetria punktów końcowych (EDR). Chuvakin zauważył później, że zakresy
+tych źródeł częściowo się pokrywają. Dopuścił też, że widoczność aplikacji
+może stać się czwartym filarem.
+
+Triada odpowiada na pytanie, co dzieje się w~infrastrukturze. Nie odpowiada
+wprost na pytanie, których informacji dotyczą obserwowane zdarzenia. Autor
+proponuje traktować DLP jako uzupełnienie triady o~perspektywę chronionych
+danych. Nie jest to stanowisko Gartnera ani Chuvakina, lecz interpretacja
+przyjęta w~tym artykule. Przykładowo EDR może odnotować uruchomienie programu
+archiwizującego, a~NDR wysyłkę dużego pliku do zewnętrznej usługi. Dopiero
+DLP może wskazać, że archiwum zawiera dokumenty oznaczone jako poufne.
+
+Wartość tej perspektywy rośnie, gdy zdarzenia DLP trafiają do wspólnego
+procesu monitorowania. Cheng i~współautorzy pokazują wiele punktów, w~których
+można rozmieścić uzupełniające się techniki ochrony: na urządzeniach
+pracowników, serwerach pocztowych i~WWW, styku z~siecią zewnętrzną oraz
+w~kontaktach z~dostawcami i~partnerami\footcite{cheng2017enterprise}.
+Przewodnik NIST SP 1800-28 również opisuje rozwiązanie przykładowe złożone
+z~wielu współpracujących systemów. Wykrywanie, reagowanie i~odtwarzanie po
+naruszeniu poufności omówiono w~nim jako osobny projekt (SP
+1800-29)\footcite{nist2024dataconf}.
+
+Integracja ma znaczenie praktyczne dla obsługi incydentów. Alarm DLP bez
+kontekstu z~EDR lub SIEM trudno ocenić: nie wiadomo, czy użytkownik działał
+świadomie, czy jego konto zostało przejęte. Z~kolei alarm EDR bez informacji
+o~rodzaju danych utrudnia ocenę skutków incydentu. Połączenie obu perspektyw
+pozwala szybciej ustalić, czy doszło do wycieku i~kogo dotyczy.
+
+% ---------------------------------------------------------------------
+\section{Od pojedynczego błędu do wycieku: kontekst i~zachowania}
+
+Wyciek rzadko wynika z~jednego działania. Dobrze to pokazuje analiza
+naruszenia w~sieci handlowej Target z~2013~roku, przedstawiona przez Chenga
+i~współautorów\footcite{cheng2017enterprise}. Napastnicy przejęli najpierw
+przez phishing system dostawcy usług technicznych, który miał zdalny dostęp
+do sieci Target. Następnie weszli do sieci firmy, zainstalowali złośliwe
+oprogramowanie na terminalach płatniczych, przenieśli zebrane dane na
+przejęte hosty wewnętrzne i~wyprowadzili je na zewnątrz. Każdy z~tych etapów
+był osobną okazją do przerwania ataku.
+
+Autorzy wskazują cztery techniczne przyczyny tego naruszenia. Target nie
+stosował odpowiedniej kontroli dostępu wobec partnerów zewnętrznych. Nie
+odseparował systemu płatniczego od reszty sieci. Nie zabezpieczył terminali
+przed instalacją nieautoryzowanego oprogramowania. Miał wdrożone zapory
+i~system zapobiegania włamaniom, ale nie zbadał ostrzeżeń, które te narzędzia
+wygenerowały\footcite{cheng2017enterprise}. Ostatnia przyczyna jest
+szczególnie istotna dla tego artykułu. Zabezpieczenie zadziałało, a~mimo to
+bariera zawiodła na poziomie organizacji.
+
+\subsection{Model sera szwajcarskiego}
+
+Taką sekwencję dobrze opisuje model sera szwajcarskiego Jamesa
+Reasona\footcite{reason2000human}. Reason przedstawia zabezpieczenia systemu
+jako kolejne warstwy. Część z~nich jest techniczna (alarmy, bariery fizyczne,
+automatyczne wyłączenia), część opiera się na ludziach, a~część na
+procedurach i~kontroli administracyjnej. Każda warstwa ma luki, które
+otwierają się, zamykają i~przesuwają. Luka w~pojedynczej warstwie zwykle nie
+prowadzi do szkody. Szkoda powstaje dopiero wtedy, gdy luki w~wielu
+warstwach chwilowo się pokryją.
+
+Reason wyróżnia dwa źródła luk. Błędy aktywne to niebezpieczne działania
+osób mających bezpośredni kontakt z~systemem: pomyłki, przeoczenia
+i~naruszenia procedur. Warunki ukryte wynikają z~decyzji projektantów,
+autorów procedur i~kierownictwa. Mogą pozostawać niezauważone przez lata,
+zanim w~połączeniu z~błędem aktywnym umożliwią
+wypadek\footcite{reason2000human}. W~odróżnieniu od błędów aktywnych warunki
+ukryte można wykryć i~usunąć, zanim dojdzie do zdarzenia.
+
+Analogia z~bezpieczeństwem lotniczym ma tu podstawę w~samym tekście Reasona.
+Autor powołuje się na dane z~obsługi technicznej statków powietrznych, według
+których około 90\% uchybień jakościowych uznano za niezawinione. Jako
+przykłady organizacji wysokiej niezawodności wymienia m.in. ośrodki kontroli
+ruchu lotniczego\footcite{reason2000human}. Reason podkreśla też, że skuteczne
+zarządzanie ryzykiem wymaga kultury zgłaszania błędów, a~ta z~kolei wymaga
+zaufania. Wniosek ten przenosi się na ochronę danych: pracownik, który obawia
+się kary, rzadziej zgłosi omyłkowe wysłanie dokumentu.
+
+W~ochronie przed wyciekiem danych błędem aktywnym może być wysłanie pliku do
+niewłaściwego odbiorcy. Warunkami ukrytymi mogą być nadmierne uprawnienia,
+brak klasyfikacji danych, nieodseparowane segmenty sieci albo brak procedury
+analizy alarmów. Przypadek Target pokazuje, że w~praktyce występują one
+łącznie\footcite{cheng2017enterprise}. DLP jest w~tym ujęciu jedną z~warstw.
+Zmniejsza prawdopodobieństwo, że luki się pokryją, ale nie eliminuje luk
+w~innych warstwach.
+
+\subsection{Analiza kontekstu i~zachowań}
+
+Reguła oceniająca pojedynczą operację odpowiada na pytanie, czy ta operacja
+narusza politykę. Nie widzi jednak sekwencji. Rozważmy przykład hipotetyczny:
+pracownik pobiera w~ciągu tygodnia więcej dokumentów niż zwykle, łączy je
+w~archiwa i~przesyła do prywatnej usługi chmurowej. Każda z~tych czynności
+osobno może mieścić się w~granicach uprawnień. Ryzyko ujawnia dopiero ich
+układ.
+
+Analiza zachowań próbuje uchwycić takie układy przez modelowanie typowej
+aktywności użytkownika i~wykrywanie odchyleń\footcite{cheng2017enterprise}.
+Cheng i~współautorzy zaznaczają jednak dwa ograniczenia. Pierwszym jest
+wysoki odsetek fałszywych alarmów, wynikający ze zmienności kontekstu
+w~czasie. Drugim jest luka semantyczna między obserwowalnymi zdarzeniami
+w~systemie a~intencjami użytkownika, których nie da się zmierzyć
+bezpośrednio. Insider działający w~granicach swoich uprawnień pozostaje więc
+trudny do wykrycia.
+
+Reakcja na pojedynczą operację i~analiza sekwencji pełnią różne funkcje.
+Pierwsza zatrzymuje oczywiste naruszenia w~chwili ich wystąpienia. Druga
+wskazuje sytuacje wymagające oceny przez analityka. Autor uważa, że łączenie
+obu poziomów jest właściwsze niż próba zastąpienia jednego drugim. Blokowanie
+na podstawie samej analizy zachowań, przy obecnym poziomie fałszywych
+alarmów, zatrzymywałoby zbyt wiele uprawnionych działań.
+
+% ---------------------------------------------------------------------
+\section{Uwarunkowania wdrożenia i~skuteczności DLP}
+
+Skuteczność DLP zależy bardziej od przygotowania organizacji niż od wyboru
+produktu. Ta sekcja ma charakter rekomendacyjny. Przedstawione etapy wynikają
+z~omawianej literatury i~z~ograniczeń technik opisanych w~sekcji~4, ale nie
+zostały zweryfikowane empirycznie w~ramach tego artykułu.
+
+\subsection{Zakres ochrony i~polityki}
+
+Wdrożenie powinno zaczynać się od określenia, które informacje wymagają
+ochrony i~dlaczego. Kolejność przyjęta w~przewodniku NIST SP 1800-28
+(najpierw identyfikacja zasobów i~ryzyk, potem ochrona) dobrze oddaje tę
+zależność\footcite{nist2024dataconf}. Organizacja, która nie wie, gdzie
+przechowuje dane osobowe klientów lub dokumentację projektową, nie napisze
+dla nich trafnych reguł.
+
+Polityki DLP powinny wynikać z~klasyfikacji danych i~z~procesów biznesowych.
+Ta sama treść może być przesyłana zasadnie w~jednym procesie
+i~niedopuszczalnie w~innym. Umowa z~kontrahentem wysłana do jego działu
+prawnego jest operacją rutynową. Ta sama umowa wysłana na prywatny adres
+pracownika wymaga wyjaśnienia. Reguła oparta wyłącznie na treści nie odróżni
+tych przypadków. Potrzebny jest kontekst procesu.
+
+\subsection{Etapowe uruchamianie}
+
+Wdrożenie można podzielić na trzy etapy:
+\begin{enumerate}
+  \item Obserwacja. System rejestruje zdarzenia bez ingerencji w~pracę
+    użytkowników. Organizacja poznaje rzeczywiste przepływy danych, które
+    często różnią się od opisanych w~procedurach.
+  \item Dostrajanie. Reguły są korygowane na podstawie zebranych zdarzeń.
+    Użytkownicy otrzymują ostrzeżenia i~mogą podać uzasadnienie operacji.
+  \item Blokowanie. Blokady obejmują najpierw reguły o~niskim odsetku
+    fałszywych alarmów i~dane o~najwyższej wrażliwości, a~dopiero później
+    kolejne kategorie.
+\end{enumerate}
+
+Kolejność ta wynika z~ograniczeń technik wykrywania. Wyrażenia regularne
+i~analiza zachowań generują dużo fałszywych
+alarmów\footcite{cheng2017enterprise}. Natychmiastowe włączenie blokad
+zatrzymałoby więc część uprawnionej pracy. Użytkownicy zaczęliby wtedy
+szukać kanałów omijających kontrolę.
+
+\subsection{Fałszywe alarmy i~wyjątki}
+
+Każdy fałszywy alarm kosztuje czas analityka i~obniża zaufanie do systemu.
+Organizacja potrzebuje procedury rozpatrywania alarmów i~przyznawania
+wyjątków. Wyjątek powinien mieć właściciela, uzasadnienie i~termin ważności.
+Wyjątki bezterminowe stają się z~czasem warunkami ukrytymi w~rozumieniu
+Reasona\footcite{reason2000human}: luką, o~której wszyscy zapomnieli.
+
+Przypadek Target pokazuje drugą stronę tego problemu. Ostrzeżenia
+wygenerowane przez narzędzia bezpieczeństwa nie zostały
+zbadane\footcite{cheng2017enterprise}. System, który generuje alarmy, ale nie
+ma przypisanej odpowiedzialności za ich obsługę, daje poczucie ochrony bez
+rzeczywistej ochrony.
+
+\subsection{Odpowiedzialność i~edukacja}
+
+DLP wymaga podziału ról. Właściciele danych określają, co jest chronione.
+Zespół bezpieczeństwa utrzymuje reguły i~obsługuje alarmy. Kierownicy
+jednostek rozstrzygają o~wyjątkach w~swoich procesach. Dział prawny lub
+inspektor ochrony danych ocenia, czy zdarzenie jest naruszeniem wymagającym
+zgłoszenia.
+
+Edukacja użytkowników ma w~tym modelu konkretny cel. Cheng i~współautorzy
+wskazują, że zapobieganie przypadkowym wyciekom wymaga, obok środków
+technicznych, budowania świadomości bezpieczeństwa w~miejscu
+pracy\footcite{cheng2017enterprise}. Ostrzeżenie wyświetlane w~chwili
+operacji może pełnić funkcję edukacyjną, jeżeli wyjaśnia, dlaczego operacja
+została zatrzymana. Wsparciem jest kultura zgłaszania błędów opisana przez
+Reasona\footcite{reason2000human}.
+
+\subsection{Ocena skuteczności i~ograniczenia modelu}
+
+Skuteczności DLP nie można mierzyć samą liczbą zablokowanych operacji. Duża
+liczba blokad może oznaczać skuteczną ochronę albo źle dobrane reguły. Autor
+proponuje kilka miar, które należy ocenić w~przyszłych badaniach: odsetek
+alarmów uznanych po analizie za zasadne, czas od alarmu do decyzji
+analityka, udział sklasyfikowanych repozytoriów objętych monitorowaniem oraz
+liczbę aktywnych wyjątków bez wyznaczonego terminu.
+
+Model ochrony oparty na DLP ma też granice. Analiza treści nie radzi sobie
+z~danymi zaszyfrowanymi lub celowo zaciemnionymi. Insider działający
+w~granicach swoich uprawnień może pozostać niewykryty. Brakuje też wspólnych
+zbiorów danych testowych, co utrudnia porównywanie metod
+wykrywania\footcite{cheng2017enterprise}. DLP ogranicza więc ryzyko wycieku,
+ale go nie usuwa.
+
+% ---------------------------------------------------------------------
+\section{Finansowe i~społeczne konsekwencje wycieków}
+
+Koszt naruszenia obejmuje znacznie więcej niż usunięcie jego technicznej
+przyczyny. Według raportu IBM z~2026~roku średni globalny koszt naruszenia
+wyniósł 4,99~mln USD\footcite{ibm2026cost}. Wartość ta jest średnią dla 602
+organizacji, które doświadczyły naruszenia od marca 2025 do lutego
+2026~roku. Nie opisuje typowego kosztu w~małej firmie ani w~polskich realiach
+rynkowych. Średnia arytmetyczna jest też wrażliwa na pojedyncze bardzo
+kosztowne przypadki.
+
+Na koszty składają się obsługa incydentu, analiza powykonawcza, przywracanie
+działalności, powiadomienia, wsparcie dla poszkodowanych i~utracone
+przychody. Cheng i~współautorzy przytaczają dwa przykłady skali takich
+skutków\footcite{cheng2017enterprise}. Target podał straty związane
+z~naruszeniem z~2013~roku na poziomie 248~mln USD. Po ujawnieniu naruszeń
+w~Yahoo Verizon zapłacił za przejęcie tej firmy o~350~mln USD mniej, niż
+pierwotnie planowano. Drugi przykład pokazuje, że naruszenie może obniżyć
+wartość przedsiębiorstwa w~transakcji kapitałowej.
+
+\subsection{Konsekwencje prawne, kontraktowe i~reputacyjne}
+
+W~Unii Europejskiej wyciek danych osobowych uruchamia obowiązki określone
+w~RODO\footcite{rodo2016}. Administrator zgłasza naruszenie organowi
+nadzorczemu bez zbędnej zwłoki, w~miarę możliwości nie później niż w~ciągu
+72~godzin od jego stwierdzenia (art.~33). Jeżeli naruszenie może powodować
+wysokie ryzyko dla praw lub wolności osób fizycznych, administrator
+zawiadamia również te osoby (art.~34). Osoba, która poniosła szkodę
+majątkową lub niemajątkową, ma prawo do odszkodowania (art.~82). Za
+naruszenie przepisów rozporządzenia grozi administracyjna kara pieniężna,
+w~najwyższym progu do 20~mln EUR lub do 4\% całkowitego rocznego światowego
+obrotu przedsiębiorstwa (art.~83).
+
+Obowiązek zgłoszenia w~ciągu 72~godzin łączy się bezpośrednio z~tematem
+artykułu. Administrator musi w~krótkim czasie ustalić, jakie dane zostały
+ujawnione i~kogo dotyczą. Zdarzenia rejestrowane przez DLP, powiązane
+z~klasyfikacją danych, mogą skrócić tę analizę. Jest to wniosek autora, a~nie
+wymóg prawny.
+
+Skutki kontraktowe i~reputacyjne trudniej zmierzyć. Wyciek danych
+powierzonych przez kontrahenta może oznaczać naruszenie umowy i~utratę
+klienta. Raport IBM wskazuje, że sprawcy ataków ransomware coraz częściej
+wywierają presję przez zagrożenie dla reputacji. Najczęściej wykorzystują
+reputację marki ofiary (41\% przypadków), dane pracowników (35\%)
+i~własność intelektualną (31\%)\footcite{ibm2026cost}. Reputacja staje się
+więc bezpośrednim narzędziem wymuszenia.
+
+\subsection{Utrata zaufania i~skutki dla osób, których dane ujawniono}
+
+Wyciek narusza zaufanie klientów, pracowników i~partnerów. Zaufanie
+odbudowuje się wolniej niż systemy informatyczne, a~jego utraty nie oddają
+w~pełni ani koszty obsługi incydentu, ani wysokość kar.
+
+Najpoważniejsze skutki ponoszą osoby, których dane ujawniono. W~incydencie
+australijskiego Red Cross Blood Service ujawnione dokumenty zawierały nie
+tylko imiona, adresy i~daty urodzenia dawców. Obejmowały też informacje
+o~aktywności seksualnej, przyjmowaniu narkotyków i~historii
+chorób\footcite{cheng2017enterprise}. Takiej szkody nie da się naprawić
+zmianą hasła ani wydaniem nowej karty płatniczej. Ujawnienie danych
+identyfikacyjnych zwiększa z~kolei ryzyko kradzieży tożsamości, która była
+typem szkody w~części największych naruszeń zestawionych przez tych samych
+autorów.
+
+Ochrona informacji jest więc odpowiedzialnością organizacyjną i~społeczną.
+Organizacja przetwarza dane osób, które zwykle nie mają wpływu na sposób ich
+zabezpieczenia. Skutki błędów ponoszą w~dużej mierze ci, którzy ich nie
+popełnili.
+
+% ---------------------------------------------------------------------
+\section{Podsumowanie i~wnioski}
+
+Systemy DLP wnoszą do wielowarstwowej ochrony informacji perspektywę, której
+nie zapewniają narzędzia triady widoczności SOC. EDR, NDR i~SIEM opisują
+zdarzenia na urządzeniach, w~sieci i~w~dziennikach systemów. DLP wiąże te
+zdarzenia z~konkretnymi informacjami i~z~zasadami ich przetwarzania. Ta
+zdolność jest użyteczna zarówno w~zapobieganiu wyciekom, jak i~w~ocenie
+skutków incydentu.
+
+Przegląd literatury wskazuje jednocześnie wyraźne granice tej klasy
+rozwiązań. DLP skutecznie ogranicza wycieki przypadkowe, ale świadomy
+sprawca może obejść analizę treści przez zaciemnienie lub szyfrowanie
+danych\footcite{cheng2017enterprise}. Analiza zachowań rozszerza możliwości
+wykrywania zagrożeń wewnętrznych, lecz generuje wiele fałszywych alarmów. DLP
+należy więc traktować jako jedną z~warstw ochrony, a~nie jako rozwiązanie
+samodzielne.
+
+Model sera szwajcarskiego\footcite{reason2000human} pozwala ująć wyciek jako
+skutek nakładania się błędów aktywnych i~warunków ukrytych. Z~tej
+perspektywy skuteczność DLP zależy od stanu pozostałych warstw: klasyfikacji
+danych, zakresu uprawnień, segmentacji sieci i~procedur obsługi alarmów.
+Przypadek Target pokazuje, że zabezpieczenie techniczne może zadziałać
+prawidłowo, a~mimo to nie zapobiec szkodzie, gdy nikt nie reaguje na jego
+sygnały\footcite{cheng2017enterprise}.
+
+Z~przeprowadzonej analizy wynikają trzy wnioski praktyczne:
+\begin{enumerate}
+  \item Projektowanie ochrony powinno zaczynać się od identyfikacji
+    i~klasyfikacji danych, a~dopiero potem obejmować dobór technologii.
+  \item Wdrożenie powinno przebiegać etapami, od obserwacji przez
+    dostrajanie reguł do blokowania. Każdy alarm i~każdy wyjątek powinien
+    mieć przypisanego właściciela.
+  \item Ocena skuteczności powinna obejmować trafność alarmów, czas reakcji
+    i~zakres pokrycia chronionych zasobów, a~nie wyłącznie liczbę
+    zablokowanych operacji.
+\end{enumerate}
+
+Wnioski te mają charakter koncepcyjny. Wymagają weryfikacji w~badaniach
+empirycznych prowadzonych w~organizacjach o~różnej wielkości i~strukturze.
+
+Kierunki dalszych badań obejmują przede wszystkim wykrywanie wycieków
+w~kanałach szyfrowanych, zastosowanie uczenia głębokiego do wykrywania
+zagrożeń wewnętrznych oraz DLP świadczone jako usługa chmurowa z~zachowaniem
+poufności analizowanych danych\footcite{cheng2017enterprise}. Potrzebne są
+też wspólne zbiory danych testowych, bez których trudno rzetelnie porównywać
+metody wykrywania. Osobnym zagadnieniem jest przepływ informacji do narzędzi
+generatywnej sztucznej inteligencji, którego skala według danych z~2025~roku
+szybko rośnie\footcite{verizon2026dbir}.
+
+% ---------------------------------------------------------------------
+%  Bibliografia (alfabetycznie, z pliku bibliografia.bib)
+% ---------------------------------------------------------------------
+\printbibliography
+
+% ---------------------------------------------------------------------
+\section*{Nota biograficzna}
+
+{\footnotesize\setstretch{1}
+% TODO: uzupełnić notę biograficzną
+\textbf{Bartosz Lewandowski} -- stopień/tytuł zawodowy lub naukowy, Atende
+S.A. Najważniejsze publikacje: \ldots{} Zainteresowania badawcze: \ldots
+\par}
+
+\end{document}
