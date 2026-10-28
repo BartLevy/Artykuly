@@ -1,0 +1,558 @@
+%% Computers in Human Behavior (Elsevier) - anonymized manuscript, elsarticle class.
+%% Created on 2026-10-23 from main-en.tex (numbers from definicje-en.tex inserted as text).
+%% This is now the ONLY source of the CHB version: edit THIS file. Author details are only in
+%% title_page.tex (double-anonymized review). Build and check the package: ./make_submission.sh
+\documentclass[preprint,12pt,authoryear]{elsarticle}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{lineno}
+
+\newcommand{\fillin}[1]{\textcolor{red}{[TODO: #1]}}
+\newcommand{\uwagatabeli}[1]{\par\vspace{2pt}\parbox{\linewidth}{\footnotesize #1}}
+
+\journal{Computers in Human Behavior}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Employee response accuracy on repeated questions: forgetting and persistent errors in a three-year microlearning program}
+
+\begin{abstract}
+Spaced repetition improves retention, but the effectiveness of
+microlearning in organizations has rarely been assessed using multi-year data on employee responses.
+The analysis covered 57{,}997 responses from 180 bank employees to
+164 multiple-choice questions, given from May 2023 to June 2026. Questions recurred on
+a schedule independent of response outcome (median interval 37 days), and the correct answer
+with an explanation was displayed after every response. Accuracy was analyzed across successive
+attempts at the same question and by the outcome of, and interval since, the previous attempt.
+Accuracy at the first attempt was 82.6\%. In sequences of at least
+5 attempts, it rose from 81.9\% to 89.0\% (by 7.2 percentage points, 95\% CI
+[5.5, 8.9]). Error corrections outnumbered forgetting events (3382 vs.\
+2719).
+The forgetting rate increased with the interval and decreased with the number of consecutive correct
+responses, from 11.9\% after one to 3.2\% after at least 4. In
+71.8\% of cases, repeated errors involved the same distractor (expected under choice
+proportional to distractor popularity: 60.0\%), regardless of the interval.
+Accuracy on recurring questions increased, but knowledge required further
+repetition, and some errors persisted despite feedback. A schedule adapted to employee performance and
+feedback addressing the selected distractor may increase the effectiveness of such programs.
+\end{abstract}
+
+\begin{keyword}
+spaced repetition \sep microlearning \sep employee training \sep feedback \sep forgetting \sep learning analytics
+\end{keyword}
+
+\end{frontmatter}
+
+\linenumbers
+
+\section{Introduction}
+
+Retrieving information from memory strengthens it more than rereading does (the testing effect), and
+learning distributed over time is more durable than massed learning (the spacing effect)
+\citep{roediger2006,cepeda2006}. Both effects are combined in spaced education, in which short
+multiple-choice questions recur periodically over weeks or months. In studies involving physicians and
+other health professionals, it improved the acquisition and retention of knowledge
+\citep{kerfoot2009,phillips2019}.
+
+In organizations, a similar format is used in \emph{microlearning}, that is, short training units,
+often in the form of quizzes. Evidence of its effectiveness, however, comes mainly from studies with
+small samples and from grey literature \citep{taylor2022}, and the effects of mandatory employee
+training, e.g., in information security, tend to be small or to fade over time
+\citep{reinheimer2020}. Training effectiveness is usually assessed through transfer, that is, the
+application of knowledge at work \citep{blume2010}. Transfer, however, requires that the knowledge
+first be acquired and retained.
+
+This earlier stage can be examined using data from microlearning platforms. The platform records each
+response together with its time and outcome, and the same question returns to the same employee
+repeatedly. Successive responses are therefore repeated measurements of the same knowledge in the same
+person. Similar data are used in learner models applied in intelligent tutoring systems and language
+learning applications \citep{corbett1994,settles2016}.
+
+The study was conducted in a bank in which employees answered short questions displayed on their
+computers during the working day, and the system collected the responses over three years. Questions
+recurred on a schedule independent of response outcome, and the correct answer was displayed after
+every response. Such a schedule makes it possible to compare error corrections and forgetting without
+the selection introduced by adaptive algorithms, which is rare in data from training platforms.
+Laboratory studies further indicate that a selected distractor can become fixed in memory and that
+errors made with high confidence can recur despite feedback \citep{butler2008,butler2011}. Whether this
+phenomenon occurs in employee training is not known. Three research questions were formulated:
+(RQ1) does the percentage of correct responses increase when the same question returns to the same
+employee;
+(RQ2) how does accuracy depend on the outcome of the previous attempt and on the time elapsed since it;
+(RQ3) do repeated errors persist despite feedback, which would point to misconceptions rather than to
+guessing.
+\section{Materials and methods}
+
+\subsection{Training program}
+The study was conducted in a bank. The questions were prepared by the bank's process support
+department, which also decided on employee participation in the program. The
+questions concerned knowledge used in everyday work at the bank. Each was a multiple-choice question
+with three to five answer options, one of which was correct, while the others were
+\emph{distractors}. The questions, answer options and explanations were written in Polish.
+
+The training application started automatically on working days on employees' computers and displayed
+one to four randomly selected questions per day, between 9:00 and 16:00. After each response, correct
+or incorrect, it showed the correct answer with an explanation (\emph{feedback}). The same question
+could return to an employee no earlier than after seven days, and the repetition schedule did not
+depend on the response outcome. The program was suspended while the questions were reviewed and
+updated. In the analyzed data, the median number of responses per employee on an active day was
+3 (IQR 2--4). The same question returned after a median of
+37 days (IQR 18--90).
+
+An example question presented to program participants, on cybersecurity, read:
+``Which of the following situations is phishing?''. Answer options:
+``1 - A DDoS attack'',
+``2 - Installing antivirus software'',
+``3 - Backing up data'',
+``4 - A fake e-mail with a link to the bank's login page (marked as the correct answer)''.
+Explanation displayed after the response:
+``Phishing is a fraud method in which someone impersonates a trusted person or institution (e.g., a bank, a courier, a public office) to trick you into revealing confidential data such as passwords, card numbers or logins. Most often it looks like an e-mail from the `bank' with an urgent request to log in, a text message with a link to an `extra payment for a parcel', or a fake website deceptively similar to the real one. The key mechanism is that the fraudster creates a sense of urgency or stress so that you click without thinking. IMPORTANT: do not click suspicious links, always check the website address (URL), do not enter your login details via a link from a message, and if something looks `too urgent', it is often a scam.''.
+
+\subsection{Data and study population}
+\label{sec:dane}
+The recorded employee responses were analyzed. Each record contained the question, the selected
+option, the employee code, the date and time of the response, and whether the response was correct.
+The analytical dataset comprised 57{,}997 responses
+(Table~\ref{tab:zbior_danych}). The bank also provided a summary of employees' age and sex.
+
+\begin{table}[H]
+\centering
+\caption{Characteristics of the dataset.}
+\label{tab:zbior_danych}
+\small
+\begin{tabular}{lr}
+\toprule
+Characteristic & Value \\
+\midrule
+Responses & 57{,}997 \\
+Employees & 180 \\
+Questions & 164 \\
+Observation period & 2023-05-10 -- 2026-06-08 \\
+Employee--question sequences & 15{,}270 \\
+Observed answer options per question, median (range) & 3 (2--5) \\
+\midrule
+Responses per employee, median [IQR] & 195 [70, 575] \\
+Questions per employee, median [IQR] & 86 [38, 138] \\
+Active days per employee, median [IQR] & 84 [30, 224] \\
+Responses per active day, median [IQR] & 3 [2, 4] \\
+Months between first and last response, median [IQR] & 18 [5, 30] \\
+\midrule
+Attempts per sequence, median [IQR] (max.) & 3 [2, 5] (17) \\
+Sequences with $\geq$2 / $\geq$3 attempts (\%) & 78.1 / 59.8 \\
+Days between attempts, median [IQR] & 37 [18, 90] \\
+\midrule
+Correct responses, overall (\%) & 86.6 \\
+Correct responses, first attempts (\%) & 82.6 \\
+\bottomrule
+\end{tabular}
+\uwagatabeli{IQR: interquartile range. A sequence is a series of attempts by one employee at one
+question. The number of observed answer options may be smaller than the number of options in the
+question because some options were not chosen by any employee. Excluded test responses: 212.
+Excluded questions with a single observed answer option: 2 (348
+responses). Excluded repetitions given earlier than 7 days after the previous attempt:
+88.}
+\end{table}
+
+Demographic data were available for 151 of the 180 employees (83.9\%).
+Women accounted for 80.1\% of persons of known sex ($n = 121$). The median age was
+47 years (IQR 41--56; range 22--67), and the largest age group was
+50--59 years (34.0\%; Table~\ref{tab:demografia}). Age was included in the
+analysis of the first attempt and of the rate of accuracy gain; sex was not analyzed.
+
+\begin{table}[H]
+\centering
+\caption{Demographic characteristics of the employees included in the analysis.}
+\label{tab:demografia}
+\small
+\begin{tabular}{lr}
+\toprule
+Characteristic & Value \\
+\midrule
+Employees included in the analysis & 180 \\
+of whom with demographic data, $n$ (\%) & 151 (83.9) \\
+\midrule
+Women, $n$ (\%) & 121 (80.1) \\
+Men, $n$ (\%) & 30 (19.9) \\
+Sex not recorded, $n$ & 29 \\
+\midrule
+Age (years), median [IQR] & 47 [41, 56] \\
+Age (years), mean (SD) & 47.2 (10.6) \\
+Age (years), range & 22--67 \\
+\midrule
+20--29 years, $n$ (\%) & 13 (8.7) \\
+30--39 years, $n$ (\%) & 21 (14.0) \\
+40--49 years, $n$ (\%) & 49 (32.7) \\
+50--59 years, $n$ (\%) & 51 (34.0) \\
+60--69 years, $n$ (\%) & 16 (10.7) \\
+Age not recorded, $n$ & 30 \\
+\bottomrule
+\end{tabular}
+\uwagatabeli{Percentages by sex were calculated among persons of known sex, and percentages by age
+group among persons of known age ($n = 150$). Missing data concern mainly employees absent from
+the demographic summary (29). IQR: interquartile range; SD: standard deviation.}
+\end{table}
+
+In the response database, employees were identified by a random code, and the demographic summary was
+linked to the recorded responses using this code. Such a code cannot be reconstructed from a list of
+employees; the analyzed data were therefore fully anonymized.
+
+\subsection{Statistical analysis}
+\label{sec:analiza}
+The responses of one employee to one question, ordered in time, formed a \emph{sequence}. The position
+of a response in the sequence was termed the \emph{attempt number}, and the first response, that is,
+the employee's first encounter with the question, the \emph{first attempt}. The \emph{interval} was the
+number of days since the previous attempt in the same sequence, and \emph{accuracy} was the percentage
+of correct responses. Accuracy was reported with 95\% confidence intervals (CI) obtained with the
+bootstrap: employees were resampled with replacement (2000 replicates), which accounts for the
+dependence between responses given by the same person. In regression models, standard errors were
+clustered by employee.
+
+\emph{First attempt.} Accuracy at the first attempt was compared across age groups. The association
+with age (10-year groups) was estimated by logistic regression with question fixed effects, that is,
+with a separate intercept for each question. Question difficulty was not recorded in the data, so the
+fixed effects were estimated from the responses of all employees. The model thus compared employees of
+different ages answering the same questions. For comparison, it was also fitted without question fixed
+effects.
+
+\emph{Changes within a sequence (RQ1).} Accuracy was calculated for successive attempt numbers;
+attempts 10 and later were pooled. With each attempt, the number of sequences
+decreased, and employees who continued responding could differ from the others, which distorts
+aggregate curves \citep{murray2013}. The change was therefore also assessed in a \emph{cohort}, that
+is, in sequences of at least 5 attempts, restricted to attempts 1 to 5. Accuracy at
+each of these attempts was calculated for the same sequences, and the measure of change was the
+difference between attempt~5 and attempt~1 in percentage points (pp).
+The association between the rate of gain and age was tested in the cohort by logistic regression with
+an interaction between $\log_2$ attempt number and age, and with employee and question fixed effects.
+
+\emph{Outcome of the previous attempt and interval (RQ2).} Each attempt from the second onward was
+assigned to one of four categories according to the outcome of that attempt and of the previous one:
+a correct response after a correct one, \emph{error correction} (correct after incorrect),
+\emph{forgetting} (incorrect after correct) or \emph{repeated error} (incorrect after incorrect).
+Because the error-correction rate ($r$) and the forgetting rate ($f$) have different denominators, the
+numbers of both events were compared, and the equilibrium level $r/(r+f)$, toward which accuracy would
+tend at constant rates, was determined. The rates were compared across six interval bins:
+7--13, 14--29, 30--59, 60--119, 120--239 and at least 240 days. The forgetting rate was also
+tabulated by the number of consecutive correct responses before a given attempt and separately after an
+error correction. An incorrect response at the attempt following an error correction was termed an
+\emph{error relapse}, and it was checked whether the employee chose the same distractor as before the
+correction. It was also checked whether the repetition schedule depended on the outcome of the
+previous attempt.
+
+\emph{Persistent errors (RQ3).} Accuracy was compared by the number of \emph{consecutive errors}, that
+is, successive incorrect responses immediately preceding a given attempt, from 0 to at least 4.
+For two successive errors, the frequency with which the employee chose the same distractor was
+calculated and compared with the percentage expected under random choice and under choice
+proportional to distractor popularity in the given question. This percentage was also tabulated in
+three interval bins: shorter than 30 days, 30--89 days and at least 90 days. The share of repeated
+errors concentrated in the 10\% of questions with the most such errors was also calculated.
+
+Computations were performed in Python 3.14.4 using pandas 3.0.3, NumPy 2.5.0, SciPy
+1.18.0, statsmodels 0.14.6 and Matplotlib 3.11.0.
+\section{Results}
+
+\subsection{First attempt}
+At the first encounter with a question (15{,}270 responses from 180 employees), accuracy
+was 82.6\% (95\% CI [81.2, 84.1]; Table~\ref{tab:pierwsza_proba_wiek}). Accuracy varied with age
+non-monotonically: it was lowest in the 30--39 age group (74.9\%) and highest in
+the 50--59 age group (84.3\%). When responses to the same questions were
+compared, the odds of a correct response increased with age (OR 1.16 per 10 years, 95\% CI
+[1.03, 1.31]; $p = 0.012$). Without question fixed effects, the association was weaker
+(OR 1.12, 95\% CI [1.01, 1.24]; $p = 0.039$).
+
+\begin{table}[H]
+\centering
+\caption{Accuracy at the first attempt, overall and by employee age group.}
+\label{tab:pierwsza_proba_wiek}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{l*{7}{r}}
+\toprule
+Age group (years) & Overall & 20--29 & 30--39 & 40--49 & 50--59 & 60--69 & Missing \\
+\midrule
+Employees & 180 & 13 & 21 & 49 & 51 & 16 & 30 \\
+First attempts, $n$ & 15{,}270 & 970 & 2011 & 4338 & 5096 & 1416 & 1439 \\
+Accuracy (\%) & 82.6 & 82.5 & 74.9 & 84.0 & 84.3 & 82.6 & 83.5 \\
+95\% CI & [81.2, 84.1] & [77.5, 89.3] & [68.8, 80.7] & [81.5, 86.3] & [82.2, 86.5] & [78.7, 86.4] & [80.0, 86.8] \\
+\bottomrule
+\end{tabular}%
+\uwagatabeli{The first attempt is the first response in a sequence. 95\% CIs were obtained with the
+bootstrap. The association with age was estimated by the logistic regression described in
+Section~\ref{sec:analiza} (13{,}578 responses from 150 employees of known age):
+OR 1.16 per 10 years, 95\% CI [1.03, 1.31], $p = 0.012$.}
+\end{table}
+
+\subsection{Changes within a sequence (RQ1)}
+Accuracy increased with attempt number, from 82.6\% [81.1, 84.1] at the first attempt to
+92.7\% [90.6, 94.8] at attempt 10 and later (Figure~\ref{fig:krzywa_uczenia}). Because
+the number of sequences decreased with each attempt, the change was examined in a cohort of
+4890 sequences. In the cohort, accuracy rose from 81.9\% [79.6, 84.1] at
+attempt~1 to 89.0\% [87.3, 90.7] at attempt~5, that is, by 7.2 pp
+(95\% CI [5.5, 8.9]; Table~\ref{tab:sekwencje_wiek}). An increase within the same sequences means
+that the improvement did not result from the earlier termination of sequences with lower accuracy.
+Accuracy at attempt~1 in the cohort (81.9\%) was close to accuracy at the first attempt in
+all sequences (82.6\%).
+
+The estimated increase was positive in all age groups and ranged from 4.0 pp
+(60--69 years) to 8.8 pp (40--49 years), although in the small
+extreme age groups the lower limit of the 95\% CI was close to zero. The rate of increase did not
+depend on age (interaction OR 0.97 per 10 years of age and doubling of attempt number, 95\% CI
+[0.90, 1.05]; $p = 0.484$).
+
+\begin{figure}[H]
+\centering
+\includegraphics{Figure_1.pdf}
+\caption{Accuracy by attempt number in all sequences available at a given attempt (their number
+decreases with attempt number). Error bars: 95\% CI (bootstrap). Attempts 10 and
+later were pooled. The course in the cohort is shown in Figure~\ref{fig:stany_kohorty}.}
+\label{fig:krzywa_uczenia}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Accuracy at successive attempts in the cohort, overall and by employee age group.}
+\label{tab:sekwencje_wiek}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{l*{7}{r}}
+\toprule
+Age group (years) & Overall & 20--29 & 30--39 & 40--49 & 50--59 & 60--69 & Missing \\
+\midrule
+Employees & 124 & 9 & 15 & 35 & 39 & 13 & 13 \\
+Sequences, $n$ & 4890 & 199 & 664 & 1784 & 1689 & 471 & 83 \\
+\midrule
+Attempt 1 (\%) & 81.9 & 81.4 & 77.0 & 81.6 & 83.8 & 82.4 & 86.7 \\
+Attempt 2 (\%) & 85.6 & 80.4 & 79.4 & 85.7 & 88.0 & 86.6 & 94.0 \\
+Attempt 3 (\%) & 87.2 & 85.4 & 81.5 & 88.5 & 88.3 & 86.0 & 95.2 \\
+Attempt 4 (\%) & 88.4 & 87.9 & 82.7 & 89.5 & 89.7 & 86.2 & 96.4 \\
+Attempt 5 (\%) & 89.0 & 86.9 & 84.2 & 90.4 & 90.1 & 86.4 & 97.6 \\
+\midrule
+Change, attempt 5 vs 1 (pp) & 7.2 & 5.5 & 7.2 & 8.8 & 6.3 & 4.0 & 10.8 \\
+95\% CI & [5.5, 8.9] & [0.0, 14.7] & [3.2, 13.5] & [5.9, 11.6] & [4.3, 8.1] & [0.0, 9.3] & [1.9, 19.8] \\
+\bottomrule
+\end{tabular}%
+\uwagatabeli{Cohort: sequences of at least 5 attempts, attempts 1 to 5.
+pp: percentage points; 95\% CIs of the change were obtained with the bootstrap. The association between
+the rate of improvement and age was estimated by the logistic regression described in
+Section~\ref{sec:analiza} (23{,}140 responses from employees of known age).}
+\end{table}
+
+\subsection{Outcome of the previous attempt and interval (RQ2)}
+The increase in accuracy results from two opposing processes: error correction and forgetting. The
+schedule did not bias their comparison, because a question returned after a correct and after an
+incorrect response with similar probability (73.5\% and 74.5\%) and
+after a similar interval (median 37 and 39 days). After a correct
+response, the next one was correct in 92.6\% [91.8, 93.4] of cases, and forgetting occurred in
+7.4\%. After an incorrect response, an error correction followed in 58.3\%
+[55.5, 61.2] of cases. These rates refer to different groups of attempts, so the numbers of events were
+also compared: there were 3382 error corrections and 2719 forgetting events. The
+predominance of corrections explains the increase in accuracy. At constant error-correction and
+forgetting rates, accuracy would tend toward an equilibrium level of 88.8\%. Accuracy in the
+cohort at attempt~5 (89.0\%) was close to this level, but at attempts 10 and
+later it was 92.7\% and exceeded it. This is because the forgetting rate was not constant but
+depended on the interval and on the number of consecutive correct responses.
+
+The forgetting rate increased with the interval, from 4.8\% at intervals shorter than 14 days
+to 11.5\% at intervals of at least 240 days (Figure~\ref{fig:odstep}). The error-correction
+rate changed less with the interval (60.9\% and 58.1\% in the same bins).
+
+The forgetting rate also depended on the number of consecutive correct responses. After one correct
+response, it was 11.9\% [10.7, 13.0], after two 7.6\%, after three
+5.0\%, and after at least 4 3.2\% [2.7, 3.7]
+(Table~\ref{tab:seria_poprawnych}). The difference persisted at every interval: at intervals shorter
+than 14 days, the forgetting rate was 7.7\% after one and 2.3\% after at
+least three correct responses, and at intervals of at least 240 days 13.9\% and
+5.2\%, respectively. Error corrections were the least durable. After a correction, an
+error relapse occurred in 24.9\% [22.9, 26.8] of cases ($n = 2457$), and in
+73.6\% [69.5, 77.7] of these the employee chose the same distractor as before the
+correction. This share was similar to the percentage of repeated choices of the same distractor after
+two successive errors (71.8\%; Section~\ref{sec:pb3}).
+
+\begin{figure}[H]
+\centering
+\includegraphics{Figure_2.pdf}
+\caption{Accuracy by interval, separately for attempts preceded by a correct response (circles) and by
+an incorrect response (squares). For attempts preceded by a correct response, the forgetting rate is
+100\% minus accuracy; for attempts preceded by an incorrect response, accuracy is the error-correction
+rate. Error bars: 95\% CI (bootstrap).}
+\label{fig:odstep}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Forgetting rate by the number of consecutive correct responses given immediately before
+a given attempt.}
+\label{tab:seria_poprawnych}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{l*{4}{r}}
+\toprule
+Consecutive correct before attempt & 1 & 2 & 3 & $\geq$4 \\
+\midrule
+Attempts, $n$ & 12{,}318 & 8276 & 5597 & 10{,}734 \\
+Employees & 159 & 147 & 137 & 123 \\
+Forgetting rate (\%) & 11.9 & 7.6 & 5.0 & 3.2 \\
+95\% CI & [10.7, 13.0] & [6.7, 8.5] & [4.2, 5.8] & [2.7, 3.7] \\
+\bottomrule
+\end{tabular}%
+\uwagatabeli{Attempts preceded by a correct response. Forgetting rate: percentage of incorrect
+responses. 95\% CIs were obtained with the bootstrap.}
+\end{table}
+
+\subsection{Persistent errors (RQ3)}
+\label{sec:pb3}
+Most errors were corrected: in 81.8\% of the 2068 sequences that began with
+an incorrect response and comprised at least two attempts, the employee later answered correctly at
+least once. The chance of correction, however, decreased with each successive error. After one error,
+accuracy was 64.4\% [62.2, 66.8], after two consecutive errors 48.1\%, after three
+41.8\%, and after at least 4 34.2\% [27.6, 40.9]
+(Table~\ref{tab:seria_bledow}). Part of this decrease may be due to several consecutive errors
+occurring mainly in more difficult questions.
+
+Repeated errors were not consistent with random choice. After two successive errors, the employee
+chose the same distractor in 71.8\% [69.4, 74.1] of cases
+($n = 2420$), whereas 47.2\% would be expected under random choice and
+60.0\% under choice proportional to distractor popularity. This percentage did
+not depend on the interval (70.6\% at intervals shorter than 30 days,
+73.2\% at 30--89 days and 71.6\% at intervals of at least 90 days). Repeated errors were
+concentrated in few questions: 14 of the 145 questions accounted for
+39.6\% of them.
+
+\begin{table}[H]
+\centering
+\caption{Accuracy by the number of consecutive errors made immediately before a given attempt.}
+\label{tab:seria_bledow}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{l*{5}{r}}
+\toprule
+Consecutive errors before attempt & 0 & 1 & 2 & 3 & $\geq$4 \\
+\midrule
+Attempts, $n$ & 36{,}925 & 4024 & 1074 & 409 & 295 \\
+Employees & 159 & 149 & 110 & 80 & 48 \\
+Accuracy (\%) & 92.6 & 64.4 & 48.1 & 41.8 & 34.2 \\
+95\% CI & [91.9, 93.4] & [62.2, 66.8] & [44.7, 51.9] & [36.4, 47.3] & [27.6, 40.9] \\
+\bottomrule
+\end{tabular}%
+\uwagatabeli{Attempts from the second onward. Column 0: attempts preceded by a correct response.
+95\% CIs were obtained with the bootstrap.}
+\end{table}
+
+\subsection{Summary of results}
+Figure~\ref{fig:stany_kohorty} summarizes the results in the cohort. Accuracy increases from attempt
+to attempt (RQ1), error corrections outnumber forgetting events (RQ2), and at every attempt from the
+second onward, part of the incorrect responses are repeated errors (RQ3).
+
+\begin{figure}[H]
+\centering
+\includegraphics{Figure_3.pdf}
+\caption{Accuracy and response state in the cohort (4890 sequences, attempts 1 to 5).
+Bars: share of responses by the outcome of the current and the previous attempt
+(Section~\ref{sec:analiza}); at attempt~1, only correct and incorrect responses. Line: accuracy with
+95\% CI (bootstrap), values above the bars.}
+\label{fig:stany_kohorty}
+\end{figure}
+\section{Discussion}
+
+In the bank's microlearning program, response accuracy increased with each return of a question, also
+in the cohort in which the same sequences were compared. The increase resulted from error corrections
+outnumbering forgetting events. Some errors, however, persisted despite feedback and consisted in
+choosing the same distractor again.
+The direction of change is consistent with studies of spaced education in medical training.
+In urology residents, the knowledge advantage gained from periodically recurring questions persisted
+two years after the end of the program \citep{kerfoot2009}, and a systematic review of studies on
+clinicians' continuing professional development indicated a beneficial effect of this method on the
+acquisition and retention of knowledge \citep{phillips2019}.
+
+The conditions of those studies, however, differed from those of the present analysis. The
+participants were health professionals, and the effect was usually assessed with a test administered
+outside the program, in comparison with a control group. In the program studied here, the participants
+were bank employees, and the increase in accuracy was observed only in responses given within the
+program itself. The agreement therefore concerns the direction of change, not the size of the effect or
+its cause. The results do, however, show what the increase in accuracy consisted of, which a final test
+score does not reveal. It was the difference between two opposing processes, error correction and
+forgetting (3382 vs.\ 2719 events), and the same overall increase could also
+arise with more frequent forgetting if it were accompanied by a correspondingly larger number of
+corrections. Aggregate measures also do not detect errors that persist despite feedback.
+
+Forgetting was associated with three factors. The first was the passage of time: forgetting was more
+frequent at longer intervals, in line with research on the spacing between repetitions
+\citep{cepeda2006}. The second was a short history of correct responses. Knowledge confirmed by one
+correct response was forgotten two to four times more often than knowledge confirmed several times in
+a row, at every interval.
+Similarly, in studies of repeated practice, each additional successful retrieval increased the
+durability of knowledge \citep{rawson2013}. The third factor was error relapse. Error correction proved
+the least durable, and when it did not hold, the employee usually returned to the distractor chosen
+before the correction. The return of original errors after feedback has also been described in
+laboratory studies \citep{butler2011}. The correct answer may thus not have replaced the misconception
+but coexisted with it.
+
+Repeated errors differed in character from forgetting. Employees chose the same distractor more often
+than chance would predict, regardless of the interval, and each successive error reduced the chance of
+correction. Such a pattern is consistent with a persistent misconception rather than with a lack of
+knowledge, which would lead to guessing. A selected distractor can become fixed in memory, and feedback
+reduces this effect \citep{butler2008}. In the program studied, the feedback gave the correct answer
+and an explanation but did not address the selected distractor, although explaining why the selected
+answer is wrong is usually more effective \citep{shute2008}. The concentration of repeated errors in
+14 questions further suggests that some of them resulted from question design, e.g.,
+an ambiguous distractor or content inconsistent with the bank's practice. Such questions can be
+identified by standard distractor analysis \citep{gierl2017}.
+
+In one-off training, e.g., in information security, the effects faded after several months
+\citep{reinheimer2020}. The present results indicate that knowledge requires further repetition also in
+a program with periodically recurring questions, and that the way these repetitions are scheduled can
+be improved. Because the interval did not depend on the outcome, mastered questions returned as often
+as questions in which the employee had only just corrected an error. An adaptive schedule could
+lengthen the interval after several consecutive correct responses and shorten it after an error
+correction, when the risk of relapse is highest. Personalized review improved long-term retention
+compared with a fixed schedule \citep{lindsey2014}, and models of forgetting rate based on response
+history are already used in language learning applications \citep{settles2016}. A second change could
+be feedback addressing the selected distractor, introduced first in the questions with the largest
+number of repeated errors.
+
+\subsection{Limitations and future research}
+The study was observational and had no control group, so the increase in accuracy cannot be attributed
+solely to the program, as employees also acquired knowledge in their everyday work. Because the
+questions were repeated, the data do not allow consolidation of knowledge to be distinguished from
+memorization of the answer to a specific question. Response time and employee confidence were not
+recorded, so forgetting cannot be separated from inattention or from a lucky guess at an earlier
+attempt, which learner models capture as slip and guess \citep{corbett1994}. Such a source of part of
+the forgetting is suggested by its rate of 4.8\% already at intervals shorter than 14 days.
+The longest intervals may have included periods when the program was suspended, so changes in question
+content may have inflated the forgetting rate at these intervals. The comparisons were descriptive and
+were not corrected for multiple testing. The confidence intervals accounted for the dependence between
+responses of the same employee, but not of the same question. The associations with the number of
+consecutive correct responses or errors may therefore partly reflect differences in difficulty between
+questions. Sex was recorded in the summary provided by the bank in binary form (female, male) and was not
+analyzed, so it is not known whether the reported associations are the same for women and men.
+
+Future studies could compare, in a randomized design, a fixed with an adaptive schedule and standard
+feedback with feedback addressing the selected distractor, using equivalent versions of questions that
+would separate knowledge from memorization of the answer. Recording response confidence would make it
+possible to test whether persistent errors concern high-confidence beliefs \citep{butler2011}.
+Microlearning outcomes should also be linked to the application of knowledge at work, e.g., to the
+number of procedural errors \citep{blume2010}.
+
+\section{Conclusions}
+In a program with periodically recurring questions, the response accuracy of bank employees increased
+from attempt to attempt. Knowledge nevertheless required further repetition, because it was forgotten
+over time, particularly after the first correct response and after an error correction. Some errors
+persisted despite feedback and consisted in choosing the same distractor again. A schedule adapted to
+employee performance and feedback addressing the selected distractor may increase the effectiveness of
+such programs, but their effect requires confirmation in studies with a control group.
+
+\input{declarations}
+
+\bibliographystyle{elsarticle-harv}
+\bibliography{references}
+
+\end{document}

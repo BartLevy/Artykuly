@@ -1,0 +1,581 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{alneyadi2016survey}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=63900f16c27ca5f3d597e5fe33ada06d}{%
+           family={Alneyadi},
+           familyi={A\bibinitperiod},
+           given={Sultan},
+           giveni={S\bibinitperiod}}}%
+        {{hash=10fb6964c899f6d4dfa12fbcebc76a74}{%
+           family={Sithirasenan},
+           familyi={S\bibinitperiod},
+           given={Elankayer},
+           giveni={E\bibinitperiod}}}%
+        {{hash=347fa08ece20bf413f011126870e8a53}{%
+           family={Muthukkumarasamy},
+           familyi={M\bibinitperiod},
+           given={Vallipuram},
+           giveni={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{0d715a6ad70e2af9cb5da5d62ab9eb27}
+      \strng{fullhash}{0d715a6ad70e2af9cb5da5d62ab9eb27}
+      \strng{fullhashraw}{0d715a6ad70e2af9cb5da5d62ab9eb27}
+      \strng{bibnamehash}{0d715a6ad70e2af9cb5da5d62ab9eb27}
+      \strng{authorbibnamehash}{0d715a6ad70e2af9cb5da5d62ab9eb27}
+      \strng{authornamehash}{0d715a6ad70e2af9cb5da5d62ab9eb27}
+      \strng{authorfullhash}{0d715a6ad70e2af9cb5da5d62ab9eb27}
+      \strng{authorfullhashraw}{0d715a6ad70e2af9cb5da5d62ab9eb27}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{journaltitle}{Journal of Network and Computer Applications}
+      \field{shorttitle}{A survey on data leakage prevention systems}
+      \field{title}{A survey on data leakage prevention systems}
+      \field{volume}{62}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \field{pages}{137\bibrangedash 152}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1016/j.jnca.2016.01.008
+      \endverb
+    \endentry
+    \entry{cheng2017enterprise}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=5b3e001affb47baac2c24279f94af2c8}{%
+           family={Cheng},
+           familyi={C\bibinitperiod},
+           given={Long},
+           giveni={L\bibinitperiod}}}%
+        {{hash=f366ed4d779dfffcffc0a514cf788132}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Fang},
+           giveni={F\bibinitperiod}}}%
+        {{hash=ae5f10ac62dfe4c32fef28acbb4cd209}{%
+           family={Yao},
+           familyi={Y\bibinitperiod},
+           given={Danfeng},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{88902d0d60218060e1e3dcb5c09ac63c}
+      \strng{fullhash}{88902d0d60218060e1e3dcb5c09ac63c}
+      \strng{fullhashraw}{88902d0d60218060e1e3dcb5c09ac63c}
+      \strng{bibnamehash}{88902d0d60218060e1e3dcb5c09ac63c}
+      \strng{authorbibnamehash}{88902d0d60218060e1e3dcb5c09ac63c}
+      \strng{authornamehash}{88902d0d60218060e1e3dcb5c09ac63c}
+      \strng{authorfullhash}{88902d0d60218060e1e3dcb5c09ac63c}
+      \strng{authorfullhashraw}{88902d0d60218060e1e3dcb5c09ac63c}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{eid}{e1211}
+      \field{journaltitle}{WIREs Data Mining and Knowledge Discovery}
+      \field{number}{5}
+      \field{shorttitle}{Enterprise data breach}
+      \field{title}{Enterprise data breach: causes, challenges, prevention, and future directions}
+      \field{volume}{7}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.1002/widm.1211
+      \endverb
+    \endentry
+    \entry{chuvakin2020triad}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=aca74d56bf7b6114ca7244c74f8a14eb}{%
+           family={Chuvakin},
+           familyi={C\bibinitperiod},
+           given={Anton},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{aca74d56bf7b6114ca7244c74f8a14eb}
+      \strng{fullhash}{aca74d56bf7b6114ca7244c74f8a14eb}
+      \strng{fullhashraw}{aca74d56bf7b6114ca7244c74f8a14eb}
+      \strng{bibnamehash}{aca74d56bf7b6114ca7244c74f8a14eb}
+      \strng{authorbibnamehash}{aca74d56bf7b6114ca7244c74f8a14eb}
+      \strng{authornamehash}{aca74d56bf7b6114ca7244c74f8a14eb}
+      \strng{authorfullhash}{aca74d56bf7b6114ca7244c74f8a14eb}
+      \strng{authorfullhashraw}{aca74d56bf7b6114ca7244c74f8a14eb}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{note}{\mkbibemph{Anton on Security} (Medium), 2020; przedruk: Security Boulevard, wrzesień 2020}
+      \field{shorttitle}{Back in 2015, while working on a Gartner SOC paper}
+      \field{title}{Back in 2015, while working on a Gartner SOC paper, I coined the concept of \enquote{SOC nuclear triad}\ldots\isdot}
+      \field{urlday}{21}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://securityboulevard.com/2020/09/back-in-2015-while-working-on-a-gartner-soc-paper-i-coined-the-concept-of-soc-nuclear-triad/
+      \endverb
+      \verb{url}
+      \verb https://securityboulevard.com/2020/09/back-in-2015-while-working-on-a-gartner-soc-paper-i-coined-the-concept-of-soc-nuclear-triad/
+      \endverb
+    \endentry
+    \entry{nist2024dataconf}{book}{}{}
+      \name{author}{5}{}{%
+        {{hash=d8d8f6a2d97dec84fbee962cce957e69}{%
+           family={Fisher},
+           familyi={F\bibinitperiod},
+           given={W.},
+           giveni={W\bibinitperiod}}}%
+        {{hash=34b8512999eb4df6093cf75c8c077e48}{%
+           family={Craft},
+           familyi={C\bibinitperiod},
+           given={R.\bibnamedelimi E.},
+           giveni={R\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=5379f9532e2ca7861d55f23c8e7e01b7}{%
+           family={Ekstrom},
+           familyi={E\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=077505139e96d185ad4d813d89d5eb40}{%
+           family={Sexton},
+           familyi={S\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=895431fcb06c54b03ddd5607fd88abd6}{%
+           family={Sweetnam},
+           familyi={S\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Gaithersburg, MD}%
+      }
+      \list{publisher}{1}{%
+        {National Institute of Standards and Technology}%
+      }
+      \strng{namehash}{6bc6b372abdf0757359cc969ccf8fd24}
+      \strng{fullhash}{60d0913ab4452c01438488d8a43262fb}
+      \strng{fullhashraw}{60d0913ab4452c01438488d8a43262fb}
+      \strng{bibnamehash}{6bc6b372abdf0757359cc969ccf8fd24}
+      \strng{authorbibnamehash}{6bc6b372abdf0757359cc969ccf8fd24}
+      \strng{authornamehash}{6bc6b372abdf0757359cc969ccf8fd24}
+      \strng{authorfullhash}{60d0913ab4452c01438488d8a43262fb}
+      \strng{authorfullhashraw}{60d0913ab4452c01438488d8a43262fb}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{number}{1800-28}
+      \field{series}{NIST Special Publication}
+      \field{shorttitle}{Data Confidentiality}
+      \field{title}{Data Confidentiality: Identifying and Protecting Assets Against Data Breaches}
+      \field{year}{2024}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.6028/NIST.SP.1800-28
+      \endverb
+    \endentry
+    \entry{ibm2026cost}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=cbf44511d041dc6d1dd73cc0c033122c}{%
+           family={{IBM}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{cbf44511d041dc6d1dd73cc0c033122c}
+      \strng{fullhash}{cbf44511d041dc6d1dd73cc0c033122c}
+      \strng{fullhashraw}{cbf44511d041dc6d1dd73cc0c033122c}
+      \strng{bibnamehash}{cbf44511d041dc6d1dd73cc0c033122c}
+      \strng{authorbibnamehash}{cbf44511d041dc6d1dd73cc0c033122c}
+      \strng{authornamehash}{cbf44511d041dc6d1dd73cc0c033122c}
+      \strng{authorfullhash}{cbf44511d041dc6d1dd73cc0c033122c}
+      \strng{authorfullhashraw}{cbf44511d041dc6d1dd73cc0c033122c}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{29}
+      \field{month}{7}
+      \field{note}{informacja prasowa dotycząca raportu \mkbibemph{Cost of a Data Breach Report 2026} (Ponemon Institute, IBM)}
+      \field{shorttitle}{IBM Study: One in Four Malicious Breaches are AI-Enabled}
+      \field{title}{IBM Study: One in Four Malicious Breaches are AI-Enabled, Costing Companies \$6 Million on Average}
+      \field{urlday}{21}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{year}{2026}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://newsroom.ibm.com/2026-07-29-ibm-study-one-in-four-malicious-breaches-are-ai-enabled,-costing-companies-6-million-on-average
+      \endverb
+      \verb{url}
+      \verb https://newsroom.ibm.com/2026-07-29-ibm-study-one-in-four-malicious-breaches-are-ai-enabled,-costing-companies-6-million-on-average
+      \endverb
+    \endentry
+    \entry{pathirana2026human}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=7ca9bb61bf34d9f49f9d2799aab65753}{%
+           family={Pathirana},
+           familyi={P\bibinitperiod},
+           given={Nadeeka},
+           giveni={N\bibinitperiod}}}%
+        {{hash=6832cbb16f11f86abe0c6cbe32b145f8}{%
+           family={Roberts},
+           familyi={R\bibinitperiod},
+           given={Ruby},
+           giveni={R\bibinitperiod}}}%
+        {{hash=6c53f5469e373a7dc3dc7d2348f4d7bf}{%
+           family={Kalutarage},
+           familyi={K\bibinitperiod},
+           given={Harsha},
+           giveni={H\bibinitperiod}}}%
+        {{hash=22a8af7a5382e3e7065bc4c756172e0a}{%
+           family={McDermott},
+           familyi={M\bibinitperiod},
+           given={Christopher\bibnamedelima D.},
+           giveni={C\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \strng{namehash}{0d5b35e09ece8a7f950573aa358ebc1f}
+      \strng{fullhash}{b8ec86321060162bf5e11159d071954b}
+      \strng{fullhashraw}{b8ec86321060162bf5e11159d071954b}
+      \strng{bibnamehash}{0d5b35e09ece8a7f950573aa358ebc1f}
+      \strng{authorbibnamehash}{0d5b35e09ece8a7f950573aa358ebc1f}
+      \strng{authornamehash}{0d5b35e09ece8a7f950573aa358ebc1f}
+      \strng{authorfullhash}{b8ec86321060162bf5e11159d071954b}
+      \strng{authorfullhashraw}{b8ec86321060162bf5e11159d071954b}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{journaltitle}{ACM Computing Surveys}
+      \field{number}{10}
+      \field{shorttitle}{Integrating Human Factors into Insider Threat Detection}
+      \field{title}{Integrating Human Factors into Insider Threat Detection: A Systematic Review}
+      \field{volume}{58}
+      \field{year}{2026}
+      \field{dateera}{ce}
+      \field{pages}{1\bibrangedash 37}
+      \range{pages}{37}
+      \verb{doi}
+      \verb 10.1145/3798089
+      \endverb
+    \endentry
+    \entry{ponemon2026insider}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=90934535280af6cfb41a281a6b154b2e}{%
+           family={{Ponemon Institute}},
+           familyi={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{90934535280af6cfb41a281a6b154b2e}
+      \strng{fullhash}{90934535280af6cfb41a281a6b154b2e}
+      \strng{fullhashraw}{90934535280af6cfb41a281a6b154b2e}
+      \strng{bibnamehash}{90934535280af6cfb41a281a6b154b2e}
+      \strng{authorbibnamehash}{90934535280af6cfb41a281a6b154b2e}
+      \strng{authornamehash}{90934535280af6cfb41a281a6b154b2e}
+      \strng{authorfullhash}{90934535280af6cfb41a281a6b154b2e}
+      \strng{authorfullhashraw}{90934535280af6cfb41a281a6b154b2e}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{13}
+      \field{month}{5}
+      \field{note}{omówienie raportu \mkbibemph{2026 Cost of Insider Risks Global Report} przygotowanego na zlecenie DTEX Systems}
+      \field{shorttitle}{2026 Cost of Insider Risks}
+      \field{title}{2026 Cost of Insider Risks: Global}
+      \field{urlday}{26}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{year}{2026}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://ponemonsullivanreport.com/2026/05/2026-cost-of-insider-risks-globa
+      \endverb
+      \verb{url}
+      \verb https://ponemonsullivanreport.com/2026/05/2026-cost-of-insider-risks-globa
+      \endverb
+    \endentry
+    \entry{reason2000human}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=52e06e9b764e93381601003ad60d04ff}{%
+           family={Reason},
+           familyi={R\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{52e06e9b764e93381601003ad60d04ff}
+      \strng{fullhash}{52e06e9b764e93381601003ad60d04ff}
+      \strng{fullhashraw}{52e06e9b764e93381601003ad60d04ff}
+      \strng{bibnamehash}{52e06e9b764e93381601003ad60d04ff}
+      \strng{authorbibnamehash}{52e06e9b764e93381601003ad60d04ff}
+      \strng{authornamehash}{52e06e9b764e93381601003ad60d04ff}
+      \strng{authorfullhash}{52e06e9b764e93381601003ad60d04ff}
+      \strng{authorfullhashraw}{52e06e9b764e93381601003ad60d04ff}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{journaltitle}{BMJ}
+      \field{number}{7237}
+      \field{shorttitle}{Human error}
+      \field{title}{Human error: models and management}
+      \field{volume}{320}
+      \field{year}{2000}
+      \field{dateera}{ce}
+      \field{pages}{768\bibrangedash 770}
+      \range{pages}{3}
+      \verb{doi}
+      \verb 10.1136/bmj.320.7237.768
+      \endverb
+    \endentry
+    \entry{rodo2016}{legislation}{}{}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labeltitlesource}{shorttitle}
+      \field{note}{Dz.Urz. UE L 119 z 4.05.2016, s. 1--88}
+      \field{shorttitle}{RODO}
+      \field{title}{Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE (ogólne rozporządzenie o ochronie danych)}
+    \endentry
+    \entry{shabtai2012survey}{book}{}{}
+      \name{author}{3}{}{%
+        {{hash=15b51f1fd7766663d21d2b39acd85716}{%
+           family={Shabtai},
+           familyi={S\bibinitperiod},
+           given={Asaf},
+           giveni={A\bibinitperiod}}}%
+        {{hash=48129f0a13603c1456c886b59a8498d3}{%
+           family={Elovici},
+           familyi={E\bibinitperiod},
+           given={Yuval},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=e583bae19511d6aca7ecc9e44953ed07}{%
+           family={Rokach},
+           familyi={R\bibinitperiod},
+           given={Lior},
+           giveni={L\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{91a2ba8595fd0feb82b5978d6ae6b067}
+      \strng{fullhash}{91a2ba8595fd0feb82b5978d6ae6b067}
+      \strng{fullhashraw}{91a2ba8595fd0feb82b5978d6ae6b067}
+      \strng{bibnamehash}{91a2ba8595fd0feb82b5978d6ae6b067}
+      \strng{authorbibnamehash}{91a2ba8595fd0feb82b5978d6ae6b067}
+      \strng{authornamehash}{91a2ba8595fd0feb82b5978d6ae6b067}
+      \strng{authorfullhash}{91a2ba8595fd0feb82b5978d6ae6b067}
+      \strng{authorfullhashraw}{91a2ba8595fd0feb82b5978d6ae6b067}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{series}{SpringerBriefs in Computer Science}
+      \field{shorttitle}{A Survey of Data Leakage Detection and Prevention Solutions}
+      \field{title}{A Survey of Data Leakage Detection and Prevention Solutions}
+      \field{year}{2012}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.1007/978-1-4614-2053-8
+      \endverb
+    \endentry
+    \entry{uodo2024pendrive}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=03ed4b5f3dfd2a43b0489525e97aa999}{%
+           family={{Urząd Ochrony Danych Osobowych}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \strng{fullhash}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \strng{fullhashraw}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \strng{bibnamehash}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \strng{authorbibnamehash}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \strng{authornamehash}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \strng{authorfullhash}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \strng{authorfullhashraw}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \field{extraname}{1}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{17}
+      \field{month}{5}
+      \field{note}{komunikat dotyczący decyzji Prezesa UODO DKN.5131.29.2023}
+      \field{shorttitle}{Prawie 240 tys. zł kary dla firmy}
+      \field{title}{Prawie 240 tys. zł kary dla firmy, której pracownik zgubił pendrive z danymi osobowymi}
+      \field{urlday}{28}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://uodo.gov.pl/pl/138/3095
+      \endverb
+      \verb{url}
+      \verb https://uodo.gov.pl/pl/138/3095
+      \endverb
+    \endentry
+    \entry{uodo2022fortum}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=03ed4b5f3dfd2a43b0489525e97aa999}{%
+           family={{Urząd Ochrony Danych Osobowych}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \strng{fullhash}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \strng{fullhashraw}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \strng{bibnamehash}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \strng{authorbibnamehash}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \strng{authornamehash}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \strng{authorfullhash}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \strng{authorfullhashraw}{03ed4b5f3dfd2a43b0489525e97aa999}
+      \field{extraname}{2}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{28}
+      \field{month}{2}
+      \field{note}{komunikat dotyczący decyzji Prezesa UODO DKN.5130.2215.2020}
+      \field{shorttitle}{Rekordowa kara dla administratora}
+      \field{title}{Rekordowa kara dla administratora za naruszenie ochrony danych}
+      \field{urlday}{28}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{year}{2022}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://uodo.gov.pl/pl/138/2389
+      \endverb
+      \verb{url}
+      \verb https://uodo.gov.pl/pl/138/2389
+      \endverb
+    \endentry
+    \entry{verizon2026dbir}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=9ef23a446a119387586d089c425f2d55}{%
+           family={{Verizon}},
+           familyi={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{9ef23a446a119387586d089c425f2d55}
+      \strng{fullhash}{9ef23a446a119387586d089c425f2d55}
+      \strng{fullhashraw}{9ef23a446a119387586d089c425f2d55}
+      \strng{bibnamehash}{9ef23a446a119387586d089c425f2d55}
+      \strng{authorbibnamehash}{9ef23a446a119387586d089c425f2d55}
+      \strng{authornamehash}{9ef23a446a119387586d089c425f2d55}
+      \strng{authorfullhash}{9ef23a446a119387586d089c425f2d55}
+      \strng{authorfullhashraw}{9ef23a446a119387586d089c425f2d55}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{19}
+      \field{month}{5}
+      \field{note}{informacja prasowa dotycząca raportu \mkbibemph{2026 Data Breach Investigations Report}}
+      \field{shorttitle}{Vulnerability exploitation top breach entry point}
+      \field{title}{Vulnerability exploitation top breach entry point, 2026 industry-wide DBIR finds}
+      \field{urlday}{21}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{year}{2026}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.verizon.com/about/news/breach-industry-wide-dbir-finds
+      \endverb
+      \verb{url}
+      \verb https://www.verizon.com/about/news/breach-industry-wide-dbir-finds
+      \endverb
+    \endentry
+    \entry{verizon2024dbir}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=fc971930f16af614663abf7a225f5946}{%
+           family={{Verizon Business}},
+           familyi={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{fc971930f16af614663abf7a225f5946}
+      \strng{fullhash}{fc971930f16af614663abf7a225f5946}
+      \strng{fullhashraw}{fc971930f16af614663abf7a225f5946}
+      \strng{bibnamehash}{fc971930f16af614663abf7a225f5946}
+      \strng{authorbibnamehash}{fc971930f16af614663abf7a225f5946}
+      \strng{authornamehash}{fc971930f16af614663abf7a225f5946}
+      \strng{authorfullhash}{fc971930f16af614663abf7a225f5946}
+      \strng{authorfullhashraw}{fc971930f16af614663abf7a225f5946}
+      \field{extraname}{1}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{shorttitle}{2024 Data Breach Investigations Report}
+      \field{title}{2024 Data Breach Investigations Report: Appendices}
+      \field{urlday}{21}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://verizon.com/business/resources/reports/dbir/2024/appendix
+      \endverb
+      \verb{url}
+      \verb https://verizon.com/business/resources/reports/dbir/2024/appendix
+      \endverb
+    \endentry
+    \entry{verizon2026dbirraport}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=fc971930f16af614663abf7a225f5946}{%
+           family={{Verizon Business}},
+           familyi={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{fc971930f16af614663abf7a225f5946}
+      \strng{fullhash}{fc971930f16af614663abf7a225f5946}
+      \strng{fullhashraw}{fc971930f16af614663abf7a225f5946}
+      \strng{bibnamehash}{fc971930f16af614663abf7a225f5946}
+      \strng{authorbibnamehash}{fc971930f16af614663abf7a225f5946}
+      \strng{authornamehash}{fc971930f16af614663abf7a225f5946}
+      \strng{authorfullhash}{fc971930f16af614663abf7a225f5946}
+      \strng{authorfullhashraw}{fc971930f16af614663abf7a225f5946}
+      \field{extraname}{2}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{shorttitle}{2026 Data Breach Investigations Report}
+      \field{title}{2026 Data Breach Investigations Report}
+      \field{urlday}{26}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{year}{2026}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.verizon.com/business/resources/T343/reports/2026-dbir-data-breach-investigations-report.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.verizon.com/business/resources/T343/reports/2026-dbir-data-breach-investigations-report.pdf
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

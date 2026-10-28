@@ -1,0 +1,5 @@
+- Three years of microlearning responses from 180 bank employees were analyzed
+- Accuracy on recurring questions rose because corrections outnumbered forgetting
+- Forgetting increased with the interval and fell with consecutive correct answers
+- Corrected errors relapsed most often, usually to the previously chosen distractor
+- Repeated errors reused the same distractor more often than chance predicted

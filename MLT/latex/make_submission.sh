@@ -36,6 +36,11 @@ cp "$MAIN" "$OUT/manuscript.tex"
 # double-anonymized review: hide author names and affiliations in the manuscript
 sed -i '0,/^\\documentclass\[/s//\\documentclass[doubleblind,/' "$OUT/manuscript.tex"
 grep -q 'documentclass\[doubleblind,' "$OUT/manuscript.tex" || { echo "ERROR: could not add doubleblind option"; exit 1; }
+# the editable source is uploaded as "Manuscript WITHOUT author details", so the author block
+# (\author ... \affiliation, up to the abstract) is removed from the source, not just hidden
+awk '/^\\author/ && !seen { skip=1; seen=1 } /^\\begin\{abstract\}/ { skip=0 } !skip' \
+    "$OUT/manuscript.tex" > "$OUT/manuscript.tmp" && mv "$OUT/manuscript.tmp" "$OUT/manuscript.tex"
+grep -qE '\\(author|ead|affiliation)\b' "$OUT/manuscript.tex" && { echo "ERROR: author details left in manuscript.tex"; exit 1; }
 
 n=0
 while IFS= read -r path; do

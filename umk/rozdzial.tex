@@ -31,8 +31,8 @@
 \pagestyle{plain}
 
 % ---------------------------------------------------------------------
-%  Śródtytuły: 12 pt, pogrubienie, wcięcie 0,75 cm; sekcje numerowane
-%  (tekst odwołuje się do numerów sekcji), podsekcje bez numeracji
+%  Śródtytuły: 12 pt, pogrubienie, wcięcie 0,75 cm; sekcje numerowane,
+%  podsekcje bez numeracji
 % ---------------------------------------------------------------------
 \usepackage{titlesec}
 \setcounter{secnumdepth}{1}
@@ -256,10 +256,10 @@
 \naglowekRozdzialu
 
 \begin{streszczenie}{Abstrakt}{Słowa kluczowe}
-Artykuł omawia rolę systemów zapobiegania wyciekom danych (DLP)
-w~wielowarstwowym modelu cyberbezpieczeństwa. Ma charakter
-przeglądowo-koncepcyjny i~opiera się na literaturze naukowej, dokumentach
-NIST, przepisach RODO oraz raportach branżowych. Wyciek danych potraktowano
+Przedmiotem rozważań jest rola systemów zapobiegania wyciekom danych (DLP)
+w~wielowarstwowym modelu cyberbezpieczeństwa. Rozważania mają charakter
+przeglądowo-koncepcyjny i~opierają się na literaturze naukowej, 
+przepisach RODO oraz raportach branżowych. Wyciek danych potraktowano
 jako skutek łańcucha zdarzeń, w~którym błędy użytkowników nakładają się na
 luki organizacyjne i~techniczne. Do opisu tego zjawiska wykorzystano model
 sera szwajcarskiego J.~Reasona. Przedstawiono mechanizmy DLP: klasyfikację
@@ -278,7 +278,7 @@ wielowarstwowa ochrona, SOC, model sera szwajcarskiego, RODO}
 \begin{streszczenie}{Abstract}{Key words}
 The article discusses the role of data loss prevention (DLP) systems in
 a~multi-layered cybersecurity model. It is a~review and conceptual study
-based on scientific literature, NIST publications, the GDPR and industry
+based on scientific literature,  the GDPR and industry
 reports. A~data leak is treated as the outcome of a~chain of events in which
 user errors coincide with organisational and technical gaps, described with
 J.~Reason's Swiss cheese model. The article presents the mechanisms of DLP:
@@ -308,25 +308,22 @@ i~w~systemach partnerów. Każde z~tych miejsc może stać się kanałem wycieku
 Zapory sieciowe i~systemy kontroli dostępu rozstrzygają, kto i~skąd może się
 połączyć. Nie oceniają jednak, czy konkretna treść powinna opuścić
 organizację. Tę funkcję pełnią systemy zapobiegania wyciekom danych (ang.
-\emph{Data Loss Prevention}, DLP), które analizują treść i~kontekst operacji
-na danych\footcite{alneyadi2016survey}.
+\emph{Data Loss Prevention}, DLP). Są to narzędzia, które rozpoznają
+informacje chronione w~treści i~kontekście operacji na danych, takich jak
+zapis na nośniku, wysłanie wiadomości czy przesłanie pliku do usługi
+chmurowej. Zależnie od przyjętej polityki rejestrują taką operację,
+ostrzegają użytkownika albo ją blokują\footcite{alneyadi2016survey}.
 
-Celem artykułu jest omówienie roli systemów DLP w~ograniczaniu ryzyka wycieku
-danych oraz określenie ich miejsca w~wielowarstwowym modelu
-cyberbezpieczeństwa. Artykuł ma charakter przeglądowo-koncepcyjny. Opiera się
-na literaturze naukowej, dokumentach instytucji normalizacyjnych i~raportach
-branżowych. Nie zawiera badań empirycznych, a~dobór źródeł nie miał
-charakteru systematycznego przeglądu literatury.
-
-Rozważania obejmują cztery obszary: źródła i~scenariusze zagrożeń, mechanizmy
-ochrony stosowane w~systemach DLP, organizacyjne warunki ich skuteczności oraz
-konsekwencje naruszeń. Sekcja~2 opisuje zmiany w~sposobach przetwarzania
-informacji, które zwiększają liczbę kanałów wycieku. Sekcja~3 przedstawia
-obraz zagrożeń wyłaniający się z~badań i~raportów, wraz z~ograniczeniami ich
-interpretacji. Sekcje~4 i~5 definiują zakres DLP i~lokują tę klasę rozwiązań
-wśród innych narzędzi bezpieczeństwa. Sekcja~6 traktuje wyciek jako skutek
-łańcucha zdarzeń, a~sekcja~7 omawia warunki wdrożenia. Sekcja~8 dotyczy
-konsekwencji finansowych i~społecznych.
+Samo wdrożenie takiego narzędzia nie zapewnia jednak ochrony. DLP rozpoznaje
+treść, ale nie zastępuje systemów obserwujących urządzenia, sieć i~dzienniki
+zdarzeń. Jego skuteczność zależy od tego, czy organizacja wie, jakie
+informacje chroni, i~czy potrafi utrzymać reguły bez mnożenia wyjątków.
+Wyciek rzadko jest skutkiem pojedynczego błędu. Zwykle kończy łańcuch
+zdarzeń, w~którym kolejne zabezpieczenia okazały się niewystarczające.
+Dlatego DLP warto rozpatrywać jako jedną z~warstw wielowarstwowego modelu
+cyberbezpieczeństwa, a~jego wartość oceniać na tle zagrożeń, które ma
+ograniczać, i~kosztów, które pojawiają się, gdy ochrona zawiedzie. Punktem
+wyjścia jest pytanie, dlaczego kanałów wycieku wciąż przybywa.
 
 % ---------------------------------------------------------------------
 \section{Geneza i~współczesne uwarunkowania wycieków danych}
@@ -346,14 +343,16 @@ Ten sam przegląd wskazuje, że współdzielenie danych z~partnerami i~klientami
 współpraca przez chmurę oraz praca poza siedzibą firmy zwiększają
 prawdopodobieństwo wycieku\footcite{cheng2017enterprise}. Nowsze dane
 potwierdzają znaczenie podmiotów zewnętrznych. Według komunikatu Verizon
-dotyczącego raportu DBIR 2026, opartego na danych z~2025~roku, udział strony
+dotyczącego raportu \emph{Data Breach
+Investigations Report} (DBIR) z~2026~roku, opartego na danych z~2025~roku, udział strony
 trzeciej odnotowano w~48\% analizowanych naruszeń, a~wskaźnik ten wzrósł
 o~60\% względem poprzedniej edycji\footcite{verizon2026dbir}. Granica
 organizacji przestaje więc pokrywać się z~granicą jej sieci.
 
 Narzędzia generatywnej sztucznej inteligencji tworzą kolejny kanał przepływu
 informacji. Ten sam komunikat podaje, że korzystanie przez pracowników
-z~niezatwierdzonych narzędzi AI (ang. \emph{shadow AI}) stało się trzecią
+z~niezatwierdzonych narzędzi sztucznej inteligencji (ang.
+\emph{artificial intelligence}, AI), określane jako \emph{shadow AI}, stało się trzecią
 najczęstszą niezłośliwą aktywnością związaną z~wyciekiem danych. Odsetek
 pracowników często korzystających z~takich narzędzi wzrósł w~ciągu roku
 z~15\% do 45\%\footcite{verizon2026dbir}. Z~perspektywy ochrony informacji
@@ -363,15 +362,23 @@ wyjaśnia, dlaczego problem dotyczy bardziej polityk ochrony danych niż samej
 technologii AI.
 
 Wyciek może mieć trzy różne źródła: działanie napastnika, celowe nadużycie
-uprawnień przez osobę z~wewnątrz albo niezamierzony błąd. Cheng
+uprawnień przez osobę z~wewnątrz organizacji (ang. \emph{insider}), czyli
+pracownika lub współpracownika mającego uprawniony dostęp do jej zasobów,
+albo niezamierzony błąd. Cheng
 i~współautorzy porządkują je według dwóch kryteriów: intencji (celowe lub
 przypadkowe) oraz pochodzenia sprawcy (wewnętrzny lub
 zewnętrzny)\footcite{cheng2017enterprise}. Do zagrożeń przypadkowych zaliczają
 m.in. omyłkową publikację, błąd konfiguracji, niewłaściwe szyfrowanie i~utratę
-komputera. Przykładem jest incydent w~australijskim Red Cross Blood Service
-z~2016~roku. Pracownik umieścił wtedy dokumenty z~danymi ponad 550~tys.
-dawców krwi w~publicznie dostępnym katalogu serwisu
-internetowego\footcite{cheng2017enterprise}.
+komputera. Obie grupy mają polskie przykłady. W~2024~roku Prezes UODO nałożył
+ponad 238~tys.~zł kary na spółkę, której pracownik zgubił pendrive
+z~niezaszyfrowanymi danymi osobowymi innego pracownika\footcite{uodo2024pendrive}.
+Organ wskazał, że administrator uwzględnił w~analizie ryzyka kradzież
+i~zniszczenie nośnika, ale pominął jego zwykłą utratę. W~sprawie spółki
+Fortum Marketing and Sales Polska źródłem naruszenia był błąd konfiguracji.
+Podmiot przetwarzający utworzył podczas zmian w~systemie dodatkową bazę danych
+klientów na serwerze bez odpowiednio skonfigurowanych zabezpieczeń. Osoby
+nieuprawnione skopiowały tę bazę, a~administrator dowiedział się o~incydencie
+od internautów\footcite{uodo2022fortum}.
 
 Podział ten ma konsekwencje praktyczne. Napastnik zewnętrzny musi najpierw
 uzyskać dostęp, osoba z~wewnątrz już go ma, a~pracownik popełniający błąd nie
@@ -383,8 +390,7 @@ i~wymaga innego sposobu wykrywania.
 
 Obraz zagrożeń opiera się w~dużej mierze na raportach branżowych, ponieważ
 organizacje rzadko udostępniają dane o~własnych incydentach badaczom
-akademickim. Dwie najczęściej przywoływane serie to \emph{Data Breach
-Investigations Report} (DBIR) firmy Verizon oraz \emph{Cost of a~Data Breach}
+akademickim. Dwie najczęściej przywoływane serie to DBIR firmy Verizon oraz \emph{Cost of a~Data Breach}
 przygotowywany przez Ponemon Institute na zlecenie IBM. Obie serie mają
 odmienną metodykę, więc ich wyniki należy czytać osobno.
 
@@ -393,16 +399,42 @@ wejścia. Odpowiada ono za 31\% naruszeń i~po raz pierwszy w~historii raportu
 wyprzedziło użycie skradzionych poświadczeń\footcite{verizon2026dbir}. Ten sam
 komunikat podaje, że socjotechnika prowadzona kanałami mobilnymi (wiadomości
 tekstowe, połączenia głosowe) osiąga skuteczność o~40\% wyższą niż tradycyjny
-phishing e-mailowy. Dane te dotyczą głównie ataków zewnętrznych, ale pokazują
+phishing, czyli wyłudzanie danych w~wiadomościach e-mail podszywających się
+pod zaufanego nadawcę. Dane te dotyczą głównie ataków zewnętrznych, ale pokazują
 też, że użytkownik pozostaje częstym celem ataku.
 
-Udział osób z~wewnątrz organizacji trudniej oszacować. Cheng i~współautorzy
-przywołują analizę Barbary Hauer obejmującą 1259 incydentów, według której
-ponad 60\% naruszeń spowodowali insiderzy\footcite{cheng2017enterprise}.
-Zaznaczają jednocześnie, że raporty oparte na różnych zbiorach danych dają
-różne wyniki. Wspólny pozostaje jedynie wniosek, że znaczna część naruszeń ma
-źródło wewnątrz organizacji. Dane te pochodzą sprzed 2017~roku i~nie powinny
-być traktowane jako opis obecnej sytuacji.
+Udział osób z~wewnątrz organizacji trudniej oszacować, ponieważ zależy on od
+przyjętej definicji i~źródła danych. Pełna wersja raportu DBIR 2026 obejmuje
+ponad 22~tys. potwierdzonych naruszeń z~okresu od listopada 2024 do
+października 2025~roku. Sprawcy wewnętrzni wystąpili w~12\% z~nich, wobec
+18\% w~poprzedniej edycji\footcite[22]{verizon2026dbirraport}. Autorzy
+raportu zaznaczają, że większość tych przypadków to pomyłki, błędy
+konfiguracji i~obchodzenie procedur, a~nie sabotaż. Umyślne nadużycie
+uprawnień odpowiadało za niespełna 4\% naruszeń. Najczęstszym motywem
+w~tej grupie była wygoda (60\%), np. przesłanie danych służbowych na
+prywatną skrzynkę w~celu pracy z~domu\footcite[57--58]{verizon2026dbirraport}.
+Inaczej wygląda administracja publiczna. Sprawcy wewnętrzni odpowiadali tam
+za 44\% naruszeń, głównie z~powodu korespondencji doręczonej niewłaściwemu
+adresatowi, która stanowiła 88\% błędów w~tym
+sektorze\footcite[89, 92]{verizon2026dbirraport}.
+
+Inną perspektywę daje badanie Ponemon Institute przeprowadzone na zlecenie
+firmy DTEX Systems wśród 8750 specjalistów IT i~bezpieczeństwa z~354
+organizacji, które doświadczyły incydentów wewnętrznych. W~2025~roku 53\%
+tych incydentów wynikało z~zaniedbań pracowników lub kontraktorów, 27\%
+z~działań celowych, a~20\% z~kradzieży poświadczeń. Średni roczny koszt
+obsługi incydentów wewnętrznych wyniósł 19,5~mln USD na
+organizację\footcite{ponemon2026insider}. Próba obejmuje wyłącznie
+organizacje dotknięte takimi incydentami, więc wyniki nie opisują ogółu
+przedsiębiorstw. Oba źródła, mimo odmiennej metodyki, prowadzą do zbieżnego
+wniosku: po stronie wewnętrznej przeważa błąd lub zaniedbanie osoby
+z~uprawnionym dostępem, a~nie działanie w~złej wierze. Przegląd
+systematyczny 121 prac opublikowanych w~latach 2014--2025 wskazuje
+jednocześnie na lukę badawczą. Niewiele metod wykrywania zagrożeń
+wewnętrznych uwzględnia czynniki ludzkie, przede wszystkim z~powodu braku
+zbiorów danych łączących informacje o~zachowaniu i~kontekście użytkownika.
+Autorzy przeglądu podkreślają potrzebę takich modeli zwłaszcza dla zagrożeń
+nieumyślnych\footcite{pathirana2026human}.
 
 Czynniki ludzkie, techniczne i~organizacyjne występują zwykle łącznie.
 W~ujęciu Chenga i~współautorów przypadkowe wycieki wynikają głównie ze słabo
@@ -430,16 +462,19 @@ słów. DBIR odróżnia incydent, czyli zdarzenie naruszające poufność,
 integralność lub dostępność zasobu informacyjnego, od naruszenia, czyli
 incydentu zakończonego potwierdzonym ujawnieniem danych osobie
 nieuprawnionej\footcite{verizon2024dbir}. Samo potencjalne narażenie danych
-nie spełnia tej definicji. Atak DDoS jest więc zwykle incydentem, ale nie
+nie spełnia tej definicji. Rozproszony atak odmowy usługi (ang.
+\emph{Distributed Denial of Service}, DDoS), który przeciąża system
+i~uniemożliwia korzystanie z~niego, jest więc zwykle incydentem, ale nie
 naruszeniem.
 
-RODO przyjmuje szersze pojęcie. Naruszenie ochrony danych osobowych obejmuje
+Ogólne rozporządzenie o~ochronie danych (RODO), czyli unijny akt prawny
+regulujący przetwarzanie danych osobowych, przyjmuje szersze pojęcie. Naruszenie ochrony danych osobowych obejmuje
 nie tylko nieuprawnione ujawnienie lub dostęp, ale także przypadkowe lub
 niezgodne z~prawem zniszczenie, utracenie i~zmodyfikowanie danych (art.~4
 pkt~12)\footcite{rodo2016}. Zaszyfrowanie danych przez oprogramowanie
-ransomware bez ich wyprowadzenia może być naruszeniem w~rozumieniu RODO, ale
-nie naruszeniem w~rozumieniu DBIR. W~tym artykule wyciek oznacza węższą
-kategorię: przekroczenie przez informację granicy, w~której jej przetwarzanie
+wymuszające okup (ang. \emph{ransomware}) bez ich wyprowadzenia może być naruszeniem w~rozumieniu RODO, ale
+nie naruszeniem w~rozumieniu DBIR. Wyciek rozumiany jest tu węziej, jako
+przekroczenie przez informację granicy, w~której jej przetwarzanie
 jest uprawnione.
 
 Różnice dotyczą też prób badawczych. DBIR opiera się na danych z~dochodzeń
@@ -460,7 +495,7 @@ jako wyspecjalizowane mechanizmy wykrywania i~zapobiegania wyciekom danych
 poufnych w~trakcie ich używania, przesyłania i~przechowywania\footcite{alneyadi2016survey}.
 Zwracają jednocześnie uwagę, że samo pojęcie pozostaje niejednoznaczne, mimo
 rosnącej liczby produktów komercyjnych. Cheng i~współautorzy używają
-szerszego określenia DLPD (ang. \emph{data leak prevention and detection})
+szerszego określenia DLPD (ang. \emph{Data Leak Prevention and Detection})
 i~przypisują tym systemom trzy zadania: identyfikację, monitorowanie
 i~zapobieganie ujawnieniu informacji wrażliwych, zarówno celowemu, jak
 i~przypadkowemu\footcite{cheng2017enterprise}.
@@ -478,13 +513,17 @@ zabezpieczenia.
 \subsection{Identyfikacja i~klasyfikacja informacji}
 
 System DLP może chronić tylko te informacje, które organizacja wcześniej
-wskazała. Przewodnik NIST SP 1800-28 rozpoczyna ochronę poufności od
-identyfikacji zasobów narażonych na naruszenie i~ryzyk, które mogą do niego
-prowadzić. Dopiero potem wprowadza technologie
-ochronne\footcite{nist2024dataconf}. Klasyfikacja wyznacza więc zakres
-działania DLP. Błędy na tym etapie przenoszą się na wszystkie dalsze decyzje
-systemu: dane pominięte w~klasyfikacji pozostają bez ochrony, a~dane
-sklasyfikowane zbyt szeroko generują nadmiar alarmów.
+rozpoznała i~opisała. Ochrona poufności zaczyna się więc nie od wyboru
+narzędzia, lecz od ustalenia, jakie dane organizacja przetwarza, gdzie się one
+znajdują, kto z~nich korzysta i~jakie byłyby skutki ich ujawnienia. Na tej
+podstawie dane przypisuje się do kategorii, na przykład publicznych,
+wewnętrznych, poufnych i~ściśle chronionych, a~każdej kategorii
+przyporządkowuje zasady przetwarzania. Dopiero tak opisane zasoby można
+przełożyć na reguły systemu DLP. Klasyfikacja nie jest przy tym czynnością
+jednorazową, ponieważ powstają nowe zbiory danych, systemy i~kanały ich
+wymiany. Wyznacza ona zakres działania DLP. Błędy na tym etapie przenoszą się
+na wszystkie dalsze decyzje systemu: dane pominięte w~klasyfikacji pozostają
+bez ochrony, a~dane sklasyfikowane zbyt szeroko generują nadmiar alarmów.
 
 \subsection{Dane przechowywane, przesyłane i~wykorzystywane}
 
@@ -603,12 +642,14 @@ Tabela~\ref{tab:porownanie} zestawia te różnice.
   \zrodlo{opracowanie własne}
 \end{table}
 
-Koncepcję trzech źródeł widoczności w~centrum operacji bezpieczeństwa (SOC)
-zaproponował w~2015~roku Anton Chuvakin, pracując wtedy jako analityk
+Koncepcję trzech źródeł widoczności w~centrum operacji bezpieczeństwa (ang.
+\emph{Security Operations Center}, SOC), czyli zespole stale monitorującym
+zdarzenia i~obsługującym incydenty, zaproponował w~2015~roku Anton Chuvakin, pracując wtedy jako analityk
 Gartnera\footcite{chuvakin2020triad}. Pierwotnie nazwał ją \enquote{jądrową
 triadą SOC}, przez analogię do triady środków przenoszenia broni jądrowej.
-Trzy filary to dzienniki zdarzeń (SIEM), dane sieciowe (NTA, później NDR)
-i~telemetria punktów końcowych (EDR). Chuvakin zauważył później, że zakresy
+Trzy filary to dzienniki zdarzeń (SIEM), dane sieciowe i~telemetria punktów
+końcowych (EDR). Dane sieciowe dostarczały pierwotnie narzędzia analizy ruchu
+(ang. \emph{Network Traffic Analysis}, NTA), później określane jako NDR. Chuvakin zauważył później, że zakresy
 tych źródeł częściowo się pokrywają. Dopuścił też, że widoczność aplikacji
 może stać się czwartym filarem.
 
@@ -616,7 +657,7 @@ Triada odpowiada na pytanie, co dzieje się w~infrastrukturze. Nie odpowiada
 wprost na pytanie, których informacji dotyczą obserwowane zdarzenia. Autor
 proponuje traktować DLP jako uzupełnienie triady o~perspektywę chronionych
 danych. Nie jest to stanowisko Gartnera ani Chuvakina, lecz interpretacja
-przyjęta w~tym artykule. Przykładowo EDR może odnotować uruchomienie programu
+proponowana w~niniejszym tekście. Przykładowo EDR może odnotować uruchomienie programu
 archiwizującego, a~NDR wysyłkę dużego pliku do zewnętrznej usługi. Dopiero
 DLP może wskazać, że archiwum zawiera dokumenty oznaczone jako poufne.
 
@@ -625,7 +666,8 @@ procesu monitorowania. Cheng i~współautorzy pokazują wiele punktów, w~który
 można rozmieścić uzupełniające się techniki ochrony: na urządzeniach
 pracowników, serwerach pocztowych i~WWW, styku z~siecią zewnętrzną oraz
 w~kontaktach z~dostawcami i~partnerami\footcite{cheng2017enterprise}.
-Przewodnik NIST SP 1800-28 również opisuje rozwiązanie przykładowe złożone
+Przewodnik SP 1800-28, opublikowany przez amerykański National Institute of
+Standards and Technology (NIST), również opisuje rozwiązanie przykładowe złożone
 z~wielu współpracujących systemów. Wykrywanie, reagowanie i~odtwarzanie po
 naruszeniu poufności omówiono w~nim jako osobny projekt (SP
 1800-29)\footcite{nist2024dataconf}.
@@ -654,7 +696,7 @@ odseparował systemu płatniczego od reszty sieci. Nie zabezpieczył terminali
 przed instalacją nieautoryzowanego oprogramowania. Miał wdrożone zapory
 i~system zapobiegania włamaniom, ale nie zbadał ostrzeżeń, które te narzędzia
 wygenerowały\footcite{cheng2017enterprise}. Ostatnia przyczyna jest
-szczególnie istotna dla tego artykułu. Zabezpieczenie zadziałało, a~mimo to
+z~perspektywy DLP najważniejsza. Zabezpieczenie zadziałało, a~mimo to
 bariera zawiodła na poziomie organizacji.
 
 \subsection{Model sera szwajcarskiego}
@@ -721,18 +763,15 @@ alarmów, zatrzymywałoby zbyt wiele uprawnionych działań.
 % ---------------------------------------------------------------------
 \section{Uwarunkowania wdrożenia i~skuteczności DLP}
 
-Skuteczność DLP zależy bardziej od przygotowania organizacji niż od wyboru
-produktu. Ta sekcja ma charakter rekomendacyjny. Przedstawione etapy wynikają
-z~omawianej literatury i~z~ograniczeń technik opisanych w~sekcji~4, ale nie
-zostały zweryfikowane empirycznie w~ramach tego artykułu.
+Skuteczność DLP zależy bardziej od przygotowania organizacji niż od wyboru produktu. 
+Równie istotnym czynnikiem sukcesu jest determinacja organizacji oraz odporność na 
+wprowadzanie wyjątków do reguł. Kluczowe etapy wdrożeń można określić w następujący sposób.
 
 \subsection{Zakres ochrony i~polityki}
 
 Wdrożenie powinno zaczynać się od określenia, które informacje wymagają
-ochrony i~dlaczego. Kolejność przyjęta w~przewodniku NIST SP 1800-28
-(najpierw identyfikacja zasobów i~ryzyk, potem ochrona) dobrze oddaje tę
-zależność\footcite{nist2024dataconf}. Organizacja, która nie wie, gdzie
-przechowuje dane osobowe klientów lub dokumentację projektową, nie napisze
+ochrony i~dlaczego. Kolejność przyjęta w procesie to najpierw identyfikacja zasobów i~ryzyk, potem ochrona.
+Organizacja, która nie wie, gdzie przechowuje dane osobowe klientów lub dokumentację projektową, nie napisze
 dla nich trafnych reguł.
 
 Polityki DLP powinny wynikać z~klasyfikacji danych i~z~procesów biznesowych.
@@ -841,8 +880,8 @@ naruszenie przepisów rozporządzenia grozi administracyjna kara pieniężna,
 w~najwyższym progu do 20~mln EUR lub do 4\% całkowitego rocznego światowego
 obrotu przedsiębiorstwa (art.~83).
 
-Obowiązek zgłoszenia w~ciągu 72~godzin łączy się bezpośrednio z~tematem
-artykułu. Administrator musi w~krótkim czasie ustalić, jakie dane zostały
+Obowiązek zgłoszenia w~ciągu 72~godzin łączy się bezpośrednio z~rolą
+DLP. Administrator musi w~krótkim czasie ustalić, jakie dane zostały
 ujawnione i~kogo dotyczą. Zdarzenia rejestrowane przez DLP, powiązane
 z~klasyfikacją danych, mogą skrócić tę analizę. Jest to wniosek autora, a~nie
 wymóg prawny.
@@ -935,9 +974,23 @@ szybko rośnie\footcite{verizon2026dbir}.
 \section*{Nota biograficzna}
 
 {\footnotesize\setstretch{1}
-% TODO: uzupełnić notę biograficzną
-\textbf{Bartosz Lewandowski} -- stopień/tytuł zawodowy lub naukowy, Atende
-S.A. Najważniejsze publikacje: \ldots{} Zainteresowania badawcze: \ldots
+dr inż. \textbf{Bartosz Lewandowski} - Dyrektor Działu Innowacji i Rozwoju w~Atende S.A. 
+oraz adiunkt w~Katedrze Inżynierii Klinicznej Akademii Śląskiej. 
+Zajmuje się sztuczną inteligencją, bezpieczeństwem i~suwerennością danych oraz innowacyjnymi 
+technologiami medycznymi i~finansowymi. 
+Posiada ponad 15-letnie doświadczenie w~projektowaniu i~wdrażaniu
+systemów informatycznych oraz zarządzaniu zespołami
+badawczo-rozwojowymi. Rozwija rozwiązania wykorzystujące lokalne
+modele językowe, architektury RAG i~agentów AI, ze~szczególnym
+uwzględnieniem cyberbezpieczeństwa, ochrony informacji
+i~suwerenności danych. Prowadzi badania nad zastosowaniami AI w~medycynie, m.in. w~analizie obrazów diagnostycznych oraz predykcji,
+a~także nad uwierzytelnianiem bezpieczeństwa żywności metodami uczenia maszynowego. 
+Współtworzył rozwiązania z~zakresu bezpiecznego cyfrowego zarządzania dokumentami, 
+w~tym system ChainDoc oparty na technologii blockchain, realizujący wymogi trwałego nośnika w~bankowości. 
+Zespół ChainDoc otrzymał nagrodę ComputerWorld za najlepsze wdrożenie technologii blockchain 
+oraz nagrodę Smart City Forum w~kategorii usług wspólnych. 
+Organizator \enquote{Konferencji PI} w Toruniu, prelegent na konferencjach krajowych oraz międzynarodowych.
+
 \par}
 
 \end{document}
