@@ -91,7 +91,7 @@ Dla każdego kryterium poniżej każda z~trzech perspektyw odpowiada \texttt{TAK
 \noindent\textbf{Kryterium R1: Podleganie reżimowi regulacyjnemu}
 
 \begin{itemize}
-  \item \textbf{Perspektywa zgodności} (DPO / Radca prawny): Czy podmiot prowadzi działalność wymienioną w~załączniku~I lub~II dyrektywy NIS2 i~spełnia kryteria wielkości określone w~art.~2 tej dyrektywy albo należy do podmiotów finansowych wymienionych w~art.~2 ust.~1 rozporządzenia DORA?
+  \item \textbf{Perspektywa zgodności} (DPO / Radca prawny): Czy podmiot prowadzi działalność wymienioną w~załączniku~I lub~II dyrektywy uKSC i~spełnia kryteria wielkości określone w~art.~2 tej dyrektywy albo należy do podmiotów finansowych wymienionych w~art.~2 ust.~1 rozporządzenia DORA?
   \item \textbf{Perspektywa użytkownika} (Zarząd / Właściciel): Czy organizacja świadczy usługi finansowe, prowadzi infrastrukturę krytyczną lub przetwarza dane na zlecenie podmiotów regulowanych?
   \item \textbf{Perspektywa techniczna} (CTO / Architekt): Czy systemy IT organizacji były kiedykolwiek objęte obowiązkowym audytem regulacyjnym lub wymogiem zgłaszania incydentów do organu nadzorczego?
 \end{itemize}
@@ -104,18 +104,23 @@ Dla każdego kryterium poniżej każda z~trzech perspektyw odpowiada \texttt{TAK
   \item \textbf{Perspektywa techniczna}: Czy organizacja przekazuje do organu nadzoru finansowego sprawozdania lub zgłoszenia generowane z~jej systemów ICT (np.\ raportowanie incydentów, rejestr informacji o~umowach ICT)?
 \end{itemize}
 
-\noindent\textbf{Kryterium R3: Podmiot kluczowy (NIS2 / KSC)}
+\noindent\textbf{Kryterium R3: Podmiot kluczowy (uKSC / KSC)}
 
 \begin{itemize}
-  \item \textbf{Perspektywa zgodności}: Czy podmiot prowadzi działalność w~sektorze wymienionym w~załączniku~I dyrektywy NIS2 i~przekracza pułapy średniego przedsiębiorstwa albo należy do kategorii uznawanej za kluczową niezależnie od wielkości (art.~3 ust.~1 dyrektywy NIS2)?
+\item \textbf{Perspektywa zgodności}: Czy podmiot jest wskazany
+w~załączniku nr~1 do~uKSC i~przewyższa wymogi dla średniego
+przedsiębiorstwa albo spełnia inne przesłanki uznania
+za~podmiot kluczowy określone w~art.~5 ust.~1 uKSC?
   \item \textbf{Perspektywa użytkownika}: Czy organizacja zatrudnia co najmniej 250~osób lub osiąga roczny obrót przekraczający 50~mln~EUR i~sumę bilansową przekraczającą 43~mln~EUR, świadcząc usługi z~sektora wymienionego w~załączniku~I?
   \item \textbf{Perspektywa techniczna}: Czy systemy organizacji bezpośrednio realizują usługę z~sektora wymienionego w~załączniku~I (np.\ dystrybucję energii, usługi DNS, centrum danych, usługi zarządzane ICT)?
 \end{itemize}
 
-\noindent\textbf{Kryterium R4: Podmiot ważny (NIS2 / KSC)}
+\noindent\textbf{Kryterium R4: Podmiot ważny (uKSC / KSC)}
 
 \begin{itemize}
-  \item \textbf{Perspektywa zgodności}: Czy podmiot prowadzi działalność w~sektorze wymienionym w~załączniku~I lub~II dyrektywy NIS2 i~jest co najmniej średnim przedsiębiorstwem (art.~3 ust.~2 dyrektywy NIS2)?
+  \item \textbf{Perspektywa zgodności}: Czy podmiot jest wskazany
+w~załączniku nr~1 lub~2 do~uKSC i~spełnia przesłanki uznania
+za~podmiot kluczowy lub ważny określone w~art.~5 uKSC?
   \item \textbf{Perspektywa użytkownika}: Czy organizacja zatrudnia co najmniej 50~osób lub osiąga roczny obrót i~sumę bilansową przekraczające 10~mln~EUR, świadcząc usługi z~sektora wymienionego w~załączniku~I lub~II?
   \item \textbf{Perspektywa techniczna}: Czy systemy organizacji bezpośrednio realizują usługę z~sektora wymienionego w~załączniku~I lub~II (np.\ usługi pocztowe, gospodarkę odpadami, produkcję, platformę handlową)?
 \end{itemize}
@@ -137,7 +142,8 @@ k(v_0) =
 \[
 R1 \neq \bigl(R2 \vee R3 \vee R4\bigr),
 \]
-klasyfikacja jest oznaczana flagą \textsc{Rozbieżność} i~wymaga rozstrzygnięcia przez audytora przed przejściem do fazy drugiej. Sprzeczność może wystąpić w~obu kierunkach: perspektywy mogą ogólnie zaprzeczyć podleganiu regulacjom (R1 = \texttt{NIE}), a jednocześnie potwierdzić, że podmiot należy np.\ do sektora finansowego (R2 = \texttt{TAK}); albo odwrotnie, potwierdzić podleganie regulacjom bez wskazania żadnej konkretnej kategorii. Do czasu rozstrzygnięcia stosuje się klasę wynikającą z~kryteriów szczegółowych, która w~pierwszym przypadku jest bardziej wymagająca. Pierwszeństwo kryterium R2 wynika z~zasady \textit{lex specialis}: w~odniesieniu do podmiotów finansowych wymogi dotyczące zarządzania ryzykiem ICT i~zgłaszania incydentów określa rozporządzenie DORA (art.~4 dyrektywy NIS2).\todo[inline]{Zweryfikować podstawę: numeracja artykułów znowelizowanej ustawy o~KSC określających podmioty kluczowe i~ważne.}
+klasyfikacja jest oznaczana flagą \textsc{Rozbieżność} i~wymaga rozstrzygnięcia przez audytora przed przejściem do fazy drugiej. Sprzeczność może wystąpić w~obu kierunkach: perspektywy mogą ogólnie zaprzeczyć podleganiu regulacjom (R1 = \texttt{NIE}), a jednocześnie potwierdzić, że podmiot należy np.\ do sektora finansowego (R2 = \texttt{TAK}); albo odwrotnie, potwierdzić podleganie regulacjom bez wskazania żadnej konkretnej kategorii. Do czasu rozstrzygnięcia stosuje się klasę wynikającą z~kryteriów szczegółowych, która w~pierwszym przypadku jest bardziej wymagająca. Pierwszeństwo kryterium R2 wynika z~zasady \textit{lex specialis}: w~odniesieniu do podmiotów finansowych wymogi dotyczące zarządzania ryzykiem ICT i~zgłaszania incydentów określa rozporządzenie DORA (art.~4 dyrektywy NIS2).
+\todo[inline]{Zweryfikować podstawę: numeracja artykułów znowelizowanej ustawy o~KSC określających podmioty kluczowe i~ważne.} - od prawnika informacja: art. 5
 
 Klasa regulacyjna określa obowiązkowość kluczowych elementów audytu, zbiór aktów prawnych $\mathcal{A}_{reg}(k)$ stosowanych do podmiotu (równanie~\eqref{eq:akty-klasy}), a przez niego efektywną obligatoryjność i~wagę pytań $\omega(q_j, k)$ (równanie~\eqref{eq:omega}) oraz to, które pytania są blokujące (równanie~\eqref{eq:kappa-eff}). Zestawienie przedstawia tabela~\ref{tab:klasyfikacja-regulacyjna}.
 
@@ -161,7 +167,8 @@ Klasa regulacyjna określa obowiązkowość kluczowych elementów audytu, zbiór
 $^{*}$ Sekcja jest aktywowana, lecz jej pytania, z~wyjątkiem bezpiecznego usunięcia danych (zakres RODO), mają zakres wyłącznie DORA, więc dla podmiotu \texttt{KLUCZOWY} tracą status obowiązkowy i~nie są blokujące. Zmiana tego stanu wymaga wskazania w~kolumnie ,,Podstawa prawna'' przepisu ustawy o~KSC nakładającego obowiązek exit planu.\par}
 \end{table}
 
-\noindent Obowiązek BCP obejmuje zarówno podmioty kluczowe, jak i~ważne, ponieważ art.~21 ust.~2 lit.~c dyrektywy NIS2 nakłada te same środki zarządzania ryzykiem na obie kategorie. Sekcja TIA nie zależy od klasy podmiotu, lecz od ekspozycji danych na jurysdykcję państwa trzeciego, dlatego dla wszystkich klas jest warunkowana przez $\mathcal{C}_{TIA}(v)$ (równanie~\eqref{eq:ctia}), niezależnie od typu przetwarzanych danych (sekcja~\ref{sec:trigger-tia}).\todo[inline]{Zweryfikować podstawę: obowiązek exit planu dla podmiotu \texttt{KLUCZOWY} w~KSC.}
+\noindent Obowiązek BCP obejmuje zarówno podmioty kluczowe, jak i~ważne, ponieważ art.~21 ust.~2 lit.~c dyrektywy NIS2 nakłada te same środki zarządzania ryzykiem na obie kategorie. Sekcja TIA nie zależy od klasy podmiotu, lecz od ekspozycji danych na jurysdykcję państwa trzeciego, dlatego dla wszystkich klas jest warunkowana przez $\mathcal{C}_{TIA}(v)$ (równanie~\eqref{eq:ctia}), niezależnie od typu przetwarzanych danych (sekcja~\ref{sec:trigger-tia}).
+% \todo[inline]{Zweryfikować podstawę: obowiązek exit planu dla podmiotu \texttt{KLUCZOWY} w~KSC.}
 
 % ============================================================
 \section{Faza 2: Inwentaryzacja i~klasyfikacja obiektów}
@@ -294,11 +301,11 @@ zdefiniowane RTO poniżej 4~godzin lub SLA z karami
 za niedostępność?
 \end{itemize}
 
-\noindent\textbf{Kryterium K2: Przetwarzanie danych osobowych
-lub wrażliwych}
+\noindent\textbf{Kryterium K2: Przetwarzanie danych osobowych,
+w~tym szczególnych kategorii danych osobowych}
 \begin{itemize}
 \item \textbf{Perspektywa zgodności:} Czy system przetwarza
-dane osobowe lub szczególne kategorie danych
+dane osobowe, w~tym szczególne kategorie danych osobowych
 w rozumieniu art.~9 RODO?
 \item \textbf{Perspektywa użytkownika:} Czy w systemie
 przechowywane są dane klientów, pracowników lub inne
@@ -527,18 +534,19 @@ Pochodzenie i~kontrola kapitałowa każdego ogniwa łańcucha przenoszą się wi
 Poniższe kryteria służą do określenia, z jakim typem danych operuje system. Dla każdego kryterium każda perspektywa odpowiada \texttt{TAK} lub \texttt{NIE}; zgodnie z~zasadą ostrożności kryterium przyjmuje wartość \texttt{TAK} przy co najmniej jednej odpowiedzi twierdzącej. Wynikiem ankiety jest zbiór spełnionych kategorii $D(v) \subseteq \{W, O, T\}$, a na jego podstawie wyznaczany jest typ danych obiektu.
 
 \bigskip
-\noindent\textbf{Kryterium W: Dane szczególnych kategorii (wrażliwe)}
+\noindent\textbf{Kryterium W: Szczególne kategorie danych osobowych}
 \begin{itemize}
-    \item \textbf{Perspektywa zgodności:} Czy system przetwarza dane
-    szczególnych kategorii w rozumieniu art.~9 RODO
-    (np.\ dane dotyczące zdrowia, wyroków skazujących, przekonań
-    religijnych, orientacji seksualnej, przynależności związkowej)?
+    \item \textbf{Perspektywa zgodności:} Czy system przetwarza
+    szczególne kategorie danych osobowych w rozumieniu art.~9 RODO
+    (np.\ dane dotyczące zdrowia, przekonań religijnych, orientacji
+    seksualnej, przynależności związkowej) lub dane dotyczące
+    wyroków skazujących w~rozumieniu art.~10 RODO?
     \item \textbf{Perspektywa użytkownika:} Czy system zawiera
     dokumentację medyczną, orzeczenia, dane HR
     o niepełnosprawności lub inne informacje uznawane
     za szczególnie chronione?
     \item \textbf{Perspektywa techniczna:} Czy baza danych zawiera
-    pola klasyfikowane jako dane wrażliwe (np.\ diagnoza,
+    pola klasyfikowane jako szczególne kategorie danych osobowych (np.\ diagnoza,
     orzeczenie, wyznanie, dane biometryczne)?
 \end{itemize}
 
@@ -588,8 +596,8 @@ $T \in D(v)$
     & przepisy sektorowe, NDA \\
 \midrule
 $W \in D(v)$, $T \notin D(v)$
-    & \texttt{WRAŻLIWE}
-    & art.~9 RODO, DPIA wymagane \\
+    & \texttt{SZCZEGÓLNE}
+    & art.~9 i~10 RODO, DPIA wymagane \\
 \midrule
 $O \in D(v)$, $W, T \notin D(v)$
     & \texttt{OSOBOWE}
@@ -606,9 +614,9 @@ $D(v) = \emptyset$
 Jeśli system spełnia kilka kryteriów jednocześnie,
 $\textit{typ\_danych}(v)$ przyjmuje kategorię o~najwyższym
 mnożniku $w_{data}$ zgodnie z~tabelą~\ref{tab:typy-danych}
-(\texttt{TAJEMNICA} $>$ \texttt{WRAŻLIWE} $>$ \texttt{OSOBOWE} $>$ \texttt{BRAK}).
+(\texttt{TAJEMNICA} $>$ \texttt{SZCZEGÓLNE} $>$ \texttt{OSOBOWE} $>$ \texttt{BRAK}).
 Pełny zbiór $D(v)$ jest jednak zachowywany, ponieważ decyduje
-o~aktywacji sekcji \texttt{DANE\_WRAZLIWE}: system z~tajemnicą
+o~aktywacji sekcji \texttt{DANE\_SZCZEGÓLNE}: system z~tajemnicą
 bankową i~danymi klientów ma typ \texttt{TAJEMNICA}, lecz
 nadal przetwarza dane osobowe w~rozumieniu RODO.
 
@@ -716,10 +724,10 @@ Pytania w tej sekcji służą do oceny dojrzałości zarządczej organizacji w z
 \generujKryteria{pytania.csv}{ORGANIZACJA}
 
 
-\subsection{Sekcja dane poufne: osobowe, wrażliwe oraz tajemnice przedsiębiorstwa}
+\subsection{Sekcja dane poufne: dane osobowe, w~tym szczególne kategorie danych osobowych, oraz tajemnice przedsiębiorstwa}
 \noindent Aktywacja: \textit{sekcja aktywna jednorazowo dla całego audytowanego podmiotu, gdy co najmniej jeden system przetwarza dane osobowe:} $\exists\, u \in V : D(u) \cap \{W, O\} \neq \emptyset$\\
 Pytania w tej sekcji służą do oceny, czy organizacja prawidłowo zarządza procesem gromadzenia oraz przetwarzania danych poufnych. Sekcja jest oceniana na poziomie podmiotu, ponieważ obowiązki, których dotyczy (rejestr czynności przetwarzania, powołanie IOD, procedura zgłaszania naruszeń, harmonogram retencji), ciążą na administratorze danych, a nie na pojedynczym systemie. Weryfikowane jest, czy organizacja prowadzi aktualny rejestr czynności przetwarzania (RCP) zawierający cel, podstawę prawną, kategorie danych, odbiorców, okresy retencji i~środki bezpieczeństwa dla każdej czynności (art.~30 RODO). Weryfikowana jest również gotowość do zgłoszenia naruszenia ochrony danych osobowych, które chroni prawa osób fizycznych i~wymaga odrębnej procedury, odrębnej ścieżki eskalacji i~odrębnych formularzy. Organizacja nieposiadająca oddzielnej procedury zgłoszeń do UODO nie wykazuje gotowości do wywiązania się z fundamentalnego obowiązku w zakresie ochrony danych osobowych. Pytania blokujące obejmują brak procedury zgłaszania naruszeń do UODO oraz brak rejestru czynności przetwarzania.
-\generujKryteria{pytania.csv}{DANE_WRAZLIWE}
+\generujKryteria{pytania.csv}{DANE_SZCZEGÓLNE}
 
 \subsection{Sekcja bezpieczeństwo techniczne}
 \noindent Aktywacja: \textit{sekcja aktywna jednorazowo dla całego audytowanego podmiotu.}\\
@@ -745,7 +753,7 @@ Pytania w tej sekcji służą do oceny zgodności wynikającej ze specyfiki prze
 \noindent Aktywacja: \textit{aktywacja warunkowa, gdy} $\mathcal{C}_{TIA}(v) = \texttt{TRUE}$ \textit{(równanie~\eqref{eq:ctia}), niezależnie od typu przetwarzanych danych; obejmuje systemy \texttt{CHMURA\_K3}, systemy wspierane spoza EOG, systemy, w~których łańcuchu dostaw występuje dostawca lub poddostawca spoza EOG albo kontrolowany z~państwa trzeciego, oraz tych dostawców i~poddostawców}\\
 Pytania w tej sekcji służą do oceny ryzyka związanego z~dostępem do danych i~ich przekazywaniem poza Europejski Obszar Gospodarczy (EOG). Sekcja jest aktywowana niezależnie od tego, czy system przetwarza dane osobowe: jurysdykcja państwa trzeciego zagraża również danym nieosobowym objętym ochroną, takim jak tajemnica przedsiębiorstwa, tajemnica bankowa czy inne informacje poufne, których ochrona nie wynika z~RODO. Część pytań sekcji (TIA w~rozumieniu RODO, umowa powierzenia DPA) dotyczy wyłącznie danych osobowych; dla systemu, który ich nie przetwarza ($D(v) \cap \{W, O\} = \emptyset$), pytania te mogą zostać oznaczone jako \texttt{N/D} na zasadach opisanych w~sekcji~\ref{sec:zasady-pytan}, czyli z~uzasadnieniem, akceptacją audytora i~dowodem co najmniej średniej jakości. Pozostałe pytania, dotyczące koncentracji jurysdykcyjnej i~ryzyka dostępu eksterytorialnego, są oceniane zawsze.
 
-W odniesieniu do danych osobowych obowiązek przeprowadzenia TIA wynika z wyroku Trybunału Sprawiedliwości UE w sprawie Schrems II z 2020 r., który stwierdził nieważność decyzji Komisji w~sprawie Tarczy Prywatności (Privacy Shield) i~nałożył na eksporterów danych obowiązek indywidualnej weryfikacji, czy prawo i~praktyka państwa docelowego nie podważają skuteczności ochrony gwarantowanej przez Standardowe Klauzule Umowne (SCC). Sprawdzane jest, czy dla każdego transferu przeprowadzono TIA uwzględniające ustawodawstwo krajowe państwa odbiorcy (w tym ryzyko eksterytorialnego dostępu wynikające z amerykańskiego CLOUD Act i~FISA 702) a także czy transfer jest obsługiwany jako komplet trzech dokumentów: aktualnej umowy DPA zgodnej z art. 28 RODO, klauzul SCC z 2021 r. oraz dokumentacji TIA. Weryfikowane jest ponadto, czy organizacja posiada od dostawcy pisemny wykaz wszystkich lokalizacji przetwarzania danych, obejmujący kopie zapasowe, logi i~metadane, w~którym każda lokalizacja poza EOG jest objęta TIA, oraz czy technicznie weryfikuje, że dane nie są przetwarzane poza lokalizacjami z~wykazu. Ocenie podlega ponadto ryzyko koncentracji przetwarzania w~jednej jurysdykcji poza EOG oraz ryzyko dostępu eksterytorialnego wynikające z~prawa państwa dostawcy. Kryteriami blokującymi są brak TIA oraz brak ważnej umowy DPA. Bez nich transfer danych osobowych nie spełnia wymogów rozdziału~V i~art.~28 RODO.
+W odniesieniu do danych osobowych obowiązek przeprowadzenia TIA wynika z wyroku Trybunału Sprawiedliwości UE w sprawie Schrems II z 2020 r., który stwierdził nieważność decyzji Komisji w~sprawie Tarczy Prywatności (Privacy Shield) i~nałożył na eksporterów danych obowiązek indywidualnej weryfikacji, czy prawo i~praktyka państwa docelowego nie podważają skuteczności ochrony gwarantowanej przez Standardowe Klauzule Umowne (SCC). Sprawdzane jest, czy dla każdego transferu opartego na SCC przeprowadzono TIA uwzględniające ustawodawstwo krajowe państwa odbiorcy (w tym ryzyko eksterytorialnego dostępu wynikające z amerykańskiego CLOUD Act i~FISA 702) a także czy taki transfer jest obsługiwany jako komplet trzech dokumentów: aktualnej umowy DPA zgodnej z art. 28 RODO, klauzul SCC z 2021 r. oraz dokumentacji TIA. Weryfikowane jest ponadto, czy organizacja posiada od dostawcy pisemny wykaz wszystkich lokalizacji przetwarzania danych, obejmujący kopie zapasowe, logi i~metadane, w~którym każda lokalizacja poza EOG jest objęta udokumentowaną podstawą transferu (DPF lub SCC z~TIA), oraz czy technicznie weryfikuje, że dane nie są przetwarzane poza lokalizacjami z~wykazu. Ocenie podlega ponadto ryzyko koncentracji przetwarzania w~jednej jurysdykcji poza EOG oraz ryzyko dostępu eksterytorialnego wynikające z~prawa państwa dostawcy. Wyjątkiem są transfery oparte na decyzji Komisji stwierdzającej odpowiedni stopień ochrony (art.~45 RODO), w~tym transfery do odbiorców w~USA certyfikowanych w~ramach DPF (decyzja wykonawcza Komisji (UE) 2023/1795)~\autocite{KomisjaEuropejska2023DPF}. Taki transfer jest legalny bez SCC i~bez TIA, dlatego pytanie o~TIA otrzymuje odpowiedź \texttt{N/D}. Dowodem jest aktualny wpis odbiorcy na liście DPF obejmujący przekazywany rodzaj danych. Kryteriami blokującymi są brak TIA oraz brak ważnej umowy DPA. Bez nich transfer danych osobowych nie spełnia wymogów rozdziału~V i~art.~28 RODO.
 
 \paragraph{Identyfikacja poddostawców i~trigger TIA}\mbox{}\\
 \label{sec:trigger-tia}
@@ -856,9 +864,9 @@ Bezpieczeństwo techniczne & \texttt{PODMIOT} & zawsze (składnik $\mathcal{S}_{
 \midrule
 Bezpieczeństwo fizyczne & \texttt{PODMIOT} & zawsze (składnik $\mathcal{S}_{\texttt{PODMIOT}}$) \\
 \midrule
-Dane poufne: osobowe, wrażliwe oraz tajemnice przedsiębiorstwa & \texttt{PODMIOT} &
+Dane poufne: dane osobowe, w~tym szczególne kategorie danych osobowych, oraz tajemnice przedsiębiorstwa &\texttt{PODMIOT} &
   $\exists\, u \in V : D(u) \cap \{W, O\} \neq \emptyset$
-  (co najmniej jeden system z~kategorią \texttt{WRAŻLIWE} lub \texttt{OSOBOWE}) \\
+  (co najmniej jeden system z~kategorią \texttt{SZCZEGÓLNE} lub \texttt{OSOBOWE}) \\
 \midrule
 Koncentracja ryzyka & \texttt{PODMIOT} &
   $\exists\, w : |\{u \in V_{SYS} : w \in R(u)\}| \geq n_{KV}^{*}$ (dostawca lub poddostawca) \\
@@ -1218,7 +1226,7 @@ Wynik podmiotu łączy dwa składniki: wynik organizacyjny
 $S_{total}(v_0)$, wyznaczony według równania~\eqref{eq:wynik-obiektu}
 z~sekcji przypisanych do podmiotu (\texttt{ORGANIZACJA},
 \texttt{BEZPIECZENSTWO\_TECH}, \texttt{BEZPIECZENSTWO\_FIZYCZNE}
-oraz, jeśli aktywne, \texttt{DANE\_WRAZLIWE}
+oraz, jeśli aktywne, \texttt{DANE\_SZCZEGÓLNE}
 i~\texttt{KONCENTRACJA\_RYZYKA}), oraz wynik grafu $S_{graf}$,
 wyznaczany jako ważona średnia wyników wszystkich pozostałych
 obiektów w grafie ICT, z uwzględnieniem łącznej wagi obiektu
@@ -1765,7 +1773,8 @@ są bezpośrednio adresowane do zarządu i~rady
 nadzorczej, gdyż to na tych organach spoczywa
 odpowiedzialność za nadzór nad kluczowymi
 zależnościami ICT w rozumieniu art.~5 DORA
-i~art.~8 KSC.\todo[inline]{Zweryfikować podstawę: numer artykułu KSC po nowelizacji z~2026~r.}
+i~art.~8 KSC.
+% \todo[inline]{Zweryfikować podstawę: numer artykułu KSC po nowelizacji z~2026~r.}
 
 
 % \section{Pytania audytowe}
@@ -1780,7 +1789,7 @@ i~art.~8 KSC.\todo[inline]{Zweryfikować podstawę: numer artykułu KSC po nowel
 % \generujKryteria{pytania.csv}{ORGANIZACJA}
 
 % \subsection{Sekcja dane poufne: wrażliwe oraz osobowe}
-% \generujKryteria{pytania.csv}{DANE_WRAZLIWE}
+% \generujKryteria{pytania.csv}{DANE_SZCZEGÓLNE}
 
 % \subsection{Sekcja utrzymanie w chmurze}
 % \generujKryteria{pytania.csv}{CHMURA}

@@ -32,7 +32,7 @@ Ocena krytyczności systemu CTN została przeprowadzona z zastosowaniem sześcio
 \midrule
 K1 & Wpływ finansowy i operacyjny niedostępności & NIE & Awaria nie zatrzymuje transakcji; BCP przewiduje zastępczy kanał papierowy \\
 \midrule
-K2 & Przetwarzanie danych osobowych lub wrażliwych & TAK & Spersonalizowane dokumenty i dane PII klientów (imię, numer umowy, dane adresowe) \\
+K2 & Przetwarzanie danych osobowych, w~tym szczególnych kategorii danych osobowych & TAK & Spersonalizowane dokumenty i dane PII klientów (imię, numer umowy, dane adresowe) \\
 \midrule
 K3 & Podleganie regulacjom zewnętrznym & TAK & Nadzór KNF (DORA; Rekomendacja~D uchylona z~dniem 17~stycznia 2025~r.) i wymogi Prezesa UOKiK dot.\ trwałego nośnika \\
 \midrule
@@ -185,7 +185,7 @@ Sekcja bezpieczeństwo techniczne jest aktywowana dla obiektów typu \texttt{POD
 
   \item \textit{Offboarding i usuwanie dostępu} (DORA art.~9 ust.~4 lit.~c, NIS2 art.~21 ust.~2 lit.~i): organizacja posiada udokumentowany i zautomatyzowany proces dezaktywacji kont przy odejściu pracownika. Dezaktywacja następuje w dniu odejścia i obejmuje wszystkie systemy bez konieczności ręcznej interwencji administratora w poszczególnych aplikacjach. Użytkownicy potwierdzili, że konta osób, które odeszły z~banku, znikają z~książki adresowej i~komunikatora najpóźniej w~dniu odejścia.
 
-  \item \textit{Bezpieczeństwo poczty elektronicznej i załączników} (RODO art.~32, NIS2 art.~21, DORA art.~9 ust.~3 lit.~a): organizacja posiada politykę regulującą wysyłanie danych wrażliwych pocztą elektroniczną, z wymogiem szyfrowania załączników zawierających dane klientów. Użytkownicy zadeklarowali, że pliki z~danymi klientów wysyłają wyłącznie zaszyfrowane albo przez firmowe narzędzie do bezpiecznego udostępniania plików.
+  \item \textit{Bezpieczeństwo poczty elektronicznej i załączników} (RODO art.~32, NIS2 art.~21, DORA art.~9 ust.~3 lit.~a): organizacja posiada politykę regulującą wysyłanie danych osobowych, w~tym szczególnych kategorii danych osobowych, pocztą elektroniczną, z wymogiem szyfrowania załączników zawierających dane klientów. Użytkownicy zadeklarowali, że pliki z~danymi klientów wysyłają wyłącznie zaszyfrowane albo przez firmowe narzędzie do bezpiecznego udostępniania plików.
 
   \item \textit{Segmentacja sieci i kontrola ruchu bocznego} (DORA art.~9, NIS2 art.~21): systemy krytyczne są logicznie odizolowane od pozostałej infrastruktury sieciowej przez segmentację VLAN uniemożliwiającą niekontrolowane przemieszczanie się potencjalnego atakującego między segmentami (lateral movement). Polityki firewalla wymuszają kontrolę ruchu wschód-zachód między segmentami. Użytkownicy potwierdzili, że połączenie z~systemami krytycznymi wymaga specjalnego dostępu (np.\ VPN lub stacji przesiadkowej) i~nie jest możliwe bezpośrednio z~sieci biurowej.
 
@@ -422,7 +422,7 @@ S(\mathcal{S}_k) =
 S(\text{ORG}) = \frac{8 \times 2{,}0 \times 0{,}9}{8 \times 2{,}0} = 0{,}900
 \]
 
-\textbf{DANE\_WRAZLIWE}: 2 obowiązkowe i~2 zalecane, wszystkie jednomyślne TAK.
+\textbf{DANE\_SZCZEGÓLNE}: 2 obowiązkowe i~2 zalecane, wszystkie jednomyślne TAK.
 \[
 S(\text{DP}) = \frac{2 \times 2{,}0 \times 0{,}9 + 2 \times 1{,}0 \times 0{,}9}{2 \times 2{,}0 + 2 \times 1{,}0} = \frac{5{,}4}{6} = 0{,}900
 \]

@@ -146,6 +146,12 @@ Art.~82 ust.~4 RODO w~zw.\ z~k.c.: solidarność
   & Jeżeli w~tym samym przetwarzaniu uczestniczy więcej niż jeden podmiot,
     odpowiadają oni solidarnie za całą szkodę, co zapewnia poszkodowanemu
     rzeczywiste uzyskanie odszkodowania. \\[4pt]
+Art.~471 k.c.: odpowiedzialność odszkodowawcza
+  & Jeżeli naruszenie ochrony danych stanowi jednocześnie niewykonanie 
+  lub nienależyte wykonanie zobowiązania umownego. 
+  Najbardziej typowym przykładem jest odpowiedzialność dostawcy IT wobec 
+  klienta za naruszenie obowiązków wynikających z umowy usługowej lub umowy powierzenia przetwarzania danych.
+Przykładowo: dostawca zobowiązał się do określonej konfiguracji uprawnień, szyfrowania danych albo wykonywania kopii zapasowych. Nie wykonał tych obowiązków, doszło do ujawnienia lub utraty danych, a klient poniósł koszty usunięcia skutków incydentu. \\[4pt]    
 Zbieg podstaw odpowiedzialności
   & Nałożenie kary przez PUODO nie zwalnia administratora z~równoległej
     odpowiedzialności cywilnej wobec osób poszkodowanych. \\
@@ -352,7 +358,7 @@ Maks. kara administracyjna
   & Do 7~mln~EUR lub 1,4\% rocznego światowego obrotu \\[4pt]
 Odpowiedzialność osobista
   & Możliwy zakaz pełnienia funkcji kierowniczych przez osoby fizyczne
-  & Możliwy zakaz pełnienia funkcji kierowniczych przez osoby fizyczne \\
+  & Możliwa odpowiedzialność kierownictwa za naruszenie obowiązków w zakresie cyberbezpieczeństwa, bez przewidzianego w NIS2 zakazu pełnienia funkcji kierowniczych \\
 \hline
 \end{tabular}
 \end{table}
@@ -426,8 +432,10 @@ muszą przeprowadzać testy obejmujące m.in.\ oceny podatności, testy scenariu
 
 \subsection*{Filar IV, Zarządzanie ryzykiem zewnętrznych dostawców ICT}
 
-Czwarty filar stanowi najbardziej przełomowy element rozporządzenia. DORA nakłada bezpośrednie obowiązki na zewnętrznych dostawców ICT, w~tym hiperscalerów chmurowych takich jak Google Cloud, Microsoft Azure czy Amazon Web Services, obejmując ich nadzorem jako kluczowych zewnętrznych dostawców usług ICT (ang. \textit{Critical ICT Third-Party Providers
-(CTPP)}), wyznaczanych przez Europejskie Urzędy Nadzoru na podstawie art.~31 DORA; kategoria ta jest odrębna od dostawcy kluczowego w~metodologii ORION (definicja~\ref{def:dostawca-kluczowy}). Instytucje finansowe muszą przeprowadzać ocenę ryzyka przed zawarciem każdej umowy z~dostawcą ICT, a~sama umowa musi zawierać postanowienia
+Czwarty filar stanowi najbardziej przełomowy element rozporządzenia. 
+DORA ustanawia wymagania dotyczące współpracy podmiotów finansowych z zewnętrznymi dostawcami usług ICT, realizowane przede wszystkim przez obowiązki w zakresie zarządzania ryzykiem oraz obowiązkowe postanowienia umowne. Jednocześnie nakłada bezpośrednie obowiązki związane z unijnym mechanizmem nadzoru na dostawców wyznaczonych jako kluczowi zewnętrzni dostawcy usług ICT (ang. \textit{Critical ICT Third-Party Providers (CTPP)}) na podstawie art. 31 DORA. 
+Przykładem takich dostawców są tzw. hiperscalerzy chmurowi reprezentowani przez Google Cloud, Microsoft Azure czy Amazon Web Services.
+Kategoria \textit{CTPP} jest odrębna od dostawcy kluczowego w~metodologii ORION (definicja~\ref{def:dostawca-kluczowy}). Instytucje finansowe muszą przeprowadzać ocenę ryzyka przed zawarciem każdej umowy z~dostawcą ICT, a~sama umowa musi zawierać postanowienia
 o~prawie do audytu, lokalizacji przetwarzania danych, planach wyjścia (ang. \textit{exit plan}) oraz minimalnych okresach przejściowych przy zmianie dostawcy~\autocite{eiopa_dora}.
 Korzystanie z~niezatwierdzonych narzędzi chmurowych (ang. \textit{shadow IT}) stanowi naruszenie tego filaru, a~jednocześnie naruszenie zasady rozliczalności z~art.~5 ust.~2 RODO.
 
@@ -452,7 +460,7 @@ Wiodący Organ Nadzorczy ma szerokie uprawnienia wobec krytycznych dostawców IC
 
 \section{Ochrona danych medycznych, regulacje prawne i~nadzór}
 
-Dane dotyczące zdrowia należą do szczególnej kategorii danych osobowych w~rozumieniu art.~9 rozporządzenia (UE) 2016/679 (\textit{RODO})\autocite{rodo}, co oznacza, że ich przetwarzanie jest co~do zasady zakazane, a~wyjątki od tego zakazu są ściśle i~enumeratywnie określone w~przepisach~\autocite{przewodnik_rodo_zdrowie}. Do kategorii tej zalicza się wszelkie informacje o~stanie zdrowia fizycznego lub psychicznego osoby, dane genetyczne i~biometryczne, a~także informacje pośrednie (takie jak numer recepty, historia wizyt lekarskich czy przynależność do grupy ubezpieczenia zdrowotnego)  jeżeli pozwalają one na wyciągnięcie wniosków o~stanie zdrowia danej osoby.
+Dane dotyczące zdrowia należą do szczególnych kategorii danych osobowych w~rozumieniu art.~9 rozporządzenia (UE) 2016/679 (\textit{RODO})\autocite{rodo}, co oznacza, że ich przetwarzanie jest co~do zasady zakazane, a~wyjątki od tego zakazu są ściśle i~enumeratywnie określone w~przepisach~\autocite{przewodnik_rodo_zdrowie}. Do kategorii tej zalicza się wszelkie informacje o~stanie zdrowia fizycznego lub psychicznego osoby, dane genetyczne i~biometryczne, a~także informacje pośrednie (takie jak numer recepty, historia wizyt lekarskich czy przynależność do grupy ubezpieczenia zdrowotnego)  jeżeli pozwalają one na wyciągnięcie wniosków o~stanie zdrowia danej osoby.
 Podwyższony reżim ochrony danych zdrowotnych uzasadniony jest ich szczególną wrażliwością: ujawnienie informacji o~chorobie, leczeniu psychiatrycznym czy uzależnieniu może prowadzić do dyskryminacji w~zatrudnieniu, wykluczenia z~rynku ubezpieczeń lub stygmatyzacji społecznej.
 
 \subsection*{Krajowe ramy prawne i~wielość nadzorców}

@@ -4,7 +4,7 @@
 \section{Luka badawcza}
 \label{sec:luka}
 
-Istniejące metodologie obejmują zarządzanie bezpieczeństwem, zarządzanie ryzykiem i~kontrole organizacyjne w znacznym stopniu w kierunku analizy systemów informatycznych. Są to standardy rynkowe, takie jak metodologie zdefiniowane w  ISO/IEC 27001, NIST Cybersecurity Framework, COBIT. Jednak żadna z nich nie spełnia jednocześnie  zasadniczych wymagań stawianych przez współczesne środowiska regulacyjne. Po pierwsze, brakuje im wielostronnej perspektywy obejmującej cały łańcuch dostaw ICT, od nadzorowanego podmiotu, poprzez jego bezpośrednich dostawców, po podprocesory działające na wielu poziomach. Po drugie, nie zawierają one opartego na dowodach mechanizmu punktacji, który rozróżniałby zweryfikowaną zgodność od zwykłego zapewnienia deklaratywnego rozróżnienia, które jest fundamentalne dla przeciwdziałania dobrze udokumentowanemu zjawisku \textit{teatru zgodności}. Po trzecie, nie zapewniają one wieloaspektowej struktury analitycznej, która formalnie przypisuje pytania audytowe do odpowiedniego podmiotu w organizacji, tj. radcy prawnego, biznesu, architekta oprogramowania lub administratora infrastruktury, w oparciu o charakter pytania, a nie wygodę organizacji. Po czwarte, nie oferują modułowej rozszerzalności sektorowej, która zachowuje uniwersalny rdzeń metodologiczny, jednocześnie aktywując perspektywy i~zestawy pytań specyficzne dla danej dziedziny dla regulowanych branż, takich jak finanse czy opieka zdrowotna.
+Istniejące metodologie obejmują zarządzanie bezpieczeństwem, zarządzanie ryzykiem i~kontrole organizacyjne w znacznym stopniu w kierunku analizy systemów informatycznych. Są to standardy rynkowe, takie jak metodologie zdefiniowane w  ISO/IEC 27001, NIST Cybersecurity Framework, COBIT. Jednak żadna z nich nie spełnia jednocześnie  zasadniczych wymagań stawianych przez współczesne środowiska regulacyjne. Po pierwsze, brakuje im wielostronnej perspektywy obejmującej cały łańcuch dostaw ICT, od nadzorowanego podmiotu, poprzez jego bezpośrednich dostawców oraz podprocesorów działających na wielu poziomach. Po drugie, nie zawierają one opartego na dowodach mechanizmu punktacji, który rozróżniałby zweryfikowaną zgodność od zwykłego zapewnienia deklaratywnego rozróżnienia, które jest fundamentalne dla przeciwdziałania dobrze udokumentowanemu zjawisku \textit{teatru zgodności}. Po trzecie, nie zapewniają one wieloaspektowej struktury analitycznej, która formalnie przypisuje pytania audytowe do odpowiedniego podmiotu w organizacji, tj. radcy prawnego, biznesu, architekta oprogramowania lub administratora infrastruktury, w oparciu o charakter pytania, a nie wygodę organizacji. Po czwarte, nie oferują modułowej rozszerzalności sektorowej, która zachowuje uniwersalny rdzeń metodologiczny, jednocześnie aktywując perspektywy i~zestawy pytań specyficzne dla danej dziedziny dla regulowanych branż, takich jak finanse czy opieka zdrowotna.
 
 \renewcommand{\arraystretch}{1.4}
 % Use longtable instead of table + tabular
@@ -776,15 +776,14 @@ z równaniem~\eqref{eq:Spodmiot_rozszerzone}.
 & RODO art.~4 pkt~1 
 & Imię, adres, adres e-mail, numer IP \\
 \midrule
-\texttt{WRAŻLIWE} & $T_2$ & $1{,}6$ 
-& RODO Art.~9 ust.~1 
+\texttt{SZCZEGÓLNE} & $T_2$ & $1{,}6$ 
+& RODO Art.~9 oraz Art.~10
 & Stan zdrowia, dane biometryczne, 
   przekonania religijne, orientacja seksualna \\
 \midrule
 \texttt{TAJEMNICA} & $T_3$ & $2{,}0$ 
 & Ustawa sektorowa\newline(bankowa, lekarska, adwokacka) 
-& Tajemnica bankowa, tajemnica lekarska, 
-  tajemnica zawodowa, dane niejawne \\
+& Tajemnica przedsiębiorstwa, tajemnica zawodowa, tajemnica sektorowa, tajemnica związana z działalnością organów i postępowaniami, informacje niejawne (ściśle tajne, tajne, zastrzeżone, poufne), informacje poufne w rozumieniu MAR 7, informacje objęte poufnością umowną, informacje chronione obowiązkiem pracowniczym \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -874,7 +873,8 @@ Dostawca ICT jest zobowiązany do świadczenia usług przez określony czas po w
 
 Exit plan traci swoją wartość, jeśli nie jest regularnie weryfikowany. DORA wymaga, aby plany wyjścia były kompleksowe, udokumentowane, wystarczająco przetestowane i~poddawane okresowym przeglądom (art.~28 ust.~8\autocite{dora2022}). Całość procesu musi być zaplanowana tak, aby klient instytucji w ogóle nie odczuł zmiany dostawcy.
 
-Ważna jest forma przygotowania dokumentacji. DORA, w art.~28 ust.~8\autocite{dora2022}, wymaga odrębnie udokumentowanego planu wyjścia. W~odniesieniu do podmiotów kluczowych ustawa o~KSC\autocite{uksc2026} realizuje cele exit planu przede wszystkim poprzez wymagania dotyczące bezpieczeństwa łańcucha dostaw i~postanowienia umowne z~dostawcą.\todo[inline]{Zweryfikować podstawę: czy znowelizowana ustawa o~KSC nakłada na podmioty kluczowe obowiązek odrębnego exit planu (dotychczas powoływany art.~8).}
+Ważna jest forma przygotowania dokumentacji. DORA, w art.~28 ust.~8\autocite{dora2022}, wymaga odrębnie udokumentowanego planu wyjścia. W~odniesieniu do podmiotów kluczowych ustawa o~KSC\autocite{uksc2026} realizuje cele exit planu przede wszystkim poprzez wymagania dotyczące bezpieczeństwa łańcucha dostaw i~postanowienia umowne z~dostawcą.
+% \todo[inline]{Zweryfikować podstawę: czy znowelizowana ustawa o~KSC nakłada na podmioty kluczowe obowiązek odrębnego exit planu (dotychczas powoływany art.~8).}
 
 W metodologii ORION sekcja exit plan jest aktywowana dla podmiotów \texttt{FINANSOWY} i~\texttt{KLUCZOWY} w~odniesieniu do systemów krytycznych i~ważnych obsługiwanych przez co najmniej jednego dostawcę zewnętrznego (tabela~\ref{tab:sekcje-aktywacja}); system utrzymywany wyłącznie siłami własnymi nie ma usługi, z~której można by wyjść. Dla podmiotu \texttt{KLUCZOWY} pytania sekcji, mające zakres wyłącznie DORA, nie są obowiązkowe ani blokujące, dopóki nie zostanie wskazana ich podstawa w~ustawie o~KSC (równanie~\eqref{eq:tau-eff}). Podobnie jak plan ciągłości działania,  brak lub nieprawidłowo zdefiniowany exit plan, gdy jest obowiązkowy, wskazuje binarnie na uchybienia w działaniu organizacji.
 
