@@ -1,0 +1,149 @@
+%  LaTeX support: latex@mdpi.com
+%  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
+
+%=================================================================
+\documentclass[foods,article,submit,moreauthors]{Definitions/mdpi}
+% The class option "submit" will be changed to "accept" by the Editorial Office when the paper is accepted.
+
+%=================================================================
+% MDPI internal commands - do not modify
+\firstpage{1}
+\makeatletter
+\setcounter{page}{\@firstpage}
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2026}
+\copyrightyear{2026}
+%\externaleditor{Firstname Lastname}
+\datereceived{ }
+\daterevised{ } % Comment out if no revised date
+\dateaccepted{ }
+\datepublished{ }
+%\datecorrected{}
+%\dateretracted{}
+
+%=================================================================
+% Add packages and commands here. The following packages are loaded in our class file: fontenc, inputenc, calc, indentfirst, fancyhdr, graphicx, epstopdf, lastpage, ifthen, float, amsmath, amssymb, lineno, setspace, enumitem, mathpazo, booktabs, titlesec, etoolbox, tabto, xcolor, colortbl, soul, multirow, microtype, tikz, totcount, changepage, attrib, upgreek, array, tabularx, pbox, ragged2e, tocloft, marginnote, marginfix, enotez, amsthm, natbib, hyperref, cleveref, scrextend, url, geometry, newfloat, caption, draftwatermark, seqsplit
+\usepackage{longtable}
+\usepackage{bm}
+
+% Placeholder for information that only the authors can supply.
+% All \tbc{...} items must be completed and the macro removed before upload
+% (check: grep -n tbc *.tex).
+\newcommand{\tbc}[1]{\textcolor{red}{[TO BE COMPLETED: #1]}}
+
+%=================================================================
+% Full title of the paper (Capitalized)
+\Title{Reproducibility of Honey Taste and Odor Typicality Assessment: A Blind Consumer Panel Versus the Verdicts of Four Laboratories}
+
+% Author Orchid ID: enter ID or remove command
+\newcommand{\orcidauthorA}{0009-0004-1158-0693} % Bartosz Lewandowski
+\newcommand{\orcidauthorB}{0009-0003-7214-4097} % Przemysław Rujna
+\newcommand{\orcidauthorC}{0000-0001-9178-1540} % Katarzyna Joanna Banach
+\newcommand{\orcidauthorD}{0000-0003-2580-7954} % Ewaryst Tkacz
+\newcommand{\orcidauthorE}{0000-0003-3900-7368} % Anna Gajda
+\newcommand{\orcidauthorF}{0000-0003-1865-2122} % Maciej Wróbel
+\newcommand{\orcidauthorG}{0000-0002-6289-7234} % Radosław Dzik
+\newcommand{\orcidauthorH}{0000-0002-3575-8159} % Agata Kabała-Dzik
+\newcommand{\orcidauthorI}{0009-0006-2931-1867} % Julia Rujna
+
+% Authors, for the paper (add full first names)
+\Author{Bartosz Lewandowski $^{1,}$*\orcidA{}, Przemysław Rujna $^{2}$\orcidB{}, Katarzyna Joanna Banach $^{3}$\orcidC{}, Ewaryst Tkacz $^{1}$\orcidD{}, Anna Gajda $^{4}$\orcidE{}, Radosław Dzik $^{1}$\orcidG{}, Agata Kabała-Dzik $^{6}$\orcidH{}, Julia Rujna $^{7}$\orcidI{} and Maciej Wróbel $^{5}$\orcidF{}}
+
+% MDPI internal command: Authors, for metadata in PDF
+\AuthorNames{Bartosz Lewandowski, Przemysław Rujna, Katarzyna Joanna Banach, Ewaryst Tkacz, Anna Gajda, Radosław Dzik, Agata Kabała-Dzik, Julia Rujna and Maciej Wróbel}
+
+% Affiliations / Addresses
+\address{%
+$^{1}$ \quad Department of Clinical Engineering, Academy of Silesia in Katowice, Katowice, Poland\\
+$^{2}$ \quad Polish Honey Chamber Association, Toruń, Poland\\
+$^{3}$ \quad Institute of Management and Quality Sciences, Faculty of Economics, University of Warmia and Mazury in Olsztyn, Olsztyn, Poland\\
+$^{4}$ \quad Laboratory of Bee Diseases, Department of Pathology and Veterinary Diagnostics, Institute of Veterinary Medicine, Warsaw University of Life Sciences, Warsaw, Poland\\
+$^{5}$ \quad Department of Otolaryngology and Laryngological Oncology, Collegium Medicum in Bydgoszcz, Nicolaus Copernicus University, Toruń, Poland\\
+$^{6}$ \quad Department of Pathology, Faculty of Pharmaceutical Sciences in Sosnowiec, Medical University of Silesia in Katowice, Sosnowiec, Poland\\
+$^{7}$ \quad SWPS University, Faculty of Psychology in Sopot, Sopot, Poland}
+
+% Contact information of the corresponding author
+\corres{Correspondence: bartosz.lewandowski@akademiaslaska.pl}
+
+% Abstract (Do not insert blank lines, i.e. \\)
+\abstract{Organoleptic assessment can decide whether a honey batch is admitted to the market, although the reproducibility of taste assessment is difficult to verify. This study examined interlaboratory and consumer--laboratory agreement on typicality verdicts. Seven honey batches were assessed in a blind consumer panel (138~respondents, 966~ratings) and, in parallel, by four laboratories. Typicality in the blind consumer panel correlated with the number of laboratories without objections ($\rho = 0.76$), but this agreement rested on one sample (P3), the only one the panel classified as typical. After its exclusion, the panel did not discriminate between the remaining six samples ($p = 0.274$), and the typicality of the two samples flagged by most laboratories did not differ significantly from 0.5. A single consumer agreed with a laboratory on whether a sample was not typical for honey to a similar degree as with another consumer ($\kappa = 0.10$ and $0.08$). Agreement among the four laboratories was fair on the binary scale ($\kappa = 0.30$) and slight on the three-level scale ($\kappa = 0.13$). A single consumer rating reproduced the laboratory majority verdict with $\mathrm{AUC} = 0.57$. Taste typicality assessment identifies extreme samples, but its reproducibility for borderline samples is limited, and as a stand-alone criterion it does not meet the objectivity required for commercial quality assessment.}
+
+% Keywords
+\keyword{honey; organoleptic assessment; blind consumer panel; interlaboratory agreement; taste typicality; commercial quality}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\input{section-introduction}
+\input{section-methods}
+\input{section-discussion}
+
+\vspace{6pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Back matter. Every \tbc{...} must be completed by the authors before submission.
+\authorcontributions{Conceptualization, B.L. and P.R.; methodology, B.L.; software, B.L.; formal analysis, B.L.; investigation, P.R. and J.R.; 
+resources, P.R.; data curation, B.L.; writing---original draft preparation, B.L.; writing---review and editing, K.J.B., E.T., A.G., R.D., A.K.-D., J.R. and M.W.; visualization, B.L.; supervision, E.T, M.W..
+ All authors have read and agreed to the published version of the manuscript.}
+
+\funding{No external funding was received for the preparation of this manuscript. The article
+processing charge (APC) will be covered by Stowarzyszenie Polska Izba Miodu (Polish Honey
+Chamber Association). The APC funder had no role in the preparation of the manuscript or in the
+decision to submit it for publication.}
+
+\institutionalreview{ Not applicable.}
+
+\informedconsent{Informed consent was obtained from all subjects involved in the study.}
+
+\dataavailability{The anonymized panel data, the laboratory descriptions and the analysis code are available from the corresponding author upon reasonable request.}
+
+\acknowledgments{During the preparation of this work, the authors used Claude Opus 5.5
+(Anthropic) in order to improve the readability and language of the manuscript. The authors have
+reviewed and edited the output and take full responsibility for the content of this publication.}
+
+\conflictsofinterest{The authors declare no conflicts of interest}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\abbreviations{Abbreviations}{%
+The following abbreviations are used in this manuscript:\\
+
+\noindent
+\begin{tabular}{@{}ll}
+AUC & area under the receiver operating characteristic curve\\
+CI & confidence interval\\
+DLG & German Agricultural Society (Deutsche Landwirtschafts-Gesellschaft)\\
+IHC & International Honey Commission\\
+L & slightly or weakly typical (laboratory code)\\
+N & not typical for honey (laboratory code)\\
+ROC & receiver operating characteristic\\
+SD & standard deviation\\
+T & typical (laboratory code)
+\end{tabular}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendixtitles{yes}
+\appendixstart
+\appendix
+\section[\appendixname~\thesection]{Verbatim Odor and Taste Descriptions from the Laboratories}
+\label{app:interlab_raw}
+
+Table~\ref{tab:interlab_descriptions} lists the verbatim odor and taste
+descriptions reported by the laboratories (August 2026,
+Section~\ref{sub:interlab_methods}), which form the basis of the coding in
+Table~\ref{tab:panel_lab}.
+
+\input{appendix-descriptions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{adjustwidth}{-\extralength}{0cm}
+
+\reftitle{References}
+\bibliography{bibliography}
+
+\PublishersNote{}
+\end{adjustwidth}
+\end{document}
